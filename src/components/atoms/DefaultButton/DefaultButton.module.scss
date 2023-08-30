@@ -2,10 +2,11 @@
 
 .default-button {
   color: $base-button-color;
-  background-color: white;
+  background-color: transparent;
   border: 2px solid $base-button-color;
   font-size: 16px;
   line-height: 18px;
+  font-weight: 700;
   padding: 9px 14px;
   border-radius: 3px;
   transition: all .3s ease-in-out;
