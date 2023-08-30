@@ -1,13 +1,13 @@
 import { FC } from "react";
 
-import classes from "./DefaultButton.module.scss";
+import classes from "./NavLink.module.scss";
 
 interface INavLinkProps {
   label: string;
 }
 
 const NavLink: FC<INavLinkProps> = (props) => {
-  return <li className={classes['nav-link']}><a href="#">{props.label}</a></li>
-}
+  return <li className={classes["nav-link"]}>{props.label}</li>;
+};
 
-export default NavLink
+export default NavLink;

@@ -1,9 +1,11 @@
-import DefaultButton from "./components/atoms/DefaultButton"
+import Header from "./components/organisms/Header";
 
 function App() {
   return (
-    <DefaultButton label="BUTTON" />
-  )
+    <>
+      <Header />
+    </>
+  );
 }
 
-export default App
+export default App;

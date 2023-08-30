@@ -8,6 +8,13 @@
   line-height: 18px;
   padding: 9px 14px;
   border-radius: 3px;
+  transition: all .3s ease-in-out;
+  &:hover {
+    background-color: $hover-button-color;
+    color: white;
+    border-color: $hover-button-color;
+    transition: all .3s ease-in-out;
+  }
   &--primary {
     color: white;
     background-color: $base-button-color;

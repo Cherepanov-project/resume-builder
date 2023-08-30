@@ -1,0 +1,12 @@
+.header-nav {
+  display: flex;
+  align-items: center;
+  padding-left: 40px;
+  &-list {
+    display: flex;
+    align-items: center;
+    & li {
+      padding-right: 40px;
+    }
+  }
+}
