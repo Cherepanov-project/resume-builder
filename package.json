@@ -8,7 +8,8 @@
     "build": "tsc && vite build",
     "lint": "eslint ./src",
     "lint:fix": "eslint ./src --fix",
-    "preview": "vite preview"
+    "preview": "vite preview",
+    "prepare": "husky install"
   },
   "dependencies": {
     "@emotion/react": "^11.11.1",
@@ -43,7 +44,7 @@
   "lint-staged": {
     "**/*.{js,jsx,ts,tsx}": [
       "prettier --write",
-      "lint:fix"
+      "npm run lint:fix"
     ]
   }
 }
