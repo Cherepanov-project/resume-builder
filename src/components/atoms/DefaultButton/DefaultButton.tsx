@@ -1,6 +1,6 @@
 import { FC } from "react";
 
-import classes from "./DefaultBurron.module.scss";
+import classes from "./DefaultButton.module.scss";
 
 interface IDefaultButtonProps {
   label: string;
