@@ -1,0 +1,22 @@
+.cvTemlpate {
+  margin: 0;
+  padding: 0 20px;
+  background-color: lightsteelblue;
+  min-height: 100vh;
+  display: flex;
+}
+
+.cvTemlpate__left {
+  max-width: 800px;
+  flex-shrink: 1;
+  background-color: lightpink;
+  padding: 20px;
+  padding-left: 0;
+}
+
+.cvTemlpate__right {
+  border-right:1px solid green;
+  padding: 20px;
+  padding-right: 0;
+}
+
