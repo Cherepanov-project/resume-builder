@@ -1,5 +1,5 @@
 import { Swiper, SwiperSlide } from "swiper/react";
-import { Pagination, FreeMode } from "swiper/modules";
+import { Pagination } from "swiper/modules";
 
 import "swiper/css";
 import "swiper/css/pagination";
@@ -12,9 +12,9 @@ const Slider = () => {
     <>
       <div className={classes['background-layout--light']}></div>
       <Swiper
-        modules={[FreeMode, Pagination]}
+        modules={[Pagination]}
         slidesPerView={3}
-        freeMode={true}
+        spaceBetween={0}
         pagination={{ clickable: true }}
         className={classes['swiper-wrapper']}
       >

@@ -1,0 +1,9 @@
+@import "../../../assets/style/variables.scss";
+
+.footer-link-list-item {
+  font-size: 15px;
+  color: $base-text-color;
+  &:hover {
+    color: $hover-button-color;
+  }
+}
