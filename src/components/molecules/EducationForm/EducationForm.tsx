@@ -13,8 +13,8 @@ const EducationForm = () => {
       <BasicInput id="degree" label="Degree" />
       <BasicInput id="school" label="School" />
       <Stack className={classes.educationForm} spacing={2} direction="row">
-        <BasicDatePicker label="From" />
-        <BasicDatePicker label="To" />
+        <BasicDatePicker label="From year" />
+        <BasicDatePicker label="To year" />
       </Stack>
     </Box>
   );

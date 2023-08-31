@@ -8,7 +8,7 @@ const Experience = () => {
   return (
     <Box className={classes.experience}>
       <ExperienceForm />
-      <Button variant="contained">Add another Experience +</Button>
+      <Button variant="contained">Add another Experience</Button>
     </Box>
   );
 };

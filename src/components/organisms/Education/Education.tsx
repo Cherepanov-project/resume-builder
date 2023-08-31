@@ -8,7 +8,7 @@ const Educatione = () => {
   return (
     <Box className={classes.education}>
       <EducationForm />
-      <Button variant="contained">Add another Education +</Button>
+      <Button variant="contained">Add another Education</Button>
     </Box>
   );
 };
