@@ -13,3 +13,8 @@ export interface IBasicTextarea {
   label?: string;
   placeholder?: string;
 }
+
+export interface IBasicDatePicker {
+  id?: string;
+  label?: string;
+}
