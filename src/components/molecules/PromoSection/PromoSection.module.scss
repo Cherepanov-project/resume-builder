@@ -2,6 +2,7 @@
 @import "../../atoms/MainTitle/MainTitle.scss";
 @import "../../atoms/DefaultSubTitle/DefaultSubTitle.scss";
 @import "../../../assets/style/variables.scss";
+@import "../../atoms/BackgroundLayoutDark/BackgroundLayoutDark.scss";
 
 .promo {
   &-content-wrapper {
@@ -22,20 +23,10 @@
 .container {
   display: flex;
   justify-content: space-between;
-  padding-top: 200px;
+  padding-top: 100px;
+  margin-bottom: 40px;
 }
 
 .default-subtitle {
-  margin-top: 100px;
+  margin-top: 150px;
 }
-
-.background-layout--dark {
-  width: 100%;
-  height: 200%;
-  position: absolute;
-  z-index: -1;
-  background: transparent;
-  background: radial-gradient(circle, transparent 0%, $base-text-color 100%);
-}
-
-

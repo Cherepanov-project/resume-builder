@@ -1,11 +1,13 @@
 import PromoSection from "../../molecules/PromoSection";
 import Slider from "../../molecules/Slider";
 
+import classes from "./MainPage.module.scss"
+
 const MainPage = () => {
   return (
     <main>
       <PromoSection />
-      <div style={{width: '100vw'}}>
+      <div className={classes['slider-container']}>
         <Slider />
       </div>
     </main>

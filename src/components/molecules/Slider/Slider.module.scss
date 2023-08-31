@@ -1,0 +1,12 @@
+@import "../../atoms/BackgroundLayoutLight/BackgroundLayoutLight.scss";
+@import "../../../assets/style/variables.scss";
+
+.swiper-wrapper {
+  cursor: grab;
+  padding: 40px 0;
+  width: 100vw;
+}
+
+.swiper-pagination-bullet-active {
+  --swiper-theme--color: $base-button-color;
+}

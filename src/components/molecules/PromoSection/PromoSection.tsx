@@ -19,7 +19,7 @@ const PromoSection = () => {
           </div>
           <span className={classes['default-subtitle']}>Pick a resume template and build your resume in minutes</span>
         </div>
-        <img src={resumePreview} className={classes["promo-image"]} />
+        <img src={resumePreview} alt="resume preview" className={classes["promo-image"]} />
       </section>
     </>
   );
