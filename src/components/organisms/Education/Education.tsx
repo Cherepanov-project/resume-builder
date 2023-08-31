@@ -4,13 +4,13 @@ import Box from '@mui/material/Box';
 import { Button } from '@mui/material';
 import EducationForm from '../../molecules/EducationForm';
 
-const Education = () => {
+const Educatione = () => {
   return (
     <Box className={classes.education}>
       <EducationForm />
-      <Button variant="contained">Add another education +</Button>
+      <Button variant="contained">Add another Education +</Button>
     </Box>
   );
 };
 
-export default Education;
+export default Educatione;

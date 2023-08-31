@@ -4,6 +4,7 @@ import DemoCv from '../../components/organisms/DemoCv';
 
 import PersonalInfo from '../../components/organisms/PersonalInfo';
 import Education from '../../components/organisms/Education';
+import Experience from '../../components/organisms/Experience';
 
 const CvTemplate = () => {
   return (
@@ -15,6 +16,7 @@ const CvTemplate = () => {
         <form action="">
           <PersonalInfo />
           <Education />
+          <Experience />
         </form>
       </div>
     </div>
