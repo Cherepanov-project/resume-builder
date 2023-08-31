@@ -1,10 +1,7 @@
 @import "../../../assets/style/variables.scss";
 
-.footer-link-list-item {
-  cursor: pointer;
+.footer-content {
   font-size: 20px;
+  line-height: 24px;
   color: $base-text-color;
-  &:hover {
-    color: $hover-button-color;
-  }
 }
