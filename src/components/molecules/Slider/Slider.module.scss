@@ -2,6 +2,6 @@
 
 .swiper-wrapper {
   cursor: grab;
-  padding: 40px 0;
-  width: 100vw;
+  padding: 40px 40px;
+  width: calc(100vw - 80px);
 }
