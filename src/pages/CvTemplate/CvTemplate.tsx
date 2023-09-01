@@ -64,39 +64,47 @@ const CvTemplate = () => {
   };
 
   return (
-    <div className={classes.cvTemlpate}>
-      <div className={classes.cvTemlpate__left}>
-        <DemoCv />
-      </div>
-      <Box className={classes.cvTemlpate__right}>
-        <Stepper activeStep={activeStep} orientation="vertical">
-          {steps.map((step, index) => (
-            <Step key={index}>
-              <StepLabel>{step.label}</StepLabel>
-              <StepContent>
-                <Typography>{step.description}</Typography>
-                <Box sx={{ mb: 2 }}>
-                  <div>
-                    <Button variant="contained" onClick={handleNext} sx={{ mt: 1, mr: 1 }}>
-                      {index === steps.length - 1 ? 'Finish' : 'Continue'}
-                    </Button>
-                    <Button disabled={index === 0} onClick={handleBack} sx={{ mt: 1, mr: 1 }}>
-                      Back
-                    </Button>
-                  </div>
-                </Box>
-              </StepContent>
-            </Step>
-          ))}
-        </Stepper>
-        {activeStep === steps.length && (
-          <Paper square elevation={0} sx={{ p: 3 }}>
-            <Typography>All steps completed - you&apos;re finished</Typography>
-            <Button onClick={handleReset} sx={{ mt: 1, mr: 1 }}>
-              Reset
-            </Button>
-          </Paper>
-        )}
+    <Box className={classes.cvTemlpate}>
+      <Box className={classes.cvTemlpate__container}>
+        <Box className={classes.cvTemlpate__content}>
+          <Box className={classes.cvTemlpate__left}>
+            <Box className={classes.cvTemlpate__demoCv}>
+              <DemoCv />
+            </Box>
+          </Box>
+          <Box className={classes.cvTemlpate__rightWrapper}>
+            <Box className={classes.cvTemlpate__right}>
+              <Stepper activeStep={activeStep} orientation="vertical">
+                {steps.map((step, index) => (
+                  <Step key={index}>
+                    <StepLabel>{step.label}</StepLabel>
+                    <StepContent>
+                      <Typography>{step.description}</Typography>
+                      <Box sx={{ mb: 2 }}>
+                        <div>
+                          <Button variant="contained" onClick={handleNext} sx={{ mt: 1, mr: 1 }}>
+                            {index === steps.length - 1 ? 'Finish' : 'Continue'}
+                          </Button>
+                          <Button disabled={index === 0} onClick={handleBack} sx={{ mt: 1, mr: 1 }}>
+                            Back
+                          </Button>
+                        </div>
+                      </Box>
+                    </StepContent>
+                  </Step>
+                ))}
+              </Stepper>
+              {activeStep === steps.length && (
+                <Paper square elevation={0} sx={{ p: 3 }}>
+                  <Typography>All steps completed - you&apos;re finished</Typography>
+                  <Button onClick={handleReset} sx={{ mt: 1, mr: 1 }}>
+                    Reset
+                  </Button>
+                </Paper>
+              )}
+            </Box>
+          </Box>
+        </Box>
       </Box>
       {/* <div className={classes.cvTemlpate__right}>
         <form action="">
@@ -107,7 +115,7 @@ const CvTemplate = () => {
           <Hobbies />
         </form>
       </div> */}
-    </div>
+    </Box>
   );
 };
 

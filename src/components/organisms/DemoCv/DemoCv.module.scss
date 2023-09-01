@@ -1,9 +1,12 @@
 .demoCv {
-  display: flex;
+  height: 100vh;
 }
 
 .demoCv__image {
   width: 100%;
+  max-width: 600px;
+  
+  height: auto;
   // width: 50%;
   // height: auto;
   // display: block;
