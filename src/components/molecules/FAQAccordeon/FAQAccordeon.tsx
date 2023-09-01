@@ -13,7 +13,6 @@ const FAQAccordeon = () => {
         <Accordion>
           <AccordionSummary
             expandIcon={<ExpandMoreIcon />}
-            aria-controls="panel1a-content"
           >
             <p>Accordion 1</p>
           </AccordionSummary>
@@ -28,7 +27,6 @@ const FAQAccordeon = () => {
         <Accordion>
           <AccordionSummary
             expandIcon={<ExpandMoreIcon />}
-            aria-controls="panel2a-content"
           >
             <p>Accordion 2</p>
           </AccordionSummary>
@@ -43,7 +41,6 @@ const FAQAccordeon = () => {
         <Accordion>
           <AccordionSummary
             expandIcon={<ExpandMoreIcon />}
-            aria-controls="panel1a-content"
           >
             <p>Accordion 3</p>
           </AccordionSummary>
@@ -58,7 +55,6 @@ const FAQAccordeon = () => {
         <Accordion>
           <AccordionSummary
             expandIcon={<ExpandMoreIcon />}
-            aria-controls="panel2a-content"
           >
             <p>Accordion 4</p>
           </AccordionSummary>
@@ -73,7 +69,6 @@ const FAQAccordeon = () => {
         <Accordion>
           <AccordionSummary
             expandIcon={<ExpandMoreIcon />}
-            aria-controls="panel1a-content"
           >
             <p>Accordion 5</p>
           </AccordionSummary>
@@ -88,7 +83,6 @@ const FAQAccordeon = () => {
         <Accordion>
           <AccordionSummary
             expandIcon={<ExpandMoreIcon />}
-            aria-controls="panel2a-content"
           >
             <p>Accordion 6</p>
           </AccordionSummary>
@@ -103,7 +97,6 @@ const FAQAccordeon = () => {
         <Accordion>
           <AccordionSummary
             expandIcon={<ExpandMoreIcon />}
-            aria-controls="panel1a-content"
           >
             <p>Accordion 7</p>
           </AccordionSummary>
@@ -118,7 +111,6 @@ const FAQAccordeon = () => {
         <Accordion>
           <AccordionSummary
             expandIcon={<ExpandMoreIcon />}
-            aria-controls="panel2a-content"
           >
             <p>Accordion 8</p>
           </AccordionSummary>
