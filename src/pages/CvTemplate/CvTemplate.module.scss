@@ -4,6 +4,7 @@
   background-color: lightsteelblue;
   min-height: 100vh;
   display: flex;
+  justify-content: center;
 }
 
 .cvTemlpate__left {
@@ -15,7 +16,7 @@
 }
 
 .cvTemlpate__right {
-  border-right:1px solid green;
+  width: 100%;
   padding: 20px;
   padding-right: 0;
 }
