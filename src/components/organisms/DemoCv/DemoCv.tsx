@@ -1,6 +1,6 @@
 import React from 'react';
 import classes from './DemoCv.module.scss';
-import demoImage from '../../../assets/images/demo-cv-1.png';
+import demoImage from '../../../assets/images/demo-cv.png';
 
 const DemoCv = () => {
   return (
