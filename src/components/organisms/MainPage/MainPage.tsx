@@ -1,3 +1,4 @@
+import FAQAccordeon from "../../molecules/FAQAccordeon";
 import PromoSection from "../../molecules/PromoSection";
 import Slider from "../../molecules/Slider";
 
@@ -10,6 +11,7 @@ const MainPage = () => {
       <div className={classes['slider-container']}>
         <Slider />
       </div>
+      <FAQAccordeon></FAQAccordeon>
     </main>
   );
 };
