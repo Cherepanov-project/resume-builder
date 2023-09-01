@@ -1,7 +1,6 @@
 import React from 'react';
 import Box from '@mui/material/Box';
 import Stack from '@mui/material/Stack';
-import BasicH2 from '../../atoms/BasicH2';
 import BasicInput from '../../atoms/BasicInput';
 import BasicTextarea from '../../atoms/BasicTextarea';
 import PortraitBox from '../../molecules/PortraitBox';
@@ -10,7 +9,6 @@ import classes from './PersonalInfo.module.scss';
 const PersonalInfo = () => {
   return (
     <Box className={classes.personalInfo}>
-      <BasicH2 text="Personal Info" />
       <PortraitBox />
 
       <Stack className={classes.personalInfo__inputGroup} spacing={2} direction="row">

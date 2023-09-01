@@ -4,8 +4,8 @@ import demoImage from '../../../assets/images/demo-cv.png';
 
 const DemoCv = () => {
   return (
-    <div className={classes.DemoCv}>
-      <img src={demoImage} alt="demo" />
+    <div className={classes.demoCv}>
+      <img className={classes.demoCv__image} src={demoImage} alt="demo" />
     </div>
   );
 };
