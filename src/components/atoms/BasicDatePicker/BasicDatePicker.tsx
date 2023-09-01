@@ -3,7 +3,11 @@ import { LocalizationProvider } from '@mui/x-date-pickers';
 import { AdapterDayjs } from '@mui/x-date-pickers/AdapterDayjs';
 import { DatePicker } from '@mui/x-date-pickers/DatePicker';
 import classes from './BasicDatePicker.module.scss';
-import { IBasicDatePicker } from '../../../types';
+
+interface IBasicDatePicker {
+  id?: string;
+  label?: string;
+}
 
 const BasicDatePicker: React.FC<IBasicDatePicker> = ({ label }) => {
   return (

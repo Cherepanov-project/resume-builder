@@ -1,7 +1,12 @@
 import React from 'react';
-import { IBasicInput } from '../../../types';
 import TextField from '@mui/material/TextField';
 import classes from './BasicInput.module.scss';
+
+interface IBasicInput {
+  id?: string;
+  label?: string;
+  placeholder?: string;
+}
 
 const BasicInput: React.FC<IBasicInput> = ({ id, label }) => {
   return (

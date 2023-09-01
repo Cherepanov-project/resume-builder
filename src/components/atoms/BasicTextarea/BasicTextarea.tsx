@@ -2,7 +2,12 @@ import React from 'react';
 import classes from './BasicTextarea.module.scss';
 
 import { TextareaAutosize } from '@mui/base/TextareaAutosize';
-import { IBasicTextarea } from '../../../types';
+
+interface IBasicTextarea {
+  id?: string;
+  label?: string;
+  placeholder?: string;
+}
 
 const BasicTextarea: React.FC<IBasicTextarea> = ({ id, placeholder }) => {
   return (
