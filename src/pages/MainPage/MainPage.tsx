@@ -1,6 +1,6 @@
-import FAQAccordeon from "../../molecules/FAQAccordeon";
-import PromoSection from "../../molecules/PromoSection";
-import Slider from "../../molecules/Slider";
+import FAQAccordeon from "../../components/molecules/FAQAccordeon";
+import PromoSection from "../../components/molecules/PromoSection";
+import Slider from "../../components/molecules/Slider";
 
 import classes from "./MainPage.module.scss"
 
