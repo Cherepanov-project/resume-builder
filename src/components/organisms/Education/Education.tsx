@@ -32,7 +32,6 @@ const Education = () => {
   return (
     <Box className={classes.education}>
       {count.length === 1 ? <EducationForm /> : render}
-
       <Button onClick={() => setCount((prev) => [...prev, 1])} variant="contained">
         Add another Education
       </Button>
