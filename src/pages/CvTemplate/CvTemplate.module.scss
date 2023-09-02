@@ -1,0 +1,40 @@
+.cvTemlpate {
+  margin: 0;
+  padding: 0 20px;
+  background-color: lightsteelblue;
+  min-height: 100vh;
+}
+
+.cvTemlpate__container {
+  max-width: 1500px;
+  margin: 0 auto;
+}
+
+.cvTemlpate__content {
+  display: flex;
+}
+
+.cvTemlpate__demoCv {
+  position: fixed;
+  height: 100vh;
+  padding: 20px;
+}
+
+.cvTemlpate__left {
+  width: 650px;
+  height: 100vh;
+  flex: 0 0 auto;
+  position: relative;
+}
+
+.cvTemlpate__rightWrapper {
+  flex: 1 1 auto;
+  width: 800px;
+  padding: 20px;
+}
+
+.cvTemlpate__right {
+  width: 100%;
+  height: 100%;
+}
+
