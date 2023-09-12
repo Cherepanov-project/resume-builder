@@ -1,8 +1,12 @@
 {
-    "version": 2,
-    "rewrites": [{ "source": "/(.*)", "destination": ": "/index.html" }],
-    "github": {
-      "autoAlias": true,
-      "silent": true
+  "rewrites": [
+    {
+      "source": "/(.*)",
+      "destination": "/index.html"
     }
+  ],
+  "github": {
+    "autoAlias": true,
+    "silent": true
   }
+}
