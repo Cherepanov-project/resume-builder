@@ -1,5 +1,5 @@
 {
-    "version": 3,
+    "version": 2,
     "rewrites": [{ "source": "/(.*)", "destination": ": "/index.html" }],
     "github": {
       "autoAlias": true,
