@@ -1,14 +1,8 @@
 {
-    "version": 2,
+    "version": 3,
     "rewrites": [{ "source": "/(.*)", "destination": "/" }],
     "github": {
       "autoAlias": true,
       "silent": true
-    },
-    "builds": [
-      { "src": "/*", "use": "@vercel/static" }
-    ],
-    "routes": [
-      { "src": "/(.*)", "dest": "/index.html" }
-    ]
+    }
   }
