@@ -1,4 +1,3 @@
-import React from 'react';
 import classes from './DemoCv.module.scss';
 import demoImage from '../../../assets/images/demo-cv.png';
 

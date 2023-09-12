@@ -1,4 +1,4 @@
-import React from 'react';
+/* eslint-disable @typescript-eslint/no-explicit-any */
 import classes from './Social.module.scss';
 import { Box, Button } from '@mui/material';
 import SocialForm from '../../molecules/SocialForm';
@@ -12,10 +12,12 @@ import { useAppSellector, useAppDispatch } from '../../../hooks/cvTemplateHooks'
 import { addSocial } from '../../../store/cvTemplate/socialSlice';
 
 const Social = () => {
-  const numOfSocials = useAppSellector((state) => state.social.numOfSocials);
+  const numOfSocials = useAppSellector((state: any) => state.social.numOfSocials);
   const dispatch = useAppDispatch();
 
-  const render = numOfSocials.map((item, index) => {
+  const render = numOfSocials.map((item: any, index: number) => {
+    // переделать нормально
+    console.log(item);
     return (
       <Accordion disableGutters sx={{ mb: 2 }}>
         <AccordionSummary

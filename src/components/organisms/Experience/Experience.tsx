@@ -1,4 +1,4 @@
-import React from 'react';
+/* eslint-disable @typescript-eslint/no-explicit-any */
 import classes from './Experience.module.scss';
 import Box from '@mui/material/Box';
 import { Button } from '@mui/material';
@@ -13,10 +13,12 @@ import { useAppSellector, useAppDispatch } from '../../../hooks/cvTemplateHooks'
 import { addExperience } from '../../../store/cvTemplate/experienceSlice';
 
 const Experience = () => {
-  const numOfExperiences = useAppSellector((state) => state.experience.numOfExperinces);
+  const numOfExperiences = useAppSellector((state: any) => state.experience.numOfExperinces);
   const dispatch = useAppDispatch();
 
-  const render = numOfExperiences.map((item, index) => {
+  const render = numOfExperiences.map((item: any, index: number) => {
+    // переделать нормально
+    console.log(item);
     return (
       <Accordion disableGutters sx={{ mb: 2 }}>
         <AccordionSummary

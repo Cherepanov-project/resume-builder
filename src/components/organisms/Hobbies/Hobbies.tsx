@@ -1,4 +1,3 @@
-import React from 'react';
 import { Box, Button } from '@mui/material';
 import BasicInput from '../../atoms/BasicInput';
 import classes from './Hobbies.module.scss';
