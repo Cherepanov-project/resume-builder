@@ -1,0 +1,21 @@
+@import "../../assets/style/variables.scss";
+
+.landing {
+  display: flex;
+  &-constructor {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    width: 50%;
+    height: 100vh;
+    padding: 20px;
+    border-radius: 10px;
+    background-color: $bg-static-light;
+  }
+  &-preview {
+    width: 50%;
+    height: 100vh;
+    padding: 20px;
+    background-color: #fff;
+  }
+}
+
