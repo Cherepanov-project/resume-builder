@@ -1,36 +1,26 @@
-import { useMemo } from 'react';
 import { useAppDispatch, useAppSellector } from '../../../hooks/cvTemplateHooks';
 import { useForm } from 'react-hook-form';
 
-import elements from '../../atoms/ConstructorElements';
-import { closeEdit, edit } from '../../../store/LandigBuilder/previewElementsSlice';
+import { edit, openEdit } from '../../../store/LandigBuilder/previewElementsSlice';
 import { Button } from '@mui/material';
+import { IStyleFormObj, IElement, IStyle } from '../../../types/landingBuilder';
 import classes from './ElementEditMenu.module.scss';
 
-type formObj = {
-  color?: string;
-  backgroundColor?: string;
-  borderColor?: string;
-  borderRadius?: string;
-  borderWidth?: string;
-  content?: string;
-  borderRadiusMeasurement?: string;
-  width?: string;
-  height?: string;
-  widthMeasurement?: string;
-  heightMeasurement?: string;
-};
-
-function defineNumsAndMeasure(str: string | number) {
-  if (typeof str === 'number') return +str;
-  let result = '';
+function defineNumsAndMeasure(str: string | number): [number, string] {
+  let num = '';
+  let measure = '';
+  if (typeof str === 'number') return [str, 'px'];
   for (let i = 0; i < str.length; i++) {
-    result += !isNaN(+str[i]) ? str[i] : '';
+    if (!isNaN(+str[i])) {
+      num += str[i];
+    } else {
+      measure += str[i];
+    }
   }
-  return +result;
+  return [+num, measure];
 }
 
-function makeStyleObj(obj: formObj) {
+function makeStyleObj(obj: IStyle) {
   const {
     color,
     backgroundColor,
@@ -46,86 +36,53 @@ function makeStyleObj(obj: formObj) {
   } = obj;
   const style = {
     color,
-    borderRadius: borderRadius + borderRadiusMeasurement,
+    borderRadius: `${borderRadius}${borderRadiusMeasurement}`,
     borderWidth: borderWidth + 'px',
     backgroundColor,
     borderColor,
-    width: width + widthMeasurement,
-    height: height + heightMeasurement,
+    width: `${width}${widthMeasurement}`,
+    height: `${height}${heightMeasurement}`,
   };
   return { style, content };
 }
 
+function makeObjForDefaultValueForm(obj: IElement): IStyle {
+  const result = { content: obj.content } as IStyle;
+  for (const prop in obj.style) {
+    if (
+      prop === 'borderRadius' ||
+      prop === 'borderWidth' ||
+      prop === 'width' ||
+      prop === 'height'
+    ) {
+      result[prop] = defineNumsAndMeasure(obj.style[prop])[0];
+      result[`${prop}Measurement`] = defineNumsAndMeasure(obj.style[prop])[1];
+    } else {
+      result[prop] = obj.style[prop];
+    }
+  }
+  return result;
+}
+
 const ElementEdit = () => {
-  // const [style, setStyle] = useState({})
   const dispatch = useAppDispatch();
-  const editData = useAppSellector((state) => state.previewElements.edit);
-  const dataBtn = elements[editData];
-  console.log(dataBtn, 'databtn');
+  const editData: IElement | null = useAppSellector((state) => state.previewElements.edit);
+  const o = editData ? makeObjForDefaultValueForm(editData) : null;
 
-  const {
-    content,
-    style: {
-      color,
-      backgroundColor,
-      borderColor,
-      borderRadius,
-      borderWidth,
-      width,
-      height,
-      widthMeasurement,
-      heightMeasurement,
+  const { register, handleSubmit, watch } = useForm({
+    defaultValues: {
+      ...o,
     },
-  } = dataBtn;
-  console.log(width, 'width');
-
-  const { register, handleSubmit, setValue, watch } = useForm({
     mode: 'onBlur',
   });
 
-  const styleForPreviewButton = !Object.keys(watch()).length ? dataBtn : makeStyleObj(watch());
+  const watchs = watch();
+  const newStyle = makeStyleObj(watchs);
 
-  const onSubmit = (data: formObj) => {
-    const {
-      color,
-      backgroundColor,
-      borderColor,
-      borderRadius,
-      borderWidth,
-      content,
-      borderRadiusMeasurement,
-      width,
-      height,
-      widthMeasurement,
-      heightMeasurement,
-    } = data;
-    const style = {
-      color,
-      borderRadius: borderRadius + borderRadiusMeasurement,
-      borderWidth: borderWidth + 'px',
-      backgroundColor,
-      borderColor,
-      width: width + widthMeasurement,
-      height: height + heightMeasurement,
-    };
-    const payload = { style, content };
-    dispatch(edit(payload));
-    dispatch(closeEdit());
+  const onSubmit = (data: IStyleFormObj): void => {
+    dispatch(edit(makeStyleObj(data)));
+    dispatch(openEdit(null));
   };
-
-  useMemo(() => {
-    console.log(width, height);
-    color ? setValue('color', color) : null;
-    borderColor ? setValue('borderColor', borderColor) : null;
-    borderWidth ? setValue('borderWidth', borderWidth) : null;
-    backgroundColor ? setValue('backgroundColor', backgroundColor) : null;
-    borderRadius ? setValue('borderRadius', defineNumsAndMeasure(borderRadius)) : null;
-    content ? setValue('content', content) : null;
-    width ? setValue('width', defineNumsAndMeasure(width)) : null;
-    height ? setValue('height', defineNumsAndMeasure(height)) : null;
-    widthMeasurement ? setValue('widthMeasurement', widthMeasurement) : null;
-    heightMeasurement ? setValue('heightMeasurement', heightMeasurement) : null;
-  }, [color, content, width, height]);
 
   return (
     <>
@@ -165,7 +122,7 @@ const ElementEdit = () => {
         </label>
         <div className={classes.line}></div>
         <div className={classes.preview}>
-          <Button style={styleForPreviewButton.style}>{styleForPreviewButton.content}</Button>
+          <Button style={newStyle.style}>{newStyle.content}</Button>
         </div>
         <div className={classes.line}></div>
         <button type="submit">Add</button>

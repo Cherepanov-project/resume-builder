@@ -2,13 +2,13 @@ import { useAppSellector } from '../../../hooks/cvTemplateHooks';
 import PresetButton from '../ConstructorPresetsList';
 import ElementEdit from '../ElementEditMenu/ElementEditMenu';
 
-import Accordion from '@mui/material/Accordion';
-import AccordionSummary from '@mui/material/AccordionSummary';
-import AccordionDetails from '@mui/material/AccordionDetails';
+import { Accordion, AccordionSummary, AccordionDetails } from '@mui/material';
 import ExpandMoreIcon from '@mui/icons-material/ExpandMore';
+import { IElement } from '../../../types/landingBuilder';
 
 const ConstructorList = () => {
-  const edit = useAppSellector((state): string => state.previewElements.edit);
+  const edit: IElement | null = useAppSellector((state) => state.previewElements.edit);
+  const editingElement = edit ? edit.element : null;
 
   return (
     <div style={{ height: 40 }}>
@@ -20,7 +20,9 @@ const ConstructorList = () => {
         >
           Button
         </AccordionSummary>
-        <AccordionDetails>{edit ? <ElementEdit /> : <PresetButton />}</AccordionDetails>
+        <AccordionDetails>
+          {editingElement === 'button' ? <ElementEdit /> : <PresetButton />}
+        </AccordionDetails>
       </Accordion>
       <Accordion>
         <AccordionSummary

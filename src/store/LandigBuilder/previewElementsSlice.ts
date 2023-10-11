@@ -1,15 +1,14 @@
 import { createSlice } from '@reduxjs/toolkit';
+import { IElement } from '../../types/landingBuilder';
 
 type InitialState = {
   renderedElements: object[];
-  openPopover: string;
-  edit: string;
+  edit: IElement | null;
 };
 
 const initialState: InitialState = {
   renderedElements: [],
-  openPopover: '',
-  edit: '',
+  edit: null,
 };
 
 const previewElementsSlice = createSlice({
@@ -19,24 +18,14 @@ const previewElementsSlice = createSlice({
     addElement: (state, action) => {
       state.renderedElements.push(action.payload);
     },
-    openPopover: (state, action) => {
-      state.openPopover = action.payload;
-    },
-    closePopover: (state) => {
-      state.openPopover = '';
-    },
     edit: (state, action) => {
       state.renderedElements[0] = { ...state.renderedElements[0], ...action.payload };
     },
     openEdit: (state, action) => {
       state.edit = action.payload;
     },
-    closeEdit: (state) => {
-      state.edit = '';
-    },
   },
 });
 
 export default previewElementsSlice.reducer;
-export const { addElement, openPopover, closePopover, edit, openEdit, closeEdit } =
-  previewElementsSlice.actions;
+export const { addElement, edit, openEdit } = previewElementsSlice.actions;

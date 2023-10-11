@@ -1,2 +1,2 @@
-import ConstructorListItem from './ConstructorListItem';
+import { ConstructorListItem } from './ConstructorListItem';
 export default ConstructorListItem;

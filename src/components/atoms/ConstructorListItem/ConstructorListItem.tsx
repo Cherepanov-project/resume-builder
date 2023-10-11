@@ -1,28 +1,23 @@
 import { FC } from 'react';
-// import ListItem from '@mui/material/ListItem';
+import { IElement } from '../../../types/landingBuilder';
 import ListItemButton from '@mui/material/ListItemButton';
 
-// import classes from './ConstructorListItem.module.scss'
 import { useAppDispatch } from '../../../hooks/cvTemplateHooks';
-import { openEdit, openPopover } from '../../../store/LandigBuilder/previewElementsSlice';
+import { openEdit } from '../../../store/LandigBuilder/previewElementsSlice';
 
 interface IConstructrListItem {
   label: string;
   appointment?: string;
-  preset?: string;
+  preset?: IElement;
 }
 
-const ConstructorListItem: FC<IConstructrListItem> = ({ label, appointment, preset }) => {
+export const ConstructorListItem: FC<IConstructrListItem> = ({ label, appointment, preset }) => {
   const dispatch = useAppDispatch();
   const onHandleClick = () => {
     if (appointment === 'preset') {
       dispatch(openEdit(preset));
-    } else {
-      dispatch(openPopover(label));
     }
   };
 
   return <ListItemButton onClick={onHandleClick}>{label}</ListItemButton>;
 };
-
-export default ConstructorListItem;
