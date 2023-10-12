@@ -20,12 +20,25 @@ enum SliderEffects {
   Creative = 'creative',
 }
 
+enum EslideHeight {
+  auto = 'auto',
+  px50 = '50px',
+  px75 = '75px',
+  px100 = '100px',
+  px125 = '125px',
+  px150 = '150px',
+  px175 = '175px',
+  px200 = '200px',
+  px225 = '225px',
+}
+
 type TSliderInit = {
   effect: string;
   loop: boolean;
   navigation: boolean;
   pagination: boolean;
   spaceBetween: number;
+  slideHeight?: number | string | undefined;
   slidesPerView: number | 'auto';
 };
 
@@ -40,6 +53,7 @@ const SwiperSVTweek: React.FC<ISwiperSVTweek> = (props) => {
 
   const stateSlider = props.value;
   const { effect, loop, spaceBetween, navigation, pagination } = props.value;
+  const slideHeight = stateSlider.slideHeight?.toString();
 
   //Функция меняет значение кольцевой прокрутки
   const onChangeLoop = (event: React.ChangeEvent<HTMLInputElement>) => {
@@ -72,7 +86,6 @@ const SwiperSVTweek: React.FC<ISwiperSVTweek> = (props) => {
       effect == SliderEffects.Fade
     ) {
       newState.slidesPerView = 1;
-      console.log('state from tweek', newState);
     } else {
       newState.slidesPerView = 'auto';
     }
@@ -86,7 +99,17 @@ const SwiperSVTweek: React.FC<ISwiperSVTweek> = (props) => {
     props.changeSlider(newState);
   };
 
+  //Меняет Высоту Слайдов
+  const handleSlideHeight = (event: SelectChangeEvent) => {
+    // setSliderStyle(event.target.value as string);
+    const height = event.target.value;
+    const newState = { ...stateSlider, slideHeight: height };
+    props.changeSlider(newState);
+  };
+
   const buttonRef = React.createRef<HTMLButtonElement>();
+
+  //скрывает и раскрывает меню настроек
   const handleButton = () => {
     if (tweekVisible) {
       buttonRef?.current?.innerHTML ? (buttonRef.current.innerHTML = 'Settings') : null;
@@ -152,7 +175,26 @@ const SwiperSVTweek: React.FC<ISwiperSVTweek> = (props) => {
           type="number"
           value={spaceBetween}
           onChange={handleSpaceBetween}
+          style={{ marginBottom: 5 }}
         />
+        <Select
+          labelId="slideHeight"
+          id="SlideHeightSelect"
+          value={slideHeight}
+          label="Slide Height"
+          onChange={handleSlideHeight}
+          size="small"
+        >
+          <MenuItem value={EslideHeight.auto}>Auto</MenuItem>
+          <MenuItem value={EslideHeight.px50}>50px</MenuItem>
+          <MenuItem value={EslideHeight.px75}>75px</MenuItem>
+          <MenuItem value={EslideHeight.px100}>100px</MenuItem>
+          <MenuItem value={EslideHeight.px125}>125px</MenuItem>
+          <MenuItem value={EslideHeight.px150}>150px</MenuItem>
+          <MenuItem value={EslideHeight.px175}>175px</MenuItem>
+          <MenuItem value={EslideHeight.px200}>200px</MenuItem>
+          <MenuItem value={EslideHeight.px225}>225px</MenuItem>
+        </Select>
       </div>
     </div>
   );

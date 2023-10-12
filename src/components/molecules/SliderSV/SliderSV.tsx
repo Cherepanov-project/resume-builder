@@ -36,6 +36,7 @@ type TSliderInit = {
   navigation: boolean;
   pagination: boolean;
   spaceBetween: number;
+  slideHeight?: number | string | undefined;
   slidesPerView: number | 'auto';
 };
 
@@ -45,6 +46,7 @@ const sliderInit: TSliderInit = {
   navigation: true,
   pagination: true,
   spaceBetween: 10,
+  slideHeight: 'auto',
   slidesPerView: 'auto',
 };
 
@@ -55,8 +57,9 @@ interface ISliderSVProps {
 
 const SliderSV: React.FC<ISliderSVProps> = ({ slides = defaulSlides }) => {
   const [sliderProps, setSliderProps] = useState(sliderInit);
+  const slideHeight = sliderProps.slideHeight;
   const slidesSlider = slides.map((el) => {
-    return <SlideSV src={el} />;
+    return <SlideSV src={el} height={slideHeight} />;
   });
 
   const sliderSlides = slidesSlider.map((el: JSX.Element, index: number) => {
