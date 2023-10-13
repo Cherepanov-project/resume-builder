@@ -9,6 +9,7 @@ import {
   MenuItem,
   TextField,
 } from '@mui/material';
+import { TSliderInit } from '../SliderSV/SliderSV';
 
 enum SliderEffects {
   Default = 'default',
@@ -31,16 +32,6 @@ enum EslideHeight {
   px200 = '200px',
   px225 = '225px',
 }
-
-type TSliderInit = {
-  effect: string;
-  loop: boolean;
-  navigation: boolean;
-  pagination: boolean;
-  spaceBetween: number;
-  slideHeight?: number | string | undefined;
-  slidesPerView: number | 'auto';
-};
 
 interface ISwiperSVTweek {
   changeSlider: (state: TSliderInit) => void;
@@ -177,6 +168,7 @@ const SwiperSVTweek: React.FC<ISwiperSVTweek> = (props) => {
           onChange={handleSpaceBetween}
           style={{ marginBottom: 5 }}
         />
+        <h6 className={style.titleh6}>Slide height</h6>
         <Select
           labelId="slideHeight"
           id="SlideHeightSelect"

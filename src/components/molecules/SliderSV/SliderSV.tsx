@@ -30,7 +30,7 @@ import SwiperSVTweek from '../SwiperSVTweek';
 import { useState } from 'react';
 import { defaulSlides } from './DefaultSlides';
 
-type TSliderInit = {
+export type TSliderInit = {
   effect: string;
   loop: boolean;
   navigation: boolean;

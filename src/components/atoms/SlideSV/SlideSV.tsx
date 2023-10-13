@@ -1,6 +1,7 @@
 import React from 'react';
 
 import style from './SlideSV.module.scss';
+
 export interface IslideSVProps {
   src: string;
   height?: string | number | undefined;
