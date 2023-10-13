@@ -58,13 +58,16 @@ interface ISliderSVProps {
 const SliderSV: React.FC<ISliderSVProps> = ({ slides = defaulSlides }) => {
   const [sliderProps, setSliderProps] = useState(sliderInit);
   const slideHeight = sliderProps.slideHeight;
+  let slideKey = 0;
   const slidesSlider = slides.map((el) => {
     return <SlideSV src={el} height={slideHeight} />;
   });
 
   const sliderSlides = slidesSlider.map((el: JSX.Element, index: number) => {
+    slideKey++;
     return (
       <SwiperSlide
+        key={slideKey}
         style={{ height: '100%' }}
         className={style.SwiperSliderContainer}
         virtualIndex={index}
