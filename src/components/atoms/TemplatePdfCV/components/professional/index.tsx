@@ -1,0 +1,1 @@
+export { PageContenProfessional } from './PageContenProfessional';

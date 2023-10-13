@@ -6,16 +6,14 @@ import CloudUploadIcon from '@mui/icons-material/CloudUpload';
 import { Modal } from '../../atoms/Modal';
 import { ComponentToPrint } from '../../atoms/ComponentToPrint';
 
-import classes from '../DemoCv/DemoCv.module.scss';
-
 interface DemoCvModalProps {
-  img: string;
+  content: React.ReactElement;
   isOpen?: boolean;
   onClose?: () => void;
 }
 
 export const DemoCvModal = (props: DemoCvModalProps) => {
-  const { img, isOpen, onClose } = props;
+  const { content, isOpen, onClose } = props;
   const componentRef = useRef(null);
 
   const reactToPrintContent = useCallback(() => {
@@ -31,14 +29,25 @@ export const DemoCvModal = (props: DemoCvModalProps) => {
     );
   }, []);
 
-  const ComponentToPrintProps = <img className={classes.demoCv__image} src={img} alt="demo" />;
-
   const pageStyle = `
-  @page {
-    size: auto;  
-    margin: 0mm;
-  }
-`;
+    @page {
+      size: '794px 1123px';
+      margin: 0mm;
+    },
+  `;
+
+  // const pageStyle = `
+  // @media print': {boxShadow: 'none !important', '@page': {size: '794px 1123px', margin: 0}
+  // `;
+
+  //   const pageStyle = `
+  //   @page {
+  //     size: 2.5in 4in
+  //   }
+  // `;
+
+  // четко задать высоту и ширину size
+  // проверить есть ли разница между маком и виндой
 
   return (
     <>
@@ -49,7 +58,7 @@ export const DemoCvModal = (props: DemoCvModalProps) => {
           documentTitle="CV"
           pageStyle={pageStyle}
         />
-        <ComponentToPrint content={ComponentToPrintProps} ref={componentRef} />
+        <ComponentToPrint content={content} ref={componentRef} />
       </Modal>
     </>
   );

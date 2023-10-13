@@ -1,0 +1,1 @@
+export { PageContenClassic } from './pageContenClassic';
