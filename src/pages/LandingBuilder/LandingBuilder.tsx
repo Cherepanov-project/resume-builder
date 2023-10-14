@@ -4,6 +4,8 @@ import icon from './create-svgrepo-com.svg';
 import ResponsiveGridLayout from 'react-grid-layout';
 import '../../../node_modules/react-grid-layout/css/styles.css';
 import '../../../node_modules/react-resizable/css/styles.css';
+import AddColumnsSideBar from '../../components/organisms/SideBars/AddColumsSideBar';
+import AddSectionSideBar from '../../components/organisms/SideBars/AddSectionSideBar';
 const LandingBuilder = () => {
   interface EventTarget {
     value: unknown;
@@ -47,7 +49,7 @@ const LandingBuilder = () => {
   const ref = useRef(null);
 
   const selectsection = (e: SyntheticEvent) => {
-    console.log(e.target.name);
+    console.log(e.target.name, 'selectsection');
     setsecpos(e.target.name);
     setdisplay1('grid');
     setcolorbtn('green');
@@ -145,7 +147,7 @@ const LandingBuilder = () => {
 
   // Функция для обновления стиля колонок
   const handleColumnStyleChange = (event: SyntheticEvent) => {
-    console.log(selected);
+    console.log(selected, 'selected');
     const wid = Number(columnStyle.width.replace('px', ''));
     if ((wid + 10) * numColumns + 120 < width) {
       setColumnStyle({ width: `${event.target.value}px` });
@@ -177,7 +179,7 @@ const LandingBuilder = () => {
   }, [layout]);
   // Функция для добавления новой колонки
   const handleAddColumn = () => {
-    console.log(selected, layout);
+    console.log(selected, layout, 'addNew');
     const wid = Number(columnStyle.width.replace('px', ''));
     setTimeout(() => {
       console.log((wid + 10) * numColumns + 100 + wid + 20, width);
@@ -212,69 +214,23 @@ const LandingBuilder = () => {
   };
   return (
     <main className={classes.landing}>
-      {/* для добавления секций */}
-      <section style={{ display: display1 }} className={classes['landing-constructor']}>
-        <ul className={classes.ulelem}>
-          <button onClick={closed1} style={{ color: 'red' }}>
-            close
-          </button>
-          <li>
-            <button name="empty" onClick={addsection} className={classes.btnelem}>
-              пустой блок
-            </button>
-          </li>
-          <li>
-            <button name="header" onClick={addsection} className={classes.btnelem}>
-              заголовок
-            </button>
-          </li>
-          <li>
-            <button name="textblock" onClick={addsection} className={classes.btnelem}>
-              текстовый блок
-            </button>
-          </li>
-          <li>
-            <button name="img" onClick={addsection} className={classes.btnelem}>
-              блок с изображением{' '}
-            </button>
-          </li>
-          <li>
-            <button name="form" onClick={addsection} className={classes.btnelem}>
-              блок с формой
-            </button>
-          </li>
-          <li>
-            <button name="botton" onClick={addsection} className={classes.btnelem}>
-              блок с кнопками
-            </button>
-          </li>
-        </ul>
-      </section>
-      {/* для добавления колонок */}
-      <section style={{ display: display2 }} className={classes['landing-constructor']}>
-        <ul className={classes.ulelem}>
-          <button onClick={closed2} style={{ color: 'red' }}>
-            close
-          </button>
-          <form>
-            <label htmlFor="column-width">Ширина колонок:</label>
-            <input
-              type="range"
-              id="column-width"
-              name="column-width"
-              min="50"
-              max="900"
-              // value={parseInt(columnStyle.width)}
-              onChange={handleColumnStyleChange}
-            />
-          </form>
-          {/* Кнопка для добавления новой колонки */}
-          <button disabled={disable} onClick={handleAddColumn}>
-            Добавить колонку
-          </button>
-          <button onClick={handleDelColumn}>Удалить колонку</button>
-        </ul>
-      </section>
+      <AddSectionSideBar
+        addsection={addsection}
+        display1={display1}
+        closed1={closed1}
+        classes={classes}
+      />
+
+      <AddColumnsSideBar
+        display2={display2}
+        closed2={closed2}
+        handleColumnStyleChange={handleColumnStyleChange}
+        disable={disable}
+        handleAddColumn={handleAddColumn}
+        handleDelColumn={handleDelColumn}
+        classes={classes}
+      />
+
       <section ref={ref} className={classes['landing-preview']}>
         {layout[0] && (
           <button
