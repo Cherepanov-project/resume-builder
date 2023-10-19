@@ -1,1 +1,0 @@
-export { TemplatePdfCV } from './TemplatePdfCV';

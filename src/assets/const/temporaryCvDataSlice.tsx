@@ -1,5 +1,7 @@
-type PersonalDateKeys = 'fullName' | 'address' | 'bio' | 'jobTitle' | 'phone' | 'website' | 'email';
-type EductionDataTypeKeys = 'study' | 'degree' | 'educationFromYear' | 'educationToYear' | 'school';
+type PersonalDateKeys = 'fullName' | 'adress' | 'bio' | 'position' | 'phone' | 'website' | 'mail';
+type EductionDataTypeKeys = 'name' | 'position' | 'fromYear' | 'toYear' | 'description';
+type ExperienceDataTypeKyes = 'name' | 'position' | 'fromYear' | 'toYear' | 'description';
+type SocialDataTypeKeys = 'name' | 'link';
 
 export type PersonalDateType = {
   [K in PersonalDateKeys]: string;
@@ -10,16 +12,11 @@ export type EductionDataType = {
 };
 
 export type ExperienceDataType = {
-  workTitle: string;
-  experienceFromYear: string;
-  experienceToYear: string;
-  company: string;
-  companyInfo: string[];
+  [K in ExperienceDataTypeKyes]: string;
 };
 
 export type SocialDataType = {
-  socialLink: string;
-  socialName: string;
+  [K in SocialDataTypeKeys]: string;
 };
 
 export type HobbyDataType = {
@@ -37,48 +34,48 @@ export interface ITemporaryCvDataSliceProps {
 export const temporaryCvDataSlice: ITemporaryCvDataSliceProps = {
   personalData: {
     fullName: 'Luke Skywalker',
-    address: 'Tatooine',
+    adress: 'Tatooine',
     bio: 'A long, long time ago',
-    jobTitle: 'Jedi Master',
+    position: 'Jedi Master',
     phone: '0-000-000-00-00',
     website: 'theforce.com',
-    email: 'luke@theforce.com',
+    mail: 'luke@theforce.com',
   },
   eductionData: [
     {
-      study: 'The light side of power',
-      degree: 'Padawan',
-      educationFromYear: '2020',
-      educationToYear: '2021',
-      school: 'Yoda Jungles School',
+      description: 'The light side of power',
+      position: 'Padawan',
+      fromYear: '2020',
+      toYear: '2021',
+      name: 'Yoda Jungles School',
     },
     {
-      study: 'The dark side of power',
-      degree: 'Jedi',
-      educationFromYear: '2021',
-      educationToYear: '2022',
-      school: 'Darth Vader School',
+      description: 'The dark side of power',
+      position: 'Jedi',
+      fromYear: '2021',
+      toYear: '2022',
+      name: 'Darth Vader School',
     },
   ],
   experienceData: [
     {
-      workTitle: 'Jedi',
-      experienceFromYear: '2022',
-      experienceToYear: '2023',
-      company: 'Alliance',
-      companyInfo: ['It was funny', 'I found the ship'],
+      position: 'Jedi',
+      fromYear: '2022',
+      toYear: '2023',
+      name: 'Alliance',
+      description: 'It was funny, I found the ship',
     },
     {
-      workTitle: 'Master Jedi',
-      experienceFromYear: '2023',
-      experienceToYear: '2025',
-      company: 'Jedi Order',
-      companyInfo: [],
+      position: 'Master Jedi',
+      fromYear: '2023',
+      toYear: '2025',
+      name: 'Jedi Order',
+      description: '',
     },
   ],
   socialData: [
-    { socialLink: 'stargram', socialName: 'LuSky' },
-    { socialLink: 'jedin', socialName: 'LukeSkywalker' },
+    { link: 'stargram', name: 'LuSky' },
+    { link: 'jedin', name: 'LukeSkywalker' },
   ],
   hobbyData: [{ hobby: 'Piloting starships' }, { hobby: 'Chatting with chewbacca' }],
 };
