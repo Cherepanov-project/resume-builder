@@ -1,13 +1,17 @@
-import { Switch, FormControlLabel, Container, Stack, Button } from '@mui/material';
+import { Container } from '@mui/material';
 import {
   FormatAlignJustify,
   FormatAlignLeft,
   FormatAlignRight,
   FormatAlignCenter,
 } from '@mui/icons-material';
-import { useState, useEffect } from 'react';
+import { useState, useEffect, ChangeEvent, SetStateAction } from 'react';
 import { useAppDispatch } from '../../../hooks/cvTemplateHooks';
 import { addCard } from '../../../store/cardSlice';
+import { BasicSelectWeight } from '../../atoms/BasicSelectWeight';
+import { BasicImageUpload } from '../../atoms/BasicImageUpload';
+import { BasicCardMenuField } from '../../atoms/BasicCardMenuField';
+import { BasicSwitch } from '../../atoms/BasicSwitch';
 
 import classes from './BasicCardMenu.module.scss';
 
@@ -69,34 +73,31 @@ export const BasicCardMenu = () => {
     titleWeight,
   ]);
 
-  const handleChangeAvatar = (e: React.ChangeEvent<HTMLInputElement>) => {
-    setAvatar(e.target.checked);
+  const handleChange = (
+    e: ChangeEvent<HTMLInputElement>,
+    value: {
+      (value: SetStateAction<boolean>): void;
+      (value: SetStateAction<boolean>): void;
+      (arg0: boolean): void;
+    },
+  ) => {
+    value(e.target.checked);
   };
 
-  const handleChangeBtnReadMore = (e: React.ChangeEvent<HTMLInputElement>) => {
-    setBtnReadMore(e.target.checked);
-  };
-
-  const handleImageUpload = (e: React.ChangeEvent<HTMLInputElement>) => {
+  const handleImageUpload = (
+    e: ChangeEvent<HTMLInputElement>,
+    value: {
+      (value: SetStateAction<string | ArrayBuffer | null>): void;
+      (value: SetStateAction<string | ArrayBuffer | null>): void;
+      (arg0: string | ArrayBuffer | null): void;
+    },
+  ) => {
     if (e.target.files) {
       const file = e.target.files[0];
       const reader = new FileReader();
 
       reader.onloadend = () => {
-        setImageUrl(reader.result);
-      };
-
-      reader.readAsDataURL(file);
-    }
-  };
-
-  const handleAvatarUpload = (e: React.ChangeEvent<HTMLInputElement>) => {
-    if (e.target.files) {
-      const file = e.target.files[0];
-      const reader = new FileReader();
-
-      reader.onloadend = () => {
-        setAvatarUrl(reader.result);
+        value(reader.result);
       };
 
       reader.readAsDataURL(file);
@@ -106,66 +107,66 @@ export const BasicCardMenu = () => {
   return (
     <div className={classes.settings}>
       <div className={classes.settings__wrapper}>
-        <label htmlFor="titleColor">Title Color</label>
-        <input id="titleColor" type="color" onChange={(e) => setTitleColor(e.target.value)} />
+        <BasicCardMenuField
+          id="titleColor"
+          title="Title Color"
+          type="color"
+          onChange={(e) => setTitleColor(e.target.value)}
+        />
       </div>
 
       <div className={classes.settings__wrapper}>
-        <label htmlFor="titleSize">Title Size</label>
-        <input
+        <BasicCardMenuField
           id="titleSize"
+          title="Title Size"
           type="range"
           onChange={(e) => setTitleSize(parseInt(e.target.value))}
         />
       </div>
 
       <div className={classes.settings__wrapper}>
-        <label htmlFor="titleWeight">Title Weight</label>
-        <select id="titleWeight" onChange={(e) => setTitleWeight(parseInt(e.target.value))}>
-          <option value={100}>100</option>
-          <option value={200}>200</option>
-          <option value={300}>300</option>
-          <option value={400}>400</option>
-          <option value={500}>500</option>
-          <option value={600} selected>
-            600
-          </option>
-          <option value={700}>700</option>
-          <option value={800}>800</option>
-          <option value={900}>900</option>
-        </select>
+        <BasicSelectWeight
+          id="titleWeight"
+          title="Title Weight"
+          onChange={(e) => setTitleWeight(parseInt(e.target.value))}
+          defaultValue={600}
+        />
       </div>
 
       <div className={classes.settings__wrapperContent}>
-        <label htmlFor="titleContent">Title Content</label>
-        <input id="titleContent" type="text" onChange={(e) => setTitleContent(e.target.value)} />
+        <BasicCardMenuField
+          id="titleContent"
+          title="Title Content"
+          type="text"
+          onChange={(e) => setTitleContent(e.target.value)}
+        />
       </div>
 
       <div className={classes.settings__wrapper}>
-        <label htmlFor="textColor">Text Color</label>
-        <input id="textColor" type="color" onChange={(e) => setTextColor(e.target.value)} />
+        <BasicCardMenuField
+          id="textColor"
+          title="Text Color"
+          type="color"
+          onChange={(e) => setTextColor(e.target.value)}
+        />
       </div>
 
       <div className={classes.settings__wrapper}>
-        <label htmlFor="textSize">Text Size</label>
-        <input id="textSize" type="range" onChange={(e) => setTextSize(parseInt(e.target.value))} />
+        <BasicCardMenuField
+          id="textSize"
+          title="Text Size"
+          type="range"
+          onChange={(e) => setTextSize(parseInt(e.target.value))}
+        />
       </div>
 
       <div className={classes.settings__wrapper}>
-        <label htmlFor="textWeight">Text Weight</label>
-        <select id="textWeight" onChange={(e) => setTextWeight(parseInt(e.target.value))}>
-          <option value={100}>100</option>
-          <option value={200}>200</option>
-          <option value={300} selected>
-            300
-          </option>
-          <option value={400}>400</option>
-          <option value={500}>500</option>
-          <option value={600}>600</option>
-          <option value={700}>700</option>
-          <option value={800}>800</option>
-          <option value={900}>900</option>
-        </select>
+        <BasicSelectWeight
+          id="textWeight"
+          title="Text Weight"
+          onChange={(e) => setTextWeight(parseInt(e.target.value))}
+          defaultValue={300}
+        />
       </div>
 
       <div className={classes.settings__wrapperContent}>
@@ -174,33 +175,33 @@ export const BasicCardMenu = () => {
       </div>
 
       <div className={classes.settings__wrapper}>
-        <label htmlFor="colorTitle">Background Color</label>
-        <input id="colorTitle" type="color" onChange={(e) => setBackgroundColor(e.target.value)} />
+        <BasicCardMenuField
+          id="colorTitle"
+          title="Background Color"
+          type="color"
+          onChange={(e) => setBackgroundColor(e.target.value)}
+        />
       </div>
 
       <div className={classes.settings__wrapper}>
-        <label htmlFor="heightImg">Height Img</label>
-        <input
+        <BasicCardMenuField
           id="heightImg"
+          title="Height Img"
           type="range"
-          max="600"
           onChange={(e) => setHeightImg(e.target.value)}
+          max={600}
         />
       </div>
 
       <div className={classes.settings__wrapper}>
-        <FormControlLabel
-          control={<Switch checked={avatar} onChange={handleChangeAvatar} />}
-          label="Avatar"
-          labelPlacement="start"
-        />
+        <BasicSwitch checked={avatar} onChange={(e) => handleChange(e, setAvatar)} label="Avatar" />
       </div>
 
       <div className={classes.settings__wrapper}>
-        <FormControlLabel
-          control={<Switch checked={btnReadMore} onChange={handleChangeBtnReadMore} />}
+        <BasicSwitch
+          checked={btnReadMore}
+          onChange={(e) => handleChange(e, setBtnReadMore)}
           label="Read more"
-          labelPlacement="start"
         />
       </div>
 
@@ -249,37 +250,19 @@ export const BasicCardMenu = () => {
       </div>
 
       <Container className={classes.settings__container}>
-        <Stack direction="row" alignItems="center">
-          <label htmlFor="upload-image">
-            <Button variant="outlined" component="span">
-              Upload image
-            </Button>
-            <input
-              id="upload-image"
-              hidden
-              accept="image/*"
-              type="file"
-              onChange={handleImageUpload}
-            />
-          </label>
-        </Stack>
+        <BasicImageUpload
+          id="upload-image"
+          title="Upload image"
+          onChange={(e) => handleImageUpload(e, setImageUrl)}
+        />
       </Container>
 
-      <Container>
-        <Stack direction="row" alignItems="center">
-          <label htmlFor="upload-avatar">
-            <Button variant="outlined" component="span">
-              Upload avatar
-            </Button>
-            <input
-              id="upload-avatar"
-              hidden
-              accept="image/*"
-              type="file"
-              onChange={handleAvatarUpload}
-            />
-          </label>
-        </Stack>
+      <Container className={classes.settings__container}>
+        <BasicImageUpload
+          id="upload-avatar"
+          title="Upload avatar"
+          onChange={(e) => handleImageUpload(e, setAvatarUrl)}
+        />
       </Container>
     </div>
   );
