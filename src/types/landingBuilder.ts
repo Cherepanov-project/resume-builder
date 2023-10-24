@@ -1,7 +1,7 @@
 export interface IElement {
   element: string;
   content: string;
-  id: string;
+  id?: string;
   style: IStyleFormObj;
 }
 

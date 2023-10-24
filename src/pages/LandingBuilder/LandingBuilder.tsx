@@ -1,6 +1,4 @@
 import classes from './LandingBuilder.module.scss';
-import '../../../node_modules/react-grid-layout/css/styles.css';
-import '../../../node_modules/react-resizable/css/styles.css';
 import WorkSpace from '../../components/organisms/WorkSpace';
 
 import { sideBar } from '../../store/LandigBuilder/landingBuilder';
