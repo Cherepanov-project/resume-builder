@@ -26,19 +26,10 @@ import 'swiper/scss/effect-flip';
 import 'swiper/css/effect-fade';
 import 'swiper/scss/effect-coverflow';
 
-import SwiperSVTweek from '../SwiperSVTweek';
+import SwiperSVTweek from './SwiperSVTweek';
 import { useState } from 'react';
 import { defaulSlides } from './DefaultSlides';
-
-export type TSliderInit = {
-  effect: string;
-  loop: boolean;
-  navigation: boolean;
-  pagination: boolean;
-  spaceBetween: number;
-  slideHeight?: number | string | undefined;
-  slidesPerView: number | 'auto';
-};
+import { ISliderSVProps, TSliderInit } from './types';
 
 const sliderInit: TSliderInit = {
   effect: 'default',
@@ -49,11 +40,6 @@ const sliderInit: TSliderInit = {
   slideHeight: 'auto',
   slidesPerView: 'auto',
 };
-
-interface ISliderSVProps {
-  slides?: Array<string>;
-  effect?: string;
-}
 
 const SliderSV: React.FC<ISliderSVProps> = ({ slides = defaulSlides }) => {
   const [sliderProps, setSliderProps] = useState(sliderInit);
