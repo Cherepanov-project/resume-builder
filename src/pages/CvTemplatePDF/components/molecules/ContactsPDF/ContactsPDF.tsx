@@ -1,32 +1,31 @@
-import { View, StyleSheet } from '@react-pdf/renderer';
+import { View } from '@react-pdf/renderer';
 
-import { TitlePDF, ContactPDF } from '../../atoms';
+import { PersonalDataType } from '../../../../../assets/const';
+import { StyleOptionType } from '../../../const';
 
-import { PersonalDateType } from '../../../../../assets/const';
+import { SubtitlePDF, ContactPDF } from '../../atoms';
 
-type ContactType = Omit<PersonalDateType, 'fullName' | 'bio' | 'position'>;
+type ContactType = Omit<PersonalDataType, 'fullName' | 'bio' | 'position'>;
+interface IContact {
+  data: ContactType;
+  style: StyleOptionType;
+}
 
-const styles = StyleSheet.create({
-  container: {
-    minWidth: '100%',
-    paddingTop: 30,
-    paddingLeft: 15,
-  },
-  block: {
-    marginBottom: 10,
-  },
-  link: { fontFamily: 'MonoSpaceBold', fontSize: 10 },
-  name: { fontFamily: 'MonoSpace', fontSize: 10 },
-});
+export const ContactsPDF = (props: IContact) => {
+  const { data, style } = props;
+  const { phone, mail, website, adress } = data;
+  const { Subtitle, Contact, ContactLink, ContactIcon, Text } = style;
 
-export const ContactsPDF = ({ phone, mail, website, adress }: ContactType) => {
+  const propsSubtitle = { str: 'Contacts ', style: Subtitle };
+  const propsContact = { Contact, ContactLink, ContactIcon, Text };
+
   return (
-    <View style={styles.container}>
-      <TitlePDF>Contacts</TitlePDF>
-      <ContactPDF contactName="phone" contactData={phone} />
-      <ContactPDF contactName="mail" contactData={mail} />
-      <ContactPDF contactName="website" contactData={website} />
-      <ContactPDF contactName="adress" contactData={adress} />
+    <View>
+      <SubtitlePDF {...propsSubtitle} />
+      <ContactPDF contactName="phone" contactData={phone} style={propsContact} />
+      <ContactPDF contactName="mail" contactData={mail} style={propsContact} />
+      <ContactPDF contactName="website" contactData={website} style={propsContact} />
+      <ContactPDF contactName="adress" contactData={adress} style={propsContact} />
     </View>
   );
 };

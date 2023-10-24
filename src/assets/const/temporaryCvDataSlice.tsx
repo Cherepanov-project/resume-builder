@@ -1,14 +1,14 @@
 type PersonalDateKeys = 'fullName' | 'adress' | 'bio' | 'position' | 'phone' | 'website' | 'mail';
-type EductionDataTypeKeys = 'name' | 'position' | 'fromYear' | 'toYear' | 'description';
+type EducationDataTypeKeys = 'name' | 'position' | 'fromYear' | 'toYear' | 'description';
 type ExperienceDataTypeKyes = 'name' | 'position' | 'fromYear' | 'toYear' | 'description';
 type SocialDataTypeKeys = 'name' | 'link';
 
-export type PersonalDateType = {
+export type PersonalDataType = {
   [K in PersonalDateKeys]: string;
 };
 
-export type EductionDataType = {
-  [K in EductionDataTypeKeys]: string;
+export type EducationDataType = {
+  [K in EducationDataTypeKeys]: string;
 };
 
 export type ExperienceDataType = {
@@ -24,8 +24,8 @@ export type HobbyDataType = {
 };
 
 export interface ITemporaryCvDataSliceProps {
-  personalData: PersonalDateType;
-  eductionData: EductionDataType[];
+  personalData: PersonalDataType;
+  educationData: EducationDataType[];
   experienceData: ExperienceDataType[];
   socialData: SocialDataType[];
   hobbyData: HobbyDataType[];
@@ -35,13 +35,13 @@ export const temporaryCvDataSlice: ITemporaryCvDataSliceProps = {
   personalData: {
     fullName: 'Luke Skywalker',
     adress: 'Tatooine',
-    bio: 'A long, long time ago',
+    bio: "Hello, it's nice to meet you And can you tell me where I am? I don't know how I got here But I think I'm starting to understand",
     position: 'Jedi Master',
     phone: '0-000-000-00-00',
     website: 'theforce.com',
     mail: 'luke@theforce.com',
   },
-  eductionData: [
+  educationData: [
     {
       description: 'The light side of power',
       position: 'Padawan',

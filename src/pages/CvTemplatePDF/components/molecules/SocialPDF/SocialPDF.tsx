@@ -1,49 +1,44 @@
-import { View, Text, StyleSheet } from '@react-pdf/renderer';
-
-import { TitlePDF } from '../../atoms';
+import { View } from '@react-pdf/renderer';
 
 import { SocialDataType } from '../../../../../assets/const';
 import { uniqueKey } from '../../../../../assets/lib';
+import { StyleOptionType } from '../../../const';
 
-const styles = StyleSheet.create({
-  container: {
-    minWidth: '100%',
-    paddingTop: 30,
-    paddingLeft: 15,
-  },
-  block: {
-    marginBottom: 10,
-  },
-  link: { fontFamily: 'MonoSpaceBold', fontSize: 10 },
-  name: { fontFamily: 'MonoSpace', fontSize: 10 },
-});
+import { SubtitlePDF, TextPDF } from '../../atoms';
 
-export const SocialPDF = (data: SocialDataType[]) => {
-  const socialContent = () => {
-    const socials = Object.values(data);
+interface ISocialProps {
+  data: SocialDataType[];
+  style: StyleOptionType;
+}
 
-    const children = socials.map((social) => {
-      const { link, name } = social;
+const socialContent = (data: SocialDataType[], style: StyleOptionType) => {
+  const children = data.map((social) => {
+    const { link, name } = social;
+    const { Social, SocialTitle, Text } = style;
+    const propsTitleText = { str: link, style: SocialTitle };
+    const propsText = { str: name, style: Text };
 
-      return (
-        <View key={uniqueKey()} style={styles.block}>
-          <Text key={uniqueKey()} style={styles.link}>
-            {link}
-          </Text>
-          <Text key={uniqueKey()} style={styles.name}>
-            {name}
-          </Text>
-        </View>
-      );
-    });
+    return (
+      <View key={uniqueKey()} style={Social}>
+        <TextPDF key={uniqueKey()} {...propsTitleText} />
+        <TextPDF key={uniqueKey()} {...propsText} />
+      </View>
+    );
+  });
 
-    return children;
-  };
+  return children;
+};
+
+export const SocialPDF = (props: ISocialProps) => {
+  const { data, style } = props;
+  const { Socials, Social, SocialTitle, Subtitle, Text } = style;
+  const currStyle = { Social, SocialTitle, Subtitle, Text };
+  const propsTitle = { str: 'Social', style: Subtitle };
 
   return (
-    <View style={styles.container}>
-      <TitlePDF>Social</TitlePDF>
-      {socialContent()}
+    <View style={Socials}>
+      <SubtitlePDF {...propsTitle} />
+      {socialContent(data, currStyle)}
     </View>
   );
 };

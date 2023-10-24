@@ -1,71 +1,60 @@
-import { View, Link, Text, Image, StyleSheet } from '@react-pdf/renderer';
+import { View, Link, Image } from '@react-pdf/renderer';
 
-import { phoneIcon, mailIcon, siteIcon, adressIcon } from '../../../assets';
+import phoneIcon from '../../../assets/icons/icon-phone.png';
+import mailIcon from '../../../assets/icons/icon-mail.png';
+import siteIcon from '../../../assets/icons/icon-site.png';
+import adressIcon from '../../../assets/icons/icon-adress.png';
+
+import { StyleOptionType } from '../../../const';
+import { TextPDF } from '../../atoms';
 
 type ContactNameType = 'phone' | 'mail' | 'website' | 'adress';
 
 interface IContactPDF {
   contactName: ContactNameType;
   contactData: string;
+  style: StyleOptionType;
 }
 
-const styles = StyleSheet.create({
-  contactWrapper: {
-    flexDirection: 'row',
-    alignContent: 'center',
-  },
-  contactLink: {
-    textDecoration: 'none',
-    justifySelf: 'center',
-    fontSize: 14,
-  },
-  contactText: { fontSize: 14 },
-  contactIcon: {
-    width: 16,
-    height: 16,
-    marginRight: 5,
-  },
-});
+const TextContact = (contactData: string, style: React.CSSProperties) => {
+  const textContactProps = { str: contactData, style };
 
-export const ContactPDF = ({ contactName, contactData }: IContactPDF) => {
-  let srcLink, iconName, contactPDFContent;
+  return <TextPDF {...textContactProps} />;
+};
+
+const LinkContact = (srcLink: string, contactData: string, ContactLink: React.CSSProperties) => {
+  return (
+    <Link src={srcLink} style={ContactLink}>
+      {contactData}
+    </Link>
+  );
+};
+
+export const ContactPDF = ({ contactName, contactData, style }: IContactPDF) => {
+  const { Contact, ContactLink, ContactIcon, Text } = style;
+  let srcLink = `${contactName}:${contactData}`;
+  let iconName, contactPDFContent;
 
   switch (contactName) {
     case 'phone':
-      srcLink = `${contactName}:${contactData}`;
-      contactPDFContent = (
-        <Link src={srcLink} style={styles.contactLink}>
-          {contactData}
-        </Link>
-      );
+      contactPDFContent = LinkContact(srcLink, contactData, ContactLink);
       iconName = phoneIcon;
-
       break;
+
     case 'mail':
-      srcLink = `${contactName}:${contactData}`;
-      contactPDFContent = (
-        <Link src={srcLink} style={styles.contactLink}>
-          {contactData}
-        </Link>
-      );
+      contactPDFContent = LinkContact(srcLink, contactData, ContactLink);
       iconName = mailIcon;
-
       break;
+
     case 'website':
       srcLink = contactName;
-      contactPDFContent = (
-        <Link src={srcLink} style={styles.contactLink}>
-          {contactData}
-        </Link>
-      );
+      contactPDFContent = LinkContact(srcLink, contactData, ContactLink);
       iconName = siteIcon;
-
       break;
-    case 'adress':
-      srcLink = `${contactName}:${contactData}`;
-      contactPDFContent = <Text style={styles.contactText}>{contactData}</Text>;
-      iconName = adressIcon;
 
+    case 'adress':
+      contactPDFContent = TextContact(contactData, Text);
+      iconName = adressIcon;
       break;
 
     default:
@@ -75,8 +64,8 @@ export const ContactPDF = ({ contactName, contactData }: IContactPDF) => {
   }
 
   return (
-    <View style={styles.contactWrapper}>
-      <Image style={styles.contactIcon} src={iconName} />
+    <View style={Contact}>
+      <Image style={ContactIcon} src={iconName} />
       {contactPDFContent}
     </View>
   );

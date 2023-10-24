@@ -1,48 +1,47 @@
-import { View, StyleSheet } from '@react-pdf/renderer';
+import { View } from '@react-pdf/renderer';
 
-import { TitlePDF, ListTitlePDF, ListItemsPDF } from '../../atoms';
+import { SubtitlePDF, ListTitlePDF, TextPDF } from '../../atoms';
 
 import { ExperienceDataType } from '../../../../../assets/const';
+import { StyleOptionType } from '../../../const';
 import { uniqueKey } from '../../../../../assets/lib';
 
-const styles = StyleSheet.create({
-  container: { minWidth: '100%', paddingTop: 30, paddingLeft: 15 },
-  block: { marginBottom: 10 },
-  title: { fontFamily: 'RobotoBold', fontSize: 10 },
-  date: { fontFamily: 'Roboto', fontSize: 10 },
-  degree: { fontFamily: 'Roboto', fontSize: 10 },
-  study: { fontFamily: 'Roboto', fontSize: 10 },
-});
+interface IExperienceProps {
+  data: ExperienceDataType[];
+  experienceName: string;
+  style: StyleOptionType;
+}
 
-export const ExperiencePDF = (data: ExperienceDataType[]) => {
-  const experienceContent = () => {
-    const experiences = Object.values(data);
+const experienceContent = (data: ExperienceDataType[], style: StyleOptionType) => {
+  const children = data.map((experience) => {
+    const { Experience, ExperienceTitle, Text } = style;
+    const { description, ...otherData } = experience;
 
-    const children = experiences.map((experience) => {
-      const { name, position, description, fromYear, toYear } = experience;
-      const titleType = 'connected';
+    const propsText = { str: description, style: Text };
+    const listTitleProps = { data: otherData, style: { ExperienceTitle } };
 
-      return (
-        <View key={uniqueKey()} style={styles.block}>
-          <ListTitlePDF
-            titleType={titleType}
-            name={name}
-            fromYear={fromYear}
-            toYear={toYear}
-            position={position}
-          />
-          <ListItemsPDF description={description} />
-        </View>
-      );
-    });
+    return (
+      <View key={uniqueKey()} style={Experience}>
+        <ListTitlePDF {...listTitleProps} />
+        <TextPDF key={uniqueKey()} {...propsText} />
+      </View>
+    );
+  });
 
-    return children;
-  };
+  return children;
+};
+
+export const ExperiencePDF = (props: IExperienceProps) => {
+  const { data, experienceName, style } = props;
+  const { Experiences, Experience, ExperienceTitle, Subtitle, Text } = style;
+
+  const propsSubtitle = { str: experienceName, style: Subtitle };
+  const currStyle = { Experience, ExperienceTitle, Text };
 
   return (
-    <View style={styles.container}>
-      <TitlePDF>Experience</TitlePDF>
-      {experienceContent()}
+    <View style={Experiences}>
+      <SubtitlePDF {...propsSubtitle} />
+      {experienceContent(data, currStyle)}
     </View>
   );
 };

@@ -4,4 +4,3 @@ export { SubtitlePDF } from './SubtitlePDF';
 export { TitlePDF } from './TitlePDF';
 export { TextPDF } from './TextPDF';
 export { ListTitlePDF } from './ListTitlePDF';
-export { ListItemsPDF } from './ListItemsPDF';

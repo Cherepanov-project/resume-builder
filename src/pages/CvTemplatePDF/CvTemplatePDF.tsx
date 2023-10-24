@@ -1,42 +1,33 @@
 import { useMemo } from 'react';
-import { Page, Document, PDFViewer, StyleSheet } from '@react-pdf/renderer';
+import { Page, Document, PDFViewer } from '@react-pdf/renderer';
 
-import { PageContenClassic, PageContenProfessional } from './componentsOld';
-
-import { temporaryCvDataSlice, ITemporaryCvDataSliceProps } from '../../assets/const';
+import { temporaryCvDataSlice } from '../../assets/const';
+import { renderTemplatePDF } from './lib';
 
 import classes from './CvTemplatePDF.module.scss';
 
-// type styles = 'classic' | 'professional';
-
-const styles = StyleSheet.create({
-  page: {
-    padding: 10,
-  },
-});
-
-// импортовать функцию-конструктор, передавать в нее название стиля
-const CvTemplatePDFContent = (
-  temporaryCvDataSlice: ITemporaryCvDataSliceProps,
-): React.ReactNode => {
-  return (
-    <Page size="A4" style={styles.page}>
-      <PageContenClassic {...temporaryCvDataSlice} />
-      <PageContenProfessional {...temporaryCvDataSlice} />
-    </Page>
-  );
-};
-
 export const CvTemplatePDF = () => {
+  // Примеры стилей
+
+  const styleName = 'default';
+  // const styleName = 'defaultCustomized';
+  // const styleName = 'classic';
+  // const styleName = 'classicCustomized';
+  // const styleName = 'modern';
+  // const styleName = 'modernRigth';
+
   const children = useMemo(() => {
-    return CvTemplatePDFContent(temporaryCvDataSlice);
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [temporaryCvDataSlice]);
+    return renderTemplatePDF(styleName, temporaryCvDataSlice);
+  }, [styleName]);
 
   return (
     <div className={classes.CvTemplatePDF}>
       <PDFViewer style={{ minHeight: '700px', minWidth: '500px' }} showToolbar={false}>
-        <Document>{children}</Document>
+        <Document>
+          <Page size="A4" style={{ width: '100%' }}>
+            {children}
+          </Page>
+        </Document>
       </PDFViewer>
     </div>
   );

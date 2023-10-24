@@ -2,8 +2,8 @@
 export { temporaryCvDataSlice } from './temporaryCvDataSlice';
 export type {
   ITemporaryCvDataSliceProps,
-  PersonalDateType,
-  EductionDataType,
+  PersonalDataType,
+  EducationDataType,
   SocialDataType,
   ExperienceDataType,
   HobbyDataType,

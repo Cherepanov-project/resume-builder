@@ -1,1 +1,0 @@
-export { PageContenClassic } from './pageContenClassic';

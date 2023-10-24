@@ -1,63 +1,46 @@
-import { View, Text, StyleSheet } from '@react-pdf/renderer';
+import { View } from '@react-pdf/renderer';
 
-import { TitlePDF } from '../../atoms';
+import { SubtitlePDF, TextPDF } from '../../atoms';
 
 import { HobbyDataType } from '../../../../../assets/const';
 import { uniqueKey } from '../../../../../assets/lib';
+import { StyleOptionType } from '../../../const';
 
-const styles = StyleSheet.create({
-  container: {
-    minWidth: '100%',
-    paddingTop: 30,
-    paddingLeft: 15,
-  },
-  bulletPoint: {
-    fontSize: 10,
-  },
-  title: {
-    fontSize: 11,
-    color: 'black',
-    textDecoration: 'none',
-    fontFamily: 'RobotoBold',
-  },
-  item: {
-    flexDirection: 'row',
-    marginBottom: 5,
-    width: '100%',
-  },
-  itemContent: {
-    flex: 1,
-    fontSize: 10,
-    fontFamily: 'Roboto',
-  },
-});
+interface IHobbiesProps {
+  data: HobbyDataType[];
+  style: StyleOptionType;
+}
 
-export const HobbiesPDF = (data: HobbyDataType[]) => {
-  const hobbiesContent = () => {
-    const hobbies = Object.values(data);
+const hobbiesContent = (data: HobbyDataType[], style: StyleOptionType) => {
+  const children = data.map((hobby) => {
+    const { Hobbie, HobbieBullets, Text } = style;
+    const hobbyTitle = hobby.hobby;
 
-    const children = hobbies.map((hobby) => {
-      const hobbyTitle = hobby.hobby;
+    const propsBullets = { str: '•', style: Text };
+    const propsText = { str: hobbyTitle, style: HobbieBullets };
 
-      return (
-        <View key={uniqueKey()} style={styles.item}>
-          <Text key={uniqueKey()} style={styles.bulletPoint}>
-            •
-          </Text>
-          <Text key={uniqueKey()} style={styles.itemContent}>
-            {hobbyTitle}
-          </Text>
-        </View>
-      );
-    });
+    return (
+      <View key={uniqueKey()} style={Hobbie}>
+        <TextPDF key={uniqueKey()} {...propsBullets} />
+        <TextPDF key={uniqueKey()} {...propsText} />
+      </View>
+    );
+  });
 
-    return children;
-  };
+  return children;
+};
+
+export const HobbiesPDF = (props: IHobbiesProps) => {
+  const { data, style } = props;
+  const { Hobbies, Hobbie, HobbieBullets, Subtitle, Text } = style;
+
+  const propsTitle = { str: 'Hobbies', style: Subtitle };
+  const currStyle = { Hobbie, HobbieBullets, Text };
 
   return (
-    <View style={styles.container}>
-      <TitlePDF>Experience</TitlePDF>
-      {hobbiesContent()}
+    <View style={Hobbies}>
+      <SubtitlePDF {...propsTitle} />
+      {hobbiesContent(data, currStyle)}
     </View>
   );
 };

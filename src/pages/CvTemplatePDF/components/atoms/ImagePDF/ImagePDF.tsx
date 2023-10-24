@@ -1,24 +1,11 @@
-import { Image, StyleSheet } from '@react-pdf/renderer';
+import { Image } from '@react-pdf/renderer';
 
-import photo from '../../../assets/images/lukeSky.jpg';
+interface IImagePDFProps {
+  imgPath: string;
+  style: { [key: string]: string | number };
+}
 
-const styles = StyleSheet.create({
-  image: {
-    width: 150,
-    height: 150,
-    borderRadius: '50%',
-    objectFit: 'cover',
-    objectPosition: 'center top',
-  },
-});
-
-export const ImagePDF = (imgPath: string, rounded: boolean) => {
-  let imgStyle;
-
-  // позже исправить, должны пояыляться из Формы
-  imgPath = photo;
-
-  if (rounded) imgStyle = styles.image;
-
-  return <Image src={imgPath} style={imgStyle} />;
+export const ImagePDF = (props: IImagePDFProps) => {
+  const { imgPath, style } = props;
+  return <Image src={imgPath} style={style} />;
 };

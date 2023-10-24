@@ -1,40 +1,12 @@
-import { Text, StyleSheet } from '@react-pdf/renderer';
-
-const styles = StyleSheet.create({
-  text: {
-    fontSize: 14,
-    textTransform: 'uppercase',
-    color: '',
-    backgroundColor: '',
-    padding: '',
-  },
-});
+import { Text } from '@react-pdf/renderer';
 
 interface ITextProps {
-  children: string;
+  str: string;
+  style: React.CSSProperties;
 }
 
-export const TextPDF = ({ children }: ITextProps) => {
-  const textStyle = { ...styles.text, color: 'white', backgroundColor: '#cccc00' };
+export const TextPDF = (props: ITextProps) => {
+  const { str, style } = props;
 
-  return <Text style={textStyle}>{children}</Text>;
+  return <Text style={style}>{str}</Text>;
 };
-
-//   subtitle: {
-//     fontFamily: 'RobotoBold',
-//     fontSize: 14,
-//     textTransform: 'uppercase',
-//     color: 'white',
-//     marginBottom: 10,
-//   },
-
-// title: {
-//     fontFamily: 'Roboto',
-//     fontSize: 14,
-//     textTransform: 'uppercase',
-
-//     backgroundColor: '#cccc00',
-//     color: '#1a4780',
-//     padding: 5,
-//     marginBottom: 15,
-//   },
