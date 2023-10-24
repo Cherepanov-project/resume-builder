@@ -1,78 +1,9 @@
-@import "../../assets/style/variables.scss";
-
 .landing {
-  display: flex;
-  margin-top: 60px;
-  &-constructor {
-    display: grid;
-    grid-template-columns: repeat(4, 1fr);
-    width: 20%;
-    height: 100vh;
-    padding: 20px;
-    border-radius: 10px;
-    justify-content: center;
-    background-color: $bg-static-light;
-  }
-  &-preview {
-    width: 100%;
-    height: 100vh;
-    padding: 20px;
-    background-color: #fff;
-  
-  }
+  margin-top: 72px;
 }
 
-.addbtn{
-  text-align: center;
-  width: 50px;
-  height: 50px;
-  margin-left:50%;
-}
-.ulelem{
-  color: black;
-  margin-top: 100px;
-  list-style-type:none;
-  justify-content: center;
-}
-.btnelem{
-  width: 200px;
+.addbtn {
+  display: block;
+  margin: 0 auto;
   margin-bottom: 10px;
-}
-.hoverclass:hover{
-  border: 1px solid black;
-}
-.btnonsecadd{
-  margin-left: 40%;
-
-}
-.btnonsecred{
-background-color: aqua;
-}
-.hoverclass{
-  border: 1px solid white;
-}
-.grid {
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  width: 100%;
-  height: 100%;
-}
-
-.column {
-  width: 100px;
-  height: 250px;
-  background-color: lightblue;
-  border-left: 1px solid black;
-  border-right: 1px solid black;
-  margin: 10px;
-  height: 95%;
-}
-
-button {
-  margin: 10px;
-}
-
-form {
-  margin: 10px;
 }

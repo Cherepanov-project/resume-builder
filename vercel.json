@@ -1,0 +1,12 @@
+{
+  "rewrites": [
+    {
+      "source": "/(.*)",
+      "destination": "/index.html"
+    }
+  ],
+  "github": {
+    "autoAlias": true,
+    "silent": true
+  }
+}

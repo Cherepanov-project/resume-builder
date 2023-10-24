@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+/* eslint-disable @typescript-eslint/no-explicit-any */
 import classes from './Education.module.scss';
 import Box from '@mui/material/Box';
 import { Button } from '@mui/material';
@@ -9,10 +9,16 @@ import AccordionSummary from '@mui/material/AccordionSummary';
 import AccordionDetails from '@mui/material/AccordionDetails';
 import Typography from '@mui/material/Typography';
 
-const Education = () => {
-  const [count, setCount] = useState([1]);
+import { useAppSellector, useAppDispatch } from '../../../hooks/cvTemplateHooks';
+import { addEducation } from '../../../store/cvTemplate/educationSlice';
 
-  const render = count.map((item, index) => {
+const Education = () => {
+  const numOfEducations = useAppSellector((state: any) => state.education.numOfEducations);
+  const dispatch = useAppDispatch();
+
+  const render = numOfEducations.map((item: any, index: number) => {
+    // переделать нормально
+    console.log(item);
     return (
       <Accordion disableGutters sx={{ mb: 2 }}>
         <AccordionSummary
@@ -31,8 +37,8 @@ const Education = () => {
 
   return (
     <Box className={classes.education}>
-      {count.length === 1 ? <EducationForm /> : render}
-      <Button onClick={() => setCount((prev) => [...prev, 1])} variant="contained">
+      {numOfEducations.length === 1 ? <EducationForm /> : render}
+      <Button onClick={() => dispatch(addEducation())} variant="contained">
         Add another Education
       </Button>
     </Box>
