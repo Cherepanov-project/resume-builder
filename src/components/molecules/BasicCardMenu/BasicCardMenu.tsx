@@ -77,7 +77,6 @@ export const BasicCardMenu = () => {
     e: ChangeEvent<HTMLInputElement>,
     value: {
       (value: SetStateAction<boolean>): void;
-      (value: SetStateAction<boolean>): void;
       (arg0: boolean): void;
     },
   ) => {
@@ -87,7 +86,6 @@ export const BasicCardMenu = () => {
   const handleImageUpload = (
     e: ChangeEvent<HTMLInputElement>,
     value: {
-      (value: SetStateAction<string | ArrayBuffer | null>): void;
       (value: SetStateAction<string | ArrayBuffer | null>): void;
       (arg0: string | ArrayBuffer | null): void;
     },
