@@ -1,16 +1,23 @@
 import classes from './LandingBuilder.module.scss';
-import { BasicCard } from '../../components/molecules/BasicCard';
-import { BasicCardMenu } from '../../components/molecules/BasicCardMenu';
+import WorkSpace from '../../components/organisms/WorkSpace';
 
+import { sideBar } from '../../store/LandigBuilder/landingBuilder';
+import { useAppDispatch } from '../../hooks/cvTemplateHooks';
+import SideBar from '../../components/organisms/SideBar';
 const LandingBuilder = () => {
+  const dispatch = useAppDispatch();
+
   return (
     <main className={classes.landing}>
-      <section className={classes['landing-constructor']}>
-        <BasicCardMenu />
-      </section>
-      <section className={classes['landing-preview']}>
-        <BasicCard />
-      </section>
+      <SideBar />
+      <WorkSpace />
+      <button
+        style={{ backgroundColor: 'green' }}
+        onClick={() => dispatch(sideBar(['addSection', 'null']))}
+        className={classes.addbtn}
+      >
+        +
+      </button>
     </main>
   );
 };
