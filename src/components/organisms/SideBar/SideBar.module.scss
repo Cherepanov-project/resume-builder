@@ -1,0 +1,15 @@
+@import "../../../assets/style/variables.scss";
+
+.side-bar {
+    display: flex;
+    flex-direction: column;
+    gap: 15px;
+    position: fixed;
+    width: 400px;
+    min-height: 100vh;
+    padding: 20px;
+    border-radius: 10px;
+    align-items: center;
+    background-color: $bg-static-light;
+    z-index: 2;
+}

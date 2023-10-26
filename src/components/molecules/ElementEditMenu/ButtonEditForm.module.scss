@@ -1,0 +1,39 @@
+.button-form {
+    display: flex;
+    flex-direction: column;
+    width: 350px;
+    box-sizing: border-box;
+    
+
+    label {
+        margin-bottom: 10px;
+    }
+
+    input {
+        margin-left: 10px;
+    }
+
+    input[type=number] {
+        width: 40px;
+    }
+
+    select {
+        margin-left: 10px;
+    }
+}
+
+form {
+    margin: 0;
+}
+
+.line {
+    height: 1px;
+    width: 100%;
+    background-color: grey;
+}
+
+.preview {
+    padding: 15px 0;
+    display: flex;
+    justify-content: center;
+}
