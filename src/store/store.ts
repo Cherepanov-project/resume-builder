@@ -4,6 +4,7 @@ import experienceReducer from './cvTemplate/experienceSlice';
 import socialReducer from './cvTemplate/socialSlice';
 import hobbiesReducer from './cvTemplate/hobbiesSlice';
 import landigBuilderReduser from './LandigBuilder/landingBuilder';
+import cardReducer from './cardSlice';
 
 export const store = configureStore({
   reducer: {
@@ -12,6 +13,7 @@ export const store = configureStore({
     social: socialReducer,
     hobbies: hobbiesReducer,
     landigBuilder: landigBuilderReduser,
+    card: cardReducer,
   },
 });
 
