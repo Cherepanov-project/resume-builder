@@ -1,0 +1,30 @@
+.Card {
+    position: relative;
+
+    &__media {
+        position: relative;
+
+        &__image {}
+
+        &__avatar {
+            position: absolute;
+            bottom: -30px;
+            left: 20px;
+            border-radius: 50%;
+            width: 60px;
+            height: 60px;
+        }
+    }
+
+    &__content {
+        display: flex;
+        flex-direction: column;
+
+        &__title {
+            padding-bottom: 20px;
+        }
+
+        &__text {
+        }
+    }
+}
