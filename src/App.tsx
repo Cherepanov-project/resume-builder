@@ -1,13 +1,11 @@
-// import Header from './components/organisms/Header';
-// import LandingBuilder from './pages/LandingBuilder';
-import CvTemplate from './pages/CvTemplate';
+import Header from './components/organisms/Header';
+import LandingBuilder from './pages/LandingBuilder';
 
 function App() {
   return (
     <>
-      {/* <Header /> */}
-      {/* <LandingBuilder /> */}
-      <CvTemplate />
+      <Header />
+      <LandingBuilder />
     </>
   );
 }

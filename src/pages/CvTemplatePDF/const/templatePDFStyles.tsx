@@ -1,3 +1,5 @@
+export type StyleType = { [key: string]: string | number };
+
 export type StylesNameKeys =
   | 'default'
   | 'defaultCustomized'
@@ -7,7 +9,7 @@ export type StylesNameKeys =
   | 'modernRigth';
 
 export type StyleOptionType = {
-  [key: string]: { [key: string]: string | number };
+  [key: string]: StyleType;
 };
 
 type StuctureType = {

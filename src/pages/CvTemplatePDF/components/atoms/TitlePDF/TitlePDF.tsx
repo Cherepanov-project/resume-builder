@@ -1,8 +1,10 @@
 import { Text } from '@react-pdf/renderer';
 
+import { StyleType } from '../../../const';
+
 interface ITitlePDF {
   fullName: string;
-  style: { [key: string]: string | number };
+  style: StyleType;
 }
 
 export const TitlePDF = (props: ITitlePDF) => {

@@ -5,7 +5,7 @@ import mailIcon from '../../../assets/icons/icon-mail.png';
 import siteIcon from '../../../assets/icons/icon-site.png';
 import adressIcon from '../../../assets/icons/icon-adress.png';
 
-import { StyleOptionType } from '../../../const';
+import { StyleOptionType, StyleType } from '../../../const';
 import { TextPDF } from '../../atoms';
 
 type ContactNameType = 'phone' | 'mail' | 'website' | 'adress';
@@ -16,13 +16,13 @@ interface IContactPDF {
   style: StyleOptionType;
 }
 
-const TextContact = (contactData: string, style: React.CSSProperties) => {
+const TextContact = (contactData: string, style: StyleType) => {
   const textContactProps = { str: contactData, style };
 
   return <TextPDF {...textContactProps} />;
 };
 
-const LinkContact = (srcLink: string, contactData: string, ContactLink: React.CSSProperties) => {
+const LinkContact = (srcLink: string, contactData: string, ContactLink: StyleType) => {
   return (
     <Link src={srcLink} style={ContactLink}>
       {contactData}
