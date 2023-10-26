@@ -1,10 +1,10 @@
 import { Text } from '@react-pdf/renderer';
 
-import { StyleType } from '../../../const';
+import { StyleOptionType, StyleType } from '../../../const';
 
 interface ITextProps {
   str: string;
-  style: StyleType;
+  style: StyleOptionType | StyleType;
 }
 
 export const TextPDF = (props: ITextProps) => {
