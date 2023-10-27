@@ -17,6 +17,7 @@
     "@mui/icons-material": "^5.14.7",
     "@mui/material": "^5.14.7",
     "@mui/x-date-pickers": "^6.12.1",
+    "@react-pdf/renderer": "^3.1.14",
     "@reduxjs/toolkit": "^1.9.5",
     "dayjs": "^1.11.9",
     "konva": "^9.2.1",
@@ -26,6 +27,7 @@
     "react-grid-layout": "^1.4.2",
     "react-hook-form": "^7.46.2",
     "react-redux": "^8.1.2",
+    "react-to-print": "^2.14.15",
     "sass": "^1.66.1",
     "swiper": "^10.2.0"
   },

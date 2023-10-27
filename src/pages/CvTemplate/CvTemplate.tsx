@@ -106,7 +106,7 @@ const CvTemplate = () => {
           </Box>
         </Box>
       </Box>
-      {/* <div className={classes.cvTemlpate__right}>
+      <div className={classes.cvTemlpate__right}>
         <form action="">
           <PersonalInfo />
           <Education />
@@ -114,7 +114,7 @@ const CvTemplate = () => {
           <Social />
           <Hobbies />
         </form>
-      </div> */}
+      </div>
     </Box>
   );
 };

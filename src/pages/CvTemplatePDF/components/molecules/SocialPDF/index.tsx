@@ -1,0 +1,1 @@
+export { SocialPDF } from './SocialPDF';

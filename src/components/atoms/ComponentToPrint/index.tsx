@@ -1,0 +1,1 @@
+export { ComponentToPrint } from './ComponentToPrint';
