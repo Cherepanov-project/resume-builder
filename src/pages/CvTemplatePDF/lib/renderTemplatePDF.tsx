@@ -18,6 +18,4 @@ export const renderTemplatePDF = (
   if (isShort) return <PageDefaultPDF {...props} />;
   else if (isWithHeader) return <PageWithHeaderPDF {...props} />;
   else if (isWithSidebar) return <PageWithSidebarPDF {...props} />;
-
-  return <p>Houston, we have a problem</p>;
 };
