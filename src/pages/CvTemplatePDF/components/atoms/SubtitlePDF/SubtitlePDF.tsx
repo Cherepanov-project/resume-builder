@@ -9,7 +9,6 @@ interface ISubtitleProps {
 
 export const SubtitlePDF = (props: ISubtitleProps) => {
   const { str, style } = props;
-  console.log(props);
 
   return <Text style={style}>{str}</Text>;
 };

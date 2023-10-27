@@ -27,6 +27,7 @@
     "react-grid-layout": "^1.4.2",
     "react-hook-form": "^7.46.2",
     "react-redux": "^8.1.2",
+    "react-to-print": "^2.14.15",
     "sass": "^1.66.1",
     "swiper": "^10.2.0"
   },

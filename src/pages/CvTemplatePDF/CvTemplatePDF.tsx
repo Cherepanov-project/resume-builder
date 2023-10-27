@@ -9,11 +9,11 @@ import classes from './CvTemplatePDF.module.scss';
 export const CvTemplatePDF = () => {
   // Примеры стилей
 
-  // const styleName = 'default';
+  const styleName = 'default';
   // const styleName = 'defaultCustomized';
   // const styleName = 'classic';
   // const styleName = 'classicCustomized';
-  const styleName = 'modern';
+  // const styleName = 'modern';
   // const styleName = 'modernRigth';
 
   const children = useMemo(() => {
