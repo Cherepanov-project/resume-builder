@@ -1,3 +1,4 @@
+import SliderSV from './components/molecules/SliderSV';
 import Header from './components/organisms/Header';
 import LandingBuilder from './pages/LandingBuilder';
 
@@ -6,6 +7,7 @@ function App() {
     <>
       <Header />
       <LandingBuilder />
+      <SliderSV />
     </>
   );
 }
