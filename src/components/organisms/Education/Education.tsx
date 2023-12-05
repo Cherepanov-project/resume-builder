@@ -1,7 +1,5 @@
-import React from 'react';
 import classes from './Education.module.scss';
-import Box from '@mui/material/Box';
-import { Button } from '@mui/material';
+import { Box, Button } from '@mui/material';
 import EducationForm from '../../molecules/EducationForm';
 
 import Accordion from '@mui/material/Accordion';
@@ -9,34 +7,75 @@ import AccordionSummary from '@mui/material/AccordionSummary';
 import AccordionDetails from '@mui/material/AccordionDetails';
 import Typography from '@mui/material/Typography';
 
-import { useAppSellector, useAppDispatch } from '../../../hooks/cvTemplateHooks';
-import { addEducation } from '../../../store/cvTemplate/educationSlice';
+import { useFormContext } from 'react-hook-form';
+import { useState } from 'react';
+
+type EducationType = {
+  study: string;
+  degree: string;
+  school: string;
+  'education-from-year': string;
+  'education-to-year': string;
+};
+
+const defaultValue: EducationType = {
+  study: '',
+  degree: '',
+  school: '',
+  'education-from-year': '',
+  'education-to-year': '',
+};
 
 const Education = () => {
-  const numOfEducations = useAppSellector((state) => state.education.numOfEducations);
-  const dispatch = useAppDispatch();
+  const { setValue, getValues } = useFormContext();
+  const [counter, setCounter] = useState(0);
 
-  const render = numOfEducations.map((item, index) => {
-    return (
-      <Accordion disableGutters sx={{ mb: 2 }}>
-        <AccordionSummary
-          // expandIcon={<ExpandMoreIcon />}
-          aria-controls="panel1a-content"
-          id="panel1a-header"
-        >
-          <Typography>Education {index + 1}</Typography>
-        </AccordionSummary>
-        <AccordionDetails>
-          <EducationForm />
-        </AccordionDetails>
-      </Accordion>
-    );
-  });
+  const addField = () => {
+    setCounter((prevCounter) => prevCounter + 1);
+    setValue('education', [...getValues('education'), defaultValue]);
+  };
+
+  const removeField = (index: number) => {
+    let resp;
+    if (counter === 0) {
+      return;
+    }
+    if (index !== 0) {
+      resp = [
+        ...getValues('education').slice(0, index),
+        ...getValues('education').slice(index + 1),
+      ];
+    } else {
+      resp = [...getValues('education').slice(index + 1)];
+    }
+    setValue('education', resp);
+    setCounter((prevCounter) => prevCounter - 1);
+  };
 
   return (
     <Box className={classes.education}>
-      {numOfEducations.length === 1 ? <EducationForm /> : render}
-      <Button onClick={() => dispatch(addEducation())} variant="contained">
+      {getValues('education').map((_: EducationType, index: number) => {
+        console.log('rerender');
+        const fieldName = `education[${index}]`;
+        return (
+          <Accordion disableGutters sx={{ mb: 2 }} key={index}>
+            <AccordionSummary aria-controls="panel1a-content" id="panel1a-header">
+              <div className="AccordionSummary__content">
+                <Typography>Education {index + 1}</Typography>
+                <Button onClick={() => removeField(index)} variant="contained">
+                  Remove
+                </Button>
+              </div>
+            </AccordionSummary>
+            <AccordionDetails>
+              <fieldset name={fieldName} key={fieldName}>
+                <EducationForm fieldName={fieldName} />
+              </fieldset>
+            </AccordionDetails>
+          </Accordion>
+        );
+      })}
+      <Button onClick={addField} variant="contained">
         Add another Education
       </Button>
     </Box>

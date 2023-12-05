@@ -1,22 +1,46 @@
 import { createSlice } from '@reduxjs/toolkit';
 
+// type EducationType = {
+//   study: string;
+//   degree: string;
+//   school: string;
+//   'education-from-year': string;
+//   'education-to-year': string;
+// };
+
 type InitialState = {
-  numOfEducations: number[];
+  indexOfEducations: number[];
+  countOfEducations: number;
 };
 
+// const initialState: InitialState = {
+//   numOfEducations: [
+//     {
+//       study: '',
+//       degree: '',
+//       school: '',
+//       'education-from-year': '',
+//       'education-to-year': '',
+//     },
+//   ],
+// };
 const initialState: InitialState = {
-  numOfEducations: [1],
+  indexOfEducations: [],
+  countOfEducations: 0,
 };
 
 const educationSlice = createSlice({
   name: 'education',
   initialState,
   reducers: {
-    addEducation: (state) => {
-      [state.numOfEducations.push(1)];
+    addIndexEducation: (state, action) => {
+      state.indexOfEducations = action.payload;
+    },
+    addCountEducation: (state, action) => {
+      state.countOfEducations = action.payload;
     },
   },
 });
 
 export default educationSlice.reducer;
-export const { addEducation } = educationSlice.actions;
+export const { addIndexEducation, addCountEducation } = educationSlice.actions;

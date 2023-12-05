@@ -1,4 +1,3 @@
-import React from 'react';
 import Box from '@mui/material/Box';
 import Stack from '@mui/material/Stack';
 import BasicInput from '../../atoms/BasicInput';
@@ -22,7 +21,7 @@ const PersonalInfo = () => {
       </Stack>
 
       <Stack className={classes.personalInfo__inputGroup} spacing={2} direction="row">
-        <BasicInput id="websitw" label="Website Link" />
+        <BasicInput id="website" label="Website Link" />
         <BasicInput id="phone" label="Phone Number" />
       </Stack>
       <Stack className={classes.personalInfo__inputGroup} spacing={2} direction="row">

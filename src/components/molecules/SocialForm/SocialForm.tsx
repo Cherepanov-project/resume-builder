@@ -1,12 +1,15 @@
-import React from 'react';
 import { Box } from '@mui/material';
 import BasicInput from '../../atoms/BasicInput';
 
-const SocialForm = () => {
+type SocialFormProps = {
+  fieldName?: string;
+};
+
+const SocialForm = ({ fieldName }: SocialFormProps) => {
   return (
     <Box>
-      <BasicInput id="social-name" label="Social Name" />
-      <BasicInput id="social-link" label="Social Link" />
+      <BasicInput id={`${fieldName}.social-name`} label="Social Name" />
+      <BasicInput id={`${fieldName}.social-link`} label="Social Link" />
     </Box>
   );
 };

@@ -1,19 +1,29 @@
 import { createSlice } from '@reduxjs/toolkit';
 
+type SocialType = {
+  'social-name': string;
+  'social-link': string;
+};
+
 type InitialState = {
-  numOfSocials: number[];
+  numOfSocials: SocialType[];
 };
 
 const initialState: InitialState = {
-  numOfSocials: [1],
+  numOfSocials: [
+    {
+      'social-name': '',
+      'social-link': '',
+    },
+  ],
 };
 
 const socialSlice = createSlice({
   name: 'social',
   initialState,
   reducers: {
-    addSocial: (state) => {
-      [state.numOfSocials.push(1)];
+    addSocial: (state, action) => {
+      state.numOfSocials = action.payload;
     },
   },
 });
