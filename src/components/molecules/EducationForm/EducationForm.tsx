@@ -3,15 +3,19 @@ import BasicInput from '../../atoms/BasicInput';
 import BasicDatePicker from '../../atoms/BasicDatePicker';
 import classes from './EducationForm.module.scss';
 
-const EducationForm = () => {
+type EducationFormProps = {
+  fieldName?: string;
+};
+
+const EducationForm = ({ fieldName }: EducationFormProps) => {
   return (
     <Box>
-      <BasicInput id="study" label="Field of study" />
-      <BasicInput id="degree" label="Degree" />
-      <BasicInput id="school" label="School" />
+      <BasicInput id={`${fieldName}.study`} label="Field of study" />
+      <BasicInput id={`${fieldName}.degree`} label="Degree" />
+      <BasicInput id={`${fieldName}.school`} label="School" />
       <Stack className={classes.educationForm} spacing={2} direction="row">
-        <BasicDatePicker label="From year" />
-        <BasicDatePicker label="To year" />
+        <BasicDatePicker id={`${fieldName}.education-from-year`} label="From year" />
+        <BasicDatePicker id={`${fieldName}.education-to-year`} label="To year" />
       </Stack>
     </Box>
   );

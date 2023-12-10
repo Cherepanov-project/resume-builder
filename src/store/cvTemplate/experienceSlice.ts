@@ -1,19 +1,35 @@
 import { createSlice } from '@reduxjs/toolkit';
 
+type ExperienceType = {
+  'work-title': string;
+  company: string;
+  'experience-from-year': string;
+  'experience-to-year': string;
+  'company-info': string;
+};
+
 type InitialState = {
-  numOfExperinces: number[];
+  numOfExperience: ExperienceType[];
 };
 
 const initialState: InitialState = {
-  numOfExperinces: [1],
+  numOfExperience: [
+    {
+      'work-title': '',
+      company: '',
+      'experience-from-year': '',
+      'experience-to-year': '',
+      'company-info': '',
+    },
+  ],
 };
 
 const experienceSlice = createSlice({
   name: 'experince',
   initialState,
   reducers: {
-    addExperience: (state) => {
-      [state.numOfExperinces.push(1)];
+    addExperience: (state, action) => {
+      state.numOfExperience = action.payload;
     },
   },
 });

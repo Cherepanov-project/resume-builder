@@ -1,4 +1,3 @@
-/* eslint-disable @typescript-eslint/no-explicit-any */
 import classes from './Experience.module.scss';
 import Box from '@mui/material/Box';
 import { Button } from '@mui/material';
@@ -9,36 +8,84 @@ import AccordionSummary from '@mui/material/AccordionSummary';
 import AccordionDetails from '@mui/material/AccordionDetails';
 import Typography from '@mui/material/Typography';
 
-import { useAppSellector, useAppDispatch } from '../../../hooks/cvTemplateHooks';
-import { addExperience } from '../../../store/cvTemplate/experienceSlice';
+import { useFormContext } from 'react-hook-form';
+import { useState } from 'react';
+
+type ExperienceType = {
+  'work-title': string;
+  company: string;
+  'experience-from-year': string;
+  'experience-to-year': string;
+  'company-info': string;
+};
+
+const defaultValue: ExperienceType = {
+  'work-title': '',
+  company: '',
+  'experience-from-year': '',
+  'experience-to-year': '',
+  'company-info': '',
+};
 
 const Experience = () => {
-  const numOfExperiences = useAppSellector((state: any) => state.experience.numOfExperinces);
-  const dispatch = useAppDispatch();
+  const { setValue, getValues } = useFormContext();
+  const [counter, setCounter] = useState(0);
 
-  const render = numOfExperiences.map((item: any, index: number) => {
-    // переделать нормально
-    console.log(item);
-    return (
-      <Accordion disableGutters sx={{ mb: 2 }}>
-        <AccordionSummary
-          // expandIcon={<ExpandMoreIcon />}
-          aria-controls="panel1a-content"
-          id="panel1a-header"
-        >
-          <Typography>Experience {index + 1}</Typography>
-        </AccordionSummary>
-        <AccordionDetails>
-          <ExperienceForm />
-        </AccordionDetails>
-      </Accordion>
-    );
-  });
+  const addField = () => {
+    setCounter((prevCounter) => prevCounter + 1);
+    setValue('experience', [...getValues('experience'), defaultValue]);
+  };
+
+  const removeField = (index: number) => {
+    let resp;
+    if (counter === 0) {
+      return;
+    }
+    if (index !== 0) {
+      resp = [
+        ...getValues('experience').slice(0, index),
+        ...getValues('experience').slice(index + 1),
+      ];
+    } else {
+      resp = [...getValues('experience').slice(index + 1)];
+    }
+    setValue('experience', resp);
+    setCounter((prevCounter) => prevCounter - 1);
+  };
 
   return (
     <Box className={classes.experience}>
-      {numOfExperiences.length === 1 ? <ExperienceForm /> : render}
-      <Button onClick={() => dispatch(addExperience())} variant="contained">
+      {getValues('experience').map((_: ExperienceType, index: number) => {
+        const fieldName = `experience[${index}]`;
+
+        return (
+          <Accordion disableGutters sx={{ mb: 2 }} key={index}>
+            <AccordionSummary
+              // expandIcon={<ExpandMoreIcon />}
+              aria-controls="panel1a-content"
+              id="panel1a-header"
+            >
+              <div className="AccordionSummary__content">
+                <Typography>Experience {index + 1}</Typography>
+                <Button onClick={() => removeField(index)} variant="contained">
+                  Remove
+                </Button>
+              </div>
+            </AccordionSummary>
+            <AccordionDetails>
+              <fieldset name={fieldName} key={fieldName}>
+                <ExperienceForm fieldName={fieldName} />
+              </fieldset>
+            </AccordionDetails>
+          </Accordion>
+        );
+      })}
+      <Button
+        onClick={() => {
+          addField();
+        }}
+        variant="contained"
+      >
         Add another Experience
       </Button>
     </Box>
