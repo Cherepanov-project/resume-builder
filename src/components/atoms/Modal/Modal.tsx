@@ -1,5 +1,4 @@
-import React, { ReactNode, useCallback, useEffect } from 'react';
-import { useState, useRef } from 'react';
+import React, { ReactNode, useCallback, useEffect, useRef, useState } from 'react';
 
 import { Portal } from '../Portal/Portal';
 

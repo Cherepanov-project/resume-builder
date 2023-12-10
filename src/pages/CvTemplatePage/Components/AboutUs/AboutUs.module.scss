@@ -1,0 +1,27 @@
+.about-us {
+  width: 100%;
+  height: 450px;
+  margin-top: 50px;
+  display: flex;
+  flex-direction: column;
+  align-items: start;
+  gap: 20px;
+  background-image: url('../../../../assets/images/templatesPageImage/cvTemplate.png');
+  background-repeat: no-repeat;
+  background-position: 90% 50%;
+
+  .about-list {
+    margin-top: 10px;
+    display: flex;
+    flex-direction: column;
+    align-items: start;
+    gap: 10px;
+
+    li {
+      display: flex;
+      gap: 10px;
+    }
+  }
+
+
+}

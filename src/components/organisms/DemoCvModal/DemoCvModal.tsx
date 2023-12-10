@@ -1,4 +1,4 @@
-import { useRef, useCallback } from 'react';
+import React, { useCallback, useRef } from 'react';
 import ReactToPrint from 'react-to-print';
 import Button from '@mui/material/Button';
 import CloudUploadIcon from '@mui/icons-material/CloudUpload';
@@ -7,7 +7,7 @@ import { Modal } from '../../atoms/Modal';
 import { ComponentToPrint } from '../../atoms/ComponentToPrint';
 
 interface DemoCvModalProps {
-  content: React.ReactElement;
+  content?: React.ReactElement;
   isOpen?: boolean;
   onClose?: () => void;
 }
@@ -37,10 +37,10 @@ export const DemoCvModal = (props: DemoCvModalProps) => {
   `;
 
   // const pageStyle = `
-  // @media print': {boxShadow: 'none !important', '@page': {size: '794px 1123px', margin: 0}
+  // @media print': {boxShadow: 'none !important', '@page': {size: '794px 1123px', margin: 0,}
   // `;
 
-  //   const pageStyle = `
+  // const pageStyle = `
   //   @page {
   //     size: 2.5in 4in
   //   }
