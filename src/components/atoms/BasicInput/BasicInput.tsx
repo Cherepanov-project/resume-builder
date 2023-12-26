@@ -10,17 +10,15 @@ interface IBasicInput {
 
 const BasicInput: React.FC<IBasicInput> = ({ id, label }) => {
   return (
-    <>
-      <TextField
-        className={classes.basicInput}
-        id={id}
-        label={label}
-        variant="outlined"
-        size="small"
-        fullWidth
-        sx={{ mb: '20px' }}
-      />
-    </>
+    <TextField
+      className={classes.basicInput}
+      id={id}
+      label={label}
+      variant="outlined"
+      size="small"
+      fullWidth
+      sx={{ mb: '20px' }}
+    />
   );
 };
 

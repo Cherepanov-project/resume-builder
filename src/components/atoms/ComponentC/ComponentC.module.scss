@@ -1,0 +1,32 @@
+.title {
+  color: #444;
+  text-align: center;
+  font-size: 48px;
+  margin-bottom: 10px;
+  width: 100%;
+}
+
+.text {
+  color: gray;
+  text-align: center;
+  font-size: 16px;
+  margin-bottom: 10px;
+  width: 100%;
+}
+
+.container {
+  flex: 1;
+  padding: 15px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  background-color: white;
+  border-radius: 6px;
+  box-shadow: 0 2px 4px 0px rgba(0, 0, 0, 0.08);
+  overflow: hidden;
+}
+
+.container .title .MuiInputBase-input {
+  font-size: 48px;
+}

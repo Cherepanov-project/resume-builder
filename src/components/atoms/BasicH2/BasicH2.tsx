@@ -5,8 +5,8 @@ interface IBasicH2_Text {
   text: string;
 }
 
-const BasicH2: React.FC<IBasicH2_Text> = ({ text }) => {
-  return <h2 className={classes.basicH2}>{text}</h2>;
+const BasicH2: React.FC<IBasicH2_Text> = ({ props }) => {
+  return <h2 className={classes.basicH2}>{props.text}</h2>;
 };
 
 export default BasicH2;

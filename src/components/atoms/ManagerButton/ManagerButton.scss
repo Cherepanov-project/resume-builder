@@ -1,0 +1,48 @@
+.manager-btn {
+  margin-top: 15px;
+
+  & button {
+    outline: none !important;
+    width: 80%;
+    background-color: rgb(130, 128, 128);
+    padding: 10px 20px 10px 15px;
+    display: flex;
+    margin: auto;
+    line-height: 24px;
+    border: none;
+    border-radius: 10px;
+    color: black;
+    transition: .2s linear;
+    background: #cadbd4;
+    transition: transform 0.3s;
+
+    &:first-child {
+      color: rgba(0, 0, 0, 0.6);
+
+    }
+
+    &:focus-visible {
+      outline: none;
+    }
+
+    &:active {
+      transform: scale(0.95);
+    }
+
+    &:nth-child(n) {
+      align-self: center;
+    }
+
+
+
+    &:hover {
+      box-shadow: 0 0 0 2px white, 0 0 0 4px #cadbd4;
+
+    }
+
+    & span {
+      margin-left: 5px;
+    }
+
+  }
+}

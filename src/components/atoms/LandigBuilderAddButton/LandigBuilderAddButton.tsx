@@ -1,7 +1,7 @@
 import { FC } from 'react';
 import classes from '../../organisms/WorkSpace/WorkSpace.module.scss';
 import { useAppDispatch } from '../../../hooks/cvTemplateHooks';
-import { sideBar } from '../../../store/LandigBuilder/landingBuilder';
+import { sideBar } from '../../../store/landingBuilder/layoutSlice';
 
 interface ILandigBuilderAddButtonProps {
   name: string;

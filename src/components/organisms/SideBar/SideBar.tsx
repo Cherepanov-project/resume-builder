@@ -1,35 +1,107 @@
-import { useAppDispatch, useAppSellector } from '../../../hooks/cvTemplateHooks';
-import { sideBar } from '../../../store/LandigBuilder/landingBuilder';
-import AddSectionSideBar from '../../molecules/AddSectionSideBar';
-import AddColumnsSideBar from '../../molecules/AddColumnsSideBar';
-import AddElementListSideBar from '../../molecules/AddElementListSideBar';
+import { useEffect, useState } from 'react';
+import { Tab, Tabs } from '@mui/material';
+import DashboardIcon from '@mui/icons-material/Dashboard';
+import ExtensionIcon from '@mui/icons-material/Extension';
+import ViewCarouselIcon from '@mui/icons-material/ViewCarousel';
+import Settings from '@mui/icons-material/Settings';
+
+import { importFiles } from '@/utils';
+import TabPanel from '@molecules/TabPanel';
+import NestedList from '@molecules/NestedList';
+
+import ManagerButton from '@/components/atoms/ManagerButton';
+import { useNavigate } from 'react-router-dom';
+
 import classes from './SideBar.module.scss';
 
-const SideBar = () => {
-  const dispatch = useAppDispatch();
-  const currentSideBar = useAppSellector((state) => state.landigBuilder.sideBar[0]);
-  let renderedSideBar = null;
+const SideBar: React.FC = () => {
+  const [currentTab, setCurrentTab] = useState(0);
+  const [isActiveTab, setSctiveTab] = useState(false);
+  const [isPromiseResolve, setPromiseResolved] = useState(false);
+  const [sidebarMenuList, setSidebarMenuList] = useState({});
+  const tabsIcons = [<DashboardIcon />, <ExtensionIcon />, <ViewCarouselIcon />, <Settings />];
 
-  if (currentSideBar === 'addSection') {
-    renderedSideBar = <AddSectionSideBar />;
-  } else if (currentSideBar === 'editColumns') {
-    renderedSideBar = <AddColumnsSideBar />;
-  } else if (currentSideBar === 'editElements') {
-    renderedSideBar = <AddElementListSideBar />;
-  }
+  useEffect(() => {
+    importFiles().then((data) => {
+      setSidebarMenuList({ ...sidebarMenuList, ...data });
+    });
 
-  if (renderedSideBar) {
-    return (
-      <div className={classes['side-bar']}>
-        <button onClick={() => dispatch(sideBar(['null', 'null']))} style={{ color: 'red' }}>
-          close
-        </button>
-        {renderedSideBar}
-      </div>
-    );
-  } else {
-    return null;
-  }
+    setPromiseResolved(true);
+  }, []);
+
+  const handleChangeTab = (_event: React.SyntheticEvent, indxBtn: number) => {
+    setCurrentTab(indxBtn);
+  };
+
+  const openPanel = () => {
+    setSctiveTab(true);
+  };
+
+  const closePanel = () => {
+    setSctiveTab(false);
+  };
+
+  const navigate = useNavigate();
+
+  return (
+    <>
+      {isPromiseResolve && (
+        <Tabs
+          className={classes['sidebar']}
+          value={currentTab}
+          orientation="vertical"
+          aria-label="sidebar"
+          onChange={handleChangeTab}
+        >
+          {Object.keys(sidebarMenuList).map((item, indx) => {
+            return (
+              <Tab
+                key={item}
+                className={classes['tab']}
+                icon={tabsIcons[indx]}
+                aria-label={item}
+                onClick={openPanel}
+              />
+            );
+          })}
+        </Tabs>
+      )}
+
+      {isPromiseResolve &&
+        Object.entries(sidebarMenuList).map(([key, items], indx) => {
+          return (
+            isActiveTab && (
+              <TabPanel
+                key={key}
+                value={currentTab}
+                index={indx}
+                label={key}
+                closePanel={closePanel}
+              >
+                {key === 'Manage' && (
+                  <>
+                    <ManagerButton
+                      onClick={() => navigate('sections-creator')}
+                      name="Section Creator"
+                    />
+                    <ManagerButton
+                      onClick={() => navigate('template-creator')}
+                      name="Template Creator"
+                    />
+                  </>
+                )}
+
+                {items.map((item) => {
+                  return (
+                    <NestedList key={item.name} name={item.name} items={item.list}></NestedList>
+                  );
+                })}
+              </TabPanel>
+            )
+          );
+        })}
+    </>
+  );
 };
 
 export default SideBar;

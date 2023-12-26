@@ -3,8 +3,10 @@ import educationReducer from './cvTemplate/educationSlice';
 import experienceReducer from './cvTemplate/experienceSlice';
 import socialReducer from './cvTemplate/socialSlice';
 import hobbiesReducer from './cvTemplate/hobbiesSlice';
-import landigBuilderReduser from './LandigBuilder/landingBuilder';
+import layoutReduser from './landingBuilder/layoutSlice';
+import utilityReducer from './landingBuilder/utilitySlice';
 import cardReducer from './cardSlice';
+import sectionsManagerSlice from './landingBuilder/sectionsManagerSlice';
 
 export const store = configureStore({
   reducer: {
@@ -12,8 +14,10 @@ export const store = configureStore({
     experience: experienceReducer,
     social: socialReducer,
     hobbies: hobbiesReducer,
-    landigBuilder: landigBuilderReduser,
+    layout: layoutReduser,
+    utility: utilityReducer,
     card: cardReducer,
+    sectionsManager: sectionsManagerSlice,
   },
 });
 
