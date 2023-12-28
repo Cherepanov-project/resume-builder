@@ -1,37 +1,112 @@
-import ResponsiveGridLayout from 'react-grid-layout';
-import { useAppSellector } from '../../../hooks/cvTemplateHooks';
-import { LandigBuilderAddButton } from '../../atoms/LandigBuilderAddButton/LandigBuilderAddButton';
-import classes from './WorkSpace.module.scss';
-import WorkSpaceColumns from '../../molecules/WorkSpaceColumns';
+import { lazy, Suspense, useEffect, useState } from 'react';
+import ResponsiveGridLayout, { Layout } from 'react-grid-layout';
 
-const WorkSpace = () => {
-  const width = window.innerWidth;
-  const workSpaceArr = useAppSellector((state) => state.landigBuilder.workSpace);
-  const layout = workSpaceArr.map(({ i, x, y, w, h, minW, maxW }) => {
-    return { i, x, y, w, h, minW, maxW };
-  });
-  const renderedArr = workSpaceArr.map((section) => {
-    return (
-      <div
-        className={classes['section']}
-        style={{ backgroundColor: 'white', border: '1px solid black' }}
-        key={section.i}
-      >
-        <LandigBuilderAddButton name={section.i} />
-        <WorkSpaceColumns columns={section.columns} columnStyle={section.columnStyle} />
-      </div>
-    );
-  });
+import { addElement, changeElement } from '@store/landingBuilder/layoutSlice';
+import { useAppDispatch, useAppSellector } from '@hooks/cvTemplateHooks';
+import ComponentPreloader from '@components/atoms/ComponentPreloader';
+import ElementToolsPanel from '@components/organisms/ElementToolsPanel';
+
+import 'react-grid-layout/css/styles.css';
+import 'react-resizable/css/styles.css';
+import classes from './WorkSpace.module.scss';
+import { DynamicComponentRendererProps, T_BlockElement } from '@/types/landingBuilder';
+
+// ========================================================================== \\
+// Отрисовываем динамический компонент
+// По сути это зависимый компонент, который отвечает за рендеринг условного блока
+const DynamicComponentRenderer: React.FC<DynamicComponentRendererProps> = ({
+  Component,
+  props,
+  columns,
+  source,
+  children,
+  layout,
+}) => {
+  const DynamicComponent = lazy(() => import(`../../${source}/${Component}/index.ts`));
+
   return (
-    <ResponsiveGridLayout
-      className="layout"
-      layout={layout}
-      cols={10}
-      rowHeight={220}
-      width={width - 100}
-    >
-      {renderedArr}
-    </ResponsiveGridLayout>
+    <Suspense fallback={<ComponentPreloader />}>
+      <DynamicComponent
+        key={Component}
+        props={props}
+        columns={columns}
+        source={source}
+        children={children}
+        layout={layout}
+      />
+    </Suspense>
+  );
+};
+// ========================================================================== \\
+
+const WorkSpace: React.FC = () => {
+  const dispatch = useAppDispatch();
+  const [width, setWidth] = useState(window.innerWidth);
+  const draggableItem = useAppSellector((state) => state.layout.currentDraggableItem);
+  const activeElements = useAppSellector((state) => state.layout.activeElements);
+
+  useEffect(() => {
+    const handleResize = () => {
+      setWidth(window.innerWidth);
+    };
+
+    window.addEventListener('resize', handleResize);
+
+    return () => {
+      window.removeEventListener('resize', handleResize);
+    };
+  }, []);
+
+  const handleDropElement = (layout: Layout[], layoutItem: Layout) => {
+    dispatch(addElement({ draggableItem, layoutItem, layout }));
+  };
+
+  // Вытаскиваем макеты наших активных компонентов
+  const workspaceLayout = activeElements.reduce((acc: Layout[], el: T_BlockElement) => {
+    return [...acc, el.layout];
+  }, []);
+
+  const handleChangeElement = (_layout: Layout[], oldItem: Layout, newItem: Layout) => {
+    const isChange = JSON.stringify(oldItem) !== JSON.stringify(newItem);
+    if (isChange) dispatch(changeElement(newItem));
+  };
+
+  return (
+    <div className={classes['workspace']}>
+      <ResponsiveGridLayout
+        className={classes['grid']}
+        layout={workspaceLayout}
+        cols={6}
+        rowHeight={30}
+        // 76 пикселей зарезервировано под сайдбар + отступ слева.
+        width={width - 76 - (width - 120) * 0.3}
+        margin={[8, 8]}
+        resizeHandles={['sw', 'se']}
+        isDraggable
+        isDroppable
+        onDrop={handleDropElement}
+        draggableHandle=".drag-area"
+        onResizeStop={handleChangeElement}
+        onDragStop={handleChangeElement}
+      >
+        {/* Динамически подгружаем компоненты и прокидывааем в них пропсы из одноимменных объектов */}
+        {activeElements.map((el) => {
+          return (
+            <div key={el.layout.i} className={classes['item']}>
+              <ElementToolsPanel layout={el.layout} />
+              <DynamicComponentRenderer
+                Component={el.name}
+                source={el.source || 'atoms'}
+                props={el.props}
+                columns={el.columns || 1}
+                children={el.children}
+                layout={el.layout}
+              />
+            </div>
+          );
+        })}
+      </ResponsiveGridLayout>
+    </div>
   );
 };
 

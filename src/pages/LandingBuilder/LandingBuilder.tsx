@@ -1,23 +1,22 @@
+import SideBar from '@organisms/SideBar';
+import WorkSpace from '@organisms/WorkSpace';
+
+// import SectionsManager from '@/components/organisms/SectionsManager';
+import { Route, Routes } from 'react-router-dom';
+// import { useEffect } from 'react';
+
 import classes from './LandingBuilder.module.scss';
-import WorkSpace from '../../components/organisms/WorkSpace';
+import TemplateManager from '@/components/organisms/TemplateManager';
 
-import { sideBar } from '../../store/LandigBuilder/landingBuilder';
-import { useAppDispatch } from '../../hooks/cvTemplateHooks';
-import SideBar from '../../components/organisms/SideBar';
 const LandingBuilder = () => {
-  const dispatch = useAppDispatch();
-
   return (
     <main className={classes.landing}>
       <SideBar />
-      <WorkSpace />
-      <button
-        style={{ backgroundColor: 'green' }}
-        onClick={() => dispatch(sideBar(['addSection', 'null']))}
-        className={classes.addbtn}
-      >
-        +
-      </button>
+      <Routes>
+        <Route path="/" element={<WorkSpace />} />
+        {/* <Route path="/sections-creator" element={<SectionsManager />} /> */}
+        <Route path="/template-creator" element={<TemplateManager />} />
+      </Routes>
     </main>
   );
 };

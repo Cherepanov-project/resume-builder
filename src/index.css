@@ -6,7 +6,7 @@
   --swiper-theme-color: #57cda4 !important;
   color-scheme: light dark;
 
-  color: rgba(255, 255, 255, 0.87);
+  color: rgba(8, 8, 8, 0.87);
   background-color: white;
   font-synthesis: none;
   text-rendering: optimizeLegibility;
@@ -15,19 +15,27 @@
   -webkit-text-size-adjust: 100%;
 }
 
-a {
-  font-weight: 500;
-  color: #646cff;
-  text-decoration: inherit;
-}
-a:hover {
-  color: #535bf2;
+/* Preferred box-sizing value */
+*,
+*::before,
+*::after {
+  box-sizing: border-box;
 }
 
 body {
   margin: 0;
   min-width: 320px;
   min-height: 100vh;
+}
+
+a {
+  font-weight: 500;
+  color: #646cff;
+  text-decoration: inherit;
+}
+
+a:hover {
+  color: #535bf2;
 }
 
 h1 {
@@ -46,9 +54,11 @@ button {
   cursor: pointer;
   transition: border-color 0.25s;
 }
+
 button:hover {
   border-color: #646cff;
 }
+
 button:focus,
 button:focus-visible {
   outline: 4px auto -webkit-focus-ring-color;
@@ -65,4 +75,17 @@ button:focus-visible {
   button {
     background-color: #f9f9f9;
   }
+}
+
+/* For images to not be able to exceed their container */
+img {
+  max-inline-size: 100%;
+  max-block-size: 100%;
+}
+
+/* Remove list styles (bullets/numbers) */
+ol,
+ul,
+menu {
+  list-style: none;
 }
