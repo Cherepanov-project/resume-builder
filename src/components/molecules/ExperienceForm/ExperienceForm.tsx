@@ -4,16 +4,20 @@ import BasicDatePicker from '../../atoms/BasicDatePicker';
 import BasicTextarea from '../../atoms/BasicTextarea';
 import classes from './ExperienceForm.module.scss';
 
-const EducationForm = () => {
+type EducationFormProps = {
+  fieldName: string;
+};
+
+const EducationForm = ({ fieldName }: EducationFormProps) => {
   return (
     <Box>
-      <BasicInput id="work-title" label="Title" />
-      <BasicInput id="company" label="Company" />
+      <BasicInput id={`${fieldName}.work-title`} label="Title" />
+      <BasicInput id={`${fieldName}.company`} label="Company" />
       <Stack className={classes.experienceForm} spacing={2} direction="row">
-        <BasicDatePicker label="From year" />
-        <BasicDatePicker label="To year" />
+        <BasicDatePicker id={`${fieldName}.experience-from-year`} label="From year" />
+        <BasicDatePicker id={`${fieldName}.experience-to-year`} label="To year" />
       </Stack>
-      <BasicTextarea placeholder="Description (optional)" />
+      <BasicTextarea id={`${fieldName}.company-info`} placeholder="Description (optional)" />
     </Box>
   );
 };

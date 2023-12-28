@@ -1,4 +1,8 @@
 import React from 'react';
+import { useForm, FormProvider } from 'react-hook-form';
+import * as yup from 'yup';
+import { yupResolver } from '@hookform/resolvers/yup';
+import { DevTool } from '@hookform/devtools';
 import classes from './CvTemplate.module.scss';
 import DemoCv from '../../components/organisms/DemoCv';
 
@@ -16,6 +20,58 @@ import StepContent from '@mui/material/StepContent';
 import Button from '@mui/material/Button';
 import Paper from '@mui/material/Paper';
 import Typography from '@mui/material/Typography';
+// import { useAppSellector } from '../../hooks/cvTemplateHooks';
+
+const validationSchema = yup.object().shape({
+  'full-name': yup.string().min(3).max(20).required(),
+  'job-title': yup.string().min(3).max(20).required(),
+  address: yup.string().min(3).max(20).required(),
+  website: yup.string().required(),
+  phone: yup.string().required(),
+  email: yup.string().required(),
+  bio: yup.string().required(),
+
+  education: yup
+    .array()
+    .of(
+      yup.object().shape({
+        study: yup.string().required(),
+        degree: yup.string().required(),
+        school: yup.string().required(),
+        'education-from-year': yup.date().required(),
+        'education-to-year': yup.date().required(),
+      }),
+    )
+    .required(),
+
+  experience: yup
+    .array()
+    .of(
+      yup.object().shape({
+        'work-title': yup.string().required(),
+        company: yup.string().required(),
+        'experience-from-year': yup.string().required(),
+        'experience-to-year': yup.string().required(),
+        'company-info': yup.string().required(),
+      }),
+    )
+    .required(),
+
+  social: yup.array().of(
+    yup.object().shape({
+      'social-name': yup.string().required(),
+      'social-link': yup.string().required(),
+    }),
+  ),
+
+  hobby: yup.array().of(
+    yup.object().shape({
+      label: yup.string().required(),
+    }),
+  ),
+});
+
+interface IFormInputs extends yup.InferType<typeof validationSchema> {}
 
 const stepTitle = (title: string) => {
   return <Typography variant="h5">{title}</Typography>;
@@ -25,35 +81,117 @@ const stepContent = (element: JSX.Element) => {
   return element;
 };
 
-const steps = [
-  {
-    label: stepTitle('Personal Info'),
-    description: stepContent(<PersonalInfo />),
-  },
-  {
-    label: stepTitle('Education'),
-    description: stepContent(<Education />),
-  },
-  {
-    label: stepTitle('Experience'),
-    description: stepContent(<Experience />),
-  },
-  {
-    label: stepTitle('Social'),
-    description: stepContent(<Social />),
-  },
-  {
-    label: stepTitle('Hobbies'),
-    description: stepContent(<Hobbies />),
-  },
-];
-
 const CvTemplate = () => {
+  const methods = useForm<IFormInputs>({
+    mode: 'onTouched',
+    resolver: yupResolver(validationSchema),
+    defaultValues: {
+      'full-name': '',
+      'job-title': '',
+      address: '',
+      bio: '',
+      education: [
+        {
+          study: '',
+          degree: '',
+          school: '',
+          'education-from-year': undefined,
+          'education-to-year': undefined,
+        },
+      ],
+      email: '',
+      experience: [
+        {
+          'work-title': '',
+          company: '',
+          'experience-from-year': '',
+          'experience-to-year': '',
+          'company-info': '',
+        },
+      ],
+      phone: '',
+      hobby: [
+        {
+          label: '',
+        },
+      ],
+      social: [
+        {
+          'social-name': '',
+          'social-link': '',
+        },
+      ],
+      website: '',
+    },
+  });
   const [activeStep, setActiveStep] = React.useState(0);
 
-  const handleNext = () => {
-    setActiveStep((prevActiveStep) => prevActiveStep + 1);
+  const handleNext = async () => {
+    let isValid: boolean = false;
+
+    switch (activeStep) {
+      case 0:
+        isValid = await methods.trigger([
+          'full-name',
+          'job-title',
+          'address',
+          'website',
+          'phone',
+          'email',
+          'bio',
+        ]);
+        // isValid = true;
+        break;
+
+      case 1:
+        isValid = await methods.trigger('education');
+        break;
+
+      case 2:
+        isValid = await methods.trigger('experience');
+        break;
+
+      case 3:
+        isValid = await methods.trigger('social');
+        break;
+
+      case 4:
+        isValid = await methods.trigger(['hobby']);
+        break;
+    }
+
+    if (isValid) {
+      setActiveStep((prevActiveStep) => prevActiveStep + 1);
+    }
   };
+
+  const steps = [
+    {
+      id: 1,
+      label: stepTitle('Personal Info'),
+      form: stepContent(<PersonalInfo />),
+    },
+    {
+      id: 2,
+      label: stepTitle('Education'),
+      form: stepContent(<Education />),
+    },
+    {
+      id: 3,
+      label: stepTitle('Experience'),
+      form: stepContent(<Experience />),
+    },
+    {
+      id: 4,
+      label: stepTitle('Social'),
+      form: stepContent(<Social />),
+    },
+    {
+      id: 5,
+      label: stepTitle('Hobbies'),
+      form: stepContent(<Hobbies />),
+    },
+  ];
 
   const handleBack = () => {
     setActiveStep((prevActiveStep) => prevActiveStep - 1);
@@ -61,6 +199,13 @@ const CvTemplate = () => {
 
   const handleReset = () => {
     setActiveStep(0);
+  };
+
+  const onSubmit = (data: IFormInputs) => {
+    console.log(data);
+    const getFields = methods.getValues();
+    console.log(getFields);
+    handleNext();
   };
 
   return (
@@ -74,26 +219,76 @@ const CvTemplate = () => {
           </Box>
           <Box className={classes.cvTemlpate__rightWrapper}>
             <Box className={classes.cvTemlpate__right}>
-              <Stepper activeStep={activeStep} orientation="vertical">
-                {steps.map((step, index) => (
-                  <Step key={index}>
-                    <StepLabel>{step.label}</StepLabel>
-                    <StepContent>
-                      <Typography>{step.description}</Typography>
-                      <Box sx={{ mb: 2 }}>
-                        <div>
-                          <Button variant="contained" onClick={handleNext} sx={{ mt: 1, mr: 1 }}>
-                            {index === steps.length - 1 ? 'Finish' : 'Continue'}
-                          </Button>
-                          <Button disabled={index === 0} onClick={handleBack} sx={{ mt: 1, mr: 1 }}>
-                            Back
-                          </Button>
-                        </div>
-                      </Box>
-                    </StepContent>
-                  </Step>
-                ))}
-              </Stepper>
+              <FormProvider {...methods}>
+                <Stepper
+                  activeStep={activeStep}
+                  orientation="vertical"
+                  onChange={async () => {
+                    switch (activeStep) {
+                      case 0:
+                        await methods.trigger([
+                          'full-name',
+                          'job-title',
+                          'address',
+                          'website',
+                          'phone',
+                          'email',
+                          'bio',
+                        ]);
+                        // isValid = true;
+                        break;
+
+                      case 1:
+                        await methods.trigger('education');
+                        break;
+
+                      case 2:
+                        await methods.trigger('experience');
+                        break;
+
+                      case 3:
+                        await methods.trigger('social');
+                        break;
+
+                      case 4:
+                        await methods.trigger(['hobby']);
+                        break;
+                    }
+                  }}
+                >
+                  {steps.map((step) => (
+                    <Step key={step.id}>
+                      <StepLabel>{step.label}</StepLabel>
+                      <StepContent>
+                        <Typography variant="body2" component={'span'}>
+                          {step.form}
+                        </Typography>
+                        <Box sx={{ mb: 2 }}>
+                          <div>
+                            <Button
+                              onClick={
+                                step.id === 5 ? methods.handleSubmit(onSubmit) : () => handleNext()
+                              }
+                              variant="contained"
+                              sx={{ mt: 1, mr: 1 }}
+                            >
+                              {step.id === 5 ? 'Finish' : 'Continue'}
+                            </Button>
+                            <Button
+                              disabled={step.id === 1}
+                              onClick={handleBack}
+                              sx={{ mt: 1, mr: 1 }}
+                            >
+                              Back
+                            </Button>
+                          </div>
+                        </Box>
+                      </StepContent>
+                    </Step>
+                  ))}
+                </Stepper>
+                <DevTool control={methods.control} placement="top-left" />
+              </FormProvider>
               {activeStep === steps.length && (
                 <Paper square elevation={0} sx={{ p: 3 }}>
                   <Typography>All steps completed - you&apos;re finished</Typography>
@@ -106,15 +301,6 @@ const CvTemplate = () => {
           </Box>
         </Box>
       </Box>
-      <div className={classes.cvTemlpate__right}>
-        <form action="">
-          <PersonalInfo />
-          <Education />
-          <Experience />
-          <Social />
-          <Hobbies />
-        </form>
-      </div>
     </Box>
   );
 };

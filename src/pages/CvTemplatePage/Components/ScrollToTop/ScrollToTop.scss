@@ -1,0 +1,25 @@
+.scroll-to-top {
+  height: 20px;
+  position: fixed;
+  bottom: 130px;
+  right: 30px;
+  background-color: transparent;
+  color: black;
+  font-size: 12px;
+  line-height: 22px;
+  padding: 10px;
+  border-radius: 5px;
+  cursor: pointer;
+  rotate: -90deg;
+  text-transform: uppercase;
+}
+
+.scroll-to-top::before {
+  position: absolute;
+  width: 30%;
+  height: 2px;
+  background-color: #000;
+  content: "";
+  top: 20px;
+  right: 100%;
+}

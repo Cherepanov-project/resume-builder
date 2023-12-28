@@ -1,19 +1,20 @@
 import { createSlice } from '@reduxjs/toolkit';
 
 type InitialState = {
-  numOfHobbies: number[];
+  numOfHobbies: { label: string }[];
 };
 
 const initialState: InitialState = {
-  numOfHobbies: [1, 1],
+  numOfHobbies: [{ label: '' }],
 };
 
 const hobbiesSlice = createSlice({
   name: 'hobbies',
   initialState,
   reducers: {
-    addHobby: (state) => {
-      [state.numOfHobbies.push(1)];
+    addHobby: (state, action) => {
+      // [state.numOfHobbies.push(1)];
+      state.numOfHobbies = action.payload;
     },
   },
 });
