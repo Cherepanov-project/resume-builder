@@ -1,17 +1,14 @@
-import { ChangeEvent, KeyboardEvent, useState } from 'react';
+import { ChangeEvent, KeyboardEvent, useEffect, useState } from 'react';
 
-type LayoutBlockParagraphProps = {
-  props: {
-    text: string;
-    wrapperStyle: { [key: string]: string | number };
-    textStyle: { [key: string]: string | number };
-    inputStyle: { [key: string]: string | number };
-  };
-};
+import { DynamicBlockProps } from '@/types/landingBuilder';
 
-const LayoutBlockParagraph: React.FC<LayoutBlockParagraphProps> = ({ props }) => {
+const LayoutBlockParagraph: React.FC<DynamicBlockProps> = ({ props }) => {
   const [isEdit, setEdit] = useState(false);
   const [text, setText] = useState(props.text);
+
+  useEffect(() => {
+    setText(props.text);
+  }, [props.text]);
 
   const handleDoubleClick = () => {
     setEdit(true);

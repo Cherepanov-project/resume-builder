@@ -7,15 +7,11 @@ import ExpandMore from '@mui/icons-material/ExpandMore';
 
 import { useAppDispatch } from '@/hooks/cvTemplateHooks';
 import { setDraggableItem } from '@/store/landingBuilder/layoutSlice';
+import { NestedListProps } from '@/types/landingBuilder';
 
 import classes from './NestedList.module.scss';
 
-// type NestedListProps = {
-//   name: string;
-//   items: {};
-// };
-
-const NestedList: React.FC = ({ name, items }) => {
+const NestedList: React.FC<NestedListProps> = ({ name, items }) => {
   const dispatch = useAppDispatch();
   const [isOpen, setOpen] = useState(false);
 

@@ -1,17 +1,30 @@
-import { lazy, Suspense, useRef, useEffect, useState } from 'react';
-import ResponsiveGridLayout from 'react-grid-layout';
+import { lazy, Suspense, useRef, useEffect, useState, ComponentType } from 'react';
+import ResponsiveGridLayout, { Layout } from 'react-grid-layout';
 
 import { addElement } from '@/store/landingBuilder/layoutSlice';
 import { useAppDispatch, useAppSellector } from '@hooks/cvTemplateHooks';
 import ComponentPreloader from '@components/atoms/ComponentPreloader';
+import {
+  ContainerDIVProps,
+  DynamicComponentRendererProps,
+  T_BlockElement,
+} from '@/types/landingBuilder';
 
 import 'react-grid-layout/css/styles.css';
 import 'react-resizable/css/styles.css';
 import classes from './ContainerDIV.module.scss';
 
+// ========================================================================== \\
 // Отрисовываем динамический компонент
-const DynamicComponentRenderer = ({ Component, props, source, children, layout }) => {
-  let DynamicComponent = () => <></>;
+// По сути это зависимый компонент, который отвечает за рендеринг условного блока
+const DynamicComponentRenderer: React.FC<DynamicComponentRendererProps> = ({
+  Component,
+  props,
+  source,
+  children,
+  layout,
+}) => {
+  let DynamicComponent: ComponentType<DynamicComponentRendererProps> = () => <></>;
 
   if (source === 'organisms') {
     DynamicComponent = lazy(() => import(`@organisms/${Component}/index.ts`));
@@ -35,8 +48,9 @@ const DynamicComponentRenderer = ({ Component, props, source, children, layout }
     </Suspense>
   );
 };
+// ========================================================================== \\
 
-const ContainerDIV: React.FC = ({ children, layout, columns }) => {
+const ContainerDIV: React.FC<ContainerDIVProps> = ({ children, layout, columns }) => {
   const dispatch = useAppDispatch();
   const containerRef = useRef(null);
   const [width, setWidth] = useState(0);
@@ -44,7 +58,7 @@ const ContainerDIV: React.FC = ({ children, layout, columns }) => {
 
   useEffect(() => {
     // Для выравнивания дочерних элементов указываем начальное значение ширины родителя.
-    const containerWidth = containerRef.current.getBoundingClientRect().width;
+    const containerWidth = (containerRef.current! as HTMLElement).getBoundingClientRect().width;
     setWidth(containerWidth);
 
     // Отслеживаем изменение ширины родителя, чтобы динамически изменять ширину дочерних элементов.
@@ -59,13 +73,15 @@ const ContainerDIV: React.FC = ({ children, layout, columns }) => {
     };
   }, [layout.w, window.innerWidth]); // Мониторим изменения ширины родителя и окна браузера.
 
-  const onDrop = (layout, layoutItem, _event) => {
-    const parentElement = _event.target.closest('.wrapper').dataset.id;
+  const handleDropElement = (_layout: Layout[], layoutItem: Layout, event: Event) => {
+    const targetElement = event.target as HTMLElement;
+    const parentElement = targetElement.closest('.wrapper') as HTMLElement;
+    const element = parentElement?.dataset.id;
 
-    dispatch(addElement({ draggableItem, layoutItem, parentElement }));
+    dispatch(addElement({ draggableItem, layoutItem, element }));
   };
 
-  const workspaceLayout = children.reduce((acc, el) => {
+  const workspaceLayout = children.reduce((acc: Layout[], el: T_BlockElement) => {
     return [...acc, el.layout];
   }, []);
 
@@ -79,7 +95,7 @@ const ContainerDIV: React.FC = ({ children, layout, columns }) => {
         margin={[0, 0]}
         isDraggable
         isDroppable
-        onDrop={onDrop}
+        onDrop={handleDropElement}
       >
         {children.map((el, indx) => {
           return (

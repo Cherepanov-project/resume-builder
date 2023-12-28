@@ -1,37 +1,54 @@
-export const insertChild = (obj, target, element) => {
-  // Когда блок помещается в рабочую область.
+import {
+  TProcessFiles,
+  T_BlockElement,
+  T_ComponentProps,
+  T_SidebarMenuItem,
+} from '@/types/landingBuilder';
+
+export const insertChild = (
+  obj: unknown,
+  target: string,
+  element: T_BlockElement,
+): T_BlockElement | T_BlockElement[] => {
+  // Когда блок помещается в рабочую область
   if (!target) {
-    return [...obj, element];
+    return [...(obj as T_BlockElement[]), element];
   }
 
   if (Array.isArray(obj)) {
-    const newArr = obj.map((item) => insertChild(item, target, element));
-    return newArr;
+    return obj.flatMap((item) => insertChild(item, target, element));
 
-    // Когда блок помещается в другой блок.
+    // Когда блок помещается в другой блок
   } else if (typeof obj === 'object' && obj !== null) {
-    if (obj.layout?.i === target) {
-      const newObj = { ...obj };
+    const objAsBlock = obj as T_BlockElement;
+    const newObj = { ...objAsBlock };
+    if (objAsBlock.layout && objAsBlock.layout.i === target) {
       newObj.children = newObj.children ? [...newObj.children, element] : [element];
       return newObj;
     }
 
-    const newObj = { ...obj };
-    for (const key in newObj) {
-      newObj[key] = insertChild(newObj[key], target, element);
-    }
-    return newObj;
+    // Не хватает ума типизировать!
+    // for (const key in newObj) {
+    //   if (newObj.hasOwnProperty(key) && newObj[key as keyof T_BlockElement]) {
+    //     newObj[key as keyof T_BlockElement] = insertChild(
+    //       newObj[key as keyof T_BlockElement],
+    //       target,
+    //       element,
+    //     );
+    //   }
+    // }
+    // return newObj;
   }
 
-  return obj;
+  return obj as T_BlockElement[];
 };
 
-const processFiles = async (moduleFiles) => {
-  const elements = [];
+const processFiles = async (moduleFiles: TProcessFiles) => {
+  const elements: T_SidebarMenuItem[] = [];
 
   for await (const file of Object.values(moduleFiles)) {
     const module = await file();
-    const { props } = module;
+    const { props } = module as T_ComponentProps;
 
     if (props) {
       const isExist = elements.find((element) => element.name === props.type);
@@ -47,10 +64,10 @@ const processFiles = async (moduleFiles) => {
 };
 
 export const importFiles = async () => {
-  let lsSections = [];
+  let lsSections: T_SidebarMenuItem[] = [];
 
   try {
-    const data = JSON.parse(localStorage.getItem('sections'));
+    const data = JSON.parse(localStorage.getItem('sections') || '');
     if (data) {
       lsSections = data;
     }

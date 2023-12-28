@@ -40,7 +40,7 @@ const layoutSlice = createSlice({
       };
 
       const renewElements = insertChild(state.activeElements, parentElement, newElement);
-      state.activeElements = [...renewElements];
+      state.activeElements = [...(renewElements as T_BlockElement[])];
     },
     // Копируем блок
     copyElement(state, action) {
@@ -99,7 +99,6 @@ const layoutSlice = createSlice({
     // Помещаем информацию о текущем перемещаемом блоке в стор
     setDraggableItem(state, action) {
       state.currentDraggableItem = action.payload;
-      console.log(action.payload);
     },
   },
 });

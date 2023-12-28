@@ -12,7 +12,7 @@ export const props = {
       source: 'atoms',
       props: {
         text: 'Default Title',
-        titleStyle: { textAlign: 'center', fontSize: 30 },
+        textStyle: { textAlign: 'center', fontSize: 30 },
         inputStyle: { width: '100%', border: 'none', fontWeight: 'bold' },
       },
       layout: { i: '1', x: 0, y: 0, w: 2, h: 2 },

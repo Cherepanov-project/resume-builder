@@ -1,17 +1,7 @@
+import { DynamicBlockProps } from '@/types/landingBuilder';
 import ContainerDIV from '@components/atoms/ContainerDIV';
 
-type SectionWrapperProps = {
-  props: {
-    text: string;
-    wrapperStyle: { [key: string]: string | number };
-    textStyle: { [key: string]: string | number };
-    inputStyle: { [key: string]: string | number };
-  };
-  children: object;
-  layout: object;
-};
-
-const SectionWrapper: React.FC<SectionWrapperProps> = (props) => {
+const SectionWrapper: React.FC<DynamicBlockProps> = (props) => {
   return <ContainerDIV children={props.children} layout={props.layout} />;
 };
 
