@@ -59,7 +59,7 @@ export type T_BlockElement = {
 };
 
 export type T_SidebarMenuItem = {
-  name: string;
+  name: string | undefined;
   list: T_BlockElement[];
 };
 
@@ -82,8 +82,8 @@ export type ContainerDIVProps = {
   layout: Layout;
   columns?: number;
   props: {
-    style: {[key: string]: string}
-  }
+    style: { [key: string]: string };
+  };
 };
 
 export type NestedListProps = {
@@ -113,22 +113,23 @@ export type TProcessFiles = Record<string, () => Promise<unknown>>;
 
 export type T_SectionElements = {
   name: string; // указание имени элмента-обертки (molecules)
-  title: string, // имя секции из input
-  type: string, // вид секции
-  columns: number,
-  source: string, // ресурс обертки
-  children: T_BlockElement[], // массив из объектов с параметрами basic LayoutBlock elements
+  title: string; // имя секции из input
+  type: string; // вид секции
+  columns: number;
+  source: string; // ресурс обертки
+  children: T_BlockElement[]; // массив из объектов с параметрами basic LayoutBlock elements
   layout: Layout;
-}
+};
 
 export type T_SectionElementProps = {
-    key: string;
-    text: string;
-    wrapperStyle: {[key: string]: string};
-    textStyle: {[key: string]: string};
-    inputStyle?: {[key: string]: string};
-    url?: string,
-}
+  key: string;
+  text: string;
+  wrapperStyle: { [key: string]: string };
+  textStyle: { [key: string]: string };
+  inputStyle?: { [key: string]: string };
+  url?: string;
+  style: { [key: string]: string };
+};
 
 export interface ILayoutBlock {
   props: T_SectionElementProps;

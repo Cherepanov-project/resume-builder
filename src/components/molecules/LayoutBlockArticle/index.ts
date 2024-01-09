@@ -5,7 +5,6 @@ export const props = {
   type: 'Articles',
   source: 'molecules',
   columns: 2,
-  props: {},
   children: [
     {
       name: 'LayoutBlockTitle',

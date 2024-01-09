@@ -6,9 +6,10 @@ export const props: T_BlockElement = {
   type: 'Simple Elements',
   source: 'atoms',
   props: {
+    key: 'title',
     text: 'Default Title',
     wrapperStyle: {},
-    textStyle: { textAlign: 'center', fontSize: 30 },
+    textStyle: { textAlign: 'center', fontSize: '30px' },
     inputStyle: { width: '100%', border: 'none', fontWeight: 'bold' },
   },
   children: [],
