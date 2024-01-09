@@ -38,7 +38,7 @@ const layoutSlice = createSlice({
           maxH: draggableItem.layout.maxH || Infinity,
         },
       };
-
+      console.log(newElement)
       const renewElements = insertChild(state.activeElements, parentElement, newElement);
       state.activeElements = [...(renewElements as T_BlockElement[])];
     },
@@ -100,6 +100,20 @@ const layoutSlice = createSlice({
     setDraggableItem(state, action) {
       state.currentDraggableItem = action.payload;
     },
+    setSectionStyle(state, action) {
+      const indx = state.activeElements.findIndex(
+        (element) => element.layout.i === action.payload.i,
+      );
+
+      state.activeElements[indx] = {
+        ...state.activeElements[indx],
+        props: {
+          style: {
+            ...action.payload.style,
+          }
+        },
+      };
+    }
   },
 });
 
@@ -112,4 +126,5 @@ export const {
   increaseElementColumns,
   decreaseElementColumns,
   setDraggableItem,
+  setSectionStyle
 } = layoutSlice.actions;

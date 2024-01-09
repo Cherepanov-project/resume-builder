@@ -50,7 +50,7 @@ const DynamicComponentRenderer: React.FC<DynamicComponentRendererProps> = ({
 };
 // ========================================================================== \\
 
-const ContainerDIV: React.FC<ContainerDIVProps> = ({ children, layout, columns }) => {
+const ContainerDIV: React.FC<ContainerDIVProps> = ({ children, layout, columns, props }) => {
   const dispatch = useAppDispatch();
   const containerRef = useRef(null);
   const [width, setWidth] = useState(0);
@@ -85,8 +85,18 @@ const ContainerDIV: React.FC<ContainerDIVProps> = ({ children, layout, columns }
     return [...acc, el.layout];
   }, []);
 
+  
+  let style;
+  try {
+    style = props.style;
+  } catch {
+    style = {
+      backgroundColor: 'white'
+    };
+  }
+
   return (
-    <div ref={containerRef} className="wrapper" data-id={layout.i}>
+    <div ref={containerRef} className="wrapper" data-id={layout.i} style={style}>
       <ResponsiveGridLayout
         layout={workspaceLayout}
         cols={columns}

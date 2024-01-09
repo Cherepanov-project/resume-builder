@@ -50,10 +50,10 @@ export interface IStyleFormObj {
 export type T_BlockElement = {
   name: string;
   title?: string;
-  type: string;
+  type?: string;
   source: string;
   columns?: number;
-  props?: { [key: string]: string | number | { [key: string]: string | number } };
+  props: T_SectionElementProps; //{[key: string]: string | {[key: string]: string}}
   children?: T_BlockElement[];
   layout: Layout;
 };
@@ -81,6 +81,9 @@ export type ContainerDIVProps = {
   children: T_BlockElement[];
   layout: Layout;
   columns?: number;
+  props: {
+    style: {[key: string]: string}
+  }
 };
 
 export type NestedListProps = {
@@ -92,7 +95,6 @@ export type DynamicBlockProps = {
   columns: number;
   props: {
     text: string;
-    url?: string;
     wrapperStyle: { [key: string]: string | number };
     textStyle: { [key: string]: string | number };
     inputStyle: { [key: string]: string | number };
@@ -106,6 +108,28 @@ export type TitleH1Props = {
     text: string;
   };
 };
-
 // Типизация вспомогательных функций -> utils/index.ts
 export type TProcessFiles = Record<string, () => Promise<unknown>>;
+
+export type T_SectionElements = {
+  name: string; // указание имени элмента-обертки (molecules)
+  title: string, // имя секции из input
+  type: string, // вид секции
+  columns: number,
+  source: string, // ресурс обертки
+  children: T_BlockElement[], // массив из объектов с параметрами basic LayoutBlock elements
+  layout: Layout;
+}
+
+export type T_SectionElementProps = {
+    key: string;
+    text: string;
+    wrapperStyle: {[key: string]: string};
+    textStyle: {[key: string]: string};
+    inputStyle?: {[key: string]: string};
+    url?: string,
+}
+
+export interface ILayoutBlock {
+  props: T_SectionElementProps;
+}

@@ -10,7 +10,7 @@ export const insertChild = (
   target: string,
   element: T_BlockElement,
 ): T_BlockElement | T_BlockElement[] => {
-  // Когда блок помещается в рабочую область
+  // Когда блок помещается в рабочую область.
   if (!target) {
     return [...(obj as T_BlockElement[]), element];
   }
@@ -18,7 +18,7 @@ export const insertChild = (
   if (Array.isArray(obj)) {
     return obj.flatMap((item) => insertChild(item, target, element));
 
-    // Когда блок помещается в другой блок
+    // Когда блок помещается в другой блок.
   } else if (typeof obj === 'object' && obj !== null) {
     const objAsBlock = obj as T_BlockElement;
     const newObj = { ...objAsBlock };

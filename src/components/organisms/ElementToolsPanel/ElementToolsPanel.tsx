@@ -18,6 +18,7 @@ import { useAppDispatch } from '@hooks/cvTemplateHooks';
 import { Layout } from 'react-grid-layout';
 
 import classes from './ElementToolsPanel.module.scss';
+import { initPanel } from '@/store/landingBuilder/settingsPanelSlice';
 
 type ElementToolsPanelProps = {
   layout: Layout;
@@ -25,6 +26,10 @@ type ElementToolsPanelProps = {
 
 const ElementToolsPanel: React.FC<ElementToolsPanelProps> = ({ layout }) => {
   const dispatch = useAppDispatch();
+
+  const handleSettings = () => {
+    dispatch(initPanel({ type: 'section', sectionID: layout.i, moduleID: '0'}))
+  }
 
   return (
     <div className={classes['tools-panel']}>
@@ -51,7 +56,7 @@ const ElementToolsPanel: React.FC<ElementToolsPanelProps> = ({ layout }) => {
         aria-label="Configure Item"
         title="Дополнительные настройки"
         color="primary"
-        onClick={() => console.log(layout)}
+        onClick={handleSettings}
       >
         <Settings />
       </IconButton>

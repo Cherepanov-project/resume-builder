@@ -8,7 +8,7 @@ export const props = {
     text: 'Link a',
     url: '#',
     wrapperStyle: {},
-    textStyle: { textAlign: 'center', fontSize: 30 },
+    titleStyle: { textAlign: 'center', fontSize: 30 },
     inputStyle: { width: '100%', border: 'none', fontWeight: 'bold' },
   },
   children: [],
