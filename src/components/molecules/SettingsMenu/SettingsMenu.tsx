@@ -24,10 +24,9 @@ const SettingsMenu = () => {
   const layoutDate = useAppSellector((state) => state.sectionsManager.layoutDate);
   const layoutRow = layoutDate[row];
 
-
   const [type, setType] = useState('');
   const [text, setText] = useState('');
-  const [ url, setUrl ] = useState('');
+  const [url, setUrl] = useState('');
 
   useEffect(() => {
     setTextToElement();
@@ -35,7 +34,7 @@ const SettingsMenu = () => {
 
   useEffect(() => {
     setUrlToElement();
-  }, [url])
+  }, [url]);
 
   const dispatch = useDispatch();
 
@@ -48,7 +47,7 @@ const SettingsMenu = () => {
         key: '',
         text: '',
         wrapperStyle: { display: 'block' },
-        textStyle: { display: 'block' }
+        textStyle: { display: 'block' },
       },
     },
     {
@@ -59,7 +58,7 @@ const SettingsMenu = () => {
         key: 'title',
         text: 'Block title text',
         wrapperStyle: { lineHeight: '20' },
-        textStyle: { textAlign: 'center', fontSize: '18px', },
+        textStyle: { textAlign: 'center', fontSize: '18px' },
         // inputStyle: { width: '100%', border: 'none', fontWeight: 'bold' },
       },
     },
@@ -83,7 +82,7 @@ const SettingsMenu = () => {
         key: 'image',
         text: 'https://tinyjpg.com/images/social/website.jpg',
         wrapperStyle: { textAlign: 'center' },
-        textStyle: { border: 'none', height: '100%', width: '100%'},
+        textStyle: { border: 'none', height: '100%', width: '100%' },
       },
     },
     {
@@ -93,10 +92,21 @@ const SettingsMenu = () => {
       title: {
         key: 'button',
         text: 'CLICK ME!',
-        wrapperStyle: { textAlign: 'center', height: '100%', display: 'flex', alignItems: 'center' },
-        textStyle: { fontSize: '16px', margin: '0px', width: '100%', height: '100%', backgroundColor: 'green' },
+        wrapperStyle: {
+          textAlign: 'center',
+          height: '100%',
+          display: 'flex',
+          alignItems: 'center',
+        },
+        textStyle: {
+          fontSize: '16px',
+          margin: '0px',
+          width: '100%',
+          height: '100%',
+          backgroundColor: 'green',
+        },
         // inputStyle: { width: '100%', border: 'none' },
-      }
+      },
     },
     {
       label: 'Block Anchor',
@@ -106,11 +116,11 @@ const SettingsMenu = () => {
         key: 'anchor',
         text: 'LINK TO',
         url: url,
-        wrapperStyle: { textAlign: 'center', width: '100%', height: '100%'},
-        textStyle: { fontSize: '16px', margin: '0px', width: '100%'},
+        wrapperStyle: { textAlign: 'center', width: '100%', height: '100%' },
+        textStyle: { fontSize: '16px', margin: '0px', width: '100%' },
         // inputStyle: { width: '100%', border: 'none' },
-      }
-    }
+      },
+    },
   ];
 
   // изменение ширины блока по X
@@ -148,7 +158,11 @@ const SettingsMenu = () => {
   // задание элементу children параметров при выборе или изменении basic элемента:
   // - name: название basic LayoutBlock элемента (molecules)
   // - props: пропсы для содержимого и стилизации содржимого
-  const setPropsToElement = (label: {key: string, title: T_SectionElementProps, value: string}, r: number, w: number) => {
+  const setPropsToElement = (
+    label: { key: string; title: T_SectionElementProps; value: string },
+    r: number,
+    w: number,
+  ) => {
     setType(label.key);
     setText(label.title.text);
     const id = String(r) + w;
@@ -156,7 +170,7 @@ const SettingsMenu = () => {
     const idxInRow = prevRow.findIndex((el: T_BlockElement) => {
       return String(el.layout.i) === id;
     });
-    console.log(prevRow[idxInRow])
+    console.log(prevRow[idxInRow]);
     prevRow[idxInRow].name = label.value;
     prevRow[idxInRow].props = label.title;
     const newRow = [...prevRow];
@@ -165,7 +179,7 @@ const SettingsMenu = () => {
 
   // изменение текста содержимого или url изображения
   // (при вводе в input и изменение стейта value)
-    const setTextToElement = () => {
+  const setTextToElement = () => {
     if (text) {
       const prevRow = JSON.parse(JSON.stringify(layoutDate[row]));
       const idxInRow = prevRow.findIndex((el: T_BlockElement) => {
@@ -200,7 +214,7 @@ const SettingsMenu = () => {
   const handleUrl = (e: React.ChangeEvent<HTMLInputElement>) => {
     const text = e.target.value;
     setUrl(`${text}`);
-  } 
+  };
 
   const setUrlToElement = () => {
     if (url) {
@@ -218,10 +232,10 @@ const SettingsMenu = () => {
     return (
       <label>
         Введите target url:
-        <input type='text' value={url} onChange={(e) => handleUrl(e)}></input>
+        <input type="text" value={url} onChange={(e) => handleUrl(e)}></input>
       </label>
     );
-  }
+  };
 
   return (
     <div className="settings-menu">
@@ -254,12 +268,17 @@ const SettingsMenu = () => {
         Choose element:
         <Select
           labelInValue
-          defaultValue={{ key: '', value: '', label: '', title: {
+          defaultValue={{
+            key: '',
+            value: '',
+            label: '',
+            title: {
               key: '',
               text: '',
               wrapperStyle: { display: 'block' },
-              textStyle: { display: 'block' }
-            }
+              textStyle: { display: 'block' },
+              style: { '': '' },
+            },
           }}
           style={{ width: 160 }}
           onChange={(label) => setPropsToElement(label, row, col)}
