@@ -11,6 +11,7 @@ export const props: T_BlockElement = {
     wrapperStyle: {},
     textStyle: { textAlign: 'center', fontSize: '30px' },
     inputStyle: { width: '100%', border: 'none', fontWeight: 'bold' },
+    style: { '': '' },
   },
   children: [],
   layout: { i: '', x: 0, y: 0, w: 1, h: 3 },
