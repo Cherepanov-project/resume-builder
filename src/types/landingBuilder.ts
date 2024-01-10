@@ -87,7 +87,7 @@ export type ContainerDIVProps = {
 };
 
 export type NestedListProps = {
-  name: string;
+  name: string | undefined;
   items: T_BlockElement[];
 };
 
