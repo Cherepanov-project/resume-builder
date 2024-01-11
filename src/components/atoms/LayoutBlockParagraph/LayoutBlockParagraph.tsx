@@ -1,14 +1,13 @@
+import { ILayoutBlock } from '@/types/landingBuilder';
 import { ChangeEvent, KeyboardEvent, useEffect, useState } from 'react';
 
-import { DynamicBlockProps } from '@/types/landingBuilder';
-
-const LayoutBlockParagraph: React.FC<DynamicBlockProps> = ({ props }) => {
+const LayoutBlockParagraph: React.FC<ILayoutBlock> = ({ props }) => {
   const [isEdit, setEdit] = useState(false);
   const [text, setText] = useState(props.text);
 
   useEffect(() => {
-    setText(props.text);
-  }, [props.text]);
+    setText(props.text)
+  }, [props.text]) 
 
   const handleDoubleClick = () => {
     setEdit(true);

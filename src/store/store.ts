@@ -7,6 +7,7 @@ import layoutReduser from './landingBuilder/layoutSlice';
 import utilityReducer from './landingBuilder/utilitySlice';
 import cardReducer from './cardSlice';
 import sectionsManagerSlice from './landingBuilder/sectionsManagerSlice';
+import settingsPanelSlice from './landingBuilder/settingsPanelSlice';
 
 export const store = configureStore({
   reducer: {
@@ -18,6 +19,7 @@ export const store = configureStore({
     utility: utilityReducer,
     card: cardReducer,
     sectionsManager: sectionsManagerSlice,
+    settingsPanel: settingsPanelSlice,
   },
 });
 

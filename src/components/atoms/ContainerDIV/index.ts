@@ -5,7 +5,11 @@ export const props = {
   type: 'Simple Elements',
   columns: 2,
   source: 'atoms',
-  props: {},
+  props: {
+    style: {
+      backgroundColor: 'white'
+    }
+  },
   children: [],
   layout: { i: '', x: 0, y: 0, w: 2, h: 3 },
 };
