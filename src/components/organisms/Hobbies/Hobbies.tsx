@@ -41,9 +41,11 @@ const Hobbies = () => {
           <div key={index}>
             <BasicInput label="Your hobby" key={index} id={`${fieldName}.label`} />
 
-            <Button onClick={() => removeField(index)} variant="contained">
-              Remove
-            </Button>
+            {index > 0 ? (
+              <Button onClick={() => removeField(index)} variant="contained">
+                Remove
+              </Button>
+            ) : null}
           </div>
         );
       })}

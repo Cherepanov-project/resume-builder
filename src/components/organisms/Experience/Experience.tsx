@@ -67,9 +67,12 @@ const Experience = () => {
             >
               <div className="AccordionSummary__content">
                 <Typography>Experience {index + 1}</Typography>
-                <Button onClick={() => removeField(index)} variant="contained">
-                  Remove
-                </Button>
+
+                {index > 0 ? (
+                  <Button onClick={() => removeField(index)} variant="contained">
+                    Remove
+                  </Button>
+                ) : null}
               </div>
             </AccordionSummary>
             <AccordionDetails>

@@ -33,8 +33,8 @@ export interface ITemporaryCvDataSliceProps {
 
 export const temporaryCvDataSlice: ITemporaryCvDataSliceProps = {
   personalData: {
-    fullName: 'Luke Skywalker',
-    adress: 'Tatooine',
+    fullName: 'Anton',
+    adress: 'Saint-Petersburg',
     bio: "Hello, it's nice to meet you And can you tell me where I am? I don't know how I got here But I think I'm starting to understand",
     position: 'Jedi Master',
     phone: '0-000-000-00-00',

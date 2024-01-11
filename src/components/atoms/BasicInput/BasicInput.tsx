@@ -6,18 +6,19 @@ interface IBasicInput {
   id: string;
   label?: string;
   placeholder?: string;
+  // reset?: any;
   // methods: UseFormMethods<FieldValues> | undefined;
 }
 
 const BasicInput: React.FC<IBasicInput> = ({ id, label, placeholder }) => {
-  const { control, watch } = useFormContext();
+  const { control } = useFormContext();
 
   return (
     <Controller
       name={id || 'defaultName'}
       control={control}
       defaultValue="" // Добавляем defaultValue
-      render={({ field: { onChange }, fieldState: { error } }) => (
+      render={({ field: { onChange, onBlur, value }, fieldState: { error } }) => (
         <TextField
           id={id}
           label={label}
@@ -28,8 +29,11 @@ const BasicInput: React.FC<IBasicInput> = ({ id, label, placeholder }) => {
           sx={{ mb: '20px' }}
           helperText={error ? error.message : null}
           error={!!error}
-          value={watch(id)}
+          value={value}
+          // value={watch(id)}
           onChange={onChange}
+          onBlur={onBlur}
+          // reset={reset}
         />
       )}
     />

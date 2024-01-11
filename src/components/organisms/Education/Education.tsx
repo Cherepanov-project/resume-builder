@@ -62,9 +62,12 @@ const Education = () => {
             <AccordionSummary aria-controls="panel1a-content" id="panel1a-header">
               <div className="AccordionSummary__content">
                 <Typography>Education {index + 1}</Typography>
-                <Button onClick={() => removeField(index)} variant="contained">
-                  Remove
-                </Button>
+
+                {index > 0 ? (
+                  <Button onClick={() => removeField(index)} variant="contained">
+                    Remove
+                  </Button>
+                ) : null}
               </div>
             </AccordionSummary>
             <AccordionDetails>

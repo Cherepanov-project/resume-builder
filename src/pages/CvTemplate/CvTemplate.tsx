@@ -5,6 +5,7 @@ import { yupResolver } from '@hookform/resolvers/yup';
 import { DevTool } from '@hookform/devtools';
 import classes from './CvTemplate.module.scss';
 import DemoCv from '../../components/organisms/DemoCv';
+// import { temporaryCvDataSlice } from '../../assets/const';
 
 import PersonalInfo from '../../components/organisms/PersonalInfo';
 import Education from '../../components/organisms/Education';
@@ -23,23 +24,27 @@ import Typography from '@mui/material/Typography';
 // import { useAppSellector } from '../../hooks/cvTemplateHooks';
 
 const validationSchema = yup.object().shape({
-  'full-name': yup.string().min(3).max(20).required(),
-  'job-title': yup.string().min(3).max(20).required(),
-  address: yup.string().min(3).max(20).required(),
-  website: yup.string().required(),
-  phone: yup.string().required(),
-  email: yup.string().required(),
-  bio: yup.string().required(),
+  'full-name': yup.string().required('Is a required field').min(3).max(20),
+  'job-title': yup.string().required('Is a required field').min(3).max(20),
+  address: yup.string().required('Is a required field').min(3).max(20),
+  website: yup.string().required('Is a required field').url().nullable(),
+  phone: yup
+    .number()
+    .typeError('Amount must be a number')
+    .required('Please provide plan cost.')
+    .min(0, 'Too little'),
+  email: yup.string().required('Is a required field').email(),
+  bio: yup.string().required('Is a required field'),
 
   education: yup
     .array()
     .of(
       yup.object().shape({
-        study: yup.string().required(),
-        degree: yup.string().required(),
-        school: yup.string().required(),
-        'education-from-year': yup.date().required(),
-        'education-to-year': yup.date().required(),
+        study: yup.string().required('Is a required field'),
+        degree: yup.string().required('Is a required field'),
+        school: yup.string().required('Is a required field'),
+        'education-from-year': yup.date().required('Is a required field'),
+        'education-to-year': yup.date().required('Is a required field'),
       }),
     )
     .required(),
@@ -48,25 +53,25 @@ const validationSchema = yup.object().shape({
     .array()
     .of(
       yup.object().shape({
-        'work-title': yup.string().required(),
-        company: yup.string().required(),
-        'experience-from-year': yup.string().required(),
-        'experience-to-year': yup.string().required(),
-        'company-info': yup.string().required(),
+        'work-title': yup.string().required('Is a required field'),
+        company: yup.string().required('Is a required field'),
+        'experience-from-year': yup.string().required('Is a required field'),
+        'experience-to-year': yup.string().required('Is a required field'),
+        'company-info': yup.string().required('Is a required field'),
       }),
     )
     .required(),
 
   social: yup.array().of(
     yup.object().shape({
-      'social-name': yup.string().required(),
-      'social-link': yup.string().required(),
+      'social-name': yup.string().required('Is a required field'),
+      'social-link': yup.string().required('Is a required field'),
     }),
   ),
 
   hobby: yup.array().of(
     yup.object().shape({
-      label: yup.string().required(),
+      label: yup.string().required('Is a required field'),
     }),
   ),
 });
@@ -83,7 +88,7 @@ const stepContent = (element: JSX.Element) => {
 
 const CvTemplate = () => {
   const methods = useForm<IFormInputs>({
-    mode: 'onTouched',
+    mode: 'onSubmit',
     resolver: yupResolver(validationSchema),
     defaultValues: {
       'full-name': '',
@@ -109,7 +114,7 @@ const CvTemplate = () => {
           'company-info': '',
         },
       ],
-      phone: '',
+      phone: undefined,
       hobby: [
         {
           label: '',
@@ -205,6 +210,7 @@ const CvTemplate = () => {
     console.log(data);
     const getFields = methods.getValues();
     console.log(getFields);
+
     handleNext();
   };
 
@@ -223,38 +229,38 @@ const CvTemplate = () => {
                 <Stepper
                   activeStep={activeStep}
                   orientation="vertical"
-                  onChange={async () => {
-                    switch (activeStep) {
-                      case 0:
-                        await methods.trigger([
-                          'full-name',
-                          'job-title',
-                          'address',
-                          'website',
-                          'phone',
-                          'email',
-                          'bio',
-                        ]);
-                        // isValid = true;
-                        break;
+                  // onChange={async () => {
+                  //   switch (activeStep) {
+                  //     case 0:
+                  //       await methods.trigger([
+                  //         // 'full-name',
+                  //         // 'job-title',
+                  //         // 'address',
+                  //         // 'website',
+                  //         // 'phone',
+                  //         // 'email',
+                  //         // 'bio',
+                  //       ]);
+                  //       // isValid = true;
+                  //       break;
 
-                      case 1:
-                        await methods.trigger('education');
-                        break;
+                  //     case 1:
+                  //       // await methods.trigger('education');
+                  //       break;
 
-                      case 2:
-                        await methods.trigger('experience');
-                        break;
+                  //     case 2:
+                  //       // await methods.trigger('experience');
+                  //       break;
 
-                      case 3:
-                        await methods.trigger('social');
-                        break;
+                  //     case 3:
+                  //       // await methods.trigger('social');
+                  //       break;
 
-                      case 4:
-                        await methods.trigger(['hobby']);
-                        break;
-                    }
-                  }}
+                  //     case 4:
+                  //       // await methods.trigger(['hobby']);
+                  //       break;
+                  //   }
+                  // }}
                 >
                   {steps.map((step) => (
                     <Step key={step.id}>
@@ -287,13 +293,16 @@ const CvTemplate = () => {
                     </Step>
                   ))}
                 </Stepper>
+
+                {/* ПАНЕЛЬ РАЗРАБОТЧИКА ХУКФОРМ */}
+
                 <DevTool control={methods.control} placement="top-left" />
               </FormProvider>
               {activeStep === steps.length && (
                 <Paper square elevation={0} sx={{ p: 3 }}>
                   <Typography>All steps completed - you&apos;re finished</Typography>
                   <Button onClick={handleReset} sx={{ mt: 1, mr: 1 }}>
-                    Reset
+                    AT FIRST
                   </Button>
                 </Paper>
               )}

@@ -50,9 +50,11 @@ const Social = () => {
           <Accordion disableGutters sx={{ mb: 2 }} key={index}>
             <AccordionSummary aria-controls="panel1a-content" id="panel1a-header">
               <Typography>Social {index + 1}</Typography>
-              <Button onClick={() => removeField(index)} variant="contained">
-                Remove
-              </Button>
+              {index > 0 ? (
+                <Button onClick={() => removeField(index)} variant="contained">
+                  Remove
+                </Button>
+              ) : null}
             </AccordionSummary>
             <AccordionDetails>
               <fieldset name={fieldName} key={fieldName}>
