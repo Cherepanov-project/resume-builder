@@ -21,6 +21,9 @@ import StepContent from '@mui/material/StepContent';
 import Button from '@mui/material/Button';
 import Paper from '@mui/material/Paper';
 import Typography from '@mui/material/Typography';
+import { useDispatch } from 'react-redux';
+
+import { addAllPersonalInfo } from '../../store/cvTemplate/allPersonaInfoSlice';
 // import { useAppSellector } from '../../hooks/cvTemplateHooks';
 
 const validationSchema = yup.object().shape({
@@ -206,12 +209,15 @@ const CvTemplate = () => {
     setActiveStep(0);
   };
 
+  const dispatch = useDispatch();
+
   const onSubmit = (data: IFormInputs) => {
     console.log(data);
     const getFields = methods.getValues();
     console.log(getFields);
 
     handleNext();
+    dispatch(addAllPersonalInfo(data));
   };
 
   return (

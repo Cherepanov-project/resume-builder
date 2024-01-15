@@ -1,3 +1,6 @@
+// import { useSelector } from 'react-redux';
+// export const selectAllPersonaInfo = (state) => state.personalInfo.numOfPersonaInfo;
+
 type PersonalDateKeys = 'fullName' | 'adress' | 'bio' | 'position' | 'phone' | 'website' | 'mail';
 type EducationDataTypeKeys = 'name' | 'position' | 'fromYear' | 'toYear' | 'description';
 type ExperienceDataTypeKyes = 'name' | 'position' | 'fromYear' | 'toYear' | 'description';
@@ -33,7 +36,7 @@ export interface ITemporaryCvDataSliceProps {
 
 export const temporaryCvDataSlice: ITemporaryCvDataSliceProps = {
   personalData: {
-    fullName: 'Anton',
+    fullName: 'Artem Chuprak',
     adress: 'Saint-Petersburg',
     bio: "Hello, it's nice to meet you And can you tell me where I am? I don't know how I got here But I think I'm starting to understand",
     position: 'Jedi Master',
