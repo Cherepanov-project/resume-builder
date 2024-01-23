@@ -16,7 +16,7 @@ interface IHeaderPDF extends PersonalDataType {
 export const HeaderPDF = (props: IHeaderPDF) => {
   // позже исправить, должны пояыляться из формы
   const imgPath = photo;
-  const { fullName, position, adress, phone, website, mail, style } = props;
+  const { fullName, position, address, phone, website, email, style } = props;
   const {
     Header,
     HeaderWrapper,
@@ -36,7 +36,7 @@ export const HeaderPDF = (props: IHeaderPDF) => {
   const propsImage = { imgPath: imgPath, style: Img };
   const propsSubtitle = { str: position, style: { Text: { ...Text, ...TextSpecial } } };
   const propsConcats = {
-    data: { adress, phone, website, mail },
+    data: { address, phone, website, email },
     style: { Subtitle: SubtitleNone, Contact, ContactLink, ContactIcon, Text },
   };
 

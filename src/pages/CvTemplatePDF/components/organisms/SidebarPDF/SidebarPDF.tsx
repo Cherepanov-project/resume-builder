@@ -17,7 +17,7 @@ export const SidebarPDF = (props: ISidebarPDF) => {
   // позже исправить, должны пояыляться из Формы
   const imgPath = photo;
 
-  const { fullName, bio, position, adress, phone, website, mail, style } = props;
+  const { fullName, bio, position, address, phone, website, email, style } = props;
   const {
     Sidebar,
     SidebarWrapper,
@@ -38,7 +38,7 @@ export const SidebarPDF = (props: ISidebarPDF) => {
   const propsSubtitle = { str: position, style: { Text: { ...Text, ...TextSpecial } } };
   const propsAbout = { bio, style: { Text, Subtitle: Subtitle } };
   const propsContacts = {
-    data: { phone, mail, website, adress },
+    data: { phone, email, website, address },
     style: { Subtitle, Contact, ContactLink, ContactIcon, Text },
   };
 

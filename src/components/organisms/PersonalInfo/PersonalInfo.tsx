@@ -11,8 +11,8 @@ const PersonalInfo = () => {
       <PortraitBox />
 
       <Stack className={classes.personalInfo__inputGroup} spacing={2} direction="row">
-        <BasicInput id="full-name" label="Full Name" />
-        <BasicInput id="job-title" label="Job Title" />
+        <BasicInput id="fullName" label="Full Name" />
+        <BasicInput id="position" label="Job Title" />
       </Stack>
 
       <Stack className={classes.personalInfo__inputGroup} spacing={2} direction="row">

@@ -22,7 +22,20 @@ interface IMainPDFProps {
 
 export const MainPDF = (props: IMainPDFProps) => {
   const { data, style } = props;
-  const { educationData, experienceData, socialData, hobbyData } = data;
+  const { experienceData, socialData, hobbyData } = data;
+
+  const educationData = [
+    {
+      description: 'hshcjhcjcsjsa',
+      position: 'hshcjhcjcsjsa',
+      fromYear: 2,
+      toYear: 2,
+      name: 'hshcjhcjcsjsa',
+    },
+  ];
+
+  console.log('EDUCATION DATA', data);
+
   const {
     Main,
     Subtitle,

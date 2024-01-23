@@ -8,7 +8,7 @@ import adressIcon from '../../../assets/icons/icon-adress.png';
 import { StyleOptionType, StyleType } from '../../../const';
 import { TextPDF } from '../../atoms';
 
-type ContactNameType = 'phone' | 'mail' | 'website' | 'adress';
+type ContactNameType = 'phone' | 'email' | 'website' | 'address';
 
 interface IContactPDF {
   contactName: ContactNameType;
@@ -41,7 +41,7 @@ export const ContactPDF = ({ contactName, contactData, style }: IContactPDF) => 
       iconName = phoneIcon;
       break;
 
-    case 'mail':
+    case 'email':
       contactPDFContent = LinkContact(srcLink, contactData, ContactLink);
       iconName = mailIcon;
       break;
@@ -52,7 +52,7 @@ export const ContactPDF = ({ contactName, contactData, style }: IContactPDF) => 
       iconName = siteIcon;
       break;
 
-    case 'adress':
+    case 'address':
       contactPDFContent = TextContact(contactData, Text);
       iconName = adressIcon;
       break;

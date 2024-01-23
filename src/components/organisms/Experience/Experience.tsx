@@ -33,7 +33,7 @@ const Experience = () => {
 
   const addField = () => {
     setCounter((prevCounter) => prevCounter + 1);
-    setValue('experience', [...getValues('experience'), defaultValue]);
+    setValue('experienceData', [...getValues('experienceData'), defaultValue]);
   };
 
   const removeField = (index: number) => {
@@ -43,20 +43,20 @@ const Experience = () => {
     }
     if (index !== 0) {
       resp = [
-        ...getValues('experience').slice(0, index),
-        ...getValues('experience').slice(index + 1),
+        ...getValues('experienceData').slice(0, index),
+        ...getValues('experienceData').slice(index + 1),
       ];
     } else {
-      resp = [...getValues('experience').slice(index + 1)];
+      resp = [...getValues('experienceData').slice(index + 1)];
     }
-    setValue('experience', resp);
+    setValue('experienceData', resp);
     setCounter((prevCounter) => prevCounter - 1);
   };
 
   return (
     <Box className={classes.experience}>
-      {getValues('experience').map((_: ExperienceType, index: number) => {
-        const fieldName = `experience[${index}]`;
+      {getValues('experienceData').map((_: ExperienceType, index: number) => {
+        const fieldName = `experienceData[${index}]`;
 
         return (
           <Accordion disableGutters sx={{ mb: 2 }} key={index}>

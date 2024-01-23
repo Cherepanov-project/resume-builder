@@ -27,8 +27,8 @@ import { addAllPersonalInfo } from '../../store/cvTemplate/allPersonaInfoSlice';
 // import { useAppSellector } from '../../hooks/cvTemplateHooks';
 
 const validationSchema = yup.object().shape({
-  'full-name': yup.string().required('Is a required field').min(3).max(20),
-  'job-title': yup.string().required('Is a required field').min(3).max(20),
+  fullName: yup.string().required('Is a required field').min(3).max(20),
+  position: yup.string().required('Is a required field').min(3).max(20),
   address: yup.string().required('Is a required field').min(3).max(20),
   website: yup.string().required('Is a required field').url().nullable(),
   phone: yup
@@ -39,7 +39,7 @@ const validationSchema = yup.object().shape({
   email: yup.string().required('Is a required field').email(),
   bio: yup.string().required('Is a required field'),
 
-  education: yup
+  educationData: yup
     .array()
     .of(
       yup.object().shape({
@@ -52,7 +52,7 @@ const validationSchema = yup.object().shape({
     )
     .required(),
 
-  experience: yup
+  experienceData: yup
     .array()
     .of(
       yup.object().shape({
@@ -65,14 +65,14 @@ const validationSchema = yup.object().shape({
     )
     .required(),
 
-  social: yup.array().of(
+  socialData: yup.array().of(
     yup.object().shape({
       'social-name': yup.string().required('Is a required field'),
       'social-link': yup.string().required('Is a required field'),
     }),
   ),
 
-  hobby: yup.array().of(
+  hobbyData: yup.array().of(
     yup.object().shape({
       label: yup.string().required('Is a required field'),
     }),
@@ -94,11 +94,15 @@ const CvTemplate = () => {
     mode: 'onSubmit',
     resolver: yupResolver(validationSchema),
     defaultValues: {
-      'full-name': '',
-      'job-title': '',
+      fullName: '',
+      position: '',
       address: '',
       bio: '',
-      education: [
+      email: '',
+      phone: undefined,
+      website: '',
+
+      educationData: [
         {
           study: '',
           degree: '',
@@ -107,8 +111,8 @@ const CvTemplate = () => {
           'education-to-year': undefined,
         },
       ],
-      email: '',
-      experience: [
+
+      experienceData: [
         {
           'work-title': '',
           company: '',
@@ -117,19 +121,18 @@ const CvTemplate = () => {
           'company-info': '',
         },
       ],
-      phone: undefined,
-      hobby: [
+
+      hobbyData: [
         {
           label: '',
         },
       ],
-      social: [
+      socialData: [
         {
           'social-name': '',
           'social-link': '',
         },
       ],
-      website: '',
     },
   });
   const [activeStep, setActiveStep] = React.useState(0);
@@ -140,8 +143,8 @@ const CvTemplate = () => {
     switch (activeStep) {
       case 0:
         isValid = await methods.trigger([
-          'full-name',
-          'job-title',
+          'fullName',
+          'position',
           'address',
           'website',
           'phone',
@@ -152,19 +155,19 @@ const CvTemplate = () => {
         break;
 
       case 1:
-        isValid = await methods.trigger('education');
+        isValid = await methods.trigger('educationData');
         break;
 
       case 2:
-        isValid = await methods.trigger('experience');
+        isValid = await methods.trigger('experienceData');
         break;
 
       case 3:
-        isValid = await methods.trigger('social');
+        isValid = await methods.trigger('socialData');
         break;
 
       case 4:
-        isValid = await methods.trigger(['hobby']);
+        isValid = await methods.trigger(['hobbyData']);
         break;
     }
 
