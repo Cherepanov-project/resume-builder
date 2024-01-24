@@ -117,9 +117,9 @@
 }
 
 .bg-form__square {
-  width: 40px; 
-  height: 40px; 
-  border: 1px solid black; 
+  width: 40px;
+  height: 40px;
+  border: 1px solid black;
   border-radius: 5px;
 }
 
@@ -161,4 +161,8 @@
   & span {
     margin-left: 15px;
   }
+}
+
+.notification {
+  margin-top: 15px;
 }

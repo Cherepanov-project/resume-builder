@@ -1,0 +1,18 @@
+.container {
+  display: flex;
+  align-items: center;
+  column-gap: 7px;
+}
+
+.label {
+  display: flex;
+  align-items: center;
+  background-color: transparent;
+  font-family: 'Inter', sans-serif;
+  font-size: 16px;
+  padding: 0;
+}
+
+.checkbox {
+  cursor: pointer;
+}

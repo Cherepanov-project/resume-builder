@@ -108,6 +108,33 @@ export type TitleH1Props = {
     text: string;
   };
 };
+
+export interface SettingsInputItem {
+  id: string;
+  value: string | number;
+  label: string | number;
+}
+
+export type ComponentType = string;
+
+export interface ElementsProps {
+  props: { [key: string]: SettingsInputItem[] };
+  layout: Layout;
+}
+
+export interface SettingsInputUpdateProps {
+  itemsList: SettingsInputItem[];
+  setItemsList: React.Dispatch<React.SetStateAction<SettingsInputItem[]>>;
+}
+
+export interface ButtonsSettingsPanelProps {
+  elementId: string;
+  itemsList: SettingsInputItem[];
+  id: string;
+  style: React.CSSProperties;
+  СheckingLabel: (key: SettingsInputItem[]) => boolean;
+}
+
 // Типизация вспомогательных функций -> utils/index.ts
 export type TProcessFiles = Record<string, () => Promise<unknown>>;
 
