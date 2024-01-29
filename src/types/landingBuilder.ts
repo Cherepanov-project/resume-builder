@@ -109,30 +109,40 @@ export type TitleH1Props = {
   };
 };
 
-export interface SettingsInputItem {
+export interface ISettingsInputItem {
   id: string;
   value: string | number;
-  label: string | number;
 }
 
-export type ComponentType = string;
+export type T_Id = string;
+export type T_Value = string | number;
 
-export interface ElementsProps {
-  props: { [key: string]: SettingsInputItem[] };
+export interface IElementsProps {
+  props: { [key: string]: ISettingsInputItem[] };
   layout: Layout;
 }
 
-export interface SettingsInputUpdateProps {
-  itemsList: SettingsInputItem[];
-  setItemsList: React.Dispatch<React.SetStateAction<SettingsInputItem[]>>;
+export interface ISettingsInputUpdateProps {
+  itemsList: ISettingsInputItem[];
+  setItemsList: React.Dispatch<React.SetStateAction<ISettingsInputItem[]>>;
 }
 
-export interface ButtonsSettingsPanelProps {
+export interface IButtonsSettingsPanelProps {
   elementId: string;
-  itemsList: SettingsInputItem[];
+  itemsList: ISettingsInputItem[];
   id: string;
   style: React.CSSProperties;
-  СheckingLabel: (key: SettingsInputItem[]) => boolean;
+  СheckingLabel: (key: ISettingsInputItem[]) => boolean;
+  onClose: () => void;
+}
+
+export interface IMasonryGalleryProps {
+  props: {
+    itemData: {
+      img: string;
+      title: string;
+    }[];
+  };
 }
 
 // Типизация вспомогательных функций -> utils/index.ts

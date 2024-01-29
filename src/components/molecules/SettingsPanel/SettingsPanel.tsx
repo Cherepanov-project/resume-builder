@@ -6,7 +6,7 @@ import React, { useEffect, useLayoutEffect, useRef, useState } from 'react';
 import ContainerDIVSettings from '@/components/atoms/ContainerDIVSettings';
 import InputUpdate from '../InputUpdate';
 import ButtonsSettingsPanel from '@/components/atoms/ButtonsSettingsPanel';
-import { SettingsInputItem } from '@/types/landingBuilder';
+import { ISettingsInputItem } from '@/types/landingBuilder';
 import { Alert } from 'antd';
 
 const SettingsPanel: React.FC = () => {
@@ -32,6 +32,7 @@ const SettingsPanel: React.FC = () => {
   };
 
   const handleClose = () => {
+    setItemsList(prevList);
     dispatch(closePanel());
   };
 
@@ -44,10 +45,14 @@ const SettingsPanel: React.FC = () => {
 
   const [itemsList, setItemsList] = useState(currentList || []);
   const [style, setStyle] = useState({});
+  const [prevList, setPrevList] = useState(currentList || []);
 
-  useEffect(() => setItemsList(currentList || []), [currentElement]);
+  useEffect(() => {
+    setPrevList(currentList || []);
+    setItemsList(currentList || []);
+  }, [currentElement]);
 
-  function СheckingLabel(list: SettingsInputItem[]) {
+  function СheckingLabel(list: ISettingsInputItem[]) {
     const labelsList = list.map((item) => item.value);
     return new Set(labelsList).size !== labelsList.length;
   }
@@ -74,6 +79,7 @@ const SettingsPanel: React.FC = () => {
         id={id}
         style={style}
         СheckingLabel={СheckingLabel}
+        onClose={handleClose}
       />
     </div>
   ) : null;

@@ -1,7 +1,7 @@
-import Masonry from './Masonry';
+import MasonryGallery from './MasonryGallery';
 
 export const props = {
-  name: 'Masonry',
+  name: 'MasonryGallery',
   type: 'Simple Elements',
   source: 'atoms',
   props: {
@@ -54,30 +54,10 @@ export const props = {
         img: 'https://images.unsplash.com/photo-1444418776041-9c7e33cc5a9c',
         title: 'Coffee',
       },
-      {
-        img: 'https://images.unsplash.com/photo-1627000086207-76eabf23aa2e',
-        title: 'Camping Car',
-      },
-      {
-        img: 'https://images.unsplash.com/photo-1533827432537-70133748f5c8',
-        title: 'Hats',
-      },
-      {
-        img: 'https://images.unsplash.com/photo-1567306301408-9b74779a11af',
-        title: 'Tomato basil',
-      },
-      {
-        img: 'https://images.unsplash.com/photo-1627328561499-a3584d4ee4f7',
-        title: 'Mountain',
-      },
-      {
-        img: 'https://images.unsplash.com/photo-1589118949245-7d38baf380d6',
-        title: 'Bike',
-      },
     ],
   },
   children: [],
   layout: { i: null, x: 0, y: 0, w: 1, h: 3 },
 };
 
-export default Masonry;
+export default MasonryGallery;
