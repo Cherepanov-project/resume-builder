@@ -70,7 +70,9 @@ export type T_ComponentProps = {
 // Типизация компонентов
 export type DynamicComponentRendererProps = {
   Component?: string;
-  props?: { [key: string]: string | number | { [key: string]: string | number } };
+  props?: {
+    [key: string]: string | number | { [key: string]: string | number } | ISettingsInputItem[];
+  };
   columns?: number;
   source: string;
   children?: T_BlockElement[];
@@ -145,6 +147,12 @@ export interface IMasonryGalleryProps {
   };
 }
 
+export interface IElementProps {
+  RadioGroup?: ISettingsInputItem[];
+  CheckboxGroup?: ISettingsInputItem[];
+  SelectList?: ISettingsInputItem[];
+}
+
 // Типизация вспомогательных функций -> utils/index.ts
 export type TProcessFiles = Record<string, () => Promise<unknown>>;
 
@@ -159,13 +167,16 @@ export type T_SectionElements = {
 };
 
 export type T_SectionElementProps = {
-  key: string;
-  text: string;
-  wrapperStyle: { [key: string]: string };
-  textStyle: { [key: string]: string };
+  key?: string;
+  text?: string;
+  wrapperStyle?: { [key: string]: string };
+  textStyle?: { [key: string]: string };
   inputStyle?: { [key: string]: string };
   url?: string;
-  style: { [key: string]: string };
+  style?: { [key: string]: string };
+  RadioGroup?: ISettingsInputItem[];
+  CheckboxGroup?: ISettingsInputItem[];
+  SelectList?: ISettingsInputItem[];
 };
 
 export interface ILayoutBlock {

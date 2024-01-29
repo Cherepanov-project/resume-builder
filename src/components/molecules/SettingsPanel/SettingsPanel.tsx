@@ -6,7 +6,7 @@ import React, { useEffect, useLayoutEffect, useRef, useState } from 'react';
 import ContainerDIVSettings from '@/components/atoms/ContainerDIVSettings';
 import InputUpdate from '../InputUpdate';
 import ButtonsSettingsPanel from '@/components/atoms/ButtonsSettingsPanel';
-import { ISettingsInputItem } from '@/types/landingBuilder';
+import { IElementProps, ISettingsInputItem } from '@/types/landingBuilder';
 import { Alert } from 'antd';
 
 const SettingsPanel: React.FC = () => {
@@ -38,10 +38,22 @@ const SettingsPanel: React.FC = () => {
 
   const { activeElements } = useAppSellector((state) => state.layout);
   const currentElement = activeElements.find((item) => item.layout.i === id);
-  const props = currentElement?.props;
+  const props: IElementProps | undefined = currentElement?.props;
   const name = currentElement?.name;
 
-  const currentList = props && name ? props[name] : [];
+  function findPropsName(props: IElementProps | undefined): ISettingsInputItem[] | undefined {
+    if (name === 'RadioGroup') {
+      return props?.RadioGroup;
+    } else if (name === 'CheckboxGroup') {
+      return props?.CheckboxGroup;
+    } else if (name === 'SelectList') {
+      return props?.SelectList;
+    }
+  }
+
+  const propsName = findPropsName(props);
+
+  const currentList = props && name ? propsName : [];
 
   const [itemsList, setItemsList] = useState(currentList || []);
   const [style, setStyle] = useState({});
@@ -57,6 +69,9 @@ const SettingsPanel: React.FC = () => {
     return new Set(labelsList).size !== labelsList.length;
   }
 
+  const isButtonsPanelVisible =
+    name === 'RadioGroup' || name === 'CheckboxGroup' || name === 'SelectList';
+
   return isShown ? (
     <div ref={panelRef} className="list__wrap">
       <div className={'list__title'}>
@@ -69,10 +84,12 @@ const SettingsPanel: React.FC = () => {
         showIcon
         className="notification"
       />
-      <InputUpdate itemsList={itemsList} setItemsList={setItemsList} />
+      {isButtonsPanelVisible && <InputUpdate itemsList={itemsList} setItemsList={setItemsList} />}
+
       <div className="settings-panel">
         {type === 'section' && <ContainerDIVSettings setStyle={setStyle} />}
       </div>
+
       <ButtonsSettingsPanel
         elementId={id}
         itemsList={itemsList}
