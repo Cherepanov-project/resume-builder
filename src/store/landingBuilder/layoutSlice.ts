@@ -125,6 +125,7 @@ const layoutSlice = createSlice({
         ...state.activeElements[idx],
         props: {
           [state.activeElements[idx].name]: [...action.payload.values],
+          text: '',
         },
       };
     },

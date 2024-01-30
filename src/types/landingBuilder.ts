@@ -168,7 +168,7 @@ export type T_SectionElements = {
 
 export type T_SectionElementProps = {
   key?: string;
-  text?: string;
+  text: string;
   wrapperStyle?: { [key: string]: string };
   textStyle?: { [key: string]: string };
   inputStyle?: { [key: string]: string };
