@@ -1,10 +1,13 @@
 import React from 'react';
+import { useCallback, useState } from 'react';
 import { useForm, FormProvider } from 'react-hook-form';
 import * as yup from 'yup';
 import { yupResolver } from '@hookform/resolvers/yup';
 import { DevTool } from '@hookform/devtools';
 import classes from './CvTemplate.module.scss';
 import DemoCv from '../../components/organisms/DemoCv';
+import { DemoCvModal } from '../../components/organisms/DemoCvModal';
+import { CvTemplatePDF } from '../CvTemplatePDF';
 // import { temporaryCvDataSlice } from '../../assets/const';
 
 import PersonalInfo from '../../components/organisms/PersonalInfo';
@@ -46,7 +49,7 @@ const validationSchema = yup.object().shape({
         study: yup.string().required('Is a required field'),
         degree: yup.string().required('Is a required field'),
         school: yup.string().required('Is a required field'),
-        'education-from-year': yup.date().required('Is a required field'),
+        educationFromYear: yup.date().required('Is a required field'),
         'education-to-year': yup.date().required('Is a required field'),
       }),
     )
@@ -90,6 +93,12 @@ const stepContent = (element: JSX.Element) => {
 };
 
 const CvTemplate = () => {
+  const [isOpen, setIsOpen] = useState(false);
+
+  const onToggleModal = useCallback(() => {
+    setIsOpen((prev) => !prev);
+  }, []);
+
   const methods = useForm<IFormInputs>({
     mode: 'onSubmit',
     resolver: yupResolver(validationSchema),
@@ -107,7 +116,7 @@ const CvTemplate = () => {
           study: '',
           degree: '',
           school: '',
-          'education-from-year': undefined,
+          educationFromYear: undefined,
           'education-to-year': undefined,
         },
       ],
@@ -214,15 +223,51 @@ const CvTemplate = () => {
 
   const dispatch = useDispatch();
 
+  //
   const onSubmit = (data: IFormInputs) => {
     console.log(data);
-    const getFields = methods.getValues();
-    console.log(getFields);
 
+    const transformedData = {
+      personalData: {
+        fullName: data.fullName,
+        address: data.address,
+        bio: data.bio,
+        position: data.position,
+        phone: data.phone,
+        website: data.website,
+        email: data.email,
+      },
+
+      educationData: data.educationData.map((education) => ({
+        description: education.study,
+        position: education.degree,
+        fromYear: new Date(education.educationFromYear).getFullYear(),
+        toYear: new Date(education['education-to-year']).getFullYear(),
+        name: education.school,
+      })),
+
+      experienceData: data.experienceData.map((experience) => ({
+        position: experience['work-title'],
+        fromYear: new Date(experience['experience-from-year']).getFullYear(),
+        toYear: new Date(experience['experience-to-year']).getFullYear(),
+        name: experience.company,
+        description: experience['company-info'],
+      })),
+
+      socialData: data.socialData?.map((social) => ({
+        link: social['social-link'],
+        name: social['social-name'],
+      })),
+
+      hobbyData: data.hobbyData?.map((hobby) => ({
+        hobby: hobby.label,
+      })),
+    };
+
+    console.log('TRANSFORMED DATA', transformedData);
+    dispatch(addAllPersonalInfo(transformedData));
     handleNext();
-    dispatch(addAllPersonalInfo(data));
   };
-
   return (
     <Box className={classes.cvTemlpate}>
       <Box className={classes.cvTemlpate__container}>
@@ -310,6 +355,18 @@ const CvTemplate = () => {
               {activeStep === steps.length && (
                 <Paper square elevation={0} sx={{ p: 3 }}>
                   <Typography>All steps completed - you&apos;re finished</Typography>
+
+                  {/* КНОПКА ПРЕВЬЮ */}
+
+                  <Button onClick={onToggleModal} sx={{ mt: 1, mr: 1 }}>
+                    Preview
+                  </Button>
+                  <DemoCvModal
+                    content={<CvTemplatePDF />}
+                    isOpen={isOpen}
+                    onClose={onToggleModal}
+                  />
+
                   <Button onClick={handleReset} sx={{ mt: 1, mr: 1 }}>
                     AT FIRST
                   </Button>

@@ -1,33 +1,49 @@
 import { createSlice } from '@reduxjs/toolkit';
 
-// type ExperienceType = {
-//   fullName: string;
-//   adress: string;
-//   bio: string;
-//   positionPers: string;
-//   phone: string;
-//   website: string;
-//   mail: string;
-//   description: string;
-//   position: string;
-//   fromYear: string;
-//   toYear: string;
-//   name: string;
-//   link: string;
-//   jobTitle: string;
+type PersonalDataType = {
+  fullName: string;
+  address: string;
+  bio: string;
+  position: string;
+  phone: string;
+  website: string;
+  email: string;
+};
 
-// };
+type EducationDataType = {
+  description: string;
+  position: string;
+  fromYear: string;
+  toYear: string;
+  name: string;
+};
 
-// type InitialState = {
-//   numOfPersonaInfo: ExperienceType[];
-//   educationData : ExperienceType[];
-//   experienceData : ExperienceType[];
-//   socialData : ExperienceType[];
-//   hobbyData : ExperienceType[];
+type ExperienceDataType = {
+  position: string;
+  fromYear: string;
+  toYear: string;
+  name: string;
+  description: string;
+};
 
-// };
+type SocialDataType = {
+  link: string;
+  name: string;
+};
 
-const initialState = {
+type HobbyDataType = {
+  hobby: string;
+};
+
+interface InitialState {
+  personalData: PersonalDataType;
+  educationData: EducationDataType[];
+  experienceData: ExperienceDataType[];
+  socialData: SocialDataType[];
+  hobbyData: HobbyDataType[];
+}
+
+const initialState: InitialState = {
   personalData: {
     fullName: '',
     address: '',
@@ -66,7 +82,12 @@ const allPersonaInfoSlice = createSlice({
 
   reducers: {
     addAllPersonalInfo: (state, action) => {
-      state.personalData = action.payload;
+      const { personalData, educationData, experienceData, socialData, hobbyData } = action.payload;
+      state.personalData = { ...state.personalData, ...personalData };
+      state.educationData = [...educationData];
+      state.experienceData = [...experienceData];
+      state.socialData = [...socialData];
+      state.hobbyData = [...hobbyData];
     },
   },
 });

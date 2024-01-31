@@ -41,7 +41,6 @@ export interface ITemporaryCvDataSliceProps {
   hobbyData: HobbyDataType[];
 }
 
-// переименовать файл ts
 export const temporaryCvDataSlice: ITemporaryCvDataSliceProps = {
   personalData: {
     fullName: 'Artem Chuprak',

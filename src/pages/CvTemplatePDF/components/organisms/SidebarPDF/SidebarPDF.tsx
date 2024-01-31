@@ -18,6 +18,8 @@ export const SidebarPDF = (props: ISidebarPDF) => {
   const imgPath = photo;
 
   const { fullName, bio, position, address, phone, website, email, style } = props;
+
+  console.log('SIDEBAR PROPS', props);
   const {
     Sidebar,
     SidebarWrapper,
@@ -32,7 +34,7 @@ export const SidebarPDF = (props: ISidebarPDF) => {
     Img,
   } = style;
 
-  const fullNameTitiles = fullName.split(' ');
+  const fullNameTitiles = fullName ? fullName.split(' ') : [];
 
   const propsImage = { imgPath: imgPath, style: Img };
   const propsSubtitle = { str: position, style: { Text: { ...Text, ...TextSpecial } } };

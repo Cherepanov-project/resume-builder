@@ -14,7 +14,7 @@ type EducationType = {
   study: string;
   degree: string;
   school: string;
-  'education-from-year': string;
+  educationFromYear: string;
   'education-to-year': string;
 };
 
@@ -22,7 +22,7 @@ const defaultValue: EducationType = {
   study: '',
   degree: '',
   school: '',
-  'education-from-year': '',
+  educationFromYear: '',
   'education-to-year': '',
 };
 

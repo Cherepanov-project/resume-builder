@@ -1,7 +1,7 @@
 import React, { useCallback, useRef } from 'react';
 import ReactToPrint from 'react-to-print';
-import Button from '@mui/material/Button';
-import CloudUploadIcon from '@mui/icons-material/CloudUpload';
+// import Button from '@mui/material/Button';
+// import CloudUploadIcon from '@mui/icons-material/CloudUpload';
 
 import { Modal } from '../../atoms/Modal';
 import { ComponentToPrint } from '../../atoms/ComponentToPrint';
@@ -21,13 +21,13 @@ export const DemoCvModal = (props: DemoCvModalProps) => {
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [componentRef.current]);
 
-  const reactToPrintTrigger = useCallback(() => {
-    return (
-      <Button variant="contained" sx={{ mb: 1 }} startIcon={<CloudUploadIcon />}>
-        Download CV
-      </Button>
-    );
-  }, []);
+  // const reactToPrintTrigger = useCallback(() => {
+  //   return (
+  //     <Button variant="contained" sx={{ mb: 1 }} startIcon={<CloudUploadIcon />}>
+  //       Download CV
+  //     </Button>
+  //   );
+  // }, []);
 
   const pageStyle = `
     @page {
@@ -53,7 +53,7 @@ export const DemoCvModal = (props: DemoCvModalProps) => {
     <>
       <Modal name="DemoCv" isOpen={isOpen} onClose={onClose}>
         <ReactToPrint
-          trigger={reactToPrintTrigger}
+          // trigger={reactToPrintTrigger}
           content={reactToPrintContent}
           documentTitle="CV"
           pageStyle={pageStyle}
