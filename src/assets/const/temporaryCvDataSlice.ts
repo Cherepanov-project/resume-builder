@@ -3,7 +3,7 @@ export type PersonalDataType = {
   address: string;
   bio: string;
   position: string;
-  phone: number;
+  phone: string;
   website: string;
   email: string;
 };
@@ -47,7 +47,7 @@ export const temporaryCvDataSlice: ITemporaryCvDataSliceProps = {
     address: 'Saint-Petersburg',
     bio: "Hello, it's nice to meet you And can you tell me where I am? I don't know how I got here But I think I'm starting to understand",
     position: 'Jedi Master',
-    phone: 1234567,
+    phone: '1234567',
     website: 'theforce.com',
     email: 'luke@theforce.com',
   },

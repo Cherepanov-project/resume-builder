@@ -8,7 +8,10 @@ import classes from './CvTemplatePDF.module.scss';
 
 import { useAppSellector } from '../../hooks/cvTemplateHooks';
 
-export const selectAllPersonaInfo = (state) => state.personalInfo;
+// export const selectAllPersonaInfo = (state) => state.personalInfo;
+
+// eslint-disable-next-line @typescript-eslint/no-explicit-any
+const selectAllPersonaInfo = (state: { personalInfo: any }) => state.personalInfo;
 
 export const CvTemplatePDF = () => {
   const userTemporaryCvDataSlice = useAppSellector(selectAllPersonaInfo);
