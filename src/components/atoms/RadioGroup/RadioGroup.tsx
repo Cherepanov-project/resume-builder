@@ -3,6 +3,7 @@ import { useAppDispatch } from '@/hooks/cvTemplateHooks';
 import { IElementsProps, ISettingsInputItem } from '@/types/landingBuilder';
 import { nanoid } from 'nanoid';
 import { setProps } from '@/store/landingBuilder/layoutSlice';
+import { Radio, RadioGroup as MuiRadioGroup, FormControlLabel, Typography } from '@mui/material';
 import classes from './RadioGroup.module.scss';
 
 const RadioGroup = ({ props, layout }: IElementsProps) => {
@@ -17,14 +18,20 @@ const RadioGroup = ({ props, layout }: IElementsProps) => {
     }
   }, []);
 
-  return currentList.map((item: ISettingsInputItem) => (
-    <div className={classes.container} key={item.id}>
-      <label className={classes.label}>
-        <input className={classes.radio} type="radio" name="radio" />
-        {item.value ? item.value : 'Text'}
-      </label>
-    </div>
-  ));
+  return (
+    <MuiRadioGroup aria-labelledby="radio-buttons-group" name="radio-buttons-group">
+      {currentList.map((item: ISettingsInputItem) => (
+        <FormControlLabel
+          key={item.id}
+          value={item.value}
+          control={<Radio size="small" className={classes.checkbox} />}
+          label={
+            <Typography className={classes.label}>{item.value ? item.value : 'Text'}</Typography>
+          }
+        />
+      ))}
+    </MuiRadioGroup>
+  );
 };
 
 export default RadioGroup;

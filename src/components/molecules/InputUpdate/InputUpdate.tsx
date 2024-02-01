@@ -1,7 +1,6 @@
-import { Input } from 'antd';
 import { nanoid } from 'nanoid';
 import classes from './InputUpdate.module.scss';
-import { IconButton } from '@mui/material';
+import { IconButton, TextField } from '@mui/material';
 import { AddCircleOutline, RemoveCircleOutline } from '@mui/icons-material';
 import {
   ISettingsInputUpdateProps,
@@ -37,10 +36,14 @@ const InputUpdate = ({ itemsList, setItemsList }: ISettingsInputUpdateProps) => 
         <ul className={classes.list}>
           {itemsList.map((item: ISettingsInputItem) => (
             <li className={classes.listItem} key={item.id}>
-              <Input
+              <TextField
+                size="small"
+                id="outlined"
                 placeholder="Text"
+                variant="outlined"
                 value={item.value}
                 onChange={(e) => handleInputChange(item.id, e.target.value)}
+                className={classes.input}
               />
 
               <IconButton

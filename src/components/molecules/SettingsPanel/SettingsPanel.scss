@@ -165,6 +165,10 @@
 
 .notification {
   margin-top: 15px;
-  font-family: 'Inter', sans-serif;
-  font-size: 14px;
+  border: 1px #1677ff solid;
+}
+
+.notificationError {
+  margin: 15px 0;
+  border: 1px #d32f2f solid;
 }

@@ -153,6 +153,11 @@ export interface IElementProps {
   SelectList?: ISettingsInputItem[];
 }
 
+export interface StateSelectList {
+  value: string | number;
+  array: ISettingsInputItem[];
+}
+
 // Типизация вспомогательных функций -> utils/index.ts
 export type TProcessFiles = Record<string, () => Promise<unknown>>;
 

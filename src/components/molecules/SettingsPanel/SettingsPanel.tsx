@@ -7,7 +7,7 @@ import ContainerDIVSettings from '@/components/atoms/ContainerDIVSettings';
 import InputUpdate from '../InputUpdate';
 import ButtonsSettingsPanel from '@/components/atoms/ButtonsSettingsPanel';
 import { IElementProps, ISettingsInputItem } from '@/types/landingBuilder';
-import { Alert } from 'antd';
+import Alert from '@mui/material/Alert';
 
 const SettingsPanel: React.FC = () => {
   const dispatch = useAppDispatch();
@@ -69,8 +69,9 @@ const SettingsPanel: React.FC = () => {
     return new Set(labelsList).size !== labelsList.length;
   }
 
-  const isButtonsPanelVisible =
-    name === 'RadioGroup' || name === 'CheckboxGroup' || name === 'SelectList';
+  const accessNames = ['RadioGroup', 'CheckboxGroup', 'SelectList'];
+
+  const isButtonsPanelVisible = accessNames.includes(name || '');
 
   return isShown ? (
     <div ref={panelRef} className="list__wrap">
@@ -78,12 +79,11 @@ const SettingsPanel: React.FC = () => {
         <h3>Settings</h3>
         <CloseIcon className="list__close-btn" onClick={handleClose} />
       </div>
-      <Alert
-        message="Your data will be displayed after saving"
-        type="info"
-        showIcon
-        className="notification"
-      />
+
+      <Alert severity="info" className="notification">
+        Your data will be displayed after saving
+      </Alert>
+
       {isButtonsPanelVisible && <InputUpdate itemsList={itemsList} setItemsList={setItemsList} />}
 
       <div className="settings-panel">

@@ -4,6 +4,7 @@ import { IElementsProps, ISettingsInputItem } from '@/types/landingBuilder';
 import { nanoid } from 'nanoid';
 import { setProps } from '@/store/landingBuilder/layoutSlice';
 import classes from './CheckboxGroup.module.scss';
+import { Checkbox, FormControlLabel, Typography } from '@mui/material';
 
 const CheckboxGroup = ({ props, layout }: IElementsProps) => {
   const dispatch = useAppDispatch();
@@ -18,12 +19,12 @@ const CheckboxGroup = ({ props, layout }: IElementsProps) => {
   }, []);
 
   return currentList.map((item: ISettingsInputItem) => (
-    <div className={classes.container} key={item.id}>
-      <label className={classes.label}>
-        <input className={classes.checkbox} type="checkbox" name="checkbox" />
-        {item.value ? item.value : 'Text'}
-      </label>
-    </div>
+    <FormControlLabel
+      key={item.id}
+      className={classes.container}
+      control={<Checkbox size="small" className={classes.checkbox} />}
+      label={<Typography className={classes.label}>{item.value ? item.value : 'Text'}</Typography>}
+    />
   ));
 };
 

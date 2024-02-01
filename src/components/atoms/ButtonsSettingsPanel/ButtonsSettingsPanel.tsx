@@ -4,7 +4,7 @@ import { useAppDispatch } from '@/hooks/cvTemplateHooks';
 import { IButtonsSettingsPanelProps } from '@/types/landingBuilder';
 import { closePanel } from '@/store/landingBuilder/settingsPanelSlice';
 import { useState } from 'react';
-import { Alert } from 'antd';
+import { Alert, Stack, Button } from '@mui/material';
 
 const ButtonsSettingsPanel = ({
   elementId,
@@ -37,27 +37,35 @@ const ButtonsSettingsPanel = ({
   return (
     <div className="settings-panel__items">
       {error && (
-        <Alert
-          message="The fields have non-unique values"
-          type="error"
-          showIcon
-          className="notification"
-        />
+        <Alert severity="error" className="notificationError">
+          The fields have non-unique values
+        </Alert>
       )}
-      <div className="settings-panel__items__btns">
-        <button
-          className="settings-panel__items__btns__btn settings-panel__items__btns__btn--green"
+
+      <Stack direction="row" className="settings-panel__items__btns">
+        <Button
+          variant="contained"
+          className="settings-panel__items__btns__btn"
+          sx={{
+            backgroundColor: '#2dc08d',
+            '&:hover': { opacity: 0.6, backgroundColor: '#2dc08d' },
+          }}
           onClick={() => handleApply()}
         >
           Apply
-        </button>
-        <button
-          className="settings-panel__items__btns__btn settings-panel__items__btns__btn--grey"
+        </Button>
+        <Button
+          variant="contained"
+          className="settings-panel__items__btns__btn"
+          sx={{
+            backgroundColor: 'grey',
+            '&:hover': { opacity: 0.6, backgroundColor: 'grey' },
+          }}
           onClick={() => onClose()}
         >
           Cancel
-        </button>
-      </div>
+        </Button>
+      </Stack>
     </div>
   );
 };
