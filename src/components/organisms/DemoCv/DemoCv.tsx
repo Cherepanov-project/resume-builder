@@ -16,7 +16,21 @@ const DemoCv = () => {
   return (
     <div className={classes.demoCv}>
       <CvTemplatePDF />
-      <Button variant="contained" sx={{ mt: 1 }} onClick={onToggleModal}>
+      <Button
+        variant="contained"
+        sx={{
+          mt: 1,
+          mr: 1,
+          backgroundColor: '#462174',
+          color: 'white',
+          ':hover': {
+            backgroundColor: 'white',
+            color: '#462174',
+            border: '1px solid #462174',
+          },
+        }}
+        onClick={onToggleModal}
+      >
         Preview & Export
       </Button>
       <DemoCvModal content={<CvTemplatePDF />} isOpen={isOpen} onClose={onToggleModal} />

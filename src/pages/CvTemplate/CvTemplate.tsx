@@ -5,24 +5,23 @@ import * as yup from 'yup';
 import { yupResolver } from '@hookform/resolvers/yup';
 import { DevTool } from '@hookform/devtools';
 import classes from './CvTemplate.module.scss';
+
 import DemoCv from '../../components/organisms/DemoCv';
 import { DemoCvModal } from '../../components/organisms/DemoCvModal';
 import { CvTemplatePDF } from '../CvTemplatePDF';
 
+import Box from '@mui/material/Box';
 import PersonalInfo from '../../components/organisms/PersonalInfo';
 import Education from '../../components/organisms/Education';
 import Experience from '../../components/organisms/Experience';
 import Social from '../../components/organisms/Social';
 import Hobbies from '../../components/organisms/Hobbies';
+import PersonalPhoto from '../../components/organisms/PersonalPhoto';
 
-import Box from '@mui/material/Box';
-import Stepper from '@mui/material/Stepper';
-import Step from '@mui/material/Step';
-import StepLabel from '@mui/material/StepLabel';
-import StepContent from '@mui/material/StepContent';
 import Button from '@mui/material/Button';
 import Paper from '@mui/material/Paper';
 import Typography from '@mui/material/Typography';
+
 import { useDispatch } from 'react-redux';
 
 import { addAllPersonalInfo } from '../../store/cvTemplate/allPersonaInfoSlice';
@@ -66,19 +65,25 @@ const validationSchema = yup.object().shape({
     )
     .required(),
 
-  socialData: yup.array().of(
-    yup.object().shape({
-      'social-name': yup.string().required('Is a required field'),
-      'social-link': yup.string().required('Is a required field'),
-    }),
-  ),
+    socialData: yup.array().of(
+      yup.object().shape({
+        'social-name': yup.string().required('Is a required field'),
+        'social-link': yup.string().required('Is a required field'),
+      }),
+    ),
 
-  hobbyData: yup.array().of(
-    yup.object().shape({
-      label: yup.string().required('Is a required field'),
-    }),
-  ),
-});
+    hobbyData: yup.array().of(
+      yup.object().shape({
+        label: yup.string().required('Is a required field'),
+      }),
+    ),
+  
+    photoData: yup.array().of(
+      yup.object().shape({
+        avatar: yup.string().required(""),
+      }),
+    ),
+  });
 
 interface IFormInputs extends yup.InferType<typeof validationSchema> {}
 
@@ -140,8 +145,14 @@ const CvTemplate = () => {
           'social-link': '',
         },
       ],
+      photoData: [
+        {
+          avatar: '',
+        },
+      ],
     },
   });
+
   const [activeStep, setActiveStep] = React.useState(0);
 
   const handleNext = async () => {
@@ -176,6 +187,10 @@ const CvTemplate = () => {
       case 4:
         isValid = await methods.trigger(['hobbyData']);
         break;
+
+      case 5:
+        isValid = await methods.trigger(['photoData']);
+        break;
     }
 
     if (isValid) {
@@ -188,26 +203,37 @@ const CvTemplate = () => {
       id: 1,
       label: stepTitle('Personal Info'),
       form: stepContent(<PersonalInfo />),
+      state: 'active',
     },
     {
       id: 2,
       label: stepTitle('Education'),
       form: stepContent(<Education />),
+      state: '',
     },
     {
       id: 3,
       label: stepTitle('Experience'),
       form: stepContent(<Experience />),
+      state: '',
     },
     {
       id: 4,
       label: stepTitle('Social'),
       form: stepContent(<Social />),
+      state: '',
     },
     {
       id: 5,
       label: stepTitle('Hobbies'),
       form: stepContent(<Hobbies />),
+      state: '',
+    },
+    {
+      id: 6,
+      label: stepTitle('Photo'),
+      form: stepContent(<PersonalPhoto />),
+      state: '',
     },
   ];
 
@@ -221,7 +247,7 @@ const CvTemplate = () => {
 
   const dispatch = useDispatch();
 
-  //
+  
   const onSubmit = (data: IFormInputs) => {
     console.log(data);
 
@@ -260,59 +286,143 @@ const CvTemplate = () => {
       hobbyData: data.hobbyData?.map((hobby) => ({
         hobby: hobby.label,
       })),
+
+      // photoData: data.photoData?.map((avatar) => ({
+      //   avatar: 'photo-link',
+      // })),
     };
 
     console.log('TRANSFORMED DATA', transformedData);
     dispatch(addAllPersonalInfo(transformedData));
     handleNext();
   };
+
+  const getButtonStatus = (index: number) => {
+    if (index === activeStep) {
+      steps[index].state = 'active';
+      return 'active';
+    } else if (index < activeStep) {
+      steps[index].state = 'done';
+      return 'done';
+    } else {
+      steps[index].state = 'next';
+      return 'next';
+    }
+  };
+ 
+
+  const getButtonStyles = (index: number) => ({
+    color: getButtonStatus(index) === 'active' ? '#462174' : getButtonStatus(index) === 'done' ? 'white' : getButtonStatus(index) === 'next' ? '#4E4D4D' : 'initial',
+    backgroundColor: getButtonStatus(index) === 'active' ? 'white' : getButtonStatus(index) === 'done' ? '#462174' : getButtonStatus(index) === 'next' ? '#dddbdb' : 'initial',
+    border: getButtonStatus(index) === 'active' ? '2px solid #462174' : getButtonStatus(index) === 'done' ? '#462174' : getButtonStatus(index) === 'next' ? '2px solid #4E4D4D' : 'initial',
+  });
+
   return (
     <Box className={classes.cvTemlpate}>
+      <Box className={classes.cvTemlpate__header}>
+        <Typography variant="h3">Resumo Resume Builder</Typography>
+      </Box>
       <Box className={classes.cvTemlpate__container}>
         <Box className={classes.cvTemlpate__content}>
-          <Box className={classes.cvTemlpate__left}>
-            <Box className={classes.cvTemlpate__demoCv}>
-              <DemoCv />
-            </Box>
-          </Box>
           <Box className={classes.cvTemlpate__rightWrapper}>
             <Box className={classes.cvTemlpate__right}>
               <FormProvider {...methods}>
-                <Stepper
-                  activeStep={activeStep}
-                  orientation="vertical"
-                >
-                  {steps.map((step) => (
-                    <Step key={step.id}>
-                      <StepLabel>{step.label}</StepLabel>
-                      <StepContent>
-                        <Typography variant="body2" component={'span'}>
+                <Box className={classes.cvTemlpate__stepper}>
+                  <Box
+                    className={classes.cvTemlpate__step}
+                    onChange={async () => {
+                      switch (activeStep) {
+                        case 0:
+                          await methods.trigger([
+                            'fullName',
+                            'position',
+                            'address',
+                            'website',
+                            'phone',
+                            'email',
+                            'bio',
+                          ]);
+                          // isValid = true;
+                          break;
+
+                        case 1:
+                          await methods.trigger('educationData');
+                          break;
+
+                        case 2:
+                          await methods.trigger('experienceData');
+                          break;
+
+                        case 3:
+                          await methods.trigger('socialData');
+                          break;
+
+                        case 4:
+                          await methods.trigger(['hobbyData']);
+                          break;
+
+                        case 5:
+                          await methods.trigger(['photoData']);
+                          break;
+                      }
+                    }}
+                  >
+                    {steps.map((step, index) => (
+                      <Button variant="contained" style={getButtonStyles(index)}  sx={{
+                        mt: 1,
+                        mr: 1, 
+                        margin: '15px',
+                        width: '322px',
+                        height: '70px',
+                      }}
+                        key={step.id}
+                      >
+                        {' '}
+                        {step.label}
+                      </Button>
+                    ))}
+                  </Box>
+
+                  {steps.map((step) => {
+                    if (step.state === 'active') {
+                      return (
+                        <Box component="form" className={classes.cvTemlpate__stepContent} key={step.id}>
+                          <Typography variant="h4" className={classes.cvTemlpate__stepContentLabel}>{step.label} </Typography>
                           {step.form}
-                        </Typography>
-                        <Box sx={{ mb: 2 }}>
-                          <div>
-                            <Button
-                              onClick={
-                                step.id === 5 ? methods.handleSubmit(onSubmit) : () => handleNext()
-                              }
-                              variant="contained"
-                              sx={{ mt: 1, mr: 1 }}
-                            >
-                              {step.id === 5 ? 'Finish' : 'Continue'}
-                            </Button>
+                          {/* Кнопки ниже формы */}
+                          <Box className={classes.cvTemlpate__stepContentButton}>
                             <Button
                               disabled={step.id === 1}
                               onClick={handleBack}
                               sx={{ mt: 1, mr: 1 }}
+                            ></Button>
+                            <Button
+                              onClick={step.id === 6 ? methods.handleSubmit(onSubmit) : handleNext}
+                              variant="contained"
+                              sx={{
+                                mt: 1,
+                                mr: 1,
+                                backgroundColor: '#462174',
+                                color: 'white',
+                                ':hover': {
+                                  backgroundColor: 'white',
+                                  color: '#462174',
+                                  border: '1px solid #462174',
+                                },
+                              }}
                             >
-                              Back
+                              {step.id === 6 ? 'Finish' : 'Next session'}
                             </Button>
-                          </div>
+                            
+                          </Box>
+                          {step.id === 6 && <DemoCv />}
                         </Box>
-                      </StepContent>
-                    </Step>
-                  ))}
-                </Stepper>
+                      );
+                    } else {
+                      return null;
+                    }
+                  })}
+                </Box>
 
                 {/* ПАНЕЛЬ РАЗРАБОТЧИКА ХУКФОРМ */}
 

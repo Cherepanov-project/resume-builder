@@ -7,4 +7,5 @@ export type {
   SocialDataType,
   ExperienceDataType,
   HobbyDataType,
+  AvatarDataType,
 } from './temporaryCvDataSlice';

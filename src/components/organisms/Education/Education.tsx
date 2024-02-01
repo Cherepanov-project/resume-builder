@@ -64,7 +64,21 @@ const Education = () => {
                 <Typography>Education {index + 1}</Typography>
 
                 {index > 0 ? (
-                  <Button onClick={() => removeField(index)} variant="contained">
+                  <Button
+                  onClick={() => removeField(index)}
+                  variant="contained"
+                  sx={{
+                    mt: 1,
+                    mr: 1,
+                    backgroundColor: '#462174',
+                    color: 'white',
+                    ':hover': {
+                      backgroundColor: 'white',
+                      color: '#462174',
+                      border: '1px solid #462174',
+                    },
+                  }}
+                >
                     Remove
                   </Button>
                 ) : null}
@@ -78,7 +92,21 @@ const Education = () => {
           </Accordion>
         );
       })}
-      <Button onClick={addField} variant="contained">
+      <Button
+        onClick={addField}
+        variant="contained"
+        sx={{
+          mt: 1,
+          mr: 1,
+          backgroundColor: '#462174',
+          color: 'white',
+          ':hover': {
+            backgroundColor: 'white',
+            color: '#462174',
+            border: '1px solid #462174',
+          },
+        }}
+      >
         Add another Education
       </Button>
     </Box>

@@ -1,9 +1,29 @@
+@import url('https://fonts.googleapis.com/css2?family=Nunito:wght@700&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Nunito:wght@400&display=swap');
+
+* {
+  font-family: 'Nunito', sans-serif;
+}
 .cvTemlpate {
   margin: 0;
-  padding: 0 20px;
-  background-color: lightsteelblue;
+  padding: 0;
   min-height: 100vh;
 }
+
+.cvTemlpate__header {
+  display: flex;
+  justify-content: space-between;
+  
+  background-color: #462174;
+  padding: 60px 100px 10px;
+  margin: 0;
+  z-index: 1;
+  height: 170px;
+
+  font-size: 22px;
+  font-family: 'Nunito', sans-serif;
+}
+
 
 .cvTemlpate__container {
   max-width: 1500px;
@@ -37,4 +57,82 @@
 .cvTemlpate__right {
   width: 100%;
   height: 100%;
+}
+
+
+// Весь степпер
+.cvTemlpate__stepper {
+  position: relative;
+  display: flex;
+  margin: 10px 70px;
+  z-index: 2;
+  top: -80px;
+}
+
+// Кнопка с формой
+.cvTemlpate__step {
+  position: relative;
+  display:  flex;
+  
+  margin-right: 50px;
+  flex-direction: column; 
+  box-shadow: 0px 0px 5px rgba(0, 0, 0, 0.3); /* Тень с параметрами */
+  border-radius: 10px;
+  padding: 40px 10px;
+  background-color: white;
+
+  height: 100%;
+}
+
+// Кнопка
+
+.cvTemlpate__stepButton {
+  position: relative;
+  display:  inline-block;
+  width: 322px;
+  height: 70px;
+
+  margin: 15px;
+  color: #4E4D4D;
+  background-color: white;
+  border: 1px solid #4E4D4D;
+}
+
+.cvTemlpate__stepButton.active {
+  color: #462174;
+  background-color: white;
+  border: 1px solid #462174;
+}
+
+.cvTemlpate__stepButton.completed {
+  color: white;
+  background-color: #462174;
+}
+
+// Форма степа
+
+.cvTemlpate__stepContentLabel {
+  color: black;
+  padding: 0 20px;
+}
+.cvTemlpate__stepContent {
+  padding: 20px;
+  width: 844px;
+  height: 100%;
+  box-shadow: 0px 0px 5px rgba(0, 0, 0, 0.3);
+  border-radius: 10px;
+  background-color: white;
+}
+
+.cvTemlpate__stepContentButton {
+  display: flex;
+  justify-content: space-between;
+  padding: 0 20px;
+}
+
+.cvTemlpate__stepContentButton button:first-child{
+  background-image: url('../../assets/images/back.svg');
+  border: none;
+  background-repeat: no-repeat;
+  height: 40px;
 }

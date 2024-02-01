@@ -29,6 +29,7 @@ export const DemoCvModal = (props: DemoCvModalProps) => {
 
 
   return (
+    
     <>
       <Modal name="DemoCv" isOpen={isOpen} onClose={onClose}>
         <ReactToPrint

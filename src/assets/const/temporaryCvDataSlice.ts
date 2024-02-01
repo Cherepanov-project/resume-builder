@@ -33,12 +33,17 @@ export type HobbyDataType = {
   hobby: string;
 };
 
+export type AvatarDataType = {
+  avatar: string;
+};
+
 export interface ITemporaryCvDataSliceProps {
   personalData: PersonalDataType;
   educationData: EducationDataType[];
   experienceData: ExperienceDataType[];
   socialData: SocialDataType[];
   hobbyData: HobbyDataType[];
+  photoData: AvatarDataType[];
 }
 
 export const temporaryCvDataSlice: ITemporaryCvDataSliceProps = {
@@ -88,4 +93,5 @@ export const temporaryCvDataSlice: ITemporaryCvDataSliceProps = {
     { link: 'jedin', name: 'LukeSkywalker' },
   ],
   hobbyData: [{ hobby: 'Piloting starships' }, { hobby: 'Chatting with chewbacca' }],
+  photoData: [{ avatar: '' }],
 };
