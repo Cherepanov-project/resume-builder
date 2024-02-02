@@ -8,7 +8,6 @@ import classes from './CvTemplate.module.scss';
 import DemoCv from '../../components/organisms/DemoCv';
 import { DemoCvModal } from '../../components/organisms/DemoCvModal';
 import { CvTemplatePDF } from '../CvTemplatePDF';
-// import { temporaryCvDataSlice } from '../../assets/const';
 
 import PersonalInfo from '../../components/organisms/PersonalInfo';
 import Education from '../../components/organisms/Education';
@@ -27,7 +26,6 @@ import Typography from '@mui/material/Typography';
 import { useDispatch } from 'react-redux';
 
 import { addAllPersonalInfo } from '../../store/cvTemplate/allPersonaInfoSlice';
-// import { useAppSellector } from '../../hooks/cvTemplateHooks';
 
 const validationSchema = yup.object().shape({
   fullName: yup.string().required('Is a required field').min(3).max(20),
@@ -283,38 +281,6 @@ const CvTemplate = () => {
                 <Stepper
                   activeStep={activeStep}
                   orientation="vertical"
-                  // onChange={async () => {
-                  //   switch (activeStep) {
-                  //     case 0:
-                  //       await methods.trigger([
-                  //         // 'full-name',
-                  //         // 'job-title',
-                  //         // 'address',
-                  //         // 'website',
-                  //         // 'phone',
-                  //         // 'email',
-                  //         // 'bio',
-                  //       ]);
-                  //       // isValid = true;
-                  //       break;
-
-                  //     case 1:
-                  //       // await methods.trigger('education');
-                  //       break;
-
-                  //     case 2:
-                  //       // await methods.trigger('experience');
-                  //       break;
-
-                  //     case 3:
-                  //       // await methods.trigger('social');
-                  //       break;
-
-                  //     case 4:
-                  //       // await methods.trigger(['hobby']);
-                  //       break;
-                  //   }
-                  // }}
                 >
                   {steps.map((step) => (
                     <Step key={step.id}>
