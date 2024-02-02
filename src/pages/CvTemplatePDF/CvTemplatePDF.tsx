@@ -8,8 +8,6 @@ import classes from './CvTemplatePDF.module.scss';
 
 import { useAppSellector } from '../../hooks/cvTemplateHooks';
 
-// export const selectAllPersonaInfo = (state) => state.personalInfo;
-
 // eslint-disable-next-line @typescript-eslint/no-explicit-any
 const selectAllPersonaInfo = (state: { personalInfo: any }) => state.personalInfo;
 
@@ -21,8 +19,6 @@ export const CvTemplatePDF = () => {
   if (userTemporaryCvDataSlice.personalData.fullName === '') {
     newData = temporaryCvDataSlice;
   }
-
-  console.log('temporaryCvDataSlice', temporaryCvDataSlice);
 
   // Примеры стилей
 
