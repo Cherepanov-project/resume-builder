@@ -24,20 +24,6 @@ export const MainPDF = (props: IMainPDFProps) => {
   const { data, style } = props;
   const { educationData, experienceData, socialData, hobbyData } = data;
 
-  // ТЕСТ СОХРАНЕНИЯ educationData
-
-  // const educationData = [
-  //   {
-  //     description: 'hshcjhcjcsjsa',
-  //     position: 'hshcjhcjcsjsa',
-  //     fromYear: 2,
-  //     toYear: 2,
-  //     name: 'hshcjhcjcsjsa',
-  //   },
-  // ];
-
-  console.log('EDUCATION DATA', data);
-  console.log('EDUCATION props', props);
 
   const {
     Main,
