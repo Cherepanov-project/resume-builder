@@ -1,0 +1,24 @@
+@import '../../../assets/style/variables.scss';
+
+.previewSpace {
+  background-color: transparent;
+  min-height: 97dvh;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  //width: calc(100% - 15px);
+
+}
+
+.grid {
+  margin: 0 0;
+  width: 100%;
+  height: 100%;
+  background-color: white;
+}
+
+.item {
+  background-color: white;
+  border-radius: 2px;
+}
+

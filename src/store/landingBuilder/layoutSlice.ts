@@ -32,10 +32,11 @@ const layoutSlice = createSlice({
           y: layoutItem.y,
           w: draggableItem.layout.w,
           h: draggableItem.layout.h,
-          minW: draggableItem.layout.minW ? draggableItem.layout.minW : undefined,
-          maxW: draggableItem.layout.maxW || Infinity,
-          minH: draggableItem.layout.minH ? draggableItem.layout.minH : undefined,
-          maxH: draggableItem.layout.maxH || Infinity,
+          minW: draggableItem.layout.minW || 0,
+          maxW: draggableItem.layout.maxW ?? 6,
+          minH: draggableItem.layout.minW || 0,
+          //значение Infinity
+          maxH: draggableItem.layout.maxH ?? 1000000,
         },
       };
       console.log(newElement);

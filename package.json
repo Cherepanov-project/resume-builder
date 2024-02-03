@@ -6,6 +6,9 @@
   "scripts": {
     "dev": "vite",
     "build": "tsc && vite build",
+    "archive": "node archiver.js",
+    "buildarchive": "tsc && vite build --outDir user-build && node archiver.js",
+    "postbuild": "react-snap",
     "lint": "eslint ./src",
     "lint:fix": "eslint ./src --fix",
     "preview": "vite preview",
@@ -21,7 +24,11 @@
     "@react-pdf/renderer": "^3.1.14",
     "@reduxjs/toolkit": "^1.9.5",
     "antd": "^5.12.5",
+    "archiver": "^6.0.1",
+    "cors": "^2.8.5",
     "dayjs": "^1.11.9",
+    "express": "^4.18.2",
+    "jszip": "^3.10.1",
     "konva": "^9.2.1",
     "nanoid": "^5.0.2",
     "react": "^18.2.0",
@@ -31,7 +38,9 @@
     "react-hook-form": "^7.46.2",
     "react-redux": "^8.1.2",
     "react-router-dom": "^6.21.1",
+    "react-snap": "^1.23.0",
     "react-to-print": "^2.14.15",
+    "redux-persist": "^6.0.0",
     "sass": "^1.66.1",
     "swiper": "^10.2.0",
     "url": "^0.11.3"
@@ -42,6 +51,7 @@
     "@types/react": "^18.2.15",
     "@types/react-dom": "^18.2.7",
     "@types/react-grid-layout": "^1.3.2",
+    "@types/redux-state-sync": "^3.1.9",
     "@typescript-eslint/eslint-plugin": "^6.0.0",
     "@typescript-eslint/parser": "^6.0.0",
     "@vitejs/plugin-react": "^4.0.3",
@@ -67,5 +77,9 @@
       "prettier --write",
       "npm run lint:fix"
     ]
-  }
+  },
+  "reactSnap": {
+    "source": "dist"
+  },
+  "proxy": "http://localhost:8000"
 }

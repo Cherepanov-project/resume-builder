@@ -1,17 +1,21 @@
-import NavLink from '@atoms/NavLink';
-import { Link } from 'react-router-dom';
 import { EyeFilled } from '@ant-design/icons';
 
-import classes from './PreviewButtonsContainer.module.scss';
+import PreviewPopup from '@molecules/PreviewPopup/PreviewPopup.tsx';
+import { useState } from 'react';
+import DefaultButton from '@atoms/DefaultButton';
 
 const PreviewButtonsContainer = () => {
+  const [isModalOpen, setModalOpen] = useState(false);
+  const onToggleModal = (value: boolean) => {
+    setModalOpen(value);
+  };
+
   return (
     <div>
-      <Link to="/landing-preview" target="_blank" className={classes.link}>
-        <NavLink label="Preview">
-          <EyeFilled />
-        </NavLink>
-      </Link>
+      <DefaultButton label="Preview" onClick={() => onToggleModal(true)}>
+        <EyeFilled />
+      </DefaultButton>
+      <PreviewPopup isModalOpen={isModalOpen} onToggleModal={onToggleModal} />
     </div>
   );
 };
