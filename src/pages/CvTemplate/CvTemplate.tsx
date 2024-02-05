@@ -1,10 +1,13 @@
 import React from 'react';
+import { useCallback, useState } from 'react';
 import { useForm, FormProvider } from 'react-hook-form';
 import * as yup from 'yup';
 import { yupResolver } from '@hookform/resolvers/yup';
 import { DevTool } from '@hookform/devtools';
 import classes from './CvTemplate.module.scss';
 import DemoCv from '../../components/organisms/DemoCv';
+import { DemoCvModal } from '../../components/organisms/DemoCvModal';
+import { CvTemplatePDF } from '../CvTemplatePDF';
 
 import PersonalInfo from '../../components/organisms/PersonalInfo';
 import Education from '../../components/organisms/Education';
@@ -20,53 +23,59 @@ import StepContent from '@mui/material/StepContent';
 import Button from '@mui/material/Button';
 import Paper from '@mui/material/Paper';
 import Typography from '@mui/material/Typography';
-// import { useAppSellector } from '../../hooks/cvTemplateHooks';
+import { useDispatch } from 'react-redux';
+
+import { addAllPersonalInfo } from '../../store/cvTemplate/allPersonaInfoSlice';
 
 const validationSchema = yup.object().shape({
-  'full-name': yup.string().min(3).max(20).required(),
-  'job-title': yup.string().min(3).max(20).required(),
-  address: yup.string().min(3).max(20).required(),
-  website: yup.string().required(),
-  phone: yup.string().required(),
-  email: yup.string().required(),
-  bio: yup.string().required(),
+  fullName: yup.string().required('Is a required field').min(3).max(20),
+  position: yup.string().required('Is a required field').min(3).max(20),
+  address: yup.string().required('Is a required field').min(3).max(20),
+  website: yup.string().required('Is a required field').url().nullable(),
+  phone: yup
+    .number()
+    .typeError('Amount must be a number')
+    .required('Please provide plan cost.')
+    .min(0, 'Too little'),
+  email: yup.string().required('Is a required field').email(),
+  bio: yup.string().required('Is a required field'),
 
-  education: yup
+  educationData: yup
     .array()
     .of(
       yup.object().shape({
-        study: yup.string().required(),
-        degree: yup.string().required(),
-        school: yup.string().required(),
-        'education-from-year': yup.date().required(),
-        'education-to-year': yup.date().required(),
+        study: yup.string().required('Is a required field'),
+        degree: yup.string().required('Is a required field'),
+        school: yup.string().required('Is a required field'),
+        educationFromYear: yup.date().required('Is a required field'),
+        'education-to-year': yup.date().required('Is a required field'),
       }),
     )
     .required(),
 
-  experience: yup
+  experienceData: yup
     .array()
     .of(
       yup.object().shape({
-        'work-title': yup.string().required(),
-        company: yup.string().required(),
-        'experience-from-year': yup.string().required(),
-        'experience-to-year': yup.string().required(),
-        'company-info': yup.string().required(),
+        'work-title': yup.string().required('Is a required field'),
+        company: yup.string().required('Is a required field'),
+        'experience-from-year': yup.string().required('Is a required field'),
+        'experience-to-year': yup.string().required('Is a required field'),
+        'company-info': yup.string().required('Is a required field'),
       }),
     )
     .required(),
 
-  social: yup.array().of(
+  socialData: yup.array().of(
     yup.object().shape({
-      'social-name': yup.string().required(),
-      'social-link': yup.string().required(),
+      'social-name': yup.string().required('Is a required field'),
+      'social-link': yup.string().required('Is a required field'),
     }),
   ),
 
-  hobby: yup.array().of(
+  hobbyData: yup.array().of(
     yup.object().shape({
-      label: yup.string().required(),
+      label: yup.string().required('Is a required field'),
     }),
   ),
 });
@@ -82,25 +91,35 @@ const stepContent = (element: JSX.Element) => {
 };
 
 const CvTemplate = () => {
+  const [isOpen, setIsOpen] = useState(false);
+
+  const onToggleModal = useCallback(() => {
+    setIsOpen((prev) => !prev);
+  }, []);
+
   const methods = useForm<IFormInputs>({
-    mode: 'onTouched',
+    mode: 'onSubmit',
     resolver: yupResolver(validationSchema),
     defaultValues: {
-      'full-name': '',
-      'job-title': '',
+      fullName: '',
+      position: '',
       address: '',
       bio: '',
-      education: [
+      email: '',
+      phone: undefined,
+      website: '',
+
+      educationData: [
         {
           study: '',
           degree: '',
           school: '',
-          'education-from-year': undefined,
+          educationFromYear: undefined,
           'education-to-year': undefined,
         },
       ],
-      email: '',
-      experience: [
+
+      experienceData: [
         {
           'work-title': '',
           company: '',
@@ -109,19 +128,18 @@ const CvTemplate = () => {
           'company-info': '',
         },
       ],
-      phone: '',
-      hobby: [
+
+      hobbyData: [
         {
           label: '',
         },
       ],
-      social: [
+      socialData: [
         {
           'social-name': '',
           'social-link': '',
         },
       ],
-      website: '',
     },
   });
   const [activeStep, setActiveStep] = React.useState(0);
@@ -132,8 +150,8 @@ const CvTemplate = () => {
     switch (activeStep) {
       case 0:
         isValid = await methods.trigger([
-          'full-name',
-          'job-title',
+          'fullName',
+          'position',
           'address',
           'website',
           'phone',
@@ -144,19 +162,19 @@ const CvTemplate = () => {
         break;
 
       case 1:
-        isValid = await methods.trigger('education');
+        isValid = await methods.trigger('educationData');
         break;
 
       case 2:
-        isValid = await methods.trigger('experience');
+        isValid = await methods.trigger('experienceData');
         break;
 
       case 3:
-        isValid = await methods.trigger('social');
+        isValid = await methods.trigger('socialData');
         break;
 
       case 4:
-        isValid = await methods.trigger(['hobby']);
+        isValid = await methods.trigger(['hobbyData']);
         break;
     }
 
@@ -201,13 +219,53 @@ const CvTemplate = () => {
     setActiveStep(0);
   };
 
+  const dispatch = useDispatch();
+
+  //
   const onSubmit = (data: IFormInputs) => {
     console.log(data);
-    const getFields = methods.getValues();
-    console.log(getFields);
+
+    const transformedData = {
+      personalData: {
+        fullName: data.fullName,
+        address: data.address,
+        bio: data.bio,
+        position: data.position,
+        phone: data.phone,
+        website: data.website,
+        email: data.email,
+      },
+
+      educationData: data.educationData.map((education) => ({
+        description: education.study,
+        position: education.degree,
+        fromYear: new Date(education.educationFromYear).getFullYear(),
+        toYear: new Date(education['education-to-year']).getFullYear(),
+        name: education.school,
+      })),
+
+      experienceData: data.experienceData.map((experience) => ({
+        position: experience['work-title'],
+        fromYear: new Date(experience['experience-from-year']).getFullYear(),
+        toYear: new Date(experience['experience-to-year']).getFullYear(),
+        name: experience.company,
+        description: experience['company-info'],
+      })),
+
+      socialData: data.socialData?.map((social) => ({
+        link: social['social-link'],
+        name: social['social-name'],
+      })),
+
+      hobbyData: data.hobbyData?.map((hobby) => ({
+        hobby: hobby.label,
+      })),
+    };
+
+    console.log('TRANSFORMED DATA', transformedData);
+    dispatch(addAllPersonalInfo(transformedData));
     handleNext();
   };
-
   return (
     <Box className={classes.cvTemlpate}>
       <Box className={classes.cvTemlpate__container}>
@@ -223,38 +281,6 @@ const CvTemplate = () => {
                 <Stepper
                   activeStep={activeStep}
                   orientation="vertical"
-                  onChange={async () => {
-                    switch (activeStep) {
-                      case 0:
-                        await methods.trigger([
-                          'full-name',
-                          'job-title',
-                          'address',
-                          'website',
-                          'phone',
-                          'email',
-                          'bio',
-                        ]);
-                        // isValid = true;
-                        break;
-
-                      case 1:
-                        await methods.trigger('education');
-                        break;
-
-                      case 2:
-                        await methods.trigger('experience');
-                        break;
-
-                      case 3:
-                        await methods.trigger('social');
-                        break;
-
-                      case 4:
-                        await methods.trigger(['hobby']);
-                        break;
-                    }
-                  }}
                 >
                   {steps.map((step) => (
                     <Step key={step.id}>
@@ -287,13 +313,28 @@ const CvTemplate = () => {
                     </Step>
                   ))}
                 </Stepper>
+
+                {/* ПАНЕЛЬ РАЗРАБОТЧИКА ХУКФОРМ */}
+
                 <DevTool control={methods.control} placement="top-left" />
               </FormProvider>
               {activeStep === steps.length && (
                 <Paper square elevation={0} sx={{ p: 3 }}>
                   <Typography>All steps completed - you&apos;re finished</Typography>
+
+                  {/* КНОПКА ПРЕВЬЮ */}
+
+                  <Button onClick={onToggleModal} sx={{ mt: 1, mr: 1 }}>
+                    Preview
+                  </Button>
+                  <DemoCvModal
+                    content={<CvTemplatePDF />}
+                    isOpen={isOpen}
+                    onClose={onToggleModal}
+                  />
+
                   <Button onClick={handleReset} sx={{ mt: 1, mr: 1 }}>
-                    Reset
+                    AT FIRST
                   </Button>
                 </Paper>
               )}

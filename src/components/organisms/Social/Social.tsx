@@ -25,7 +25,7 @@ const Social = () => {
 
   const addField = () => {
     setCounter((prevCounter) => prevCounter + 1);
-    setValue('social', [...getValues('social'), defaultValue]);
+    setValue('socialData', [...getValues('socialData'), defaultValue]);
   };
 
   const removeField = (index: number) => {
@@ -34,25 +34,30 @@ const Social = () => {
       return;
     }
     if (index !== 0) {
-      resp = [...getValues('social').slice(0, index), ...getValues('social').slice(index + 1)];
+      resp = [
+        ...getValues('socialData').slice(0, index),
+        ...getValues('socialData').slice(index + 1),
+      ];
     } else {
-      resp = [...getValues('social').slice(index + 1)];
+      resp = [...getValues('socialData').slice(index + 1)];
     }
-    setValue('social', resp);
+    setValue('socialData', resp);
     setCounter((prevCounter) => prevCounter - 1);
   };
 
   return (
     <Box>
-      {getValues('social').map((_: SocialType, index: number) => {
-        const fieldName = `social[${index}]`;
+      {getValues('socialData').map((_: SocialType, index: number) => {
+        const fieldName = `socialData[${index}]`;
         return (
           <Accordion disableGutters sx={{ mb: 2 }} key={index}>
             <AccordionSummary aria-controls="panel1a-content" id="panel1a-header">
               <Typography>Social {index + 1}</Typography>
-              <Button onClick={() => removeField(index)} variant="contained">
-                Remove
-              </Button>
+              {index > 0 ? (
+                <Button onClick={() => removeField(index)} variant="contained">
+                  Remove
+                </Button>
+              ) : null}
             </AccordionSummary>
             <AccordionDetails>
               <fieldset name={fieldName} key={fieldName}>

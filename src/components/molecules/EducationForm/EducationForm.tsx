@@ -14,7 +14,7 @@ const EducationForm = ({ fieldName }: EducationFormProps) => {
       <BasicInput id={`${fieldName}.degree`} label="Degree" />
       <BasicInput id={`${fieldName}.school`} label="School" />
       <Stack className={classes.educationForm} spacing={2} direction="row">
-        <BasicDatePicker id={`${fieldName}.education-from-year`} label="From year" />
+        <BasicDatePicker id={`${fieldName}.educationFromYear`} label="From year" />
         <BasicDatePicker id={`${fieldName}.education-to-year`} label="To year" />
       </Stack>
     </Box>

@@ -23,6 +23,8 @@ interface IMainPDFProps {
 export const MainPDF = (props: IMainPDFProps) => {
   const { data, style } = props;
   const { educationData, experienceData, socialData, hobbyData } = data;
+
+
   const {
     Main,
     Subtitle,

@@ -15,6 +15,8 @@ export const PageDefaultPDF = (props: IPageDefaultPDF) => {
   const propsShort = { ...personalData, style: otherStyle };
   const propsMain = { data: otherDate, style: otherStyle };
 
+  console.log('propsMain!!!!!!!!!!', propsMain);
+
   return (
     <View>
       <HeaderShortPDF {...propsShort} />

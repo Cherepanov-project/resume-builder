@@ -15,7 +15,7 @@ interface ISidebarShortPDF extends PersonalDataType {
 export const SidebarShortPDF = (props: ISidebarShortPDF) => {
   // позже исправить, должны пояыляться из Формы
   const imgPath = photo;
-  const { bio, style, phone, mail, website, adress } = props;
+  const { bio, style, phone, email, website, address } = props;
   const {
     SidebarShort,
     SidebarShortImage,
@@ -31,7 +31,7 @@ export const SidebarShortPDF = (props: ISidebarShortPDF) => {
   const propsImage = { imgPath, style: Img };
   const propsAbout = { bio, style: { Text, Subtitle: Subtitle } };
   const propsContacts = {
-    data: { phone, mail, website, adress },
+    data: { phone, email, website, address },
     style: { Subtitle, Contact, ContactLink, ContactIcon, Text },
   };
 

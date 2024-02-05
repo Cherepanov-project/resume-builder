@@ -15,7 +15,7 @@ const Hobbies = () => {
 
   const addField = () => {
     setCounter((prevCounter) => prevCounter + 1);
-    setValue('hobby', [...getValues('hobby'), defaultValue]);
+    setValue('hobbyData', [...getValues('hobbyData'), defaultValue]);
   };
 
   const removeField = (index: number) => {
@@ -24,26 +24,31 @@ const Hobbies = () => {
       return;
     }
     if (index !== 0) {
-      resp = [...getValues('hobby').slice(0, index), ...getValues('hobby').slice(index + 1)];
+      resp = [
+        ...getValues('hobbyData').slice(0, index),
+        ...getValues('hobbyData').slice(index + 1),
+      ];
     } else {
-      resp = [...getValues('hobby').slice(index + 1)];
+      resp = [...getValues('hobbyData').slice(index + 1)];
     }
-    setValue('hobby', resp);
+    setValue('hobbyData', resp);
     setCounter((prevCounter) => prevCounter - 1);
   };
 
   return (
     <Box className={classes.hobbies}>
-      {getValues('hobby').map((_: HobbiesType, index: number) => {
-        const fieldName = `hobby[${index}]`;
+      {getValues('hobbyData').map((_: HobbiesType, index: number) => {
+        const fieldName = `hobbyData[${index}]`;
 
         return (
           <div key={index}>
             <BasicInput label="Your hobby" key={index} id={`${fieldName}.label`} />
 
-            <Button onClick={() => removeField(index)} variant="contained">
-              Remove
-            </Button>
+            {index > 0 ? (
+              <Button onClick={() => removeField(index)} variant="contained">
+                Remove
+              </Button>
+            ) : null}
           </div>
         );
       })}

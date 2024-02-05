@@ -14,7 +14,7 @@ type EducationType = {
   study: string;
   degree: string;
   school: string;
-  'education-from-year': string;
+  educationFromYear: string;
   'education-to-year': string;
 };
 
@@ -22,7 +22,7 @@ const defaultValue: EducationType = {
   study: '',
   degree: '',
   school: '',
-  'education-from-year': '',
+  educationFromYear: '',
   'education-to-year': '',
 };
 
@@ -32,7 +32,7 @@ const Education = () => {
 
   const addField = () => {
     setCounter((prevCounter) => prevCounter + 1);
-    setValue('education', [...getValues('education'), defaultValue]);
+    setValue('educationData', [...getValues('educationData'), defaultValue]);
   };
 
   const removeField = (index: number) => {
@@ -42,29 +42,32 @@ const Education = () => {
     }
     if (index !== 0) {
       resp = [
-        ...getValues('education').slice(0, index),
-        ...getValues('education').slice(index + 1),
+        ...getValues('educationData').slice(0, index),
+        ...getValues('educationData').slice(index + 1),
       ];
     } else {
-      resp = [...getValues('education').slice(index + 1)];
+      resp = [...getValues('educationData').slice(index + 1)];
     }
-    setValue('education', resp);
+    setValue('educationData', resp);
     setCounter((prevCounter) => prevCounter - 1);
   };
 
   return (
     <Box className={classes.education}>
-      {getValues('education').map((_: EducationType, index: number) => {
+      {getValues('educationData').map((_: EducationType, index: number) => {
         console.log('rerender');
-        const fieldName = `education[${index}]`;
+        const fieldName = `educationData[${index}]`;
         return (
           <Accordion disableGutters sx={{ mb: 2 }} key={index}>
             <AccordionSummary aria-controls="panel1a-content" id="panel1a-header">
               <div className="AccordionSummary__content">
                 <Typography>Education {index + 1}</Typography>
-                <Button onClick={() => removeField(index)} variant="contained">
-                  Remove
-                </Button>
+
+                {index > 0 ? (
+                  <Button onClick={() => removeField(index)} variant="contained">
+                    Remove
+                  </Button>
+                ) : null}
               </div>
             </AccordionSummary>
             <AccordionDetails>

@@ -11,7 +11,10 @@ interface ISocialProps {
   style: StyleOptionType;
 }
 
-const socialContent = (data: SocialDataType[], style: StyleOptionType) => {
+const socialContent = (data: SocialDataType[] | undefined, style: StyleOptionType) => {
+  if (!data) {
+    return null;
+  }
   const children = data.map((social) => {
     const { link, name } = social;
     const { Social, SocialTitle, Text } = style;
@@ -31,6 +34,9 @@ const socialContent = (data: SocialDataType[], style: StyleOptionType) => {
 
 export const SocialPDF = (props: ISocialProps) => {
   const { data, style } = props;
+  if (!data) {
+    return null;
+  }
   const { Socials, Social, SocialTitle, Subtitle, Text } = style;
   const currStyle = { Social, SocialTitle, Subtitle, Text };
   const propsTitle = { str: 'Social', style: Subtitle };
