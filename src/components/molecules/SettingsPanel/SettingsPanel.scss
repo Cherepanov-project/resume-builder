@@ -88,12 +88,18 @@
   }
 }
 
-.settings-panel__items__btns__btn--green {
+.settings-panel__items__btns .settings-panel__items__btns__btn--green {
   background-color: #2dc08d;
+  &:hover {
+    background-color: #2dc08d;
+  }
 }
 
-.settings-panel__items__btns__btn--grey {
+.settings-panel__items__btns .settings-panel__items__btns__btn--grey {
   background-color: grey;
+  &:hover {
+    background-color: grey;
+  }
 }
 
 .bg-form {
@@ -171,4 +177,10 @@
 .notificationError {
   margin: 15px 0;
   border: 1px #d32f2f solid;
+}
+
+.list__title .title {
+  font-family: 'Inter', sans-serif;
+  font-size: 20px;
+  font-weight: 700;
 }

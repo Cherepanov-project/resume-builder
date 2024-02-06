@@ -7,7 +7,7 @@ import ContainerDIVSettings from '@/components/atoms/ContainerDIVSettings';
 import InputUpdate from '../InputUpdate';
 import ButtonsSettingsPanel from '@/components/atoms/ButtonsSettingsPanel';
 import { IElementProps, ISettingsInputItem } from '@/types/landingBuilder';
-import Alert from '@mui/material/Alert';
+import { Alert, Box, Typography } from '@mui/material';
 
 const SettingsPanel: React.FC = () => {
   const dispatch = useAppDispatch();
@@ -74,11 +74,13 @@ const SettingsPanel: React.FC = () => {
   const isButtonsPanelVisible = accessNames.includes(name || '');
 
   return isShown ? (
-    <div ref={panelRef} className="list__wrap">
-      <div className={'list__title'}>
-        <h3>Settings</h3>
+    <Box ref={panelRef} className="list__wrap">
+      <Box className={'list__title'}>
+        <Typography variant="h3" className="title">
+          Settings
+        </Typography>
         <CloseIcon className="list__close-btn" onClick={handleClose} />
-      </div>
+      </Box>
 
       <Alert severity="info" className="notification">
         Your data will be displayed after saving
@@ -86,9 +88,9 @@ const SettingsPanel: React.FC = () => {
 
       {isButtonsPanelVisible && <InputUpdate itemsList={itemsList} setItemsList={setItemsList} />}
 
-      <div className="settings-panel">
+      <Box className="settings-panel">
         {type === 'section' && <ContainerDIVSettings setStyle={setStyle} />}
-      </div>
+      </Box>
 
       <ButtonsSettingsPanel
         elementId={id}
@@ -98,7 +100,7 @@ const SettingsPanel: React.FC = () => {
         СheckingLabel={СheckingLabel}
         onClose={handleClose}
       />
-    </div>
+    </Box>
   ) : null;
 };
 

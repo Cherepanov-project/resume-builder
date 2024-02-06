@@ -4,7 +4,7 @@ import { useAppDispatch } from '@/hooks/cvTemplateHooks';
 import { IButtonsSettingsPanelProps } from '@/types/landingBuilder';
 import { closePanel } from '@/store/landingBuilder/settingsPanelSlice';
 import { useState } from 'react';
-import { Alert, Stack, Button } from '@mui/material';
+import { Alert, Stack, Button, Box } from '@mui/material';
 
 const ButtonsSettingsPanel = ({
   elementId,
@@ -35,7 +35,7 @@ const ButtonsSettingsPanel = ({
   };
 
   return (
-    <div className="settings-panel__items">
+    <Box className="settings-panel__items">
       {error && (
         <Alert severity="error" className="notificationError">
           The fields have non-unique values
@@ -45,28 +45,20 @@ const ButtonsSettingsPanel = ({
       <Stack direction="row" className="settings-panel__items__btns">
         <Button
           variant="contained"
-          className="settings-panel__items__btns__btn"
-          sx={{
-            backgroundColor: '#2dc08d',
-            '&:hover': { opacity: 0.6, backgroundColor: '#2dc08d' },
-          }}
+          className="settings-panel__items__btns__btn settings-panel__items__btns__btn--green"
           onClick={() => handleApply()}
         >
           Apply
         </Button>
         <Button
           variant="contained"
-          className="settings-panel__items__btns__btn"
-          sx={{
-            backgroundColor: 'grey',
-            '&:hover': { opacity: 0.6, backgroundColor: 'grey' },
-          }}
+          className="settings-panel__items__btns__btn settings-panel__items__btns__btn--grey"
           onClick={() => onClose()}
         >
           Cancel
         </Button>
       </Stack>
-    </div>
+    </Box>
   );
 };
 

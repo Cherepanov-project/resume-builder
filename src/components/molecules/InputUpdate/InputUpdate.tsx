@@ -1,6 +1,5 @@
 import { nanoid } from 'nanoid';
-import classes from './InputUpdate.module.scss';
-import { IconButton, TextField } from '@mui/material';
+import { Box, IconButton, TextField, Typography } from '@mui/material';
 import { AddCircleOutline, RemoveCircleOutline } from '@mui/icons-material';
 import {
   ISettingsInputUpdateProps,
@@ -8,6 +7,7 @@ import {
   ISettingsInputItem,
   T_Value,
 } from '@/types/landingBuilder';
+import classes from './InputUpdate.module.scss';
 
 const InputUpdate = ({ itemsList, setItemsList }: ISettingsInputUpdateProps) => {
   const handleAddInput = () => {
@@ -30,12 +30,14 @@ const InputUpdate = ({ itemsList, setItemsList }: ISettingsInputUpdateProps) => 
   };
 
   return (
-    <div className={classes.generalContainer}>
-      <h3 className={classes.title}>Input Text</h3>
-      <div className={classes.editingContainer}>
-        <ul className={classes.list}>
+    <Box className={classes.generalContainer}>
+      <Typography variant="h4" className={classes.title}>
+        Input Text
+      </Typography>
+      <Box className={classes.editingContainer}>
+        <Box className={classes.list}>
           {itemsList.map((item: ISettingsInputItem) => (
-            <li className={classes.listItem} key={item.id}>
+            <Box className={classes.listItem} key={item.id}>
               <TextField
                 size="small"
                 id="outlined"
@@ -55,16 +57,16 @@ const InputUpdate = ({ itemsList, setItemsList }: ISettingsInputUpdateProps) => 
               >
                 <RemoveCircleOutline />
               </IconButton>
-            </li>
+            </Box>
           ))}
-        </ul>
-        <div className={classes.btnPlus}>
+        </Box>
+        <Box className={classes.btnPlus}>
           <IconButton aria-label="Add" className={classes.btn} onClick={handleAddInput}>
             <AddCircleOutline />
           </IconButton>
-        </div>
-      </div>
-    </div>
+        </Box>
+      </Box>
+    </Box>
   );
 };
 
