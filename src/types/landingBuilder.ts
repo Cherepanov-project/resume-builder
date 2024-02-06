@@ -70,7 +70,9 @@ export type T_ComponentProps = {
 // Типизация компонентов
 export type DynamicComponentRendererProps = {
   Component?: string;
-  props?: { [key: string]: string | number | { [key: string]: string | number } };
+  props?: {
+    [key: string]: string | number | { [key: string]: string | number } | ISettingsInputItem[];
+  };
   columns?: number;
   source: string;
   children?: T_BlockElement[];
@@ -108,6 +110,54 @@ export type TitleH1Props = {
     text: string;
   };
 };
+
+export interface ISettingsInputItem {
+  id: string;
+  value: string | number;
+}
+
+export type T_Id = string;
+export type T_Value = string | number;
+
+export interface IElementsProps {
+  props: { [key: string]: ISettingsInputItem[] };
+  layout: Layout;
+}
+
+export interface ISettingsInputUpdateProps {
+  itemsList: ISettingsInputItem[];
+  setItemsList: React.Dispatch<React.SetStateAction<ISettingsInputItem[]>>;
+}
+
+export interface IButtonsSettingsPanelProps {
+  elementId: string;
+  itemsList: ISettingsInputItem[];
+  id: string;
+  style: React.CSSProperties;
+  СheckingLabel: (key: ISettingsInputItem[]) => boolean;
+  onClose: () => void;
+}
+
+export interface IMasonryGalleryProps {
+  props: {
+    itemData: {
+      img: string;
+      title: string;
+    }[];
+  };
+}
+
+export interface IElementProps {
+  RadioGroup?: ISettingsInputItem[];
+  CheckboxGroup?: ISettingsInputItem[];
+  SelectList?: ISettingsInputItem[];
+}
+
+export interface StateSelectList {
+  value: string | number;
+  array: ISettingsInputItem[];
+}
+
 // Типизация вспомогательных функций -> utils/index.ts
 export type TProcessFiles = Record<string, () => Promise<unknown>>;
 
@@ -122,13 +172,16 @@ export type T_SectionElements = {
 };
 
 export type T_SectionElementProps = {
-  key: string;
+  key?: string;
   text: string;
-  wrapperStyle: { [key: string]: string };
-  textStyle: { [key: string]: string };
+  wrapperStyle?: { [key: string]: string };
+  textStyle?: { [key: string]: string };
   inputStyle?: { [key: string]: string };
   url?: string;
-  style: { [key: string]: string };
+  style?: { [key: string]: string };
+  RadioGroup?: ISettingsInputItem[];
+  CheckboxGroup?: ISettingsInputItem[];
+  SelectList?: ISettingsInputItem[];
 };
 
 export interface ILayoutBlock {
