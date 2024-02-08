@@ -19,7 +19,6 @@ export const DemoCvModal = (props: DemoCvModalProps) => {
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [componentRef.current]);
 
-
   const pageStyle = `
     @page {
       size: '794px 1123px';
@@ -27,9 +26,7 @@ export const DemoCvModal = (props: DemoCvModalProps) => {
     },
   `;
 
-
   return (
-    
     <>
       <Modal name="DemoCv" isOpen={isOpen} onClose={onClose}>
         <ReactToPrint

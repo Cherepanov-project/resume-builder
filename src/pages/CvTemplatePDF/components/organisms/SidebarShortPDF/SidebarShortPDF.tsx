@@ -1,21 +1,23 @@
 import { View } from '@react-pdf/renderer';
 
-import photo from '../.././../assets/images/lukeSky.jpg';
-
-import { PersonalDataType } from '../../../../../assets/const';
+import { AvatarDataType, PersonalDataType } from '../../../../../assets/const';
 import { StyleOptionType } from '../../../const';
 
 import { ImagePDF } from '../../atoms';
 import { AboutPDF, ContactsPDF } from '../../molecules';
 
-interface ISidebarShortPDF extends PersonalDataType {
+interface ISidebarShortPDFProps {
+  data: {
+    personalData: PersonalDataType;
+    photoData: AvatarDataType;
+  };
   style: StyleOptionType;
 }
 
-export const SidebarShortPDF = (props: ISidebarShortPDF) => {
-  // позже исправить, должны пояыляться из Формы
-  const imgPath = photo;
-  const { bio, style, phone, email, website, address } = props;
+export const SidebarShortPDF = (props: ISidebarShortPDFProps) => {
+  const { data, style } = props;
+  const { personalData, photoData } = data;
+
   const {
     SidebarShort,
     SidebarShortImage,
@@ -28,10 +30,15 @@ export const SidebarShortPDF = (props: ISidebarShortPDF) => {
     ContactIcon,
   } = style;
 
-  const propsImage = { imgPath, style: Img };
-  const propsAbout = { bio, style: { Text, Subtitle: Subtitle } };
+  const propsImage = { imgPath: photoData.avatar, style: Img };
+  const propsAbout = { bio: personalData.bio, style: { Text, Subtitle: Subtitle } };
   const propsContacts = {
-    data: { phone, email, website, address },
+    data: {
+      address: personalData.address,
+      phone: personalData.phone,
+      website: personalData.website,
+      email: personalData.email,
+    },
     style: { Subtitle, Contact, ContactLink, ContactIcon, Text },
   };
 

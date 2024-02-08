@@ -1,49 +1,8 @@
 import { createSlice } from '@reduxjs/toolkit';
+import { ITemporaryCvDataSliceProps } from '../../assets/const';
+import placeholderImage from '../../components/organisms/PersonalPhoto/placeholder.jpg';
 
-type PersonalDataType = {
-  fullName: string;
-  address: string;
-  bio: string;
-  position: string;
-  phone: string;
-  website: string;
-  email: string;
-};
-
-type EducationDataType = {
-  description: string;
-  position: string;
-  fromYear: string;
-  toYear: string;
-  name: string;
-};
-
-type ExperienceDataType = {
-  position: string;
-  fromYear: string;
-  toYear: string;
-  name: string;
-  description: string;
-};
-
-type SocialDataType = {
-  link: string;
-  name: string;
-};
-
-type HobbyDataType = {
-  hobby: string;
-};
-
-interface InitialState {
-  personalData: PersonalDataType;
-  educationData: EducationDataType[];
-  experienceData: ExperienceDataType[];
-  socialData: SocialDataType[];
-  hobbyData: HobbyDataType[];
-}
-
-const initialState: InitialState = {
+const initialState: ITemporaryCvDataSliceProps = {
   personalData: {
     fullName: '',
     address: '',
@@ -74,6 +33,7 @@ const initialState: InitialState = {
   ],
   socialData: [{ link: '', name: '' }],
   hobbyData: [{ hobby: '' }],
+  photoData: { avatar: placeholderImage },
 };
 
 const allPersonaInfoSlice = createSlice({
@@ -89,8 +49,14 @@ const allPersonaInfoSlice = createSlice({
       state.socialData = [...socialData];
       state.hobbyData = [...hobbyData];
     },
+    addPersonalPhoto: (state, action) => {
+      state.photoData = {
+        ...state.photoData,
+        ...action.payload,
+      };
+    },
   },
 });
 
 export default allPersonaInfoSlice.reducer;
-export const { addAllPersonalInfo } = allPersonaInfoSlice.actions;
+export const { addAllPersonalInfo, addPersonalPhoto } = allPersonaInfoSlice.actions;

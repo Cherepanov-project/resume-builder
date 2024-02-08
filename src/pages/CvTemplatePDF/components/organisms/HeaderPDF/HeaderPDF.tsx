@@ -1,22 +1,24 @@
 import { View } from '@react-pdf/renderer';
 
-import photo from '../.././../assets/images/lukeSky.jpg';
-
 import { uniqueKey } from '../../../../../assets/lib';
-import { PersonalDataType } from '../../../../../assets/const';
+import { PersonalDataType, AvatarDataType } from '../../../../../assets/const';
 import { StyleOptionType } from '../../../const';
 
 import { TitlePDF, TextPDF, ImagePDF } from '../../atoms';
 import { ContactsPDF } from '../../molecules';
 
-interface IHeaderPDF extends PersonalDataType {
+interface IHeaderPDFProps {
+  data: {
+    personalData: PersonalDataType;
+    photoData: AvatarDataType;
+  };
   style: StyleOptionType;
 }
 
-export const HeaderPDF = (props: IHeaderPDF) => {
-  // позже исправить, должны пояыляться из формы
-  const imgPath = photo;
-  const { fullName, position, address, phone, website, email, style } = props;
+export const HeaderPDF = (props: IHeaderPDFProps) => {
+  const { data, style } = props;
+  const { personalData, photoData } = data;
+
   const {
     Header,
     HeaderWrapper,
@@ -31,12 +33,20 @@ export const HeaderPDF = (props: IHeaderPDF) => {
     Img,
   } = style;
 
-  const fullNameTitiles = fullName.split(' ');
+  const fullNameTitiles = personalData.fullName.split(' ');
 
-  const propsImage = { imgPath: imgPath, style: Img };
-  const propsSubtitle = { str: position, style: { Text: { ...Text, ...TextSpecial } } };
+  const propsImage = { imgPath: photoData.avatar, style: Img };
+  const propsSubtitle = {
+    str: personalData.position,
+    style: { Text: { ...Text, ...TextSpecial } },
+  };
   const propsConcats = {
-    data: { address, phone, website, email },
+    data: {
+      address: personalData.address,
+      phone: personalData.phone,
+      website: personalData.website,
+      email: personalData.email,
+    },
     style: { Subtitle: SubtitleNone, Contact, ContactLink, ContactIcon, Text },
   };
 

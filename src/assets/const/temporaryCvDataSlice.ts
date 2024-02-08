@@ -1,3 +1,5 @@
+import photo from '../images/lukeSky.jpg';
+
 export type PersonalDataType = {
   fullName: string;
   address: string;
@@ -43,7 +45,7 @@ export interface ITemporaryCvDataSliceProps {
   experienceData: ExperienceDataType[];
   socialData: SocialDataType[];
   hobbyData: HobbyDataType[];
-  photoData: AvatarDataType[];
+  photoData: AvatarDataType;
 }
 
 export const temporaryCvDataSlice: ITemporaryCvDataSliceProps = {
@@ -93,5 +95,5 @@ export const temporaryCvDataSlice: ITemporaryCvDataSliceProps = {
     { link: 'jedin', name: 'LukeSkywalker' },
   ],
   hobbyData: [{ hobby: 'Piloting starships' }, { hobby: 'Chatting with chewbacca' }],
-  photoData: [{ avatar: '' }],
+  photoData: { avatar: photo },
 };

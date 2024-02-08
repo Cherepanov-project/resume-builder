@@ -15,7 +15,7 @@ const DemoCv = () => {
 
   return (
     <div className={classes.demoCv}>
-      <CvTemplatePDF />
+      {/* <CvTemplatePDF /> */}
       <Button
         variant="contained"
         sx={{

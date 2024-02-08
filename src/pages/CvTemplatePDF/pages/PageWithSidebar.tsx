@@ -9,10 +9,10 @@ interface IPageDefaultPDF extends ITemporaryCvDataSliceProps {
 }
 
 export const PageWithSidebarPDF = (props: IPageDefaultPDF) => {
-  const { personalData, style, ...otherDate } = props;
+  const { personalData, photoData, style, ...otherDate } = props;
   const { Page, SidebarPage, MainPage, ...otherStyle } = style;
 
-  const propsSidebar = { ...personalData, style: otherStyle };
+  const propsSidebar = { data: { personalData, photoData }, style: otherStyle };
   const propsMain = { data: otherDate, style: otherStyle };
 
   return (

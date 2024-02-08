@@ -46,20 +46,21 @@ const Hobbies = () => {
 
             {index > 0 ? (
               <Button
-              onClick={() => removeField(index)}
-              variant="contained"
-              sx={{
-                mt: 1,
-                mr: 1,
-                backgroundColor: '#462174',
-                color: 'white',
-                ':hover': {
-                  backgroundColor: 'white',
-                  color: '#462174',
+                onClick={() => removeField(index)}
+                variant="contained"
+                sx={{
+                  mt: 1,
+                  mr: 1,
+                  backgroundColor: '#462174',
+                  color: 'white',
                   border: '1px solid #462174',
-                },
-              }}
-            >
+                  ':hover': {
+                    backgroundColor: 'white',
+                    color: '#462174',
+                    border: '1px solid #462174',
+                  },
+                }}
+              >
                 Remove
               </Button>
             ) : null}
@@ -78,6 +79,7 @@ const Hobbies = () => {
           mr: 1,
           backgroundColor: '#462174',
           color: 'white',
+          border: '1px solid #462174',
           ':hover': {
             backgroundColor: 'white',
             color: '#462174',

@@ -55,7 +55,6 @@ const Education = () => {
   return (
     <Box className={classes.education}>
       {getValues('educationData').map((_: EducationType, index: number) => {
-        console.log('rerender');
         const fieldName = `educationData[${index}]`;
         return (
           <Accordion disableGutters sx={{ mb: 2 }} key={index}>
@@ -65,20 +64,21 @@ const Education = () => {
 
                 {index > 0 ? (
                   <Button
-                  onClick={() => removeField(index)}
-                  variant="contained"
-                  sx={{
-                    mt: 1,
-                    mr: 1,
-                    backgroundColor: '#462174',
-                    color: 'white',
-                    ':hover': {
-                      backgroundColor: 'white',
-                      color: '#462174',
+                    onClick={() => removeField(index)}
+                    variant="contained"
+                    sx={{
+                      mt: 1,
+                      mr: 1,
+                      backgroundColor: '#462174',
+                      color: 'white',
                       border: '1px solid #462174',
-                    },
-                  }}
-                >
+                      ':hover': {
+                        backgroundColor: 'white',
+                        color: '#462174',
+                        border: '1px solid #462174',
+                      },
+                    }}
+                  >
                     Remove
                   </Button>
                 ) : null}
@@ -100,6 +100,7 @@ const Education = () => {
           mr: 1,
           backgroundColor: '#462174',
           color: 'white',
+          border: '1px solid #462174',
           ':hover': {
             backgroundColor: 'white',
             color: '#462174',

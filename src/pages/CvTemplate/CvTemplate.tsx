@@ -1,12 +1,11 @@
 import React from 'react';
 import { useCallback, useState } from 'react';
-import { useForm, FormProvider } from 'react-hook-form';
+import { useForm, SubmitHandler, FormProvider } from 'react-hook-form';
 import * as yup from 'yup';
 import { yupResolver } from '@hookform/resolvers/yup';
 import { DevTool } from '@hookform/devtools';
 import classes from './CvTemplate.module.scss';
 
-import DemoCv from '../../components/organisms/DemoCv';
 import { DemoCvModal } from '../../components/organisms/DemoCvModal';
 import { CvTemplatePDF } from '../CvTemplatePDF';
 
@@ -65,25 +64,19 @@ const validationSchema = yup.object().shape({
     )
     .required(),
 
-    socialData: yup.array().of(
-      yup.object().shape({
-        'social-name': yup.string().required('Is a required field'),
-        'social-link': yup.string().required('Is a required field'),
-      }),
-    ),
+  socialData: yup.array().of(
+    yup.object().shape({
+      'social-name': yup.string().required('Is a required field'),
+      'social-link': yup.string().required('Is a required field'),
+    }),
+  ),
 
-    hobbyData: yup.array().of(
-      yup.object().shape({
-        label: yup.string().required('Is a required field'),
-      }),
-    ),
-  
-    photoData: yup.array().of(
-      yup.object().shape({
-        avatar: yup.string().required(""),
-      }),
-    ),
-  });
+  hobbyData: yup.array().of(
+    yup.object().shape({
+      label: yup.string().required('Is a required field'),
+    }),
+  ),
+});
 
 interface IFormInputs extends yup.InferType<typeof validationSchema> {}
 
@@ -145,11 +138,6 @@ const CvTemplate = () => {
           'social-link': '',
         },
       ],
-      photoData: [
-        {
-          avatar: '',
-        },
-      ],
     },
   });
 
@@ -169,7 +157,6 @@ const CvTemplate = () => {
           'email',
           'bio',
         ]);
-        // isValid = true;
         break;
 
       case 1:
@@ -189,7 +176,7 @@ const CvTemplate = () => {
         break;
 
       case 5:
-        isValid = await methods.trigger(['photoData']);
+        isValid = true;
         break;
     }
 
@@ -247,10 +234,7 @@ const CvTemplate = () => {
 
   const dispatch = useDispatch();
 
-  
-  const onSubmit = (data: IFormInputs) => {
-    console.log(data);
-
+  const onSubmit: SubmitHandler<IFormInputs> = (data) => {
     const transformedData = {
       personalData: {
         fullName: data.fullName,
@@ -286,10 +270,6 @@ const CvTemplate = () => {
       hobbyData: data.hobbyData?.map((hobby) => ({
         hobby: hobby.label,
       })),
-
-      // photoData: data.photoData?.map((avatar) => ({
-      //   avatar: 'photo-link',
-      // })),
     };
 
     console.log('TRANSFORMED DATA', transformedData);
@@ -309,12 +289,32 @@ const CvTemplate = () => {
       return 'next';
     }
   };
- 
 
   const getButtonStyles = (index: number) => ({
-    color: getButtonStatus(index) === 'active' ? '#462174' : getButtonStatus(index) === 'done' ? 'white' : getButtonStatus(index) === 'next' ? '#4E4D4D' : 'initial',
-    backgroundColor: getButtonStatus(index) === 'active' ? 'white' : getButtonStatus(index) === 'done' ? '#462174' : getButtonStatus(index) === 'next' ? '#dddbdb' : 'initial',
-    border: getButtonStatus(index) === 'active' ? '2px solid #462174' : getButtonStatus(index) === 'done' ? '#462174' : getButtonStatus(index) === 'next' ? '2px solid #4E4D4D' : 'initial',
+    color:
+      getButtonStatus(index) === 'active'
+        ? '#462174'
+        : getButtonStatus(index) === 'done'
+        ? 'white'
+        : getButtonStatus(index) === 'next'
+        ? '#4E4D4D'
+        : 'initial',
+    backgroundColor:
+      getButtonStatus(index) === 'active'
+        ? 'white'
+        : getButtonStatus(index) === 'done'
+        ? '#462174'
+        : getButtonStatus(index) === 'next'
+        ? '#dddbdb'
+        : 'initial',
+    border:
+      getButtonStatus(index) === 'active'
+        ? '2px solid #462174'
+        : getButtonStatus(index) === 'done'
+        ? '#462174'
+        : getButtonStatus(index) === 'next'
+        ? '2px solid #4E4D4D'
+        : 'initial',
   });
 
   return (
@@ -360,34 +360,98 @@ const CvTemplate = () => {
                         case 4:
                           await methods.trigger(['hobbyData']);
                           break;
-
-                        case 5:
-                          await methods.trigger(['photoData']);
-                          break;
                       }
                     }}
                   >
                     {steps.map((step, index) => (
-                      <Button variant="contained" style={getButtonStyles(index)}  sx={{
-                        mt: 1,
-                        mr: 1, 
-                        margin: '15px',
-                        width: '322px',
-                        height: '70px',
-                      }}
+                      <Button
+                        disabled={true}
+                        variant="contained"
+                        style={getButtonStyles(index)}
+                        sx={{
+                          mt: 1,
+                          mr: 1,
+                          margin: '15px',
+                          width: '322px',
+                          height: '70px',
+                        }}
                         key={step.id}
                       >
-                        {' '}
                         {step.label}
                       </Button>
                     ))}
                   </Box>
 
+                  {activeStep === steps.length && (
+                    <Paper
+                      square
+                      elevation={0}
+                      sx={{ p: 3, boxShadow: '0px 0px 5px rgba(0, 0, 0, 0.3)' }}
+                      className={classes.cvTemlpate__stepContent}
+                    >
+                      <Typography variant="h4">
+                        All steps completed - you&apos;re finished
+                      </Typography>
+
+                      {/* КНОПКА ПРЕВЬЮ */}
+
+                      <Button
+                        onClick={onToggleModal}
+                        sx={{
+                          mt: 1,
+                          mr: 1,
+                          backgroundColor: '#462174',
+                          color: 'white',
+                          border: '1px solid #462174',
+                          ':hover': {
+                            backgroundColor: 'white',
+                            color: '#462174',
+                            border: '1px solid #462174',
+                          },
+                        }}
+                      >
+                        Preview
+                      </Button>
+                      <DemoCvModal
+                        content={<CvTemplatePDF />}
+                        isOpen={isOpen}
+                        onClose={onToggleModal}
+                      />
+
+                      <Button
+                        onClick={handleReset}
+                        sx={{
+                          mt: 1,
+                          mr: 1,
+                          backgroundColor: '#462174',
+                          color: 'white',
+                          border: '1px solid #462174',
+                          ':hover': {
+                            backgroundColor: 'white',
+                            color: '#462174',
+                            border: '1px solid #462174',
+                          },
+                        }}
+                      >
+                        AT FIRST
+                      </Button>
+                    </Paper>
+                  )}
+
                   {steps.map((step) => {
                     if (step.state === 'active') {
                       return (
-                        <Box component="form" className={classes.cvTemlpate__stepContent} key={step.id}>
-                          <Typography variant="h4" className={classes.cvTemlpate__stepContentLabel}>{step.label} </Typography>
+                        <Box
+                          component="form"
+                          className={classes.cvTemlpate__stepContent}
+                          key={step.id}
+                        >
+                          <Typography
+                            variant="caption"
+                            className={classes.cvTemlpate__stepContentLabel}
+                          >
+                            {step.label}
+                          </Typography>
                           {step.form}
                           {/* Кнопки ниже формы */}
                           <Box className={classes.cvTemlpate__stepContentButton}>
@@ -396,6 +460,7 @@ const CvTemplate = () => {
                               onClick={handleBack}
                               sx={{ mt: 1, mr: 1 }}
                             ></Button>
+
                             <Button
                               onClick={step.id === 6 ? methods.handleSubmit(onSubmit) : handleNext}
                               variant="contained"
@@ -404,6 +469,7 @@ const CvTemplate = () => {
                                 mr: 1,
                                 backgroundColor: '#462174',
                                 color: 'white',
+                                border: '1px solid #462174',
                                 ':hover': {
                                   backgroundColor: 'white',
                                   color: '#462174',
@@ -413,9 +479,7 @@ const CvTemplate = () => {
                             >
                               {step.id === 6 ? 'Finish' : 'Next session'}
                             </Button>
-                            
                           </Box>
-                          {step.id === 6 && <DemoCv />}
                         </Box>
                       );
                     } else {
@@ -428,26 +492,6 @@ const CvTemplate = () => {
 
                 <DevTool control={methods.control} placement="top-left" />
               </FormProvider>
-              {activeStep === steps.length && (
-                <Paper square elevation={0} sx={{ p: 3 }}>
-                  <Typography>All steps completed - you&apos;re finished</Typography>
-
-                  {/* КНОПКА ПРЕВЬЮ */}
-
-                  <Button onClick={onToggleModal} sx={{ mt: 1, mr: 1 }}>
-                    Preview
-                  </Button>
-                  <DemoCvModal
-                    content={<CvTemplatePDF />}
-                    isOpen={isOpen}
-                    onClose={onToggleModal}
-                  />
-
-                  <Button onClick={handleReset} sx={{ mt: 1, mr: 1 }}>
-                    AT FIRST
-                  </Button>
-                </Paper>
-              )}
             </Box>
           </Box>
         </Box>
