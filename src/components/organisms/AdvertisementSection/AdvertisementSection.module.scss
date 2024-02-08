@@ -1,0 +1,114 @@
+$background: #dcf2ed;
+$primary-green: #b8e4da;
+$white: #f1fffc;
+$secondary-green: #1c4532;
+$light-blue: #cbd5e0;
+
+.right_side {
+  display: flex;
+  flex-direction: column;
+  background: $secondary-green;
+  min-height: 768px;
+  width: 666px;
+  position: relative;
+  text-align: center;
+  align-items: center;
+  max-height: 1024px;
+  overflow: hidden;
+  border-top-right-radius: 30px;
+  border-bottom-right-radius: 30px;
+}
+
+.rs_content {
+  width: 525px;
+  margin-top: 50px;
+  &__card {
+    background: $white;
+    position: relative;
+    border-radius: 10px;
+    &_large {
+      border-radius: 10px;
+      text-align: start;
+      padding: 44px;
+      display: flex;
+      background: url(../../../assets/images/card3.png);
+      background-repeat: no-repeat;
+      background-position-x: 250px;
+      background-size: 332.68px 378.75px;
+      box-sizing: border-box;
+      > div {
+        width: 255px;
+      }
+      &__title {
+        color: $secondary-green;
+        font-family: 'Inter', sans-serif;
+        font-size: 34px;
+        font-style: normal;
+        font-weight: 700;
+        line-height: 37px;
+        letter-spacing: -0.68px;
+      }
+      &__text {
+        color: #718096;
+        font-family: 'Inter', sans-serif;
+        font-size: 16px;
+        font-style: normal;
+        font-weight: 500;
+        line-height: 28px;
+        letter-spacing: -0.32px;
+      }
+    }
+    &_small {
+      position: absolute;
+      background-color: #fff;
+      width: 287px;
+      height: 94px;
+      left: 238px;
+      bottom: -45px;
+      display: flex;
+      align-items: center;
+      border-radius: 10px;
+      gap: 20px;
+      padding: 30px;
+      &__inner {
+        display: flex;
+        flex-direction: column;
+        align-items: flex-start;
+        > p {
+          margin: 0;
+        }
+        > h2 {
+          margin: 0;
+        }
+      }
+    }
+  }
+  &__new_features {
+    margin-top: 75px;
+    margin-bottom: 25px;
+    > h2 {
+      font-size: 40px;
+      color: #f7fafc;
+    }
+    > p {
+      font-size: 20px;
+      color: #cfd9e0;
+    }
+  }
+}
+
+.rs_navigation {
+  display: flex;
+  gap: 15px;
+  justify-content: center;
+  align-items: center;
+  color: #fff;
+  &__load::before {
+    font-size: 30px;
+    content: '* ';
+  }
+  &__load::after {
+    font-size: 30px;
+    content: ' *';
+  }
+}
