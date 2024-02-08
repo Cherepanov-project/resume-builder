@@ -6,9 +6,11 @@
     right: 0px;
     top: 72px;
     width: 320px;
-    height: 100vh;
+    height: Calc(100vh - 72px);
+    overflow-y: scroll;
     background-color: $bg-sidebar;
     z-index: 1;
+    padding-bottom: 20px;
   }
 
   &__title {

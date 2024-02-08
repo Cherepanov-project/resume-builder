@@ -8,6 +8,7 @@ import InputUpdate from '../InputUpdate';
 import ButtonsSettingsPanel from '@/components/atoms/ButtonsSettingsPanel';
 import { IElementProps, ISettingsInputItem } from '@/types/landingBuilder';
 import Alert from '@mui/material/Alert';
+import SliderSettings from '../SliderSettings';
 
 const SettingsPanel: React.FC = () => {
   const dispatch = useAppDispatch();
@@ -48,6 +49,8 @@ const SettingsPanel: React.FC = () => {
       return props?.CheckboxGroup;
     } else if (name === 'SelectList') {
       return props?.SelectList;
+    } else if (name === 'LayoutBlockSlider') {
+      return props?.LayoutBlockSlider;
     }
   }
 
@@ -73,6 +76,8 @@ const SettingsPanel: React.FC = () => {
 
   const isButtonsPanelVisible = accessNames.includes(name || '');
 
+  const showSliderSettings = name === 'LayoutBlockSlider';
+
   return isShown ? (
     <div ref={panelRef} className="list__wrap">
       <div className={'list__title'}>
@@ -85,6 +90,7 @@ const SettingsPanel: React.FC = () => {
       </Alert>
 
       {isButtonsPanelVisible && <InputUpdate itemsList={itemsList} setItemsList={setItemsList} />}
+      {showSliderSettings && <SliderSettings itemsList={itemsList} setItemsList={setItemsList} />}
 
       <div className="settings-panel">
         {type === 'section' && <ContainerDIVSettings setStyle={setStyle} />}

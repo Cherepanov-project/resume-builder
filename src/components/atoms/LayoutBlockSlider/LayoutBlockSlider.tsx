@@ -1,5 +1,5 @@
 import { ILayoutBlock } from '@/types/landingBuilder';
-import { FC, useEffect, useState } from 'react';
+import { FC, useState } from 'react';
 import { Swiper, SwiperSlide } from 'swiper/react';
 import 'swiper/css';
 import 'swiper/css/navigation';
@@ -8,11 +8,9 @@ import { Navigation, Pagination } from 'swiper/modules';
 import './LayoutBlockSlider.scss';
 
 const LayoutBlockSlider: FC<ILayoutBlock> = ({ props }) => {
-  const [filter, setFilter] = useState<string>('');
-
-  useEffect(() => {
-    setFilter(props.text);
-  }, [props]);
+  const [filter, setFilter] = useState<string>('default');
+  const { LayoutBlockSlider } = props;
+  const slidesList = LayoutBlockSlider;
 
   const handleClick = (filterValue: string) => {
     setFilter(filterValue);
@@ -21,15 +19,13 @@ const LayoutBlockSlider: FC<ILayoutBlock> = ({ props }) => {
   const slides = () => {
     return (
       <>
-        <SwiperSlide>Slide 1</SwiperSlide>
-        <SwiperSlide>Slide 2</SwiperSlide>
-        <SwiperSlide>Slide 3</SwiperSlide>
-        <SwiperSlide>Slide 4</SwiperSlide>
-        <SwiperSlide>Slide 5</SwiperSlide>
-        <SwiperSlide>Slide 6</SwiperSlide>
-        <SwiperSlide>Slide 7</SwiperSlide>
-        <SwiperSlide>Slide 8</SwiperSlide>
-        <SwiperSlide>Slide 9</SwiperSlide>
+        {slidesList?.map((el) => {
+          return (
+            <SwiperSlide key={el.id || '123'}>
+              <img src={`${el.value}`} className="sliderPics" />
+            </SwiperSlide>
+          );
+        })}
       </>
     );
   };
@@ -94,7 +90,7 @@ const LayoutBlockSlider: FC<ILayoutBlock> = ({ props }) => {
   };
 
   return (
-    <div style={props.wrapperStyle}>
+    <div className="slider-global">
       <div className="slider-filters">
         <button className={activeFiler('default')} onClick={() => handleClick('default')}>
           default

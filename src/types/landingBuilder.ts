@@ -113,7 +113,7 @@ export type TitleH1Props = {
 
 export interface ISettingsInputItem {
   id: string;
-  value: string | number;
+  value: string | number | never;
 }
 
 export type T_Id = string;
@@ -151,6 +151,7 @@ export interface IElementProps {
   RadioGroup?: ISettingsInputItem[];
   CheckboxGroup?: ISettingsInputItem[];
   SelectList?: ISettingsInputItem[];
+  LayoutBlockSlider?: ISettingsInputItem[];
 }
 
 export interface StateSelectList {
@@ -182,6 +183,7 @@ export type T_SectionElementProps = {
   RadioGroup?: ISettingsInputItem[];
   CheckboxGroup?: ISettingsInputItem[];
   SelectList?: ISettingsInputItem[];
+  LayoutBlockSlider?: ISettingsInputItem[];
 };
 
 export interface ILayoutBlock {
