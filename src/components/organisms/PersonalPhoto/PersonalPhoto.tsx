@@ -1,6 +1,7 @@
 import React, { useState } from 'react';
 
 import placeholderImage from './placeholder.jpg';
+import { buttonStyle } from '../../../assets/style/buttonStyle';
 import classes from './PersonalPhoto.module.scss';
 import { BasicImageUpload } from '../../atoms/BasicImageUpload';
 import { Box } from '@mui/material';
@@ -51,18 +52,7 @@ const PersonalPhoto = () => {
         id="avatar"
         title="Загрузите фото"
         onChange={handleFileChange}
-        sx={{
-          mt: 1,
-          mr: 1,
-          backgroundColor: '#462174',
-          color: 'white',
-          border: '1px solid #462174',
-          ':hover': {
-            backgroundColor: 'white',
-            color: '#462174',
-            border: '1px solid #462174',
-          },
-        }}
+        sx={buttonStyle}
       />
     </Box>
   );

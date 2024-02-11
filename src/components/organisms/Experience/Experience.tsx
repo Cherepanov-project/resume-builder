@@ -2,6 +2,7 @@ import classes from './Experience.module.scss';
 import Box from '@mui/material/Box';
 import { Button } from '@mui/material';
 import ExperienceForm from '../../molecules/ExperienceForm';
+import { buttonStyle } from '../../../assets/style/buttonStyle';
 
 import Accordion from '@mui/material/Accordion';
 import AccordionSummary from '@mui/material/AccordionSummary';
@@ -69,22 +70,7 @@ const Experience = () => {
                 <Typography>Experience {index + 1}</Typography>
 
                 {index > 0 ? (
-                  <Button
-                    onClick={() => removeField(index)}
-                    variant="contained"
-                    sx={{
-                      mt: 1,
-                      mr: 1,
-                      backgroundColor: '#462174',
-                      color: 'white',
-                      border: '1px solid #462174',
-                      ':hover': {
-                        backgroundColor: 'white',
-                        color: '#462174',
-                        border: '1px solid #462174',
-                      },
-                    }}
-                  >
+                  <Button onClick={() => removeField(index)} variant="contained" sx={buttonStyle}>
                     Remove
                   </Button>
                 ) : null}
@@ -103,18 +89,7 @@ const Experience = () => {
           addField();
         }}
         variant="contained"
-        sx={{
-          mt: 1,
-          mr: 1,
-          backgroundColor: '#462174',
-          color: 'white',
-          border: '1px solid #462174',
-          ':hover': {
-            backgroundColor: 'white',
-            color: '#462174',
-            border: '1px solid #462174',
-          },
-        }}
+        sx={buttonStyle}
       >
         Add another Experience
       </Button>

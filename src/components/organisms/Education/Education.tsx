@@ -1,6 +1,7 @@
 import classes from './Education.module.scss';
 import { Box, Button } from '@mui/material';
 import EducationForm from '../../molecules/EducationForm';
+import { buttonStyle } from '../../../assets/style/buttonStyle';
 
 import Accordion from '@mui/material/Accordion';
 import AccordionSummary from '@mui/material/AccordionSummary';
@@ -63,22 +64,7 @@ const Education = () => {
                 <Typography>Education {index + 1}</Typography>
 
                 {index > 0 ? (
-                  <Button
-                    onClick={() => removeField(index)}
-                    variant="contained"
-                    sx={{
-                      mt: 1,
-                      mr: 1,
-                      backgroundColor: '#462174',
-                      color: 'white',
-                      border: '1px solid #462174',
-                      ':hover': {
-                        backgroundColor: 'white',
-                        color: '#462174',
-                        border: '1px solid #462174',
-                      },
-                    }}
-                  >
+                  <Button onClick={() => removeField(index)} variant="contained" sx={buttonStyle}>
                     Remove
                   </Button>
                 ) : null}
@@ -92,22 +78,7 @@ const Education = () => {
           </Accordion>
         );
       })}
-      <Button
-        onClick={addField}
-        variant="contained"
-        sx={{
-          mt: 1,
-          mr: 1,
-          backgroundColor: '#462174',
-          color: 'white',
-          border: '1px solid #462174',
-          ':hover': {
-            backgroundColor: 'white',
-            color: '#462174',
-            border: '1px solid #462174',
-          },
-        }}
-      >
+      <Button onClick={addField} variant="contained" sx={buttonStyle}>
         Add another Education
       </Button>
     </Box>

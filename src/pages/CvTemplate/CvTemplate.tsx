@@ -8,6 +8,7 @@ import classes from './CvTemplate.module.scss';
 
 import { DemoCvModal } from '../../components/organisms/DemoCvModal';
 import { CvTemplatePDF } from '../CvTemplatePDF';
+import { buttonStyle } from '../../assets/style/buttonStyle.ts';
 
 import Box from '@mui/material/Box';
 import PersonalInfo from '../../components/organisms/PersonalInfo';
@@ -290,32 +291,36 @@ const CvTemplate = () => {
     }
   };
 
-  const getButtonStyles = (index: number) => ({
-    color:
-      getButtonStatus(index) === 'active'
-        ? '#462174'
-        : getButtonStatus(index) === 'done'
-        ? 'white'
-        : getButtonStatus(index) === 'next'
-        ? '#4E4D4D'
-        : 'initial',
-    backgroundColor:
-      getButtonStatus(index) === 'active'
-        ? 'white'
-        : getButtonStatus(index) === 'done'
-        ? '#462174'
-        : getButtonStatus(index) === 'next'
-        ? '#dddbdb'
-        : 'initial',
-    border:
-      getButtonStatus(index) === 'active'
-        ? '2px solid #462174'
-        : getButtonStatus(index) === 'done'
-        ? '#462174'
-        : getButtonStatus(index) === 'next'
-        ? '2px solid #4E4D4D'
-        : 'initial',
-  });
+  const getButtonStyles = (index: number) => {
+    const buttonStatus = getButtonStatus(index);
+
+    return {
+      color:
+        buttonStatus === 'active'
+          ? '#462174'
+          : buttonStatus === 'done'
+          ? 'white'
+          : buttonStatus === 'next'
+          ? '#4E4D4D'
+          : 'initial',
+      backgroundColor:
+        buttonStatus === 'active'
+          ? 'white'
+          : buttonStatus === 'done'
+          ? '#462174'
+          : buttonStatus === 'next'
+          ? '#dddbdb'
+          : 'initial',
+      border:
+        buttonStatus === 'active'
+          ? '2px solid #462174'
+          : buttonStatus === 'done'
+          ? '#462174'
+          : buttonStatus === 'next'
+          ? '2px solid #4E4D4D'
+          : 'initial',
+    };
+  };
 
   return (
     <Box className={classes.cvTemlpate}>
@@ -395,21 +400,7 @@ const CvTemplate = () => {
 
                       {/* КНОПКА ПРЕВЬЮ */}
 
-                      <Button
-                        onClick={onToggleModal}
-                        sx={{
-                          mt: 1,
-                          mr: 1,
-                          backgroundColor: '#462174',
-                          color: 'white',
-                          border: '1px solid #462174',
-                          ':hover': {
-                            backgroundColor: 'white',
-                            color: '#462174',
-                            border: '1px solid #462174',
-                          },
-                        }}
-                      >
+                      <Button onClick={onToggleModal} sx={buttonStyle}>
                         Preview
                       </Button>
                       <DemoCvModal
@@ -418,21 +409,7 @@ const CvTemplate = () => {
                         onClose={onToggleModal}
                       />
 
-                      <Button
-                        onClick={handleReset}
-                        sx={{
-                          mt: 1,
-                          mr: 1,
-                          backgroundColor: '#462174',
-                          color: 'white',
-                          border: '1px solid #462174',
-                          ':hover': {
-                            backgroundColor: 'white',
-                            color: '#462174',
-                            border: '1px solid #462174',
-                          },
-                        }}
-                      >
+                      <Button onClick={handleReset} sx={buttonStyle}>
                         AT FIRST
                       </Button>
                     </Paper>
@@ -464,18 +441,7 @@ const CvTemplate = () => {
                             <Button
                               onClick={step.id === 6 ? methods.handleSubmit(onSubmit) : handleNext}
                               variant="contained"
-                              sx={{
-                                mt: 1,
-                                mr: 1,
-                                backgroundColor: '#462174',
-                                color: 'white',
-                                border: '1px solid #462174',
-                                ':hover': {
-                                  backgroundColor: 'white',
-                                  color: '#462174',
-                                  border: '1px solid #462174',
-                                },
-                              }}
+                              sx={buttonStyle}
                             >
                               {step.id === 6 ? 'Finish' : 'Next session'}
                             </Button>

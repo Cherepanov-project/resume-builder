@@ -1,6 +1,7 @@
 import { Box, Button } from '@mui/material';
 import BasicInput from '../../atoms/BasicInput';
 import classes from './Hobbies.module.scss';
+import { buttonStyle } from '../../../assets/style/buttonStyle';
 
 import { useFormContext } from 'react-hook-form';
 import { useState } from 'react';
@@ -45,22 +46,7 @@ const Hobbies = () => {
             <BasicInput label="Your hobby" key={index} id={`${fieldName}.label`} />
 
             {index > 0 ? (
-              <Button
-                onClick={() => removeField(index)}
-                variant="contained"
-                sx={{
-                  mt: 1,
-                  mr: 1,
-                  backgroundColor: '#462174',
-                  color: 'white',
-                  border: '1px solid #462174',
-                  ':hover': {
-                    backgroundColor: 'white',
-                    color: '#462174',
-                    border: '1px solid #462174',
-                  },
-                }}
-              >
+              <Button onClick={() => removeField(index)} variant="contained" sx={buttonStyle}>
                 Remove
               </Button>
             ) : null}
@@ -74,18 +60,7 @@ const Hobbies = () => {
           addField();
         }}
         variant="contained"
-        sx={{
-          mt: 1,
-          mr: 1,
-          backgroundColor: '#462174',
-          color: 'white',
-          border: '1px solid #462174',
-          ':hover': {
-            backgroundColor: 'white',
-            color: '#462174',
-            border: '1px solid #462174',
-          },
-        }}
+        sx={buttonStyle}
       >
         Add another Hobby
       </Button>
