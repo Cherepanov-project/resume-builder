@@ -7,8 +7,8 @@ import ContainerDIVSettings from '@/components/atoms/ContainerDIVSettings';
 import InputUpdate from '../InputUpdate';
 import ButtonsSettingsPanel from '@/components/atoms/ButtonsSettingsPanel';
 import { IElementProps, ISettingsInputItem } from '@/types/landingBuilder';
-import Alert from '@mui/material/Alert';
 import SliderSettings from '../SliderSettings';
+import { Alert, Box, Typography } from '@mui/material';
 
 const SettingsPanel: React.FC = () => {
   const dispatch = useAppDispatch();
@@ -34,6 +34,7 @@ const SettingsPanel: React.FC = () => {
 
   const handleClose = () => {
     setItemsList(prevList);
+    setElementsSize(prevElementsSize);
     dispatch(closePanel());
   };
 
@@ -41,6 +42,7 @@ const SettingsPanel: React.FC = () => {
   const currentElement = activeElements.find((item) => item.layout.i === id);
   const props: IElementProps | undefined = currentElement?.props;
   const name = currentElement?.name;
+  const size = currentElement?.props?.size;
 
   function findPropsName(props: IElementProps | undefined): ISettingsInputItem[] | undefined {
     if (name === 'RadioGroup') {
@@ -51,6 +53,8 @@ const SettingsPanel: React.FC = () => {
       return props?.SelectList;
     } else if (name === 'LayoutBlockSlider') {
       return props?.LayoutBlockSlider;
+    } else if (name === 'MasonryGallery') {
+      return props?.MasonryGallery;
     }
   }
 
@@ -59,42 +63,59 @@ const SettingsPanel: React.FC = () => {
   const currentList = props && name ? propsName : [];
 
   const [itemsList, setItemsList] = useState(currentList || []);
+  const [elementsSize, setElementsSize] = useState(size || 0);
+  const [prevElementsSize, setPrevElementsSize] = useState(size || 1);
   const [style, setStyle] = useState({});
   const [prevList, setPrevList] = useState(currentList || []);
 
   useEffect(() => {
     setPrevList(currentList || []);
     setItemsList(currentList || []);
-  }, [currentElement]);
+    setPrevElementsSize(size || 1);
+    setElementsSize(size || 1);
+  }, [currentElement, size]);
 
   function СheckingLabel(list: ISettingsInputItem[]) {
-    const labelsList = list.map((item) => item.value);
-    return new Set(labelsList).size !== labelsList.length;
+    if (name && name !== 'MasonryGallery') {
+      const labelsList = list.map((item) => item.value);
+      return new Set(labelsList).size !== labelsList.length;
+    }
+    return false;
   }
 
-  const accessNames = ['RadioGroup', 'CheckboxGroup', 'SelectList'];
+  const accessNames = ['RadioGroup', 'CheckboxGroup', 'SelectList', 'MasonryGallery'];
 
   const isButtonsPanelVisible = accessNames.includes(name || '');
 
   const showSliderSettings = name === 'LayoutBlockSlider';
 
   return isShown ? (
-    <div ref={panelRef} className="list__wrap">
-      <div className={'list__title'}>
-        <h3>Settings</h3>
+    <Box ref={panelRef} className="list__wrap">
+      <Box className={'list__title'}>
+        <Typography variant="h3" className="title">
+          Settings
+        </Typography>
         <CloseIcon className="list__close-btn" onClick={handleClose} />
-      </div>
+      </Box>
 
       <Alert severity="info" className="notification">
         Your data will be displayed after saving
       </Alert>
 
-      {isButtonsPanelVisible && <InputUpdate itemsList={itemsList} setItemsList={setItemsList} />}
       {showSliderSettings && <SliderSettings itemsList={itemsList} setItemsList={setItemsList} />}
+      {isButtonsPanelVisible && (
+        <InputUpdate
+          itemsList={itemsList}
+          setItemsList={setItemsList}
+          name={name || ''}
+          elementsSize={elementsSize}
+          setElementsSize={setElementsSize}
+        />
+      )}
 
-      <div className="settings-panel">
+      <Box className="settings-panel">
         {type === 'section' && <ContainerDIVSettings setStyle={setStyle} />}
-      </div>
+      </Box>
 
       <ButtonsSettingsPanel
         elementId={id}
@@ -103,8 +124,10 @@ const SettingsPanel: React.FC = () => {
         style={style}
         СheckingLabel={СheckingLabel}
         onClose={handleClose}
+        elementsSize={elementsSize}
+        setElementsSize={setElementsSize}
       />
-    </div>
+    </Box>
   ) : null;
 };
 

@@ -7,10 +7,16 @@
     top: 72px;
     width: 320px;
     height: Calc(100vh - 72px);
-    overflow-y: scroll;
     background-color: $bg-sidebar;
     z-index: 1;
     padding-bottom: 20px;
+    overflow-y: auto;
+    -ms-overflow-style: none;
+    scrollbar-width: none;
+
+    &::-webkit-scrollbar {
+      display: none;
+    }
   }
 
   &__title {
@@ -90,12 +96,18 @@
   }
 }
 
-.settings-panel__items__btns__btn--green {
+.settings-panel__items__btns .settings-panel__items__btns__btn--green {
   background-color: #2dc08d;
+  &:hover {
+    background-color: #2dc08d;
+  }
 }
 
-.settings-panel__items__btns__btn--grey {
+.settings-panel__items__btns .settings-panel__items__btns__btn--grey {
   background-color: grey;
+  &:hover {
+    background-color: grey;
+  }
 }
 
 .bg-form {
@@ -173,4 +185,10 @@
 .notificationError {
   margin: 15px 0;
   border: 1px #d32f2f solid;
+}
+
+.list__title .title {
+  font-family: 'Inter', sans-serif;
+  font-size: 20px;
+  font-weight: 700;
 }

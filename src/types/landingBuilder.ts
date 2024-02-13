@@ -113,7 +113,9 @@ export type TitleH1Props = {
 
 export interface ISettingsInputItem {
   id: string;
-  value: string | number | never;
+  value?: string | number;
+  img?: string | number;
+  title?: string | number;
 }
 
 export type T_Id = string;
@@ -127,6 +129,9 @@ export interface IElementsProps {
 export interface ISettingsInputUpdateProps {
   itemsList: ISettingsInputItem[];
   setItemsList: React.Dispatch<React.SetStateAction<ISettingsInputItem[]>>;
+  name: string;
+  elementsSize: number;
+  setElementsSize: React.Dispatch<React.SetStateAction<number>>;
 }
 
 export interface IButtonsSettingsPanelProps {
@@ -136,6 +141,8 @@ export interface IButtonsSettingsPanelProps {
   style: React.CSSProperties;
   СheckingLabel: (key: ISettingsInputItem[]) => boolean;
   onClose: () => void;
+  elementsSize: number;
+  setElementsSize: React.Dispatch<React.SetStateAction<number>>;
 }
 
 export interface IMasonryGalleryProps {
@@ -152,6 +159,7 @@ export interface IElementProps {
   CheckboxGroup?: ISettingsInputItem[];
   SelectList?: ISettingsInputItem[];
   LayoutBlockSlider?: ISettingsInputItem[];
+  MasonryGallery?: ISettingsInputItem[];
 }
 
 export interface StateSelectList {
@@ -184,6 +192,8 @@ export type T_SectionElementProps = {
   CheckboxGroup?: ISettingsInputItem[];
   SelectList?: ISettingsInputItem[];
   LayoutBlockSlider?: ISettingsInputItem[];
+  MasonryGallery?: ISettingsInputItem[];
+  size?: number;
 };
 
 export interface ILayoutBlock {

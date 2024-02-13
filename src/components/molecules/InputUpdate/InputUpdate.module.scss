@@ -1,16 +1,19 @@
 .generalContainer {
   padding: 15px;
+  display: flex;
+  flex-direction: column;
+  row-gap: 10px;
 }
 
-.title {
+.generalContainer .title {
   font-family: 'Inter', sans-serif;
   font-size: 16px;
-  margin: 0;
+  font-weight: 700;
 }
 
 .editingContainer {
   display: flex;
-  margin-top: 10px;
+  column-gap: 10px;
 }
 
 .list {
@@ -23,6 +26,7 @@
 
 .listItem {
   display: flex;
+  column-gap: 10px;
 }
 
 .buttons {
@@ -33,6 +37,8 @@
 .btn {
   outline: 'none';
   background-color: 'transparent';
+  width: 24px;
+  height: 24px;
 }
 
 .btnPlus {
@@ -47,5 +53,16 @@
 }
 
 .input {
+  background-color: #fff;
+}
+
+.sizeBox {
+  display: flex;
+  column-gap: 10px;
+  align-items: center;
+}
+
+.sizeInput {
+  width: 153px;
   background-color: #fff;
 }

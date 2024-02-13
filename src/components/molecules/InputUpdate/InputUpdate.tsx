@@ -1,6 +1,5 @@
 import { nanoid } from 'nanoid';
-import classes from './InputUpdate.module.scss';
-import { IconButton, TextField } from '@mui/material';
+import { Box, IconButton, TextField, Typography } from '@mui/material';
 import { AddCircleOutline, RemoveCircleOutline } from '@mui/icons-material';
 import {
   ISettingsInputUpdateProps,
@@ -8,17 +7,38 @@ import {
   ISettingsInputItem,
   T_Value,
 } from '@/types/landingBuilder';
+import classes from './InputUpdate.module.scss';
 
-const InputUpdate = ({ itemsList, setItemsList }: ISettingsInputUpdateProps) => {
+const InputUpdate = ({
+  itemsList,
+  setItemsList,
+  name,
+  elementsSize,
+  setElementsSize,
+}: ISettingsInputUpdateProps) => {
+  const checkIsMasonry = name === 'MasonryGallery';
+
   const handleAddInput = () => {
-    const updatedItemsList = [...itemsList, { id: nanoid(), value: '' }];
+    let updatedItemsList;
+    if (!checkIsMasonry) {
+      updatedItemsList = [...itemsList, { id: nanoid(), value: '' }];
+    } else {
+      updatedItemsList = [...itemsList, { id: nanoid(), img: '', title: '' }];
+    }
     setItemsList(updatedItemsList);
   };
 
-  const handleInputChange = (id: T_Id, value: T_Value) => {
-    const updatedItemsList = itemsList.map((item: ISettingsInputItem) =>
-      item.id === id ? { ...item, value } : item,
-    );
+  const handleInputChange = (id: T_Id, value: T_Value, isTitle: boolean = false) => {
+    let updatedItemsList;
+    if (!checkIsMasonry) {
+      updatedItemsList = itemsList.map((item: ISettingsInputItem) =>
+        item.id === id ? { ...item, value } : item,
+      );
+    } else {
+      updatedItemsList = itemsList.map((item: ISettingsInputItem) =>
+        item.id === id ? (isTitle ? { ...item, title: value } : { ...item, img: value }) : item,
+      );
+    }
     setItemsList(updatedItemsList);
   };
 
@@ -30,21 +50,39 @@ const InputUpdate = ({ itemsList, setItemsList }: ISettingsInputUpdateProps) => 
   };
 
   return (
-    <div className={classes.generalContainer}>
-      <h3 className={classes.title}>Input Text</h3>
-      <div className={classes.editingContainer}>
-        <ul className={classes.list}>
+    <Box className={classes.generalContainer}>
+      <Typography variant="h4" className={classes.title}>
+        {!checkIsMasonry ? 'Input Text' : 'Pictures'}
+      </Typography>
+      <Box className={classes.editingContainer}>
+        <Box className={classes.list}>
           {itemsList.map((item: ISettingsInputItem) => (
-            <li className={classes.listItem} key={item.id}>
-              <TextField
-                size="small"
-                id="outlined"
-                placeholder="Text"
-                variant="outlined"
-                value={item.value}
-                onChange={(e) => handleInputChange(item.id, e.target.value)}
-                className={classes.input}
-              />
+            <Box className={classes.listItem} key={item.id}>
+              <Box>
+                <TextField
+                  size="small"
+                  id="outlined"
+                  placeholder={!checkIsMasonry ? 'Text' : 'Url'}
+                  variant="outlined"
+                  value={!checkIsMasonry ? item.value : item.img}
+                  onChange={(e) => handleInputChange(item.id, e.target.value)}
+                  className={classes.input}
+                  autoComplete="off"
+                />
+
+                {checkIsMasonry && (
+                  <TextField
+                    size="small"
+                    id="outlined"
+                    placeholder="Title"
+                    variant="outlined"
+                    value={!checkIsMasonry ? item.value : item.title}
+                    onChange={(e) => handleInputChange(item.id, e.target.value, true)}
+                    className={classes.input}
+                    autoComplete="off"
+                  />
+                )}
+              </Box>
 
               <IconButton
                 aria-label="Remove"
@@ -55,16 +93,32 @@ const InputUpdate = ({ itemsList, setItemsList }: ISettingsInputUpdateProps) => 
               >
                 <RemoveCircleOutline />
               </IconButton>
-            </li>
+            </Box>
           ))}
-        </ul>
-        <div className={classes.btnPlus}>
+        </Box>
+        <Box className={classes.btnPlus}>
           <IconButton aria-label="Add" className={classes.btn} onClick={handleAddInput}>
             <AddCircleOutline />
           </IconButton>
-        </div>
-      </div>
-    </div>
+        </Box>
+      </Box>
+      {checkIsMasonry && (
+        <Box className={classes.sizeBox}>
+          <Typography variant="h4" className={classes.title}>
+            Colums
+          </Typography>
+          <TextField
+            size="small"
+            id="outlined"
+            placeholder="Number 1-10"
+            variant="outlined"
+            value={!isNaN(elementsSize) && elementsSize < 11 ? elementsSize : ''}
+            onChange={(e) => setElementsSize(Number(e.target.value))}
+            className={classes.sizeInput}
+          />
+        </Box>
+      )}
+    </Box>
   );
 };
 
