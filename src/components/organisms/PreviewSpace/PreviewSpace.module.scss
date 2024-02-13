@@ -10,14 +10,35 @@
 
 }
 
-.grid {
-  margin: 0 0;
-  width: 100%;
-  height: 100%;
-  background-color: white;
+
+//.grid {
+//  margin: 0 0;
+//  width: 100%;
+//  height: 100%;
+//  background-color: white;
+//}
+
+.container {
+  //background-color: #00a3c8;
+
+  @media (min-width: 481px) {
+    //background-color: #4bfd01;
+  }
+  @media (min-width: 769px) {
+    //background-color: #f8f412;
+    //grid-template-columns: repeat(4, 1fr);
+  }
+  @media (min-width: 1025px) {
+    //background-color: #c25608;
+    //grid-template-columns: repeat(5, 1fr);
+  }
+  @media (min-width: 1201px) {
+    //background-color: #9f0406;
+    //grid-template-columns: repeat(6, 1fr);
+  }
 }
 
-.item {
+.box {
   background-color: white;
   border-radius: 2px;
 }

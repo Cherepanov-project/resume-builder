@@ -53,6 +53,8 @@ export type T_BlockElement = {
   type?: string;
   source: string;
   columns?: number;
+  elementScript?: string;
+  interactiveType?: 'button' | 'slider';
   props: T_SectionElementProps; //{[key: string]: string | {[key: string]: string}}
   children?: T_BlockElement[];
   layout: Layout;
@@ -73,6 +75,8 @@ export type DynamicComponentRendererProps = {
   props?: { [key: string]: string | number | { [key: string]: string | number } };
   columns?: number;
   source: string;
+  elementScript?: string;
+  interactiveType?: 'button' | 'slider';
   children?: T_BlockElement[];
   layout: Layout;
 };

@@ -43,7 +43,7 @@ const rootReducer = combineReducers({
 //преобразование редьюсера для persist
 const persistedReducer = persistReducer(persistConfig, rootReducer);
 
-//миддлвар добавлен для игнора действий Redux-Persist
+//миддлвар добавлен для игнора действий самого Redux-Persist
 const store = configureStore({
   reducer: persistedReducer,
   middleware: (getDefaultMiddleware) =>

@@ -1,5 +1,5 @@
 import { createSlice } from '@reduxjs/toolkit';
-import { nanoid } from 'nanoid';
+import { customAlphabet } from 'nanoid';
 
 import { insertChild } from '@/utils';
 import { Layout } from 'react-grid-layout';
@@ -15,6 +15,8 @@ const initialState: stateProps = {
   currentDraggableItem: null,
 };
 
+const nanoid = customAlphabet('ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz', 15);
+
 const layoutSlice = createSlice({
   name: 'layout',
   initialState,
@@ -22,12 +24,20 @@ const layoutSlice = createSlice({
     // Добавляем блок в рабочую область
     addElement(state, action) {
       const { draggableItem, layoutItem, parentElement } = action.payload;
-      // Задаем уникльный ID блоку и параметры
+      // Задаем уникальный ID блоку и параметры
+      //при дропе добавляем скрипт с эвент листенером в виде строки
+      const elemId = nanoid();
       const newElement = {
         ...draggableItem,
+        elementScript: `<script>
+window['${elemId}'] = document.querySelector('.${elemId}>div:nth-child(1)');
+${elemId}.addEventListener('click', () => console.log('Я тот самый элемент, ${elemId} ${draggableItem.name} ' +
+ 'меня нашли по селектору и вот теперь по нажатию я пишу это. Дальше нужно придумывать, как передавать сюда осмысленные скрипты.'));
+console.log(window['${elemId}']);
+</script>`,
         layout: {
           ...layoutItem,
-          i: nanoid(),
+          i: elemId,
           x: layoutItem.x,
           y: layoutItem.y,
           w: draggableItem.layout.w,
