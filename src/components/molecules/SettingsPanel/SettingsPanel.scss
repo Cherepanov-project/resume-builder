@@ -6,9 +6,17 @@
     right: 0px;
     top: 72px;
     width: 320px;
-    height: 100vh;
+    height: Calc(100vh - 72px);
     background-color: $bg-sidebar;
     z-index: 1;
+    padding-bottom: 20px;
+    overflow-y: auto;
+    -ms-overflow-style: none;
+    scrollbar-width: none;
+
+    &::-webkit-scrollbar {
+      display: none;
+    }
   }
 
   &__title {
@@ -88,12 +96,18 @@
   }
 }
 
-.settings-panel__items__btns__btn--green {
+.settings-panel__items__btns .settings-panel__items__btns__btn--green {
   background-color: #2dc08d;
+  &:hover {
+    background-color: #2dc08d;
+  }
 }
 
-.settings-panel__items__btns__btn--grey {
+.settings-panel__items__btns .settings-panel__items__btns__btn--grey {
   background-color: grey;
+  &:hover {
+    background-color: grey;
+  }
 }
 
 .bg-form {
@@ -117,9 +131,9 @@
 }
 
 .bg-form__square {
-  width: 40px; 
-  height: 40px; 
-  border: 1px solid black; 
+  width: 40px;
+  height: 40px;
+  border: 1px solid black;
   border-radius: 5px;
 }
 
@@ -161,4 +175,20 @@
   & span {
     margin-left: 15px;
   }
+}
+
+.notification {
+  margin-top: 15px;
+  border: 1px #1677ff solid;
+}
+
+.notificationError {
+  margin: 15px 0;
+  border: 1px #d32f2f solid;
+}
+
+.list__title .title {
+  font-family: 'Inter', sans-serif;
+  font-size: 20px;
+  font-weight: 700;
 }

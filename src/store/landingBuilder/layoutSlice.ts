@@ -49,7 +49,7 @@ console.log(window['${elemId}']);
           maxH: draggableItem.layout.maxH ?? 1000000,
         },
       };
-      console.log(newElement);
+      // console.log(newElement);
       const renewElements = insertChild(state.activeElements, parentElement, newElement);
       state.activeElements = [...(renewElements as T_BlockElement[])];
     },
@@ -129,6 +129,18 @@ console.log(window['${elemId}']);
         },
       };
     },
+    setProps(state, action) {
+      const idx = state.activeElements.findIndex((item) => item.layout.i === action.payload.id);
+
+      state.activeElements[idx] = {
+        ...state.activeElements[idx],
+        props: {
+          [state.activeElements[idx].name]: [...action.payload.values],
+          text: '',
+          size: action.payload.size === 0 ? 1 : action.payload.size,
+        },
+      };
+    },
   },
 });
 
@@ -142,4 +154,5 @@ export const {
   decreaseElementColumns,
   setDraggableItem,
   setSectionStyle,
+  setProps,
 } = layoutSlice.actions;
