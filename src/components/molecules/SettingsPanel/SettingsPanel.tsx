@@ -102,7 +102,15 @@ const SettingsPanel: React.FC = () => {
         Your data will be displayed after saving
       </Alert>
 
-      {showSliderSettings && <SliderSettings itemsList={itemsList} setItemsList={setItemsList} />}
+      {showSliderSettings && (
+        <SliderSettings
+          itemsList={itemsList}
+          setItemsList={setItemsList}
+          name={name || ''}
+          elementsSize={elementsSize}
+          setElementsSize={setElementsSize}
+        />
+      )}
       {isButtonsPanelVisible && (
         <InputUpdate
           itemsList={itemsList}
