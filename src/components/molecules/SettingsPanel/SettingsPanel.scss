@@ -6,9 +6,16 @@
     right: 0px;
     top: 72px;
     width: 320px;
-    height: 100vh;
+    height: calc(100% - 72px);
     background-color: $bg-sidebar;
     z-index: 1;
+    overflow-y: auto;
+    -ms-overflow-style: none;
+    scrollbar-width: none;
+
+    &::-webkit-scrollbar {
+      display: none;
+    }
   }
 
   &__title {

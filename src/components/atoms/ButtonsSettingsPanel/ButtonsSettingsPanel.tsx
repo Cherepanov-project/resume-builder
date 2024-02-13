@@ -10,7 +10,9 @@ const ButtonsSettingsPanel = ({
   elementId,
   itemsList,
   СheckingLabel,
-  onClose, // id, style
+  onClose,
+  elementsSize,
+  setElementsSize, // id, style
 }: IButtonsSettingsPanelProps) => {
   const dispatch = useAppDispatch();
 
@@ -19,12 +21,16 @@ const ButtonsSettingsPanel = ({
   const objForStore = {
     id: elementId,
     values: itemsList,
+    size: elementsSize,
   };
 
   const handleApply = () => {
     const check = СheckingLabel(itemsList);
 
     if (!check) {
+      if (elementsSize === 0) {
+        setElementsSize(1);
+      }
       setError(false);
       dispatch(setProps(objForStore));
       dispatch(closePanel());
