@@ -19,14 +19,12 @@ export const DemoCvModal = (props: DemoCvModalProps) => {
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [componentRef.current]);
 
-
   const pageStyle = `
     @page {
       size: '794px 1123px';
       margin: 0mm;
     },
   `;
-
 
   return (
     <>

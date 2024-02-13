@@ -1,5 +1,6 @@
 import { Box, Button } from '@mui/material';
 import SocialForm from '../../molecules/SocialForm';
+import { buttonStyle } from '../../../assets/style/buttonStyle';
 
 import Accordion from '@mui/material/Accordion';
 import AccordionSummary from '@mui/material/AccordionSummary';
@@ -54,7 +55,7 @@ const Social = () => {
             <AccordionSummary aria-controls="panel1a-content" id="panel1a-header">
               <Typography>Social {index + 1}</Typography>
               {index > 0 ? (
-                <Button onClick={() => removeField(index)} variant="contained">
+                <Button onClick={() => removeField(index)} variant="contained" sx={buttonStyle}>
                   Remove
                 </Button>
               ) : null}
@@ -72,6 +73,7 @@ const Social = () => {
           addField();
         }}
         variant="contained"
+        sx={buttonStyle}
       >
         Add another Social
       </Button>

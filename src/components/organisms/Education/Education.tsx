@@ -1,6 +1,7 @@
 import classes from './Education.module.scss';
 import { Box, Button } from '@mui/material';
 import EducationForm from '../../molecules/EducationForm';
+import { buttonStyle } from '../../../assets/style/buttonStyle';
 
 import Accordion from '@mui/material/Accordion';
 import AccordionSummary from '@mui/material/AccordionSummary';
@@ -55,7 +56,6 @@ const Education = () => {
   return (
     <Box className={classes.education}>
       {getValues('educationData').map((_: EducationType, index: number) => {
-        console.log('rerender');
         const fieldName = `educationData[${index}]`;
         return (
           <Accordion disableGutters sx={{ mb: 2 }} key={index}>
@@ -64,7 +64,7 @@ const Education = () => {
                 <Typography>Education {index + 1}</Typography>
 
                 {index > 0 ? (
-                  <Button onClick={() => removeField(index)} variant="contained">
+                  <Button onClick={() => removeField(index)} variant="contained" sx={buttonStyle}>
                     Remove
                   </Button>
                 ) : null}
@@ -78,7 +78,7 @@ const Education = () => {
           </Accordion>
         );
       })}
-      <Button onClick={addField} variant="contained">
+      <Button onClick={addField} variant="contained" sx={buttonStyle}>
         Add another Education
       </Button>
     </Box>
