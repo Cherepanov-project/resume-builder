@@ -7,6 +7,7 @@ import ContainerDIVSettings from '@/components/atoms/ContainerDIVSettings';
 import InputUpdate from '../InputUpdate';
 import ButtonsSettingsPanel from '@/components/atoms/ButtonsSettingsPanel';
 import { IElementProps, ISettingsInputItem } from '@/types/landingBuilder';
+import SliderSettings from '../SliderSettings';
 import { Alert, Box, Typography } from '@mui/material';
 
 const SettingsPanel: React.FC = () => {
@@ -50,6 +51,8 @@ const SettingsPanel: React.FC = () => {
       return props?.CheckboxGroup;
     } else if (name === 'SelectList') {
       return props?.SelectList;
+    } else if (name === 'LayoutBlockSlider') {
+      return props?.LayoutBlockSlider;
     } else if (name === 'MasonryGallery') {
       return props?.MasonryGallery;
     }
@@ -84,6 +87,8 @@ const SettingsPanel: React.FC = () => {
 
   const isButtonsPanelVisible = accessNames.includes(name || '');
 
+  const showSliderSettings = name === 'LayoutBlockSlider';
+
   return isShown ? (
     <Box ref={panelRef} className="list__wrap">
       <Box className={'list__title'}>
@@ -97,6 +102,15 @@ const SettingsPanel: React.FC = () => {
         Your data will be displayed after saving
       </Alert>
 
+      {showSliderSettings && (
+        <SliderSettings
+          itemsList={itemsList}
+          setItemsList={setItemsList}
+          name={name || ''}
+          elementsSize={elementsSize}
+          setElementsSize={setElementsSize}
+        />
+      )}
       {isButtonsPanelVisible && (
         <InputUpdate
           itemsList={itemsList}

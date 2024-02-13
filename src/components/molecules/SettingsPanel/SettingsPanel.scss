@@ -6,9 +6,10 @@
     right: 0px;
     top: 72px;
     width: 320px;
-    height: calc(100% - 72px);
+    height: Calc(100vh - 72px);
     background-color: $bg-sidebar;
     z-index: 1;
+    padding-bottom: 20px;
     overflow-y: auto;
     -ms-overflow-style: none;
     scrollbar-width: none;

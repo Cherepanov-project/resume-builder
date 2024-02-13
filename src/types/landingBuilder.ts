@@ -158,6 +158,7 @@ export interface IElementProps {
   RadioGroup?: ISettingsInputItem[];
   CheckboxGroup?: ISettingsInputItem[];
   SelectList?: ISettingsInputItem[];
+  LayoutBlockSlider?: ISettingsInputItem[];
   MasonryGallery?: ISettingsInputItem[];
 }
 
@@ -190,6 +191,7 @@ export type T_SectionElementProps = {
   RadioGroup?: ISettingsInputItem[];
   CheckboxGroup?: ISettingsInputItem[];
   SelectList?: ISettingsInputItem[];
+  LayoutBlockSlider?: ISettingsInputItem[];
   MasonryGallery?: ISettingsInputItem[];
   size?: number;
 };
