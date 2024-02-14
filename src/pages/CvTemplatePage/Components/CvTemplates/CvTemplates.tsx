@@ -1,5 +1,4 @@
 import classes from './CvTemplates.module.scss';
-import BasicH2 from '../../../../components/atoms/BasicH2';
 import cv1 from '../../../../assets/images/templatesPageImage/demo-1.png';
 import ArrowRightAltIcon from '@mui/icons-material/ArrowRightAlt';
 import cv2 from '../../../../assets/images/templatesPageImage/demo-2.png';
@@ -34,7 +33,6 @@ const CvTemplates = () => {
         <div className={classes['dots-wrapper']}>
           <DotsColor />
         </div>
-        <BasicH2 text="Our Creative Templates" />
         <p>
           Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt
           ut labore et dolore magna aliqua
