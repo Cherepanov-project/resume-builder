@@ -1,0 +1,21 @@
+.list {
+  padding: 0 !important;
+
+  & > div {
+    padding: 4px 0 !important;
+  }
+}
+
+.icon {
+  &__circle {
+    margin-left: 12px;
+  }
+
+  &__dotcircle {
+    margin-left: 24px;
+  }
+
+  &__expand {
+    margin-right: 15px;
+  }
+}
