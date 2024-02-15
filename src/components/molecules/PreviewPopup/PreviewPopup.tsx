@@ -10,6 +10,7 @@ const PreviewPopup = ({ isModalOpen, onToggleModal }: Props) => {
   const moveToPreview = async () => {
     await onToggleModal(false);
     let link: HTMLAnchorElement | null = document.createElement('a');
+    link.rel = 'noopener noreferrer';
     link.href = '/landing-preview';
     link.target = '_blank';
     link.click();
