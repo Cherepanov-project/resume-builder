@@ -2,14 +2,16 @@
 // import Header from './components/organisms/Header';
 // import CvTemplatesPage from './pages/CvTemplatePage';
 // import LandingBuilder from './pages/LandingBuilder';
+// import SliderSV from './components/molecules/SliderSV';
 import CvTemplate from './pages/CvTemplate';
+// import StarterPage from './pages/StarterPage';
 import { Route, Routes } from 'react-router-dom';
 // import SliderSV from './components/molecules/SliderSV';
 // import CvTemplate from './pages/CvTemplate';
 import Header from './components/organisms/Header';
 import LandingBuilder from './pages/LandingBuilder';
 import AuthPage from './pages/AuthPage';
-import StarterPage from './pages/StarterPage';
+// import StarterPage from './pages/StarterPage';
 import SectionsManager from './components/organisms/SectionsManager';
 import TemplateManager from './components/organisms/TemplateManager';
 import IntroPage from './pages/IntroPage';
