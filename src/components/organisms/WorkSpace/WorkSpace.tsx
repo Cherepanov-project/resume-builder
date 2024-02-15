@@ -66,13 +66,7 @@ const WorkSpace: React.FC = () => {
     return [...acc, el.layout];
   }, []);
 
-  // const handleChangeElement = (_layout: Layout[], oldItem: Layout, newItem: Layout) => {
-  //   const isChange = JSON.stringify(oldItem) !== JSON.stringify(newItem);
-  //   if (isChange) dispatch(changeElement(newItem));
-  // };
-
   const handleChangeLayout = (layout: Layout[]) => {
-    console.log(layout);
     layout.map((item) => {
       dispatch(changeElement(item));
     });

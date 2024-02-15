@@ -12,7 +12,6 @@ const PreviewPopup = ({ isModalOpen, onToggleModal }: Props) => {
 
   const moveToPreview = async () => {
     await onToggleModal(false);
-    console.log('GO!');
     window.open('/landing-preview', '_blank');
   };
 

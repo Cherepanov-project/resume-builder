@@ -30,8 +30,8 @@ function App() {
           }
         >
           <Route index element={<WorkSpace />} />
-          <Route path="/sections-creator" element={<SectionsManager />} />
-          <Route path="/template-creator" element={<TemplateManager />} />
+          <Route path="/landing-builder/sections-creator" element={<SectionsManager />} />
+          <Route path="/landing-builder/template-creator" element={<TemplateManager />} />
         </Route>
         <Route path="/landing-preview" element={<LandingPreview />} />
         <Route path="*" element={<NotFoundPage />} />

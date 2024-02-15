@@ -38,22 +38,10 @@ const MemoDynamicComponentRenderer = memo(DynamicComponentRenderer);
 // ========================================================================== \\
 
 const PreviewSpace = () => {
-  // const [width, setWidth] = useState(window.innerWidth);
   const activeElements = useAppSellector((state) => state.layout.activeElements);
-
-  // useEffect(() => {
-  //   const handleResize = () => {
-  //     setWidth(window.innerWidth);
-  //   };
-  //   window.addEventListener('resize', handleResize);
-  //   return () => {
-  //     window.removeEventListener('resize', handleResize);
-  //   };
-  // }, []);
 
   // мемоизируем массив Layout
   const previewLayout: ResponsiveGridLayout.Layout[] = useMemo(() => {
-    console.log('перерендер');
     return activeElements.reduce((acc: Layout[], el: T_BlockElement) => {
       const previewElem = { ...el.layout };
       previewElem.isDraggable = false;
@@ -62,8 +50,7 @@ const PreviewSpace = () => {
     }, []);
   }, [activeElements]);
 
-  console.log(activeElements);
-  console.log(previewLayout);
+  //сортировка может потребоваться для настройки респонсива
   const sortedPreviewLayout = previewLayout.sort((a, b) => {
     if (a.y < b.y) {
       return -1;
@@ -116,7 +103,6 @@ const PreviewSpace = () => {
                 gridColumnEnd: `span ${el.layout.w}`,
                 gridRowStart: `${el.layout.y + 1}`,
                 gridRowEnd: `span ${el.layout.h}`,
-                border: '3px solid blue',
                 backgroundColor: 'white',
                 borderRadius: '2px',
               }}
