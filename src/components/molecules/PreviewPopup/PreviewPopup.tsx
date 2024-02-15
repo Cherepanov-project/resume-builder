@@ -1,18 +1,20 @@
 import { Dialog, DialogActions, DialogTitle } from '@mui/material';
 import DefaultButton from '@atoms/DefaultButton';
 import { LocalFireDepartment } from '@mui/icons-material';
-// import {useNavigate} from "react-router-dom";
 
 type Props = {
   isModalOpen: boolean;
   onToggleModal: (data: boolean) => void;
 };
 const PreviewPopup = ({ isModalOpen, onToggleModal }: Props) => {
-  // const navigate = useNavigate()
-
   const moveToPreview = async () => {
     await onToggleModal(false);
-    window.open('/landing-preview', '_blank');
+    let link: HTMLAnchorElement | null = document.createElement('a');
+    link.href = '/landing-preview';
+    link.target = '_blank';
+    link.click();
+    link = null;
+    // window.open('', '_blank');
   };
 
   return (
