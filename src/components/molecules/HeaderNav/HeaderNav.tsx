@@ -7,9 +7,11 @@ import classes from './NavLink.module.scss';
 const HeaderNav = () => {
   return (
     <nav className={classes['header-nav']}>
+      <Logo />
       <ul className={classes['header-nav-list']}>
-        <Link to={'/'}>{<Logo />}</Link>
-        <Link to={'/templates'}>{<NavLink label="Resume" />}</Link>
+        <Link to="/">
+          <NavLink label="Constructor" />
+        </Link>
         <NavLink label="Reserved" />
         <NavLink label="Reserved" />
         <NavLink label="Reserved" />
