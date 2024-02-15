@@ -10,7 +10,6 @@ import SettingsPanel from '@/components/molecules/SettingsPanel';
 import ImageMenu from '@/components/molecules/ImageMenu';
 
 const LandingBuilder = () => {
-
   return (
     <main className={classes.landing}>
       <SideBar />
