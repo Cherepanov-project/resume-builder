@@ -1,7 +1,7 @@
 {
   "compilerOptions": {
-    "target": "es2015",
-    "module": "commonjs",
+    "target": "es5",
+    "module": "es2015",
     "esModuleInterop": true,
     "resolveJsonModule": true,
     "moduleResolution": "bundler", // Set module resolution to 'bundler'
