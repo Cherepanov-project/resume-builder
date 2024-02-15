@@ -2,6 +2,7 @@ import { createSlice } from '@reduxjs/toolkit';
 import { customAlphabet } from 'nanoid';
 
 import { insertChild } from '@/utils';
+import { addBaseScript } from '@/utils/scriptAssigner';
 import { Layout } from 'react-grid-layout';
 import { T_BlockElement } from '@/types/landingBuilder';
 
@@ -29,12 +30,7 @@ const layoutSlice = createSlice({
       const elemId = nanoid();
       const newElement = {
         ...draggableItem,
-        elementScript: `<script>
-window['${elemId}'] = document.querySelector('.${elemId}>div:nth-child(1)');
-${elemId}.addEventListener('click', () => console.log('Я тот самый элемент, ${elemId} ${draggableItem.name} ' +
- 'меня нашли по селектору и вот теперь по нажатию я пишу это. Дальше нужно придумывать, как передавать сюда осмысленные скрипты.'));
-console.log(window['${elemId}']);
-</script>`,
+        elementScript: addBaseScript(elemId, draggableItem),
         layout: {
           ...layoutItem,
           i: elemId,

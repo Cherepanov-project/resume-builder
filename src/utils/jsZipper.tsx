@@ -9,7 +9,7 @@ const createZip = async () => {
   const activeElements = state.layout.activeElements;
 
   const zip = new JSZip();
-  const htmlElement = document.querySelector('[class^="_previewSpace"]');
+  const htmlElement = document.querySelector('[class^="previewSpace"]');
   const htmlContent = htmlElement?.innerHTML;
   const myStyles = document.styleSheets;
   let cssContent = '';

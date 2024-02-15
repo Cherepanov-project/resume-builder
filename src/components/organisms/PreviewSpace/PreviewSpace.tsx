@@ -4,7 +4,6 @@ import { useAppSellector } from '@hooks/cvTemplateHooks.ts';
 
 import { DynamicComponentRendererProps, T_BlockElement } from '@/types/landingBuilder';
 import ComponentPreloader from '@atoms/ComponentPreloader';
-import classes from './PreviewSpace.module.scss';
 import Box from '@mui/material/Box';
 import Typography from '@mui/material/Typography';
 
@@ -85,7 +84,16 @@ const PreviewSpace = () => {
   console.log(sortedPreviewLayout);
 
   return (
-    <div className={classes.previewSpace}>
+    <Box
+      className="previewSpace"
+      sx={{
+        backgroundColor: 'transparent',
+        minHeight: '97dvh',
+        display: 'flex',
+        flexDirection: 'column',
+        alignItems: 'center',
+      }}
+    >
       <Box
         sx={{
           display: 'grid',
@@ -98,7 +106,6 @@ const PreviewSpace = () => {
           alignItems: 'stretch',
           justifyItems: 'stretch',
         }}
-        className={classes.container}
       >
         {activeElements.map((el) => {
           return (
@@ -107,13 +114,13 @@ const PreviewSpace = () => {
               sx={{
                 gridColumnStart: `${el.layout.x + 1}`,
                 gridColumnEnd: `span ${el.layout.w}`,
-                // gridColumn: `span ${el.layout.w}`,
                 gridRowStart: `${el.layout.y + 1}`,
                 gridRowEnd: `span ${el.layout.h}`,
-                // gridRow: `span ${el.layout.h}`,
                 border: '3px solid blue',
+                backgroundColor: 'white',
+                borderRadius: '2px',
               }}
-              className={`${classes.box} ${el.layout.i}`}
+              className={`${el.layout.i}`}
             >
               <MemoDynamicComponentRenderer
                 Component={el.name}
@@ -130,7 +137,7 @@ const PreviewSpace = () => {
       <Typography component="span" display="inline" sx={{ pt: '20px' }}>
         Copyright © 2024 Landing Builder DreamTeam ltd
       </Typography>
-    </div>
+    </Box>
   );
 };
 
