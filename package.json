@@ -6,8 +6,6 @@
   "scripts": {
     "dev": "vite",
     "build": "tsc && vite build",
-    "archive": "node archiver.js",
-    "buildarchive": "tsc && vite build --outDir user-build && node archiver.js",
     "postbuild": "react-snap",
     "lint": "eslint ./src",
     "lint:fix": "eslint ./src --fix",

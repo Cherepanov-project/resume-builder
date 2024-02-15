@@ -11,8 +11,6 @@ import TemplateManager from '@organisms/TemplateManager';
 function App() {
   return (
     <>
-      {/*<Header/>*/}
-      {/*<LandingBuilder/>*/}
       <Routes>
         <Route
           path="/"
