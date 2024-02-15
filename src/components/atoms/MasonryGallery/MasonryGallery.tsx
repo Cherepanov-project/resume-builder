@@ -1,11 +1,10 @@
-import Box from '@mui/material/Box';
-import Masonry from '@mui/lab/Masonry';
+import { Masonry } from '@mui/lab';
 import { useEffect } from 'react';
 import { nanoid } from 'nanoid';
 import { useAppDispatch } from '@/hooks/cvTemplateHooks';
 import { setProps } from '@/store/landingBuilder/layoutSlice';
 import { IElementsProps } from '@/types/landingBuilder';
-import { Alert } from '@mui/material';
+import { Alert, Box } from '@mui/material';
 
 const MasonryGallery = ({ props, layout }: IElementsProps) => {
   const dispatch = useAppDispatch();

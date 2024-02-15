@@ -1,5 +1,4 @@
-import Box from '@mui/material/Box';
-import Stack from '@mui/material/Stack';
+import { Box, Stack } from '@mui/material';
 import BasicInput from '../../atoms/BasicInput';
 import BasicTextarea from '../../atoms/BasicTextarea';
 // import PortraitBox from '../../molecules/PortraitBox';

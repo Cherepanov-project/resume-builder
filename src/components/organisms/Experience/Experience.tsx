@@ -1,6 +1,5 @@
 import classes from './Experience.module.scss';
-import Box from '@mui/material/Box';
-import { Button } from '@mui/material';
+import { Button, Box } from '@mui/material';
 import ExperienceForm from '../../molecules/ExperienceForm';
 import { buttonStyle } from '../../../assets/style/buttonStyle';
 

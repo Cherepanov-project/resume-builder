@@ -4,9 +4,9 @@ import BasicDatePicker from '../../atoms/BasicDatePicker';
 import BasicTextarea from '../../atoms/BasicTextarea';
 import classes from './ExperienceForm.module.scss';
 
-type EducationFormProps = {
+interface EducationFormProps {
   fieldName: string;
-};
+}
 
 const EducationForm = ({ fieldName }: EducationFormProps) => {
   return (
