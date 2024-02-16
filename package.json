@@ -72,5 +72,8 @@
       "prettier --write",
       "npm run lint:fix"
     ]
+  },
+  "resolutions": {
+    "csstype": "3.1.2"
   }
 }
