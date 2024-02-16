@@ -36,7 +36,7 @@ const IntroPage = () => {
           secondBox='url("./../../../src/assets/images/defaultSlides/8.jpg")'
         />
         <IntroPageSection
-          title="Use the components"
+          title="Use the resume builder"
           content="We've included granular components such as checkboxes and buttons for your convenience.
           Build your own blocks using the colors, type and components from scratch to add to the
           library of pre-prepared content blocks."
