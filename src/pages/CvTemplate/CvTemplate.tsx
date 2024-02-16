@@ -300,26 +300,26 @@ const CvTemplate = () => {
         buttonStatus === 'active'
           ? '#462174'
           : buttonStatus === 'done'
-          ? 'white'
-          : buttonStatus === 'next'
-          ? '#4E4D4D'
-          : 'initial',
+            ? 'white'
+            : buttonStatus === 'next'
+              ? '#4E4D4D'
+              : 'initial',
       backgroundColor:
         buttonStatus === 'active'
           ? 'white'
           : buttonStatus === 'done'
-          ? '#462174'
-          : buttonStatus === 'next'
-          ? '#dddbdb'
-          : 'initial',
+            ? '#462174'
+            : buttonStatus === 'next'
+              ? '#dddbdb'
+              : 'initial',
       border:
         buttonStatus === 'active'
           ? '2px solid #462174'
           : buttonStatus === 'done'
-          ? '#462174'
-          : buttonStatus === 'next'
-          ? '2px solid #4E4D4D'
-          : 'initial',
+            ? '#462174'
+            : buttonStatus === 'next'
+              ? '2px solid #4E4D4D'
+              : 'initial',
     };
   };
 

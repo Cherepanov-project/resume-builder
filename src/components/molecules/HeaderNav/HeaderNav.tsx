@@ -9,7 +9,7 @@ const HeaderNav = () => {
     <nav className={classes['header-nav']}>
       <Logo />
       <ul className={classes['header-nav-list']}>
-        <Link to="/">
+        <Link to="/landing-builder">
           <NavLink label="Constructor" />
         </Link>
         <NavLink label="Reserved" />

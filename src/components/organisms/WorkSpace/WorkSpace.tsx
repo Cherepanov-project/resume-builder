@@ -66,9 +66,10 @@ const WorkSpace: React.FC = () => {
     return [...acc, el.layout];
   }, []);
 
-  const handleChangeElement = (_layout: Layout[], oldItem: Layout, newItem: Layout) => {
-    const isChange = JSON.stringify(oldItem) !== JSON.stringify(newItem);
-    if (isChange) dispatch(changeElement(newItem));
+  const handleChangeLayout = (layout: Layout[]) => {
+    layout.map((item) => {
+      dispatch(changeElement(item));
+    });
   };
 
   return (
@@ -86,8 +87,8 @@ const WorkSpace: React.FC = () => {
         isDroppable
         onDrop={handleDropElement}
         draggableHandle=".drag-area"
-        onResizeStop={handleChangeElement}
-        onDragStop={handleChangeElement}
+        onResizeStop={handleChangeLayout}
+        onDragStop={handleChangeLayout}
       >
         {/* Динамически подгружаем компоненты и прокидывааем в них пропсы из одноимменных объектов */}
         {activeElements.map((el) => {

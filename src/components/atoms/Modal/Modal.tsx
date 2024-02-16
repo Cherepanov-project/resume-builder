@@ -59,8 +59,8 @@ export const Modal = (props: ModalProps) => {
     isClosing && isOpen
       ? `${classes.Modal__content} ${classes['Modal__content--opened']} ${classes['Modal__content--isClosing']}`
       : !isClosing && isOpen
-      ? `${classes.Modal__content} ${classes['Modal__content--opened']}`
-      : classes.Modal__content;
+        ? `${classes.Modal__content} ${classes['Modal__content--opened']}`
+        : classes.Modal__content;
 
   const modalContentStyle =
     name === 'DemoCv'

@@ -1,7 +1,8 @@
 import { createSlice } from '@reduxjs/toolkit';
-import { nanoid } from 'nanoid';
+import { customAlphabet } from 'nanoid';
 
 import { insertChild } from '@/utils';
+import { addBaseScript } from '@/utils/scriptAssigner';
 import { Layout } from 'react-grid-layout';
 import { T_BlockElement } from '@/types/landingBuilder';
 
@@ -15,6 +16,8 @@ const initialState: stateProps = {
   currentDraggableItem: null,
 };
 
+const nanoid = customAlphabet('ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz', 15);
+
 const layoutSlice = createSlice({
   name: 'layout',
   initialState,
@@ -22,20 +25,24 @@ const layoutSlice = createSlice({
     // Добавляем блок в рабочую область
     addElement(state, action) {
       const { draggableItem, layoutItem, parentElement } = action.payload;
-      // Задаем уникльный ID блоку и параметры
+      // Задаем уникальный ID блоку и параметры
+      //при дропе добавляем скрипт с эвент листенером в виде строки
+      const elemId = nanoid();
       const newElement = {
         ...draggableItem,
+        elementScript: addBaseScript(elemId, draggableItem),
         layout: {
           ...layoutItem,
-          i: nanoid(),
+          i: elemId,
           x: layoutItem.x,
           y: layoutItem.y,
           w: draggableItem.layout.w,
           h: draggableItem.layout.h,
-          minW: draggableItem.layout.minW ? draggableItem.layout.minW : undefined,
-          maxW: draggableItem.layout.maxW || Infinity,
-          minH: draggableItem.layout.minH ? draggableItem.layout.minH : undefined,
-          maxH: draggableItem.layout.maxH || Infinity,
+          minW: draggableItem.layout.minW || 0,
+          maxW: draggableItem.layout.maxW ?? 6,
+          minH: draggableItem.layout.minW || 0,
+          //значение Infinity
+          maxH: draggableItem.layout.maxH ?? 1000000,
         },
       };
       // console.log(newElement);
