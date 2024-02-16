@@ -1,3 +1,3 @@
-import {MemoizedSectionsConstructor} from "./SectionsConstructor";
+import { MemoizedSectionsConstructor } from './SectionsConstructor';
 
 export default MemoizedSectionsConstructor;

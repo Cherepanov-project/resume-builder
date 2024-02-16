@@ -1,3 +1,3 @@
-import ContainerDIVSettings from "./ContainerDIVSettings";
+import ContainerDIVSettings from './ContainerDIVSettings';
 
 export default ContainerDIVSettings;
