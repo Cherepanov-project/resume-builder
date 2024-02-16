@@ -12,23 +12,23 @@ const settingsPanelSlice = createSlice({
   name: 'settingsPanelSlice',
   initialState,
   reducers: {
-   initPanel(state, action) {
-    const { type='', sectionID='0', moduleID='0' } = action.payload;
-    state.shown = true;
-    state.type = type;
-    state.sectionID = sectionID;
-    state.moduleID = moduleID
-   },
-   closePanel(state) {
-    state.shown = false;
-   },
-   initImageMenu(state) {
-    state.shown = true;
-    state.imageMenu = true;
-   },
-   closeImageMenu(state) {
-    state.imageMenu = false;
-   }
+    initPanel(state, action) {
+      const { type = '', sectionID = '0', moduleID = '0' } = action.payload;
+      state.shown = true;
+      state.type = type;
+      state.sectionID = sectionID;
+      state.moduleID = moduleID;
+    },
+    closePanel(state) {
+      state.shown = false;
+    },
+    initImageMenu(state) {
+      state.shown = true;
+      state.imageMenu = true;
+    },
+    closeImageMenu(state) {
+      state.imageMenu = false;
+    },
   },
 });
 

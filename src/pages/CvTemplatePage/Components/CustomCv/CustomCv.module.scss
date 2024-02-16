@@ -1,0 +1,42 @@
+.custom-cv {
+  width: 1100px;
+  padding: 50px 20px;
+  display: flex;
+  margin-top: 100px;
+  align-items: center;
+  justify-content: center;
+  gap: 100px;
+  border-radius: 15px;
+  overflow: hidden;
+  box-shadow: 0 5px 40px 0 rgb(0 0 0 / 11%);
+  background-image: url("../../../../assets/images/templatesPageImage/custom.png");
+  background-repeat: no-repeat;
+
+  .custom-cv__button {
+    position: relative;
+    overflow: hidden;
+    display: inline-block;
+    padding: 14px 40px;
+    font-size: 16px;
+    line-height: 1.25;
+    color: #1d88ed;
+    background: #fff;
+    border: 1px solid #1d88ed;
+    border-radius: 5px;
+    font-weight: 600;
+    letter-spacing: 0.02em;
+    text-transform: none;
+    white-space: nowrap;
+    text-overflow: ellipsis;
+    text-align: center;
+    cursor: pointer;
+    vertical-align: middle;
+    user-select: none;
+    transition: 250ms all ease-in-out;
+  }
+
+  .custom-cv__button:hover {
+    background: #25cbd3;
+    color: #fff;
+  }
+}

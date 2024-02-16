@@ -1,26 +1,42 @@
-type PersonalDateKeys = 'fullName' | 'adress' | 'bio' | 'position' | 'phone' | 'website' | 'mail';
-type EducationDataTypeKeys = 'name' | 'position' | 'fromYear' | 'toYear' | 'description';
-type ExperienceDataTypeKyes = 'name' | 'position' | 'fromYear' | 'toYear' | 'description';
-type SocialDataTypeKeys = 'name' | 'link';
+import photo from '../images/lukeSky.jpg';
 
 export type PersonalDataType = {
-  [K in PersonalDateKeys]: string;
+  fullName: string;
+  address: string;
+  bio: string;
+  position: string;
+  phone: string;
+  website: string;
+  email: string;
 };
 
 export type EducationDataType = {
-  [K in EducationDataTypeKeys]: string;
+  description: string;
+  position: string;
+  fromYear: string;
+  toYear: string;
+  name: string;
 };
 
 export type ExperienceDataType = {
-  [K in ExperienceDataTypeKyes]: string;
+  position: string;
+  fromYear: string;
+  toYear: string;
+  name: string;
+  description: string;
 };
 
 export type SocialDataType = {
-  [K in SocialDataTypeKeys]: string;
+  link: string;
+  name: string;
 };
 
 export type HobbyDataType = {
   hobby: string;
+};
+
+export type AvatarDataType = {
+  avatar: string;
 };
 
 export interface ITemporaryCvDataSliceProps {
@@ -29,17 +45,18 @@ export interface ITemporaryCvDataSliceProps {
   experienceData: ExperienceDataType[];
   socialData: SocialDataType[];
   hobbyData: HobbyDataType[];
+  photoData: AvatarDataType;
 }
 
 export const temporaryCvDataSlice: ITemporaryCvDataSliceProps = {
   personalData: {
-    fullName: 'Luke Skywalker',
-    adress: 'Tatooine',
+    fullName: 'Artem Chuprak',
+    address: 'Saint-Petersburg',
     bio: "Hello, it's nice to meet you And can you tell me where I am? I don't know how I got here But I think I'm starting to understand",
     position: 'Jedi Master',
-    phone: '0-000-000-00-00',
+    phone: '1234567',
     website: 'theforce.com',
-    mail: 'luke@theforce.com',
+    email: 'luke@theforce.com',
   },
   educationData: [
     {
@@ -78,4 +95,5 @@ export const temporaryCvDataSlice: ITemporaryCvDataSliceProps = {
     { link: 'jedin', name: 'LukeSkywalker' },
   ],
   hobbyData: [{ hobby: 'Piloting starships' }, { hobby: 'Chatting with chewbacca' }],
+  photoData: { avatar: photo },
 };

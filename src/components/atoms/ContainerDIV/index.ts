@@ -7,8 +7,8 @@ export const props = {
   source: 'atoms',
   props: {
     style: {
-      backgroundColor: 'white'
-    }
+      backgroundColor: 'white',
+    },
   },
   children: [],
   layout: { i: '', x: 0, y: 0, w: 2, h: 3 },

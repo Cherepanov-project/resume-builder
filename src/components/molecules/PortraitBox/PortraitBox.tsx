@@ -3,8 +3,15 @@ import Button from '@mui/material/Button';
 import avatar from '../../../assets/images/avatar.png';
 import classes from './PortraitBox.module.scss';
 import { Typography } from '@mui/material';
+import { useFormContext } from 'react-hook-form';
 
 const PortraitBox = () => {
+  const { reset } = useFormContext();
+
+  const handleRemove = () => {
+    reset();
+  };
+
   return (
     <Stack className={classes.portraitBox} direction="row">
       <Stack spacing={2} direction="row">
@@ -20,8 +27,15 @@ const PortraitBox = () => {
       </Stack>
 
       <Stack spacing={2} direction="row">
-        <Button variant="contained">Upload</Button>
-        <Button variant="outlined">Remove</Button>
+        <Button
+          variant="contained"
+          sx={{ mt: 1, mr: 1, backgroundColor: '#462174', color: 'white' }}
+        >
+          Upload
+        </Button>
+        <Button variant="outlined" onClick={handleRemove} sx={{ borderColor: '#462174', color: '#462174' }}>
+          Remove
+        </Button>
       </Stack>
     </Stack>
   );

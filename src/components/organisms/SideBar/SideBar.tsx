@@ -90,7 +90,7 @@ const SideBar: React.FC = () => {
                     <ManagerButton
                       onClick={() => {
                         closePanel();
-                        navigate('template-creator')
+                        navigate('template-creator');
                       }}
                       name="Template Creator"
                     />

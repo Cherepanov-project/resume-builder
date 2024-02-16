@@ -1,4 +1,6 @@
 import { configureStore } from '@reduxjs/toolkit';
+
+import allPersonaInfoSlice from './cvTemplate/allPersonaInfoSlice';
 import educationReducer from './cvTemplate/educationSlice';
 import experienceReducer from './cvTemplate/experienceSlice';
 import socialReducer from './cvTemplate/socialSlice';
@@ -11,6 +13,7 @@ import settingsPanelSlice from './landingBuilder/settingsPanelSlice';
 
 export const store = configureStore({
   reducer: {
+    personalInfo: allPersonaInfoSlice,
     education: educationReducer,
     experience: experienceReducer,
     social: socialReducer,

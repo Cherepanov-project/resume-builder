@@ -15,6 +15,9 @@
     "@ant-design/icons": "^5.2.6",
     "@emotion/react": "^11.11.3",
     "@emotion/styled": "^11.11.0",
+    "@hookform/devtools": "^4.3.1",
+    "@hookform/resolvers": "^3.3.2",
+    "@material-ui/styles": "^4.11.5",
     "@mui/icons-material": "^5.14.7",
     "@mui/lab": "^5.0.0-alpha.163",
     "@mui/material": "^5.15.7",
@@ -29,13 +32,14 @@
     "react-colorful": "^5.6.1",
     "react-dom": "^18.2.0",
     "react-grid-layout": "^1.4.2",
-    "react-hook-form": "^7.46.2",
+    "react-hook-form": "^7.47.0",
     "react-redux": "^8.1.2",
     "react-router-dom": "^6.21.1",
     "react-to-print": "^2.14.15",
     "sass": "^1.66.1",
     "swiper": "^10.2.0",
-    "url": "^0.11.3"
+    "url": "^0.11.3",
+    "yup": "^1.3.3"
   },
   "devDependencies": {
     "@babel/eslint-parser": "^7.22.11",
@@ -68,5 +72,10 @@
       "prettier --write",
       "npm run lint:fix"
     ]
+  },
+  "resolutions": {
+    "csstype": "3.1.2",
+    "@mui/material": "5.15.2",
+    "@mui/base": "5.0.0-beta.28"
   }
 }

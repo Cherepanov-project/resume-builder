@@ -1,23 +1,25 @@
 import { View } from '@react-pdf/renderer';
 
-import photo from '../.././../assets/images/lukeSky.jpg';
-
-import { PersonalDataType } from '../../../../../assets/const';
+import { AvatarDataType, PersonalDataType } from '../../../../../assets/const';
 import { uniqueKey } from '../../../../../assets/lib';
 import { StyleOptionType } from '../../../const';
 
 import { ImagePDF, TitlePDF, SubtitlePDF } from '../../atoms';
 import { AboutPDF, ContactsPDF } from '../../molecules';
 
-interface ISidebarPDF extends PersonalDataType {
+interface ISidebarPDFProps {
+  data: {
+    personalData: PersonalDataType;
+    photoData: AvatarDataType;
+  };
   style: StyleOptionType;
 }
 
-export const SidebarPDF = (props: ISidebarPDF) => {
-  // позже исправить, должны пояыляться из Формы
-  const imgPath = photo;
+export const SidebarPDF = (props: ISidebarPDFProps) => {
+  const { data, style } = props;
+  const { personalData, photoData } = data;
 
-  const { fullName, bio, position, adress, phone, website, mail, style } = props;
+  console.log('SIDEBAR PROPS', props);
   const {
     Sidebar,
     SidebarWrapper,
@@ -32,13 +34,21 @@ export const SidebarPDF = (props: ISidebarPDF) => {
     Img,
   } = style;
 
-  const fullNameTitiles = fullName.split(' ');
+  const fullNameTitiles = personalData.fullName ? personalData.fullName.split(' ') : [];
 
-  const propsImage = { imgPath: imgPath, style: Img };
-  const propsSubtitle = { str: position, style: { Text: { ...Text, ...TextSpecial } } };
-  const propsAbout = { bio, style: { Text, Subtitle: Subtitle } };
+  const propsImage = { imgPath: photoData.avatar, style: Img };
+  const propsSubtitle = {
+    str: personalData.position,
+    style: { Text: { ...Text, ...TextSpecial } },
+  };
+  const propsAbout = { bio: personalData.bio, style: { Text, Subtitle: Subtitle } };
   const propsContacts = {
-    data: { phone, mail, website, adress },
+    data: {
+      address: personalData.address,
+      phone: personalData.phone,
+      website: personalData.website,
+      email: personalData.email,
+    },
     style: { Subtitle, Contact, ContactLink, ContactIcon, Text },
   };
 

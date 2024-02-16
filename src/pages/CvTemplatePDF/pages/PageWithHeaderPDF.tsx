@@ -9,10 +9,10 @@ interface IPageDefaultPDF extends ITemporaryCvDataSliceProps {
 }
 
 export const PageWithHeaderPDF = (props: IPageDefaultPDF) => {
-  const { personalData, style, ...otherDate } = props;
+  const { personalData, photoData, style, ...otherDate } = props;
   const { Page, ...otherStyle } = style;
 
-  const propsHeader = { ...personalData, style: otherStyle };
+  const propsHeader = { data: { personalData, photoData }, style: otherStyle };
   const propsMain = { data: otherDate, style: otherStyle };
 
   return (

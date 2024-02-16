@@ -85,13 +85,12 @@ const ContainerDIV: React.FC<ContainerDIVProps> = ({ children, layout, columns, 
     return [...acc, el.layout];
   }, []);
 
-  
   let style;
   try {
     style = props.style;
   } catch {
     style = {
-      backgroundColor: 'white'
+      backgroundColor: 'white',
     };
   }
 
