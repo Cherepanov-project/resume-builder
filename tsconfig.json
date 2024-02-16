@@ -12,6 +12,7 @@
     "noFallthroughCasesInSwitch": true,
     "jsx": "react-jsx",
     "noEmit": true, // or "emitDeclarationOnly": true, depending on your needs
+    "skipLibCheck": true,
 
     "paths": {
       "@/*": ["./src/*"],
