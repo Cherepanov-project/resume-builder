@@ -6,8 +6,8 @@ const LayoutBlockParagraph: React.FC<ILayoutBlock> = ({ props }) => {
   const [text, setText] = useState(props.text);
 
   useEffect(() => {
-    setText(props.text)
-  }, [props.text]) 
+    setText(props.text);
+  }, [props.text]);
 
   const handleDoubleClick = () => {
     setEdit(true);

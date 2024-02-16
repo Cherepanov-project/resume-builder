@@ -13,7 +13,7 @@ interface IContact {
 
 export const ContactsPDF = (props: IContact) => {
   const { data, style } = props;
-  const { phone, mail, website, adress } = data;
+  const { phone, email, website, address } = data;
   const { Subtitle, Contact, ContactLink, ContactIcon, Text } = style;
 
   const propsSubtitle = { str: 'Contacts ', style: Subtitle };
@@ -23,9 +23,9 @@ export const ContactsPDF = (props: IContact) => {
     <View>
       <SubtitlePDF {...propsSubtitle} />
       <ContactPDF contactName="phone" contactData={phone} style={propsContact} />
-      <ContactPDF contactName="mail" contactData={mail} style={propsContact} />
+      <ContactPDF contactName="email" contactData={email} style={propsContact} />
       <ContactPDF contactName="website" contactData={website} style={propsContact} />
-      <ContactPDF contactName="adress" contactData={adress} style={propsContact} />
+      <ContactPDF contactName="address" contactData={address} style={propsContact} />
     </View>
   );
 };

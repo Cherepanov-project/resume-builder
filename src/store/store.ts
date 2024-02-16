@@ -1,3 +1,4 @@
+import allPersonaInfoSlice from './cvTemplate/allPersonaInfoSlice';
 import { combineReducers, configureStore } from '@reduxjs/toolkit';
 import {
   persistStore,
@@ -29,6 +30,7 @@ const persistConfig = {
 
 //НОВЫЕ РЕДЬЮСЕРЫ ДОБАВЛЯЕМ СЮДА!
 const rootReducer = combineReducers({
+  personalInfo: allPersonaInfoSlice,
   education: educationReducer,
   experience: experienceReducer,
   social: socialReducer,

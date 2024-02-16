@@ -1,5 +1,4 @@
-import React, { ReactNode, useCallback, useEffect } from 'react';
-import { useState, useRef } from 'react';
+import React, { ReactNode, useCallback, useEffect, useRef, useState } from 'react';
 
 import { Portal } from '../Portal/Portal';
 
@@ -60,8 +59,8 @@ export const Modal = (props: ModalProps) => {
     isClosing && isOpen
       ? `${classes.Modal__content} ${classes['Modal__content--opened']} ${classes['Modal__content--isClosing']}`
       : !isClosing && isOpen
-      ? `${classes.Modal__content} ${classes['Modal__content--opened']}`
-      : classes.Modal__content;
+        ? `${classes.Modal__content} ${classes['Modal__content--opened']}`
+        : classes.Modal__content;
 
   const modalContentStyle =
     name === 'DemoCv'

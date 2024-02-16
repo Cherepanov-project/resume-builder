@@ -1,3 +1,3 @@
-import { MemoizedSectionsConstructorRowEl } from "./SectionsConstructorRowEl";
+import { MemoizedSectionsConstructorRowEl } from './SectionsConstructorRowEl';
 
 export default MemoizedSectionsConstructorRowEl;

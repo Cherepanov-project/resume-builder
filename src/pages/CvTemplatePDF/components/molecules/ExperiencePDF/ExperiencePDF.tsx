@@ -12,7 +12,10 @@ interface IExperienceProps {
   style: StyleOptionType;
 }
 
-const experienceContent = (data: ExperienceDataType[], style: StyleOptionType) => {
+const experienceContent = (data: ExperienceDataType[] | undefined, style: StyleOptionType) => {
+  if (!data) {
+    return null;
+  }
   const children = data.map((experience) => {
     const { Experience, ExperienceTitle, Text } = style;
     const { description, ...otherData } = experience;
@@ -33,6 +36,9 @@ const experienceContent = (data: ExperienceDataType[], style: StyleOptionType) =
 
 export const ExperiencePDF = (props: IExperienceProps) => {
   const { data, experienceName, style } = props;
+  if (!data) {
+    return null;
+  }
   const { Experiences, Experience, ExperienceTitle, Subtitle, Text } = style;
 
   const propsSubtitle = { str: experienceName, style: Subtitle };

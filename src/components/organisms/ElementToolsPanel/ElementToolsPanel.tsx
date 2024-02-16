@@ -28,8 +28,8 @@ const ElementToolsPanel: React.FC<ElementToolsPanelProps> = ({ layout }) => {
   const dispatch = useAppDispatch();
 
   const handleSettings = () => {
-    dispatch(initPanel({ type: 'section', sectionID: layout.i, moduleID: '0'}))
-  }
+    dispatch(initPanel({ type: 'section', sectionID: layout.i, moduleID: '0' }));
+  };
 
   return (
     <div className={classes['tools-panel']}>

@@ -11,7 +11,10 @@ interface IHobbiesProps {
   style: StyleOptionType;
 }
 
-const hobbiesContent = (data: HobbyDataType[], style: StyleOptionType) => {
+const hobbiesContent = (data: HobbyDataType[] | undefined, style: StyleOptionType) => {
+  if (!data) {
+    return null;
+  }
   const children = data.map((hobby) => {
     const { Hobbie, HobbieBullets, Text } = style;
     const hobbyTitle = hobby.hobby;
@@ -32,6 +35,9 @@ const hobbiesContent = (data: HobbyDataType[], style: StyleOptionType) => {
 
 export const HobbiesPDF = (props: IHobbiesProps) => {
   const { data, style } = props;
+  if (!data) {
+    return null;
+  }
   const { Hobbies, Hobbie, HobbieBullets, Subtitle, Text } = style;
 
   const propsTitle = { str: 'Hobbies', style: Subtitle };

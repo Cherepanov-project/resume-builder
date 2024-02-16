@@ -17,6 +17,7 @@ interface ITitleProps {
 
 export const ListTitlePDF = (props: ITitleProps) => {
   const { data, style } = props;
+
   const { name, position, fromYear, toYear } = data;
   const { ExperienceTitle } = style;
 
