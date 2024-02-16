@@ -11,11 +11,13 @@ const createZip = async () => {
   const zip = new JSZip();
   const htmlElement = document.querySelector('[class^="previewSpace"]');
   const htmlContent = htmlElement?.innerHTML;
-  const myStyles = document.styleSheets;
+  // const myStyles = document.styleSheets;
+  const styleSheetsArray = Array.from(document.styleSheets) as CSSStyleSheet[];
   let cssContent = '';
-  for (const styleSheet of myStyles) {
+  for (const styleSheet of styleSheetsArray) {
     if (styleSheet.cssRules) {
-      for (const rule of styleSheet.cssRules) {
+      const styleSheetsRuleArray = Array.from(styleSheet.cssRules) as CSSRule[];
+      for (const rule of styleSheetsRuleArray) {
         cssContent += rule.cssText;
       }
     }
@@ -26,11 +28,12 @@ const createZip = async () => {
     return acc + el.elementScript;
   }, '');
   //скрипты со страницы
-  const myScripts = document.scripts;
-
-  console.log(myScripts);
+  // const myScripts = document.scripts;
+  const scriptsArray = Array.from(document.scripts) as HTMLScriptElement[];
+  // console.log(myScripts);
   let jsContent = '';
-  for (const script of myScripts) {
+
+  for (const script of scriptsArray) {
     jsContent += script.outerHTML;
   }
   jsContent += scriptContent;
