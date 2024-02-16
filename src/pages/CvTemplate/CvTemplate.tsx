@@ -25,6 +25,7 @@ import Typography from '@mui/material/Typography';
 import { useDispatch } from 'react-redux';
 
 import { addAllPersonalInfo } from '../../store/cvTemplate/allPersonaInfoSlice';
+import { yupResolver } from '@hookform/resolvers/yup';
 
 const validationSchema = yup.object().shape({
   fullName: yup.string().required('Is a required field').min(3).max(20),
@@ -98,6 +99,7 @@ const CvTemplate = () => {
 
   const methods = useForm<IFormInputs>({
     mode: 'onSubmit',
+    resolver: yupResolver(validationSchema),
     defaultValues: {
       fullName: '',
       position: '',
