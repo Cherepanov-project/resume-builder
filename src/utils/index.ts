@@ -3,7 +3,7 @@ import {
   T_BlockElement,
   T_ComponentProps,
   T_SidebarMenuItem,
-} from '@/types/landingBuilder';
+} from '../types/landingBuilder';
 
 export const insertChild = (
   obj: unknown,
