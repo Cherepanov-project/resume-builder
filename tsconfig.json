@@ -1,40 +1,31 @@
 {
   "compilerOptions": {
-    "target": "ES2020",
-    "useDefineForClassFields": true,
-    "lib": ["ES2020", "DOM", "DOM.Iterable"],
-    "module": "ESNext",
-    "skipLibCheck": true,
-
-    // / Bundler mode /
-    "moduleResolution": "bundler",
-    "allowImportingTsExtensions": true,
+    "target": "es5",
+    "module": "es2020",
+    "esModuleInterop": true,
     "resolveJsonModule": true,
+    "moduleResolution": "bundler", // Set module resolution to 'bundler'
+    "allowImportingTsExtensions": true,
     "isolatedModules": true,
-    "noEmit": true,
-    "jsx": "react-jsx",
-
-    // / Linting /
-    "strict": true,
     "noUnusedLocals": true,
     "noUnusedParameters": true,
     "noFallthroughCasesInSwitch": true,
+    "jsx": "react-jsx",
+    "noEmit": true, // or "emitDeclarationOnly": true, depending on your needs
 
-    // / Paths /
     "paths": {
-      "@/": ["./src/"],
-      "@assets/": ["./src/assets/"],
-      "@components/": ["./src/components/"],
-      "@atoms/": ["./src/components/atoms/"],
-      "@molecules/": ["./src/components/molecules/"],
-      "@organisms/": ["./src/components/organisms/"],
-      "@hooks/": ["./src/hooks/"],
-      "@pages/": ["./src/pages/"],
-      "@store/": ["./src/store/"],
-      "@types/": ["./src/types/*"]
+      "@/*": ["./src/*"],
+      "@assets/*": ["./src/assets/*"],
+      "@components/*": ["./src/components/*"],
+      "@atoms/*": ["./src/components/atoms/*"],
+      "@molecules/*": ["./src/components/molecules/*"],
+      "@organisms/*": ["./src/components/organisms/*"],
+      "@hooks/*": ["./src/hooks/*"],
+      "@pages/*": ["./src/pages/*"],
+      "@store/*": ["./src/store/*"],
+      "@types/*": ["./src/types/*"]
     }
   },
-  "include": ["src/**/*.ts", "tests/**/*.ts"],
-  "exclude": ["node_modules", ".vscode"],
+  "include": ["src"],
   "references": [{ "path": "./tsconfig.node.json" }]
 }
