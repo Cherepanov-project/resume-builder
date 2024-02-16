@@ -33,7 +33,11 @@ const PortraitBox = () => {
         >
           Upload
         </Button>
-        <Button variant="outlined" onClick={handleRemove} sx={{ borderColor: '#462174', color: '#462174' }}>
+        <Button
+          variant="outlined"
+          onClick={handleRemove}
+          sx={{ borderColor: '#462174', color: '#462174' }}
+        >
           Remove
         </Button>
       </Stack>

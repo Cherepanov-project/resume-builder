@@ -1,6 +1,11 @@
 @import '../../../assets/style/variables.scss';
 
 .default-button {
+  display: inline-flex;
+  flex-direction: row;
+  gap: 5px;
+  align-items: center;
+  justify-content: center;
   color: $base-button-color;
   background-color: transparent;
   border: 1px solid $base-button-color;
@@ -8,6 +13,7 @@
   line-height: 18px;
   font-weight: 700;
   padding: 9px 14px;
+  max-height: 40px;
   border-radius: 3px;
   transition: all .3s ease-in-out;
   &:hover {
@@ -15,9 +21,21 @@
     color: white;
     border-color: $hover-button-color;
     transition: all .3s ease-in-out;
+    opacity: 1;
+  }
+  &:focus, &:active {
+    outline-color: $base-button-color;
   }
   &--primary {
     color: white;
     background-color: $base-button-color;
+  }
+  &--float {
+    position: fixed;
+    height: 40px;
+    top: 50px;
+    right: 50px;
+    border-radius: 50%;
+    opacity: 0.4;
   }
 }
