@@ -2,7 +2,7 @@ import TitleH1 from './TitleH1';
 
 export const props = {
   name: 'TitleH1',
-  type: 'Simple Elements',
+  type: 'Text Elements',
   source: 'atoms',
   props: { text: 'Заголовок H1' },
   children: [],

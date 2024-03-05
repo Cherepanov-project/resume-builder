@@ -2,7 +2,7 @@ import LayoutBlockModal from './LayoutBlockModal';
 
 export const props = {
   name: 'LayoutBlockModal',
-  type: 'Simple Elements',
+  type: 'Text Elements',
   source: 'atoms',
   props: {
     text: ['Click here to open modal', 'Here is your modal title', 'Wow! You opened modal.'],

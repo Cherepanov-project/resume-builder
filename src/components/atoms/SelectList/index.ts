@@ -2,7 +2,7 @@ import SelectList from './SelectList';
 
 export const props = {
   name: 'SelectList',
-  type: 'Simple Elements',
+  type: 'Text Elements',
   source: 'atoms',
   props: {},
   children: [],

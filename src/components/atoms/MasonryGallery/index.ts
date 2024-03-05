@@ -2,7 +2,7 @@ import MasonryGallery from './MasonryGallery';
 
 export const props = {
   name: 'MasonryGallery',
-  type: 'Simple Elements',
+  type: 'Image Elements',
   source: 'atoms',
   props: {},
   children: [],

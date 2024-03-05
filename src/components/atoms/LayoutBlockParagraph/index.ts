@@ -3,7 +3,7 @@ import LayoutBlockParagraph from './LayoutBlockParagraph';
 
 export const props: T_BlockElement = {
   name: 'LayoutBlockParagraph',
-  type: 'Simple Elements',
+  type: 'Text Elements',
   source: 'atoms',
   props: {
     key: 'paragraph',

@@ -3,7 +3,7 @@ import LayoutBlockTitle from './LayoutBlockTitle';
 
 export const props: T_BlockElement = {
   name: 'LayoutBlockTitle',
-  type: 'Simple Elements',
+  type: 'Text Elements',
   source: 'atoms',
   props: {
     key: 'title',
