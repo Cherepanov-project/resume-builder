@@ -1,11 +1,10 @@
-import { View } from '@react-pdf/renderer';
-
 import { AvatarDataType, PersonalDataType } from '../../../../../assets/const';
 import { uniqueKey } from '../../../../../assets/lib';
 import { StyleOptionType } from '../../../const';
 
 import { ImagePDF, TitlePDF, SubtitlePDF } from '../../atoms';
 import { AboutPDF, ContactsPDF } from '../../molecules';
+import { Box } from '@mui/material';
 
 interface ISidebarPDFProps {
   data: {
@@ -53,22 +52,22 @@ export const SidebarPDF = (props: ISidebarPDFProps) => {
   };
 
   return (
-    <View style={Sidebar}>
-      <View style={SidebarImage}>
+    <Box style={Sidebar}>
+      <Box style={SidebarImage}>
         <ImagePDF {...propsImage} />
-      </View>
-      <View>
+      </Box>
+      <Box>
         {fullNameTitiles.map((str) => (
           <TitlePDF key={uniqueKey()} {...{ fullName: str, style: Title }} />
         ))}
         <SubtitlePDF {...propsSubtitle} />
-      </View>
-      <View style={SidebarWrapper}>
+      </Box>
+      <Box style={SidebarWrapper}>
         <AboutPDF {...propsAbout} />
-      </View>
-      <View style={SidebarWrapper}>
+      </Box>
+      <Box style={SidebarWrapper}>
         <ContactsPDF {...propsContacts} />
-      </View>
-    </View>
+      </Box>
+    </Box>
   );
 };

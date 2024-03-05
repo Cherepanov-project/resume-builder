@@ -26,11 +26,13 @@ import { useDispatch } from 'react-redux';
 
 import { addAllPersonalInfo } from '../../store/cvTemplate/allPersonaInfoSlice';
 import { yupResolver } from '@hookform/resolvers/yup';
+import EditResumeTemplate from './EditResumeTemplate';
+import FinishResume from './FinishResume';
 
 const validationSchema = yup.object().shape({
   fullName: yup.string().required('Is a required field').min(3).max(20),
   position: yup.string().required('Is a required field').min(3).max(20),
-  address: yup.string().required('Is a required field').min(3).max(20),
+  address: yup.string().required('Is a required field').min(3),
   website: yup.string().required('Is a required field').url().nullable(),
   phone: yup
     .number()
@@ -82,14 +84,6 @@ const validationSchema = yup.object().shape({
 
 interface IFormInputs extends yup.InferType<typeof validationSchema> {}
 
-const stepTitle = (title: string) => {
-  return <Typography variant="h5">{title}</Typography>;
-};
-
-const stepContent = (element: JSX.Element) => {
-  return element;
-};
-
 const CvTemplate = () => {
   const [isOpen, setIsOpen] = useState(false);
 
@@ -101,19 +95,19 @@ const CvTemplate = () => {
     mode: 'onSubmit',
     resolver: yupResolver(validationSchema),
     defaultValues: {
-      fullName: '',
-      position: '',
-      address: '',
-      bio: '',
-      email: '',
-      phone: undefined,
-      website: '',
+      fullName: 'Alex',
+      position: 'Team Lead',
+      address: 'Russia',
+      bio: 'Good programmer',
+      email: 'qweqwen@inbox.ru',
+      phone: 12313123,
+      website: 'https://www.youtube.com/',
 
       educationData: [
         {
-          study: '',
-          degree: '',
-          school: '',
+          study: 'qweqwe',
+          degree: 'qweqwe',
+          school: 'qweqwe',
           educationFromYear: undefined,
           'education-to-year': undefined,
         },
@@ -121,23 +115,23 @@ const CvTemplate = () => {
 
       experienceData: [
         {
-          'work-title': '',
-          company: '',
-          'experience-from-year': '',
-          'experience-to-year': '',
-          'company-info': '',
+          'work-title': 'qweqwe',
+          company: 'qweqwewqe',
+          'experience-from-year': undefined,
+          'experience-to-year': undefined,
+          'company-info': 'qweqwe',
         },
       ],
 
       hobbyData: [
         {
-          label: '',
+          label: 'asdasdsad',
         },
       ],
       socialData: [
         {
-          'social-name': '',
-          'social-link': '',
+          'social-name': 'asdasd',
+          'social-link': 'asdasdasd',
         },
       ],
     },
@@ -190,38 +184,38 @@ const CvTemplate = () => {
   const steps = [
     {
       id: 1,
-      label: stepTitle('Personal Info'),
-      form: stepContent(<PersonalInfo />),
+      label: <Typography variant="h5">Personal Info</Typography>,
+      form: <PersonalInfo />,
       state: 'active',
     },
     {
       id: 2,
-      label: stepTitle('Education'),
-      form: stepContent(<Education />),
+      label: <Typography variant="h5">Education</Typography>,
+      form: <Education />,
       state: '',
     },
     {
       id: 3,
-      label: stepTitle('Experience'),
-      form: stepContent(<Experience />),
+      label: <Typography variant="h5">Experience</Typography>,
+      form: <Experience />,
       state: '',
     },
     {
       id: 4,
-      label: stepTitle('Social'),
-      form: stepContent(<Social />),
+      label: <Typography variant="h5">Social</Typography>,
+      form: <Social />,
       state: '',
     },
     {
       id: 5,
-      label: stepTitle('Hobbies'),
-      form: stepContent(<Hobbies />),
+      label: <Typography variant="h5">Hobbies</Typography>,
+      form: <Hobbies />,
       state: '',
     },
     {
       id: 6,
-      label: stepTitle('Photo'),
-      form: stepContent(<PersonalPhoto />),
+      label: <Typography variant="h5">Photo</Typography>,
+      form: <PersonalPhoto />,
       state: '',
     },
   ];
@@ -300,129 +294,136 @@ const CvTemplate = () => {
         buttonStatus === 'active'
           ? '#462174'
           : buttonStatus === 'done'
-          ? 'white'
-          : buttonStatus === 'next'
-          ? '#4E4D4D'
-          : 'initial',
+            ? 'white'
+            : buttonStatus === 'next'
+              ? '#4E4D4D'
+              : 'initial',
       backgroundColor:
         buttonStatus === 'active'
           ? 'white'
           : buttonStatus === 'done'
-          ? '#462174'
-          : buttonStatus === 'next'
-          ? '#dddbdb'
-          : 'initial',
+            ? '#462174'
+            : buttonStatus === 'next'
+              ? '#dddbdb'
+              : 'initial',
       border:
         buttonStatus === 'active'
           ? '2px solid #462174'
           : buttonStatus === 'done'
-          ? '#462174'
-          : buttonStatus === 'next'
-          ? '2px solid #4E4D4D'
-          : 'initial',
+            ? '#462174'
+            : buttonStatus === 'next'
+              ? '2px solid #4E4D4D'
+              : 'initial',
     };
   };
+  const [showElement, setShowElement] = useState(false);
 
+  const handleButtonClick = () => {
+    setShowElement(!showElement);
+  };
   return (
-    <Box className={classes.cvTemlpate}>
+    <Box>
       <Box className={classes.cvTemlpate__header}>
-        <Typography variant="h3">Resumo Resume Builder</Typography>
+        <Typography sx={{ mt: 6, ml: 8, fontSize: 32 }}>Resumo Resume Builder</Typography>
       </Box>
-      <Box className={classes.cvTemlpate__container}>
-        <Box className={classes.cvTemlpate__content}>
-          <Box className={classes.cvTemlpate__rightWrapper}>
-            <Box className={classes.cvTemlpate__right}>
-              <FormProvider {...methods}>
-                <Box className={classes.cvTemlpate__stepper}>
-                  <Box className={classes.cvTemlpate__step}>
-                    {steps.map((step, index) => (
-                      <Button
-                        disabled={true}
-                        variant="contained"
-                        style={getButtonStyles(index)}
-                        sx={{
-                          mt: 1,
-                          mr: 1,
-                          margin: '15px',
-                          width: '322px',
-                          height: '70px',
-                        }}
-                        key={step.id}
+      {showElement ? (
+        <EditResumeTemplate handleButtonClick={handleButtonClick} />
+      ) : activeStep === 6 ? (
+        <FinishResume
+          handleReset={handleReset}
+          handleButtonClick={handleButtonClick}
+          onToggleModal={onToggleModal}
+          isOpen={isOpen}
+        />
+      ) : (
+        <Box>
+          <FormProvider {...methods}>
+            <Box className={classes.cvTemlpate__stepper}>
+              <Box className={classes.cvTemlpate__step}>
+                {steps.map((step, index) => (
+                  <Button
+                    disabled={false}
+                    variant="contained"
+                    style={getButtonStyles(index)}
+                    sx={{
+                      mt: 1,
+                      mr: 1,
+                      margin: '15px',
+                      width: '322px',
+                      height: '70px',
+                    }}
+                    key={step.id}
+                    onClick={() => setActiveStep(step.id - 1)}
+                  >
+                    {step.label}
+                  </Button>
+                ))}
+              </Box>
+              {activeStep === steps.length && (
+                <Paper
+                  square
+                  elevation={0}
+                  sx={{ p: 3, boxShadow: '0px 0px 5px rgba(0, 0, 0, 0.3)' }}
+                  className={classes.cvTemlpate__stepContent}
+                >
+                  <Typography variant="h4">Choose template for your resume</Typography>
+
+                  <Button onClick={onToggleModal} sx={buttonStyle}>
+                    Modern
+                  </Button>
+                  <Button onClick={onToggleModal} sx={buttonStyle}>
+                    Classic
+                  </Button>
+                  <DemoCvModal
+                    content={<CvTemplatePDF />}
+                    isOpen={isOpen}
+                    onClose={onToggleModal}
+                  />
+                  <Button onClick={handleReset} sx={buttonStyle}>
+                    AT FIRST
+                  </Button>
+                </Paper>
+              )}
+              {steps.map((step) => {
+                if (step.state === 'active') {
+                  return (
+                    <Box component="form" className={classes.cvTemlpate__stepContent} key={step.id}>
+                      <Typography
+                        variant="caption"
+                        className={classes.cvTemlpate__stepContentLabel}
                       >
                         {step.label}
-                      </Button>
-                    ))}
-                  </Box>
-                  {activeStep === steps.length && (
-                    <Paper
-                      square
-                      elevation={0}
-                      sx={{ p: 3, boxShadow: '0px 0px 5px rgba(0, 0, 0, 0.3)' }}
-                      className={classes.cvTemlpate__stepContent}
-                    >
-                      <Typography variant="h4">
-                        All steps completed - you&apos;re finished
                       </Typography>
+                      {step.form}
 
-                      <>
-                        <Button onClick={onToggleModal} sx={buttonStyle}>
-                          Preview
-                        </Button>
-                        <DemoCvModal
-                          content={<CvTemplatePDF />}
-                          isOpen={isOpen}
-                          onClose={onToggleModal}
+                      <Box className={classes.cvTemlpate__stepContentButton}>
+                        <Button
+                          disabled={step.id === 1}
+                          onClick={handleBack}
+                          sx={{ mt: 1, mr: 1 }}
                         />
-                        <Button onClick={handleReset} sx={buttonStyle}>
-                          AT FIRST
-                        </Button>
-                      </>
-                    </Paper>
-                  )}
-                  {steps.map((step) => {
-                    if (step.state === 'active') {
-                      return (
-                        <Box
-                          component="form"
-                          className={classes.cvTemlpate__stepContent}
-                          key={step.id}
+
+                        <Button
+                          onClick={
+                            step.id === 6
+                              ? methods.handleSubmit(onSubmit)
+                              : () => setActiveStep((prevActiveStep) => prevActiveStep + 1)
+                          }
+                          variant="contained"
+                          sx={buttonStyle}
                         >
-                          <Typography
-                            variant="caption"
-                            className={classes.cvTemlpate__stepContentLabel}
-                          >
-                            {step.label}
-                          </Typography>
-                          {step.form}
-
-                          <Box className={classes.cvTemlpate__stepContentButton}>
-                            <Button
-                              disabled={step.id === 1}
-                              onClick={handleBack}
-                              sx={{ mt: 1, mr: 1 }}
-                            ></Button>
-
-                            <Button
-                              onClick={step.id === 6 ? methods.handleSubmit(onSubmit) : handleNext}
-                              variant="contained"
-                              sx={buttonStyle}
-                            >
-                              {step.id === 6 ? 'Finish' : 'Next session'}
-                            </Button>
-                          </Box>
-                        </Box>
-                      );
-                    } else {
-                      return null;
-                    }
-                  })}
-                </Box>
-                <DevTool control={methods.control} placement="top-left" />
-              </FormProvider>
+                          {step.id === 6 ? 'Finish' : 'Next session'}
+                        </Button>
+                      </Box>
+                    </Box>
+                  );
+                }
+              })}
             </Box>
-          </Box>
+            <DevTool control={methods.control} placement="top-left" />
+          </FormProvider>
         </Box>
-      </Box>
+      )}
     </Box>
   );
 };

@@ -1,7 +1,6 @@
-import { View, Text } from '@react-pdf/renderer';
-
 import { uniqueKey } from '../../../../../assets/lib';
 import { StyleOptionType } from '../../../const';
+import { Box, Typography } from '@mui/material';
 
 type TitlePropsType = {
   name: string;
@@ -22,11 +21,11 @@ export const ListTitlePDF = (props: ITitleProps) => {
   const { ExperienceTitle } = style;
 
   return (
-    <View>
-      <Text key={uniqueKey()} style={ExperienceTitle}>
+    <Box>
+      <Typography key={uniqueKey()} style={ExperienceTitle}>
         {`${name} | ${fromYear} -- ${toYear}`}
-      </Text>
-      <Text style={ExperienceTitle}>{position}</Text>
-    </View>
+      </Typography>
+      <Typography style={ExperienceTitle}>{position}</Typography>
+    </Box>
   );
 };

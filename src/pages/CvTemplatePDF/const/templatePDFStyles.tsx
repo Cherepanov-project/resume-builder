@@ -6,7 +6,9 @@ export type StylesNameKeys =
   | 'classic'
   | 'classicCustomized'
   | 'modern'
-  | 'modernRigth';
+  | 'modernRigth'
+  | 'custom'
+  | 'toronto';
 
 export type StyleOptionType = {
   [key: string]: StyleType;
@@ -25,6 +27,16 @@ type StructureContentType = {
 type StylesType = Record<StylesNameKeys, StructureContentType>;
 
 export const templatePDFStyles: StylesType = {
+  toronto: {
+    structure: {
+      isShort: true,
+      header: { isPresented: true },
+      sidebar: { isPresented: true, isPlaced: 'left' },
+      main: {},
+    },
+    style: {},
+  },
+
   default: {
     structure: {
       isShort: true,
@@ -265,7 +277,7 @@ export const templatePDFStyles: StylesType = {
       },
     },
   },
-  classic: {
+  custom: {
     structure: {
       isShort: false,
       header: { isPresented: true },
@@ -274,12 +286,11 @@ export const templatePDFStyles: StylesType = {
     },
     style: {
       Main: { flexDirection: 'column', padding: 10, paddingLeft: 30 },
-
       Header: {
         height: '200px',
         flexDirection: 'row',
         padding: '10px',
-        // backgroundColor: 'green',
+        backgroundColor: 'white',
         borderBottomStyle: 'solid',
         borderBottomWidth: 2,
         borderBottomColor: '#000000',
@@ -343,7 +354,7 @@ export const templatePDFStyles: StylesType = {
       },
 
       Title: {
-        fontFamily: 'Times-Bold',
+        fontFamily: 'Times-BoldItalic',
         fontSize: 35,
         textTransform: 'uppercase',
         color: '#00008b',
@@ -361,6 +372,118 @@ export const templatePDFStyles: StylesType = {
       },
       Text: {
         fontFamily: 'Times-Roman',
+        fontSize: 14,
+      },
+      TextSpecial: {
+        fontFamily: 'Times-Bold',
+        fontSize: 20,
+        textTransform: 'uppercase',
+      },
+      Img: {
+        width: 120,
+        height: 120,
+        borderRadius: '50%',
+        objectFit: 'cover',
+        objectPosition: 'center top',
+      },
+    },
+  },
+  classic: {
+    structure: {
+      isShort: false,
+      header: { isPresented: true },
+      sidebar: { isPresented: false },
+      main: {},
+    },
+    style: {
+      Main: { backgroundColor: 'white', flexDirection: 'column', padding: 10, paddingLeft: 30 },
+
+      Header: {
+        flexDirection: 'row',
+        padding: '10px',
+        backgroundColor: 'white',
+        borderBottomStyle: 'solid',
+        borderBottomWidth: 2,
+        borderBottomColor: '#000000',
+      },
+      HeaderWrapper: {
+        justifyContent: 'center',
+        marginRight: 20,
+      },
+
+      Experiences: {
+        marginBottom: 10,
+        minWidth: '100%',
+      },
+      Experience: { marginBottom: 10 },
+      ExperienceTitle: {
+        fontFamily: 'Times-Bold',
+        fontSize: 14,
+        textTransform: 'uppercase',
+      },
+
+      Socials: { marginBottom: 10 },
+      Social: {
+        marginBottom: 10,
+      },
+      SocialTitle: {
+        fontFamily: 'Times-Bold',
+        fontSize: 20,
+        textTransform: 'uppercase',
+      },
+
+      Hobbies: {},
+      Hobbie: {
+        flexDirection: 'row',
+        marginBottom: 5,
+      },
+      HobbieBullets: {
+        fontFamily: 'Times-Roman',
+        fontSize: 14,
+        marginRight: 5,
+      },
+
+      ContactsWrapeer: {
+        justifyContent: 'center',
+        marginLeft: 'auto',
+      },
+      Contact: {
+        flexDirection: 'row',
+        justifyContent: 'flex-end',
+        marginBottom: 5,
+      },
+      ContactLink: {
+        fontFamily: 'Times-Roman',
+        textDecoration: 'none',
+        fontSize: 14,
+        color: 'black',
+      },
+      ContactIcon: {
+        width: 16,
+        height: 16,
+        marginRight: 5,
+      },
+
+      Title: {
+        fontFamily: 'Times-Roman',
+        fontStyle: 'bold',
+        fontSize: 35,
+        textTransform: 'uppercase',
+        color: '#00008b',
+      },
+      Subtitle: {
+        fontFamily: 'Times-Bold',
+        fontSize: 30,
+        textTransform: 'uppercase',
+        marginBottom: 5,
+        color: '#00008b',
+      },
+      SubtitleNone: {
+        display: 'none',
+        opacity: 0,
+      },
+      Text: {
+        fontFamily: 'Times-Bold',
         fontSize: 14,
       },
       TextSpecial: {

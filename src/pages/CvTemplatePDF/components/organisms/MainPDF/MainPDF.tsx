@@ -1,5 +1,3 @@
-import { View } from '@react-pdf/renderer';
-
 import {
   EducationDataType,
   ExperienceDataType,
@@ -9,6 +7,7 @@ import {
 import { StyleOptionType } from '../../../const';
 
 import { ExperiencePDF, SocialPDF, HobbiesPDF } from '../../molecules';
+import { Box } from '@mui/material';
 
 interface IMainPDFProps {
   data: {
@@ -87,19 +86,19 @@ export const MainPDF = (props: IMainPDFProps) => {
   };
 
   return (
-    <View style={Main}>
-      <View style={style.MainWrapper}>
+    <Box style={Main}>
+      <Box style={style.MainWrapper}>
         <ExperiencePDF {...propsEducation} />
-      </View>
-      <View style={style.MainWrapper}>
+      </Box>
+      <Box style={style.MainWrapper}>
         <ExperiencePDF {...propsExperience} />
-      </View>
-      <View style={style.MainWrapper}>
+      </Box>
+      <Box style={style.MainWrapper}>
         <SocialPDF {...propsSocial} />
-      </View>
-      <View style={style.MainWrapper}>
+      </Box>
+      <Box style={style.MainWrapper}>
         <HobbiesPDF {...propsHobbies} />
-      </View>
-    </View>
+      </Box>
+    </Box>
   );
 };

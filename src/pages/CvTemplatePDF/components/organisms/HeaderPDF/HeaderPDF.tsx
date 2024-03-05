@@ -1,11 +1,10 @@
-import { View } from '@react-pdf/renderer';
-
 import { uniqueKey } from '../../../../../assets/lib';
 import { PersonalDataType, AvatarDataType } from '../../../../../assets/const';
 import { StyleOptionType } from '../../../const';
 
-import { TitlePDF, TextPDF, ImagePDF } from '../../atoms';
+import { TitlePDF, TextPDF } from '../../atoms';
 import { ContactsPDF } from '../../molecules';
+import { Box } from '@mui/material';
 
 interface IHeaderPDFProps {
   data: {
@@ -22,7 +21,6 @@ export const HeaderPDF = (props: IHeaderPDFProps) => {
   const {
     Header,
     HeaderWrapper,
-    ContactsWrapeer,
     Contact,
     ContactLink,
     ContactIcon,
@@ -51,19 +49,15 @@ export const HeaderPDF = (props: IHeaderPDFProps) => {
   };
 
   return (
-    <View style={Header}>
-      <View style={style.HeaderWrapper}>
-        <ImagePDF {...propsImage} />
-      </View>
-      <View style={HeaderWrapper}>
+    <Box style={Header} sx={{ display: 'flex' }}>
+      <img src={propsImage.imgPath} style={propsImage.style} />
+      <Box style={HeaderWrapper}>
         {fullNameTitiles.map((str) => (
           <TitlePDF key={uniqueKey()} {...{ fullName: str, style: Title }} />
         ))}
         <TextPDF {...propsSubtitle} />
-      </View>
-      <View style={ContactsWrapeer}>
-        <ContactsPDF {...propsConcats} />
-      </View>
-    </View>
+      </Box>
+      <ContactsPDF {...propsConcats} />
+    </Box>
   );
 };

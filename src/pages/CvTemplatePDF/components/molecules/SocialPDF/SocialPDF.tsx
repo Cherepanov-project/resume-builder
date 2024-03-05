@@ -1,10 +1,9 @@
-import { View } from '@react-pdf/renderer';
-
 import { SocialDataType } from '../../../../../assets/const';
 import { uniqueKey } from '../../../../../assets/lib';
 import { StyleOptionType } from '../../../const';
 
 import { SubtitlePDF, TextPDF } from '../../atoms';
+import { Box } from '@mui/material';
 
 interface ISocialProps {
   data: SocialDataType[];
@@ -22,10 +21,10 @@ const socialContent = (data: SocialDataType[] | undefined, style: StyleOptionTyp
     const propsText = { str: name, style: Text };
 
     return (
-      <View key={uniqueKey()} style={Social}>
+      <Box key={uniqueKey()} style={Social}>
         <TextPDF key={uniqueKey()} {...propsTitleText} />
         <TextPDF key={uniqueKey()} {...propsText} />
-      </View>
+      </Box>
     );
   });
 
@@ -42,9 +41,9 @@ export const SocialPDF = (props: ISocialProps) => {
   const propsTitle = { str: 'Social', style: Subtitle };
 
   return (
-    <View style={Socials}>
+    <Box style={Socials}>
       <SubtitlePDF {...propsTitle} />
       {socialContent(data, currStyle)}
-    </View>
+    </Box>
   );
 };

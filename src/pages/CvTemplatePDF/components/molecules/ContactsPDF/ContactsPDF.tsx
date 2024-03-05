@@ -1,9 +1,8 @@
-import { View } from '@react-pdf/renderer';
-
 import { PersonalDataType } from '../../../../../assets/const';
 import { StyleOptionType } from '../../../const';
 
 import { SubtitlePDF, ContactPDF } from '../../atoms';
+import { Box } from '@mui/material';
 
 type ContactType = Omit<PersonalDataType, 'fullName' | 'bio' | 'position'>;
 interface IContact {
@@ -20,12 +19,12 @@ export const ContactsPDF = (props: IContact) => {
   const propsContact = { Contact, ContactLink, ContactIcon, Text };
 
   return (
-    <View>
+    <Box display="flex" flexDirection="column" alignItems="flex-start">
       <SubtitlePDF {...propsSubtitle} />
       <ContactPDF contactName="phone" contactData={phone} style={propsContact} />
       <ContactPDF contactName="email" contactData={email} style={propsContact} />
       <ContactPDF contactName="website" contactData={website} style={propsContact} />
       <ContactPDF contactName="address" contactData={address} style={propsContact} />
-    </View>
+    </Box>
   );
 };

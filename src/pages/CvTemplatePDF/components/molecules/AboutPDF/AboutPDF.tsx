@@ -1,7 +1,6 @@
-import { View } from '@react-pdf/renderer';
-
 import { StyleOptionType } from '../../../const';
 import { SubtitlePDF, TextPDF } from '../../atoms';
+import { Box } from '@mui/material';
 
 interface IAboutTypeProps {
   bio: string;
@@ -16,9 +15,9 @@ export const AboutPDF = (props: IAboutTypeProps) => {
   const propsText = { str: bio, style: Text };
 
   return (
-    <View>
+    <Box>
       <SubtitlePDF {...propsSubtitle} />
       <TextPDF {...propsText} />
-    </View>
+    </Box>
   );
 };

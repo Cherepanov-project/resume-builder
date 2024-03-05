@@ -1,10 +1,9 @@
-import { View } from '@react-pdf/renderer';
-
 import { SubtitlePDF, ListTitlePDF, TextPDF } from '../../atoms';
 
 import { ExperienceDataType } from '../../../../../assets/const';
 import { StyleOptionType } from '../../../const';
 import { uniqueKey } from '../../../../../assets/lib';
+import { Box } from '@mui/material';
 
 interface IExperienceProps {
   data: ExperienceDataType[];
@@ -24,10 +23,10 @@ const experienceContent = (data: ExperienceDataType[] | undefined, style: StyleO
     const listTitleProps = { data: otherData, style: { ExperienceTitle } };
 
     return (
-      <View key={uniqueKey()} style={Experience}>
+      <Box key={uniqueKey()} style={Experience}>
         <ListTitlePDF {...listTitleProps} />
         <TextPDF key={uniqueKey()} {...propsText} />
-      </View>
+      </Box>
     );
   });
 
@@ -45,9 +44,9 @@ export const ExperiencePDF = (props: IExperienceProps) => {
   const currStyle = { Experience, ExperienceTitle, Text };
 
   return (
-    <View style={Experiences}>
+    <Box style={Experiences}>
       <SubtitlePDF {...propsSubtitle} />
       {experienceContent(data, currStyle)}
-    </View>
+    </Box>
   );
 };

@@ -1,10 +1,9 @@
-import { View } from '@react-pdf/renderer';
-
 import { SubtitlePDF, TextPDF } from '../../atoms';
 
 import { HobbyDataType } from '../../../../../assets/const';
 import { uniqueKey } from '../../../../../assets/lib';
 import { StyleOptionType } from '../../../const';
+import { Box } from '@mui/material';
 
 interface IHobbiesProps {
   data: HobbyDataType[];
@@ -23,10 +22,10 @@ const hobbiesContent = (data: HobbyDataType[] | undefined, style: StyleOptionTyp
     const propsText = { str: hobbyTitle, style: HobbieBullets };
 
     return (
-      <View key={uniqueKey()} style={Hobbie}>
+      <Box key={uniqueKey()} style={Hobbie} display="flex">
         <TextPDF key={uniqueKey()} {...propsBullets} />
         <TextPDF key={uniqueKey()} {...propsText} />
-      </View>
+      </Box>
     );
   });
 
@@ -44,9 +43,9 @@ export const HobbiesPDF = (props: IHobbiesProps) => {
   const currStyle = { Hobbie, HobbieBullets, Text };
 
   return (
-    <View style={Hobbies}>
+    <Box style={Hobbies}>
       <SubtitlePDF {...propsTitle} />
       {hobbiesContent(data, currStyle)}
-    </View>
+    </Box>
   );
 };

@@ -1,49 +1,33 @@
-import { useMemo } from 'react';
 import { Document, Page, PDFViewer } from '@react-pdf/renderer';
 
 import { temporaryCvDataSlice } from '../../assets/const';
 import { renderTemplatePDF } from './lib';
 
-import classes from './CvTemplatePDF.module.scss';
-
 import { useAppSellector } from '../../hooks/cvTemplateHooks';
+import { Paper } from '@mui/material';
 
 // eslint-disable-next-line @typescript-eslint/no-explicit-any
 const selectAllPersonaInfo = (state: { personalInfo: any }) => state.personalInfo;
 
-export const CvTemplatePDF = () => {
+export const CvTemplatePDF = ({ styleName }) => {
   const userTemporaryCvDataSlice = useAppSellector(selectAllPersonaInfo);
-
   let newData = userTemporaryCvDataSlice;
-
   if (userTemporaryCvDataSlice.personalData.fullName === '') {
     newData = temporaryCvDataSlice;
   }
 
-  // Примеры стилей
-
-  // const styleName = 'default';
-  // const styleName = 'defaultCustomized';
-  // const styleName = 'classic';
-  // const styleName = 'classicCustomized';
-
-  const styleName = 'modern';
-
-  const children = useMemo(() => {
-    return renderTemplatePDF(styleName, newData);
-  }, [styleName, newData]);
-
-  console.log('CHILDREN', children);
-
   return (
-    <div className={classes.CvTemplatePDF}>
-      <PDFViewer style={{ minHeight: '750px', minWidth: '500px' }} showToolbar={true}>
+    <>
+      <Paper sx={{ width: 500, height: 680 }} elevation={12}>
+        {renderTemplatePDF(styleName, newData)}
+      </Paper>
+      {/* <PDFViewer height={680} width={500} showToolbar={false}>
         <Document>
           <Page size="A4" style={{ width: '100%' }}>
-            {children}
+            {renderTemplatePDF(styleName, newData)}
           </Page>
         </Document>
-      </PDFViewer>
-    </div>
+      </PDFViewer> */}
+    </>
   );
 };
