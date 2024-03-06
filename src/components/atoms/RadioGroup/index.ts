@@ -2,7 +2,7 @@ import RadioGroup from './RadioGroup';
 
 export const props = {
   name: 'RadioGroup',
-  type: 'CheckBox Elements',
+  type: 'CheckBoxes',
   source: 'atoms',
   props: {},
   children: [],

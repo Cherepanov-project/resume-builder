@@ -2,7 +2,7 @@ import LayoutBlockAnchor from './LayoutBlockAnchor';
 
 export const props = {
   name: 'LayoutBlockAnchor',
-  type: 'LayoutBlock Elements',
+  type: 'LayoutBlocks',
   source: 'atoms',
   props: {
     text: 'Link a',

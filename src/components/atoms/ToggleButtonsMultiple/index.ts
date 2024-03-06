@@ -2,7 +2,7 @@ import ToggleButtonsMultiple from "./ToggleButtonsMultiple";
 
 export const props = {
   name: 'ToggleButtonsMultiple',
-  type: 'CheckBox Elements',
+  type: 'CheckBoxes',
   columns: 2,
   source: 'atoms',
   props: {

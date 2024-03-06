@@ -2,7 +2,7 @@ import LayoutBlockVideoPlayer from './LayoutBlockVideoPlayer';
 
 export const props = {
   name: 'LayoutBlockVideoPlayer',
-  type: 'LayoutBlock Elements',
+  type: 'LayoutBlocks',
   source: 'atoms',
   props: {
     text: 'https://www.youtube.com/embed/JGckbtbQThM?si=e3aN0ObSkZ1WoHuE',

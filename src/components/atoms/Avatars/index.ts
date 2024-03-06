@@ -2,7 +2,7 @@ import Avatars from "./Avatars";
 
 export const props = {
   name: 'Avatars',
-  type: 'Image Elements',
+  type: 'Avatar & Images',
   columns: 1,
   source: 'atoms',
   url: '',

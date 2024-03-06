@@ -2,7 +2,7 @@ import LayoutBlockSlider from './LayoutBlockSlider';
 
 export const props = {
   name: 'LayoutBlockSlider',
-  type: 'LayoutBlock Elements',
+  type: 'LayoutBlocks',
   source: 'atoms',
   props: {
     text: '',
