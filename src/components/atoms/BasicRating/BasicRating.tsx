@@ -4,7 +4,6 @@ import {default as Rate} from '@mui/material/Rating';
 import { T_BlockElement } from '@/types/landingBuilder';
 
 const BasicRating: React.FC<T_BlockElement> = ( props ) => {
-  const [value, setValue] = React.useState<number | null>(2);
 
   return (
     <Box
@@ -16,7 +15,7 @@ const BasicRating: React.FC<T_BlockElement> = ( props ) => {
         name="simple-controlled"
         value={props.value}
         onChange={(event, newValue) => {
-          setValue(newValue);
+          console.log(newValue)
         }}
       />      
     </Box>

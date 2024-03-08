@@ -2,11 +2,10 @@ import { IElementsProps } from '@/types/landingBuilder';
 import Avatar from '@mui/material/Avatar';
 import Stack from '@mui/material/Stack';
 import classes from './Avatar.module.scss';
-import { useEffect, useState } from 'react';
+import { useEffect, useMemo } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { nanoid } from 'nanoid';
 import { setProps } from '@/store/landingBuilder/layoutSlice';
-import { imageListClasses } from '@mui/material';
 
 const Avatars = ({ props, layout }: IElementsProps) => {
 
@@ -15,7 +14,6 @@ const Avatars = ({ props, layout }: IElementsProps) => {
 
   const dispatch = useDispatch();
   const { Avatars } = props;
-  const url = '';
   const currentList = Avatars || [];
 
   useEffect(() => {
@@ -34,8 +32,6 @@ const Avatars = ({ props, layout }: IElementsProps) => {
       dispatch(setProps(secondItem));
     }
   }, []);
-  
-  //const elementsContainsPicture = currentList.some((item) => String(item.img).length > 0);
 
   return (
     <Stack direction="row" spacing={2}

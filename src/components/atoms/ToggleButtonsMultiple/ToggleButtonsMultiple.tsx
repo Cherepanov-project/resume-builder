@@ -8,7 +8,7 @@ import ToggleButton from '@mui/material/ToggleButton';
 import ToggleButtonGroup from '@mui/material/ToggleButtonGroup';
 import { T_BlockElement } from '@/types/landingBuilder';
 
-const ToggleButtonsMultiple: React.FC<T_BlockElement> = ( props ) => {
+const ToggleButtonsMultiple: React.FC<T_BlockElement> = () => {
   const [formats, setFormats] = React.useState(() => ['bold', 'italic']);
 
   const handleFormat = (
