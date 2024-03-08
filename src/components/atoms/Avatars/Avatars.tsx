@@ -3,14 +3,11 @@ import Avatar from '@mui/material/Avatar';
 import Stack from '@mui/material/Stack';
 import classes from './Avatar.module.scss';
 import { useEffect } from 'react';
-import { useDispatch, useSelector } from 'react-redux';
+import { useDispatch } from 'react-redux';
 import { nanoid } from 'nanoid';
 import { setProps } from '@/store/landingBuilder/layoutSlice';
 
 const Avatars = ({ props, layout }: IElementsProps) => {
-
-  const data = useSelector(state => state.layout.activeElements)
-  console.log(data)
 
   const dispatch = useDispatch();
   const { Avatars } = props;
@@ -31,6 +28,7 @@ const Avatars = ({ props, layout }: IElementsProps) => {
       };
       dispatch(setProps(secondItem));
     }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
   return (

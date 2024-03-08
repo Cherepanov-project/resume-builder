@@ -30,6 +30,7 @@ const SectionsConstructorRowEl: React.FC<SectionsConstructorRowElType> = ({ row 
 
   useEffect(() => {
     gridLayoutStyled();
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [layoutRow]);
 
   // задание grid-ряду свойства gridTemplateColumns при изменении количсетва блоков в ряду

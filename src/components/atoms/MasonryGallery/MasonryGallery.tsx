@@ -27,7 +27,7 @@ const MasonryGallery = ({ props, layout }: IElementsProps) => {
       };
       dispatch(setProps(firstItem));
     }
-  }, []);
+  });
 
   const elementsContainsPicture = currentList.some((item) => String(item.img).length > 0);
 

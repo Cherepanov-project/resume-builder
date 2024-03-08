@@ -71,6 +71,7 @@ const ContainerDIV: React.FC<ContainerDIVProps> = ({ children, layout, columns, 
     return () => {
       window.removeEventListener('resize', handleResize);
     };
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [layout.w, window.innerWidth]); // Мониторим изменения ширины родителя и окна браузера.
 
   const handleDropElement = (_layout: Layout[], layoutItem: Layout, event: Event) => {
@@ -83,7 +84,7 @@ const ContainerDIV: React.FC<ContainerDIVProps> = ({ children, layout, columns, 
 
   const workspaceLayout = children.reduce((acc: Layout[], el: T_BlockElement) => {
     return [...acc, el.layout];
-  }, []);
+  });
 
   let style;
   try {

@@ -30,10 +30,12 @@ const SettingsMenu = () => {
 
   useEffect(() => {
     setTextToElement();
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [text]);
 
   useEffect(() => {
     setUrlToElement();
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [url]);
 
   const dispatch = useDispatch();

@@ -75,6 +75,7 @@ const SettingsPanel: React.FC = () => {
     setItemsList(currentList || []);
     setPrevElementsSize(size || 1);
     setElementsSize(size || 1);
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [currentElement, size]);
 
   function СheckingLabel(list: ISettingsInputItem[]) {
