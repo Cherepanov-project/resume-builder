@@ -14,7 +14,7 @@ const BasicRating: React.FC<T_BlockElement> = ( props ) => {
        <Rate
         name="simple-controlled"
         value={props.value}
-        onChange={(event, newValue) => {
+        onChange={(newValue) => {
           console.log(newValue)
         }}
       />      

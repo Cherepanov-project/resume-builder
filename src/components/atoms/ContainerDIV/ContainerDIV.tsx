@@ -50,7 +50,7 @@ const DynamicComponentRenderer: React.FC<DynamicComponentRendererProps> = ({
 };
 // ========================================================================== \\
 
-const ContainerDIV: React.FC<ContainerDIVProps> = ({ children, layout, columns, props }) => {
+const ContainerDIV: React.FC<ContainerDIVProps> = ({ children, layout, columns, props }: any) => {
   const dispatch = useAppDispatch();
   const containerRef = useRef(null);
   const [width, setWidth] = useState(0);
@@ -82,11 +82,11 @@ const ContainerDIV: React.FC<ContainerDIVProps> = ({ children, layout, columns, 
     dispatch(addElement({ draggableItem, layoutItem, element }));
   };
 
-  const workspaceLayout = children.reduce((acc: Layout[], el: T_BlockElement) => {
+  const workspaceLayout = children.reduce((acc: Layout[] | any, el: T_BlockElement | any): any => {
     return [...acc, el.layout];
   });
 
-  let style;
+  let style: any;
   try {
     style = props.style;
   } catch {
