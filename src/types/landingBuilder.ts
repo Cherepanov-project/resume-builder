@@ -59,7 +59,7 @@ export type T_BlockElement = {
   interactiveType?: 'button' | 'slider';
   props: T_SectionElementProps; //{[key: string]: string | {[key: string]: string}}
   children?: T_BlockElement[];
-  layout: Layout | {};
+  layout: Layout;
 };
 
 export type T_SidebarMenuItem = {
