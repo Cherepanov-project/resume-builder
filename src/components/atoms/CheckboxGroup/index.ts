@@ -2,7 +2,7 @@ import CheckboxGroup from './CheckboxGroup';
 
 export const props = {
   name: 'CheckboxGroup',
-  type: 'Simple Elements',
+  type: 'CheckBoxes',
   source: 'atoms',
   props: {},
   children: [],

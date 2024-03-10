@@ -15,7 +15,7 @@ const LayoutBlockImage: FC<ILayoutBlock> = ({ props }) => {
     backgroundImage: `url(${url})`,
     backgroundSize: 'contain',
     height: '100%',
-    widht: 'auto',
+    width: 'auto',
     backgroundRepeat: 'no-repeat',
   };
 
