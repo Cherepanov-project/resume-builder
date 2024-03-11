@@ -9,14 +9,14 @@ interface IPageDefaultPDF extends ITemporaryCvDataSliceProps {
 
 export const PageWithHeaderPDF = (props: IPageDefaultPDF) => {
   const { personalData, photoData, style, ...otherDate } = props;
-  const { Page, ...otherStyle } = style;
+  const { MainPage, ...otherStyle } = style;
 
   const propsHeader = { data: { personalData, photoData }, style: otherStyle };
-  const propsMain = { data: otherDate, style: otherStyle };
+  const propsMain = { data: { personalData, photoData, ...otherDate }, style: otherStyle };
 
   return (
     <Box
-      style={Page}
+      style={MainPage}
       sx={{ display: 'flex', flexDirection: 'column', height: '680px', width: '500px' }}
     >
       <HeaderPDF {...propsHeader} />

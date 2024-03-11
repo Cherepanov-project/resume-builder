@@ -13,7 +13,7 @@ const FinishResume: FC = ({ isOpen, handleButtonClick, onToggleModal, handleRese
           Edit
         </Button>
       </Box>
-      <Box display="flex" justify-content="center" flexDirection="row">
+      <Box display="flex" justify-content="center" flexDirection="row" sx={{ mr: '80px' }}>
         <Box>
           <Typography sx={{ mt: 10, fontSize: 60, ml: 10, fontWeight: 700 }}>
             Congratulations!
@@ -27,15 +27,16 @@ const FinishResume: FC = ({ isOpen, handleButtonClick, onToggleModal, handleRese
             </Button>
           </Box>
         </Box>
-        <Box sx={{ mr: 10 }}>
-          <CvTemplatePDF styleName={'classic'} />
-        </Box>
+
+        <CvTemplatePDF styleName={'oslo'} />
       </Box>
+
       <DemoCvModal
         content={<CvTemplatePDF styleName={'classic'} />}
         isOpen={isOpen}
         onClose={onToggleModal}
       />
+
       <Box sx={{ mb: 4, ml: 7 }}>
         <Button sx={buttonStyle} onClick={handleReset}>
           Back

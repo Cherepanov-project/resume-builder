@@ -13,13 +13,13 @@ interface IContact {
 export const ContactsPDF = (props: IContact) => {
   const { data, style } = props;
   const { phone, email, website, address } = data;
-  const { Subtitle, Contact, ContactLink, ContactIcon, Text } = style;
+  const { Subtitle, Contact, ContactLink, ContactIcon, Text, ContactWrapper } = style;
 
   const propsSubtitle = { str: 'Contacts ', style: Subtitle };
   const propsContact = { Contact, ContactLink, ContactIcon, Text };
 
   return (
-    <Box display="flex" flexDirection="column" alignItems="flex-start">
+    <Box display="flex" flexDirection="column" alignItems="flex-start" style={ContactWrapper}>
       <SubtitlePDF {...propsSubtitle} />
       <ContactPDF contactName="phone" contactData={phone} style={propsContact} />
       <ContactPDF contactName="email" contactData={email} style={propsContact} />

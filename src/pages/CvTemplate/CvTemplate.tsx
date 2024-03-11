@@ -95,10 +95,10 @@ const CvTemplate = () => {
     mode: 'onSubmit',
     resolver: yupResolver(validationSchema),
     defaultValues: {
-      fullName: 'Alex',
+      fullName: 'Alex Ivanov',
       position: 'Team Lead',
       address: 'Russia',
-      bio: 'Good programmer',
+      bio: 'Adept in creating a comprehensive and well-rounded curriculum that meets education requirements and standards. Experienced and passionate Early Childhood Teacher with a love for educating today youth.',
       email: 'qweqwen@inbox.ru',
       phone: 12313123,
       website: 'https://www.youtube.com/',
@@ -119,7 +119,8 @@ const CvTemplate = () => {
           company: 'qweqwewqe',
           'experience-from-year': undefined,
           'experience-to-year': undefined,
-          'company-info': 'qweqwe',
+          'company-info':
+            'Conducted comprehensive job analyses to update job descriptions and salary benchmarks, resulting in improved job satisfaction and equity',
         },
       ],
 

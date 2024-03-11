@@ -9,6 +9,7 @@ const ColorPicker: FC = ({ handleStyleChange, place, styles }) => {
     { color: 'blue', id: 2 },
     { color: 'green', id: 3 },
     { color: 'white', id: 4 },
+    { color: 'black', id: 5 },
   ];
 
   const handleClick = (circleId, circleColor, place, style) => {

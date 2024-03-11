@@ -26,7 +26,7 @@ const LinkContact = (contactData: string, ContactLink: StyleType) => {
 };
 
 export const ContactPDF = ({ contactName, contactData, style }: IContactPDF) => {
-  const { Contact, ContactLink, ContactIcon, Text } = style;
+  const { Contact, ContactLink, ContactIcon } = style;
   let iconName, contactPDFContent;
 
   switch (contactName) {
@@ -46,7 +46,7 @@ export const ContactPDF = ({ contactName, contactData, style }: IContactPDF) => 
       break;
 
     case 'address':
-      contactPDFContent = TextContact(contactData, Text);
+      contactPDFContent = TextContact(contactData, ContactLink);
       iconName = adressIcon;
       break;
 

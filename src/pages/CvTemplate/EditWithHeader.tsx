@@ -9,6 +9,9 @@ interface IProps {
 }
 
 const EditWithHeader: FC<IProps> = ({ setChooseTemplate }) => {
+  if (templatePDFStyles.custom.style.Header === undefined) {
+    templatePDFStyles.custom.style.Header = { backgroundColor: '' };
+  }
   const [styles, setStyles] = useState({
     color: templatePDFStyles.custom.style.Header.backgroundColor,
     colorTitle: templatePDFStyles.custom.style.Title.color,
@@ -95,19 +98,31 @@ const EditWithHeader: FC<IProps> = ({ setChooseTemplate }) => {
             elevation={8}
             sx={{ p: 3, mb: 2, display: 'flex', justifyContent: 'space-around' }}
           >
-            <Box sx={{ mr: 3 }}>
-              <Typography sx={{ fontStyle: 'bold' }}>Header color</Typography>
-              <ColorPicker
-                handleStyleChange={handleStyleChange}
-                place="Header"
-                styles="backgroundColor"
-              />
-            </Box>
+            {templatePDFStyles.custom.style.Header.backgroundColor === '' ? (
+              <Box sx={{ mr: 3 }}>
+                <Typography sx={{ fontStyle: 'bold' }}>Sidebar color</Typography>
+                <ColorPicker
+                  handleStyleChange={handleStyleChange}
+                  place="Sidebar"
+                  styles="backgroundColor"
+                />
+              </Box>
+            ) : (
+              <Box sx={{ mr: 3 }}>
+                <Typography sx={{ fontStyle: 'bold' }}>Header color</Typography>
+                <ColorPicker
+                  handleStyleChange={handleStyleChange}
+                  place="Header"
+                  styles="backgroundColor"
+                />
+              </Box>
+            )}
+
             <Box>
               <Typography>Body color</Typography>
               <ColorPicker
                 handleStyleChange={handleStyleChange}
-                place="Main"
+                place="MainPage"
                 styles="backgroundColor"
               />
             </Box>

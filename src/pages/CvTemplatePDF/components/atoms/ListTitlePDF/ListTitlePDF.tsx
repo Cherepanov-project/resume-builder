@@ -18,14 +18,18 @@ export const ListTitlePDF = (props: ITitleProps) => {
   const { data, style } = props;
 
   const { name, position, fromYear, toYear } = data;
-  const { ExperienceTitle } = style;
+  const { ExperienceTitle, ExperienceTime, ExperiencePosition } = style;
+  const { EducationTitle, EducationTime, EducationPosition } = style;
 
   return (
     <Box>
-      <Typography key={uniqueKey()} style={ExperienceTitle}>
-        {`${name} | ${fromYear} -- ${toYear}`}
+      <Typography key={uniqueKey()} style={{ ...ExperienceTitle, ...EducationTitle }}>
+        {`${name}`}
       </Typography>
-      <Typography style={ExperienceTitle}>{position}</Typography>
+      <Typography style={{ ...ExperienceTime, ...EducationTime }}>
+        {`${fromYear} - ${toYear}`}
+      </Typography>
+      <Typography style={{ ...ExperiencePosition, ...EducationPosition }}>{position}</Typography>
     </Box>
   );
 };

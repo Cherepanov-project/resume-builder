@@ -1,7 +1,6 @@
 import { ITemporaryCvDataSliceProps } from '../../../assets/const';
 import { templatePDFStyles, StylesNameKeys } from '../const';
 import { PageDefaultPDF, PageWithSidebarPDF, PageWithHeaderPDF } from '../pages';
-import { PageToronto } from '../pages/PageToronto';
 
 export const renderTemplatePDF = (
   styleName: StylesNameKeys,
@@ -16,7 +15,6 @@ export const renderTemplatePDF = (
 
   const props = { ...temporaryCvDataSlice, style };
 
-  if (styleName === 'toronto') return <PageToronto {...props} />;
   if (isShort) return <PageDefaultPDF {...props} />;
   else if (isWithHeader) return <PageWithHeaderPDF {...props} />;
   else if (isWithSidebar) return <PageWithSidebarPDF {...props} />;

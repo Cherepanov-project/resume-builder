@@ -11,8 +11,8 @@ export const PageWithSidebarPDF = (props: IPageDefaultPDF) => {
   const { personalData, photoData, style, ...otherDate } = props;
   const { Page, SidebarPage, MainPage, ...otherStyle } = style;
 
-  const propsSidebar = { data: { personalData, photoData }, style: otherStyle };
-  const propsMain = { data: otherDate, style: otherStyle };
+  const propsSidebar = { data: { personalData, photoData, ...otherDate }, style: otherStyle };
+  const propsMain = { data: { personalData, photoData, ...otherDate }, style: otherStyle };
 
   return (
     <Box style={Page} display="flex">

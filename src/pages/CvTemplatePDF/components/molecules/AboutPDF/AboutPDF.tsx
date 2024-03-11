@@ -9,13 +9,13 @@ interface IAboutTypeProps {
 
 export const AboutPDF = (props: IAboutTypeProps) => {
   const { bio, style } = props;
-  const { Text, Subtitle } = style;
+  const { Text, Subtitle, SubtitleWrapper } = style;
 
   const propsSubtitle = { str: 'About me', style: Subtitle };
   const propsText = { str: bio, style: Text };
 
   return (
-    <Box>
+    <Box style={SubtitleWrapper}>
       <SubtitlePDF {...propsSubtitle} />
       <TextPDF {...propsText} />
     </Box>

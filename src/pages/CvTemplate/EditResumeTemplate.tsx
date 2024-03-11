@@ -27,11 +27,11 @@ const EditResumeTemplate: FC = ({ handleButtonClick }) => {
           </Typography>
           <Box display="flex" sx={{ ml: 10, mb: 10 }}>
             <Box display="flex" flexDirection="column" sx={{ mr: 5 }}>
-              <CvTemplatePDF styleName={'classic'} />
+              <CvTemplatePDF styleName={'oslo'} />
               <Button
                 sx={{ ...buttonStyle }}
                 onClick={() => {
-                  templatePDFStyles.custom = JSON.parse(JSON.stringify(templatePDFStyles.classic));
+                  templatePDFStyles.custom = JSON.parse(JSON.stringify(templatePDFStyles.oslo));
                   setChooseTemplate(1);
                 }}
               >
@@ -39,11 +39,11 @@ const EditResumeTemplate: FC = ({ handleButtonClick }) => {
               </Button>
             </Box>
             <Box display="flex" flexDirection="column" sx={{ mr: 5 }}>
-              <CvTemplatePDF styleName={'modern'} />
+              <CvTemplatePDF styleName={'sydney'} />
               <Button
                 sx={buttonStyle}
                 onClick={() => {
-                  templatePDFStyles.custom = JSON.parse(JSON.stringify(templatePDFStyles.modern));
+                  templatePDFStyles.custom = JSON.parse(JSON.stringify(templatePDFStyles.sydney));
                   setChooseTemplate(2);
                 }}
               >
@@ -55,9 +55,7 @@ const EditResumeTemplate: FC = ({ handleButtonClick }) => {
               <Button
                 sx={buttonStyle}
                 onClick={() => {
-                  templatePDFStyles.custom = JSON.parse(
-                    JSON.stringify(templatePDFStyles.modernRigth),
-                  );
+                  templatePDFStyles.custom = JSON.parse(JSON.stringify(templatePDFStyles.toronto));
                   setChooseTemplate(3);
                 }}
               >

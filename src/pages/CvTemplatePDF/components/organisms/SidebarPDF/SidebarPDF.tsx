@@ -3,29 +3,39 @@ import { uniqueKey } from '../../../../../assets/lib';
 import { StyleOptionType } from '../../../const';
 
 import { ImagePDF, TitlePDF, SubtitlePDF } from '../../atoms';
-import { AboutPDF, ContactsPDF } from '../../molecules';
+import { AboutPDF, ContactsPDF, HobbiesPDF, SocialPDF } from '../../molecules';
 import { Box } from '@mui/material';
 
 interface ISidebarPDFProps {
   data: {
     personalData: PersonalDataType;
     photoData: AvatarDataType;
+    socialData: SocialDataType[];
+    hobbyData: HobbyDataType[];
   };
   style: StyleOptionType;
 }
 
 export const SidebarPDF = (props: ISidebarPDFProps) => {
   const { data, style } = props;
-  const { personalData, photoData } = data;
+  const { personalData, photoData, socialData, hobbyData } = data;
 
   console.log('SIDEBAR PROPS', props);
   const {
+    Socials,
+    Social,
+    SocialTitle,
     Sidebar,
     SidebarWrapper,
     SidebarImage,
+    SubtitleSpecial,
+    Hobbies,
+    Hobbie,
+    HobbieBullets,
     Contact,
     ContactLink,
     ContactIcon,
+    ContactWrapper,
     Title,
     Text,
     TextSpecial,
@@ -48,26 +58,57 @@ export const SidebarPDF = (props: ISidebarPDFProps) => {
       website: personalData.website,
       email: personalData.email,
     },
-    style: { Subtitle, Contact, ContactLink, ContactIcon, Text },
+    style: { Subtitle, Contact, ContactLink, ContactIcon, Text, ContactWrapper },
+  };
+  const propsSocial = {
+    data: socialData,
+    style: {
+      Socials,
+      Social,
+      SocialTitle,
+      Subtitle: { ...Subtitle, ...SubtitleSpecial },
+      Text,
+    },
+  };
+
+  const propsHobbies = {
+    data: hobbyData,
+    style: {
+      Hobbies,
+      Hobbie,
+      HobbieBullets,
+      Subtitle: { ...Subtitle, ...SubtitleSpecial },
+      Text,
+    },
   };
 
   return (
-    <Box style={Sidebar}>
-      <Box style={SidebarImage}>
-        <ImagePDF {...propsImage} />
-      </Box>
-      <Box>
-        {fullNameTitiles.map((str) => (
-          <TitlePDF key={uniqueKey()} {...{ fullName: str, style: Title }} />
-        ))}
-        <SubtitlePDF {...propsSubtitle} />
-      </Box>
-      <Box style={SidebarWrapper}>
-        <AboutPDF {...propsAbout} />
-      </Box>
-      <Box style={SidebarWrapper}>
-        <ContactsPDF {...propsContacts} />
-      </Box>
-    </Box>
+    <>
+      {Sidebar.type === 'sydney' ? (
+        <Box style={Sidebar}>
+          <ContactsPDF {...propsContacts} />
+          <SocialPDF {...propsSocial} />
+          <HobbiesPDF {...propsHobbies} />
+        </Box>
+      ) : (
+        <Box style={Sidebar}>
+          <Box style={SidebarImage}>
+            <ImagePDF {...propsImage} />
+          </Box>
+          <Box>
+            {fullNameTitiles.map((str) => (
+              <TitlePDF key={uniqueKey()} {...{ fullName: str, style: Title }} />
+            ))}
+            <SubtitlePDF {...propsSubtitle} />
+          </Box>
+          <Box style={SidebarWrapper}>
+            <AboutPDF {...propsAbout} />
+          </Box>
+          <Box style={SidebarWrapper}>
+            <ContactsPDF {...propsContacts} />
+          </Box>
+        </Box>
+      )}
+    </>
   );
 };
