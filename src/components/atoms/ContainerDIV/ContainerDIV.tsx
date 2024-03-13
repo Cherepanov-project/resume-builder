@@ -82,9 +82,9 @@ const ContainerDIV: React.FC<ContainerDIVProps> = ({ children, layout, columns, 
     dispatch(addElement({ draggableItem, layoutItem, element }));
   };
 
-  const workspaceLayout = children.reduce((acc: Layout[], el: T_BlockElement) => {
+  const workspaceLayout = children?.reduce((acc: Layout[], el: T_BlockElement) => {
     return [...acc, el.layout];
-  });
+  }, []);
 
   let style: any;
   try {

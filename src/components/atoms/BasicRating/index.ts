@@ -2,7 +2,7 @@ import BasicRating from "./BasicRating";
 
 export const props = {
   name: 'BasicRating',
-  type: 'Simple Elements',
+  type: 'Simple Blocks',
   columns: 2,
   source: 'atoms',
   props: {
