@@ -1,0 +1,33 @@
+.settings {
+
+    &__wrapper {
+        display: flex;
+        justify-content: space-between;
+        margin-bottom: 7px;
+    }
+
+    &__wrapperContent {
+        display: flex;
+        flex-direction: column;
+        margin-bottom: 10px;
+    }
+
+    &__wrapperRadio {
+        display: flex;
+        justify-content: space-between;
+
+        input {
+            display: none;
+        }
+        
+        label {
+            &:hover {
+                cursor: pointer;
+            }
+        }
+    }
+
+    &__container {
+        margin-bottom: 10px;
+    }
+}

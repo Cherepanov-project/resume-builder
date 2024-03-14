@@ -1,0 +1,40 @@
+@import '../../../assets/style/variables.scss';
+
+.workspace {
+  padding-left: 56px;
+  height: calc(100dvh - 72px);
+  display: flex;
+  justify-content: center;
+}
+
+.grid {
+  margin-top: 30px;
+  width: calc(100% - 30%);
+  min-height: calc(100% - 58px);
+  background-color: rgb(250, 250, 250);
+  border-radius: 5px;
+  box-shadow: inset 0 0 6px rgba(90, 90, 90, 0.5);
+}
+
+.item {
+  background-color: white;
+  border-radius: 2px;
+
+  & > span {
+    bottom: -3px !important;
+
+    &:after {
+      right: 0;
+      bottom: 0;
+      border-color: #1976d2 !important;
+    }
+  }
+
+  & > span:first-of-type {
+    left: -3px !important;
+  }
+
+  & > span:last-of-type {
+    right: -3px !important;
+  }
+}

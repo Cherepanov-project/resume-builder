@@ -1,0 +1,24 @@
+@import '../../../assets/style/variables.scss';
+
+.sidebar {
+  position: fixed;
+  height: 100vh;
+  background-color: $bg-static-light;
+
+  & > div > span {
+    left: 0;
+  }
+
+  &__list {
+    margin: 0;
+    padding: 0;
+  }
+
+  &__listitem {
+    margin: 4px 0 0 4px;
+  }
+}
+
+.tab {
+  min-width: 30px !important;
+}

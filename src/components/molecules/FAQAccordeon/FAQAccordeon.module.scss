@@ -1,0 +1,11 @@
+@import "../../molecules/DefaultContainer/DefaultContainer.scss";
+@import "../../atoms/DefaultTitle/DefaultTitle.scss";
+@import "../../../assets/style/variables.scss";
+
+.accordeon-container {
+  background-color: $bg-static-light;
+  color: $base-text-color;
+  padding-bottom: 60px;
+  padding-top: 10px;
+  border-top: 1px solid #000;
+}

@@ -1,0 +1,1 @@
+export { renderTemplatePDF } from './renderTemplatePDF';

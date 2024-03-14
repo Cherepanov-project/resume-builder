@@ -1,0 +1,65 @@
+.settings-menu {
+    width: 204px;
+    height: 72%;
+    background-color: #faf2f2;
+    border-radius: 10px;
+    align-self: center;
+    margin-top: 12px;
+    margin-bottom: 12px;
+    border: 1px solid #cfc5c5;
+    min-height: 300px;
+    display: flex;
+    flex-direction: column;
+}
+
+.settings-menu__title {
+    display: flex;
+    justify-content: space-between;
+    margin-top: 20px;
+    &:nth-child(1) {
+        font-size: 20px;
+        margin-left: 10px;
+    }
+    &:nth-child(1) {
+        margin-right: 10px;
+    }
+}
+
+.settings-menu__content {
+    margin-top: 10px;
+    align-self: center;
+    width: 90%;
+    font-size: 20px;
+}
+
+.constructor-container__row__el__section__inputs {
+  margin-top: 20px;
+  margin-right: 12px;
+  align-self: center;
+  display: flex;
+  flex-direction: row;
+  min-width: 50px;
+  & label:nth-child(2) {
+      margin-left: 5px;
+  }
+  & input {
+  border-radius: 5px;
+  margin: auto;
+  width: 30px;
+  background-color: #fff;
+  color: #000;
+  padding-left: 10px;
+  margin-left: 5px;
+  &:nth-child(1) {
+      margin-right: 0px;
+  }
+  }
+}
+
+.settings-menu__content__title-props {
+  & textarea {
+    min-height: 300px;
+    max-width: 95%;
+    margin-bottom: 20px;
+  }
+}
