@@ -21,7 +21,6 @@ import utilityReducer from './landingBuilder/utilitySlice';
 import cardReducer from './cardSlice';
 import sectionsManagerSlice from './landingBuilder/sectionsManagerSlice';
 import settingsPanelSlice from './landingBuilder/settingsPanelSlice';
-import swiperSlice from './swiperSlice'
 
 //конфиг для persist
 const persistConfig = {
@@ -41,7 +40,6 @@ const rootReducer = combineReducers({
   card: cardReducer,
   sectionsManager: sectionsManagerSlice,
   settingsPanel: settingsPanelSlice,
-  swiper: swiperSlice,
 });
 
 //преобразование редьюсера для persist

@@ -68,7 +68,6 @@ const SliderSV: React.FC<ISliderSVProps> = ({ slides = defaulSlides }) => {
       return state;
     });
   };
-  console.log(sliderProps);
   return (
     <div className={style.swiperContainer}>
       <SwiperSVTweek changeSlider={changeSlider} value={sliderProps} />

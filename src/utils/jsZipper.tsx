@@ -1,20 +1,16 @@
 import JSZip from 'jszip';
 import store from '@store/store.ts';
-import { jsZipperStyleImporter } from '.';
-import { jsZipperLogicImporter } from '.';
 
 const createZip = async () => {
   //тут мы получили список активных элементов
   //в каждом должно лежать свойство со значением - текст скрипта.
   //их мы будем собирать в scriptContent
   const state = store.getState();
-  console.log(state);
   const activeElements = state.layout.activeElements;
 
   const zip = new JSZip();
   const htmlElement = document.querySelector('[class^="previewSpace"]');
   const htmlContent = htmlElement?.innerHTML;
-  console.log(htmlContent);
   // const myStyles = document.styleSheets;
   const styleSheetsArray = Array.from(document.styleSheets) as CSSStyleSheet[];
   let cssContent = '';
@@ -34,7 +30,7 @@ const createZip = async () => {
   //скрипты со страницы
   // const myScripts = document.scripts;
   const scriptsArray = Array.from(document.scripts) as HTMLScriptElement[];
-
+  // console.log(myScripts);
   let jsContent = '';
 
   for (const script of scriptsArray) {
@@ -54,13 +50,12 @@ const createZip = async () => {
       <meta name="viewport" content="width=device-width, initial-scale=1.0">
       <title>My New Website</title>
       <link rel="stylesheet" href="styles.css">
-      ${jsZipperStyleImporter(htmlContent)}
     </head>
     <body>
     <div style="display:flex; flex-direction:column;align-items:center;">
       ${htmlContent}
       </div>
-      ${jsZipperLogicImporter(htmlContent)}      
+      ${jsContent}
     </body>
     </html>
   `;

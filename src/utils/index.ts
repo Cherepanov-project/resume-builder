@@ -86,33 +86,3 @@ export const importFiles = async () => {
     Manage: [],
   };
 };
-
-// подключение стилей свайпера
-export const jsZipperStyleImporter = (previewElement: string): string => {
-  if (previewElement.includes('swiper')) {
-    const swiperUrl: string =
-      '<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/swiper@11/swiper-bundle.min.css"/>';
-    return swiperUrl;
-  }
-  return '';
-};
-
-export const jsZipperLogicImporter = (previewElement: string, params?): string => {
-  if (!params) {
-    params = {
-      effect: 'default',
-      loop: false,
-      spaceBetween: 10,
-      slideHeight: 'auto',
-      slidesPerView: 'auto',
-    };
-  }
-  if (previewElement.includes('swiper')) {
-    const swiperInitialization: string = `<script type="module">
-      import Swiper from 'https://cdn.jsdelivr.net/npm/swiper@11/swiper-bundle.min.mjs'      
-      const swiper = new Swiper('.swiper', ${JSON.stringify(params)})
-      </script>`;
-    return swiperInitialization;
-  }
-  return '';
-};

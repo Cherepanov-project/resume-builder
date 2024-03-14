@@ -27,6 +27,7 @@ const SideBar: React.FC = () => {
     });
 
     setPromiseResolved(true);
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
   const handleChangeTab = (_event: React.SyntheticEvent, indxBtn: number) => {
