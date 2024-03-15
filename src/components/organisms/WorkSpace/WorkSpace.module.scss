@@ -7,13 +7,39 @@
   justify-content: center;
 }
 
-.grid {
-  margin-top: 30px;
+.wrapper {
   width: calc(100% - 30%);
-  min-height: calc(100% - 58px);
+  min-height: calc(100dvh - 72px);
+  box-shadow: inset 0 0 6px rgba(90, 90, 90, 0.5);
   background-color: rgb(250, 250, 250);
   border-radius: 5px;
-  box-shadow: inset 0 0 6px rgba(90, 90, 90, 0.5);
+}
+
+.container {
+  box-sizing: content-box;
+  padding: 28px 0;
+  display: flex;
+  flex-direction: column;
+  border-bottom: 2px dashed rgba(90, 90, 90, 0.5);
+  border-top: 2px dashed transparent;
+  margin-top: -2px;
+  position: relative;
+  
+  &:hover {
+    border-bottom: 2px dashed rgb(90, 90, 90);
+    border-top: 2px dashed rgb(90, 90, 90);
+    transition: all ease-in-out .3s;
+  }
+
+  &:first-child {
+    border-top: 2px dashed transparent;
+  }
+}
+
+.grid {
+  width: 100%;
+  min-height: calc(100% - 58px);
+ 
 }
 
 .item {
@@ -36,5 +62,83 @@
 
   & > span:last-of-type {
     right: -3px !important;
+  }
+}
+
+.add-button, .delete-button {
+  width: 30px;
+  height: 30px;
+  padding: 0;
+  border-radius: 50%;
+  position: absolute;
+  bottom: -15px;
+  background-color: white;
+  border: 2px solid #2dc08d;
+  cursor: pointer;
+
+  &:hover {
+    background-color: #2dc08d;
+    border-color: #2dc08d;
+
+    &::after {
+      content: '+';
+      font-size: 24px;
+      color: white;
+      position: relative;
+      top: -2px;
+      left: -1px;
+    }
+  }
+}
+
+.delete-button {
+  right: calc(50% + 20px);
+  &::after {
+    content: '-';
+    font-size: 24px;
+    color: #2dc08d;
+    position: relative;
+    top: -2px;
+    left: -1px;
+  }
+
+  &:hover {
+    background-color: #2dc08d;
+    border-color: #2dc08d;
+
+    &::after {
+      content: '-';
+      font-size: 24px;
+      color: white;
+      position: relative;
+      top: -2px;
+      left: -1px;
+    }
+  }
+}
+
+.add-button {
+  right: calc(50% - 20px);
+  &::after {
+    content: '+';
+    font-size: 24px;
+    color: #2dc08d;
+    position: relative;
+    top: -2px;
+    left: -1px;
+  }
+
+  &:hover {
+    background-color: #2dc08d;
+    border-color: #2dc08d;
+
+    &::after {
+      content: '+';
+      font-size: 24px;
+      color: white;
+      position: relative;
+      top: -2px;
+      left: -1px;
+    }
   }
 }
