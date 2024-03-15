@@ -35,6 +35,7 @@ const SelectList = ({ props, layout }: IElementsProps) => {
     if (!currentList.some((item) => item.value === selectList.value)) {
       setSelectList((prev) => ({ ...prev, value: currentList[0]?.value || '' }));
     }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [currentList]);
 
   return (

@@ -21,7 +21,8 @@ const ContainerDIVSettings: React.FC<IProps> = ({ setStyle }) => {
     return () => {
       document.removeEventListener('mousedown', handleClick);
     };
-  });
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, []);
 
   useEffect(() => {
     // вывести в отдельную функцию
@@ -29,6 +30,7 @@ const ContainerDIVSettings: React.FC<IProps> = ({ setStyle }) => {
       backgroundColor: color,
       backgroundImage: `url(${image})`, // сделать валидацию urla
     });
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [color, image]);
 
   const handleColorInput = (e: React.ChangeEvent<HTMLInputElement>) => {

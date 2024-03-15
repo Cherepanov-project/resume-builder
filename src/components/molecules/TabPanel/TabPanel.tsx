@@ -33,6 +33,7 @@ const TabPanel: React.FC<TabPanelProps> = ({ label, children, value, index, clos
           </div>
           {children}
         </>
+        
       )}
     </div>
   );
