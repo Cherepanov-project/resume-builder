@@ -120,7 +120,7 @@ export const MainPDF = (props: IMainPDFProps) => {
   return (
     <>
       {Main.type === 'sydney' ? (
-        <Box sx={{ mt: '30px', ml: '30px', mr: '30px' }}>
+        <Box sx={{ mt: '30px', ml: '30px', mr: '30px', height: '100%' }}>
           <Box sx={{ display: 'flex', mb: '10px' }}>
             <ImagePDF {...propsImage} />
             <Box>
@@ -145,10 +145,14 @@ export const MainPDF = (props: IMainPDFProps) => {
         </Box>
       ) : (
         <Box style={Main}>
-          <EducationPDF {...propsEducation} />
-          <ExperiencePDF {...propsExperience} />
-          <SocialPDF {...propsSocial} />
-          <HobbiesPDF {...propsHobbies} />
+          <Box sx={{ height: '100%', width: '65%' }}>
+            <EducationPDF {...propsEducation} />
+            <ExperiencePDF {...propsExperience} />
+          </Box>
+          <Box sx={{ height: '100%', width: '25%' }}>
+            <SocialPDF {...propsSocial} />
+            <HobbiesPDF {...propsHobbies} />
+          </Box>
         </Box>
       )}
     </>

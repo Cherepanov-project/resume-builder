@@ -1,7 +1,12 @@
 import { FC, useState } from 'react';
 import { Box } from '@mui/material';
+interface IProps {
+  handleStyleChange;
+  place: string;
+  styles: string;
+}
 
-const ColorPicker: FC = ({ handleStyleChange, place, styles }) => {
+const ColorPicker: FC<IProps> = ({ handleStyleChange, place, styles }) => {
   const [selectedCircle, setSelectedCircle] = useState(null);
 
   const circles = [

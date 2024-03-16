@@ -75,7 +75,7 @@ export const HeaderPDF = (props: IHeaderPDFProps) => {
         </>
       ) : Header.name === 'oslo' ? (
         <>
-          <Box style={Header} sx={{ display: 'flex' }}>
+          <Box style={Header} sx={{ display: 'flex', height: '200px' }}>
             <Box
               sx={{ display: 'flex', flexDirection: 'column', alignItems: 'center', width: '100%' }}
             >

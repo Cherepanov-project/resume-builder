@@ -1,8 +1,9 @@
-import { FC, useState } from 'react';
+import { FC, useRef, useState } from 'react';
 import { templatePDFStyles } from '../CvTemplatePDF/const';
 import { Box, Button, Input, MenuItem, Paper, Select, Typography } from '@mui/material';
 import { buttonStyle } from '@/assets/style/buttonStyle';
 import { CvTemplatePDF } from '../CvTemplatePDF';
+import { useReactToPrint } from 'react-to-print';
 import ColorPicker from './ColorPicker';
 interface IProps {
   setChooseTemplate: React.Dispatch<React.SetStateAction<number>>;
@@ -76,7 +77,7 @@ const EditWithHeader: FC<IProps> = ({ setChooseTemplate }) => {
     },
   ];
 
-  function handleStyleChange(event, place, type) {
+  function handleStyleChange(event, place: string, type: string) {
     setStyles((prevStyles) => ({
       ...prevStyles,
       [type]: event,
@@ -90,6 +91,10 @@ const EditWithHeader: FC<IProps> = ({ setChooseTemplate }) => {
     };
   }
 
+  const componentRef = useRef();
+  const handlePrint = useReactToPrint({
+    content: () => componentRef.current,
+  });
   return (
     <>
       <Box display="flex" justifyContent="space-between" sx={{ m: 5 }}>
@@ -236,10 +241,13 @@ const EditWithHeader: FC<IProps> = ({ setChooseTemplate }) => {
             </Box>
           </Paper>
         </Box>
-        <CvTemplatePDF styleName={'custom'} />
+        <CvTemplatePDF styleName={'custom'} ref={componentRef} />
       </Box>
       <Button sx={{ ...buttonStyle, ml: 5 }} onClick={() => setChooseTemplate(0)}>
         Back
+      </Button>
+      <Button sx={{ ...buttonStyle, ml: 5 }} onClick={handlePrint}>
+        Print
       </Button>
     </>
   );

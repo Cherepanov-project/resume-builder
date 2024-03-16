@@ -1,17 +1,25 @@
 import { Box, Button, Typography } from '@mui/material';
-import { FC, useState } from 'react';
+import { FC, useRef, useState } from 'react';
 import { CvTemplatePDF } from '../CvTemplatePDF';
 import { buttonStyle } from '@/assets/style/buttonStyle';
 import EditColor from './EditColor';
 import { templatePDFStyles } from '../CvTemplatePDF/const';
+import oslo from './oslo-resume-templates.avif';
+import toronto from './toronto-resume-templates.avif';
+import sydney from './sydney-resume-templates.avif';
 
-const EditResumeTemplate: FC = ({ handleButtonClick }) => {
+interface IProps {
+  handleButtonClick: React.MouseEventHandler<HTMLButtonElement>;
+}
+
+const EditResumeTemplate: FC<IProps> = ({ handleButtonClick }) => {
   const [chooseTemplate, setChooseTemplate] = useState(0);
+  const componentRef = useRef();
 
   return (
     <>
       {chooseTemplate != 0 ? (
-        <EditColor setChooseTemplate={setChooseTemplate} chooseTemplate={chooseTemplate} />
+        <EditColor setChooseTemplate={setChooseTemplate} />
       ) : (
         <Box>
           <Typography
@@ -27,7 +35,7 @@ const EditResumeTemplate: FC = ({ handleButtonClick }) => {
           </Typography>
           <Box display="flex" sx={{ ml: 10, mb: 10 }}>
             <Box display="flex" flexDirection="column" sx={{ mr: 5 }}>
-              <CvTemplatePDF styleName={'oslo'} />
+              <img src={`${oslo}`} alt={'oslo'} style={{ width: '500px' }} />
               <Button
                 sx={{ ...buttonStyle }}
                 onClick={() => {
@@ -39,7 +47,7 @@ const EditResumeTemplate: FC = ({ handleButtonClick }) => {
               </Button>
             </Box>
             <Box display="flex" flexDirection="column" sx={{ mr: 5 }}>
-              <CvTemplatePDF styleName={'sydney'} />
+              <img src={`${sydney}`} alt={'sydney'} style={{ width: '500px' }} />
               <Button
                 sx={buttonStyle}
                 onClick={() => {
@@ -51,7 +59,7 @@ const EditResumeTemplate: FC = ({ handleButtonClick }) => {
               </Button>
             </Box>
             <Box display="flex" flexDirection="column" sx={{ mr: 5 }}>
-              <CvTemplatePDF styleName={'toronto'} />
+              <img src={`${toronto}`} alt={'toronto'} style={{ width: '500px' }} />
               <Button
                 sx={buttonStyle}
                 onClick={() => {

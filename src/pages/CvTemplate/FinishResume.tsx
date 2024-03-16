@@ -1,10 +1,19 @@
 import { Box, Button, Typography } from '@mui/material';
-import { FC, useState } from 'react';
+import { FC, useRef } from 'react';
 import { CvTemplatePDF } from '../CvTemplatePDF';
-import { DemoCvModal } from '@/components/organisms/DemoCvModal';
 import { buttonStyle } from '@/assets/style/buttonStyle';
+import { useReactToPrint } from 'react-to-print';
+interface IProps {
+  handleButtonClick: React.MouseEventHandler<HTMLButtonElement>;
+  handleReset: React.MouseEventHandler<HTMLButtonElement>;
+}
 
-const FinishResume: FC = ({ isOpen, handleButtonClick, onToggleModal, handleReset }) => {
+const FinishResume: FC<IProps> = ({ handleButtonClick, handleReset }) => {
+  const componentRef = useRef();
+  const handlePrint = useReactToPrint({
+    content: () => componentRef.current,
+  });
+
   return (
     <Box>
       <Box display="flex" justifyContent="space-between" alignItems="flex-end" sx={{ mb: 3 }}>
@@ -22,20 +31,14 @@ const FinishResume: FC = ({ isOpen, handleButtonClick, onToggleModal, handleRese
             Your resume is awesome ready for download. Get it in any format of your choice.
           </Typography>
           <Box sx={{ ml: 10 }}>
-            <Button sx={buttonStyle} onClick={onToggleModal}>
-              Downolad
+            <Button sx={buttonStyle} onClick={handlePrint}>
+              Print
             </Button>
           </Box>
         </Box>
 
-        <CvTemplatePDF styleName={'oslo'} />
+        <CvTemplatePDF styleName={'toronto'} ref={componentRef} />
       </Box>
-
-      <DemoCvModal
-        content={<CvTemplatePDF styleName={'classic'} />}
-        isOpen={isOpen}
-        onClose={onToggleModal}
-      />
 
       <Box sx={{ mb: 4, ml: 7 }}>
         <Button sx={buttonStyle} onClick={handleReset}>

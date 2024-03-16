@@ -1,4 +1,9 @@
-import { AvatarDataType, PersonalDataType } from '../../../../../assets/const';
+import {
+  AvatarDataType,
+  HobbyDataType,
+  PersonalDataType,
+  SocialDataType,
+} from '../../../../../assets/const';
 import { uniqueKey } from '../../../../../assets/lib';
 import { StyleOptionType } from '../../../const';
 

@@ -1,13 +1,11 @@
 import React from 'react';
-import { useCallback, useState } from 'react';
+import { useState } from 'react';
 
 import { useForm, SubmitHandler, FormProvider } from 'react-hook-form';
 import * as yup from 'yup';
 import { DevTool } from '@hookform/devtools';
 import classes from './CvTemplate.module.scss';
 
-import { DemoCvModal } from '../../components/organisms/DemoCvModal';
-import { CvTemplatePDF } from '../CvTemplatePDF';
 import { buttonStyle } from '../../assets/style/buttonStyle';
 
 import { Box } from '@mui/material';
@@ -19,7 +17,6 @@ import Hobbies from '../../components/organisms/Hobbies';
 import PersonalPhoto from '../../components/organisms/PersonalPhoto';
 
 import Button from '@mui/material/Button';
-import Paper from '@mui/material/Paper';
 import Typography from '@mui/material/Typography';
 
 import { useDispatch } from 'react-redux';
@@ -85,12 +82,6 @@ const validationSchema = yup.object().shape({
 interface IFormInputs extends yup.InferType<typeof validationSchema> {}
 
 const CvTemplate = () => {
-  const [isOpen, setIsOpen] = useState(false);
-
-  const onToggleModal = useCallback(() => {
-    setIsOpen((prev) => !prev);
-  }, []);
-
   const methods = useForm<IFormInputs>({
     mode: 'onSubmit',
     resolver: yupResolver(validationSchema),
@@ -225,7 +216,7 @@ const CvTemplate = () => {
     setActiveStep((prevActiveStep) => prevActiveStep - 1);
   };
 
-  const handleReset = () => {
+  const handleReset: React.MouseEventHandler<HTMLButtonElement> = () => {
     setActiveStep(0);
   };
 
@@ -319,9 +310,10 @@ const CvTemplate = () => {
   };
   const [showElement, setShowElement] = useState(false);
 
-  const handleButtonClick = () => {
+  const handleButtonClick: React.MouseEventHandler<HTMLButtonElement> = () => {
     setShowElement(!showElement);
   };
+
   return (
     <Box>
       <Box className={classes.cvTemlpate__header}>
@@ -330,12 +322,7 @@ const CvTemplate = () => {
       {showElement ? (
         <EditResumeTemplate handleButtonClick={handleButtonClick} />
       ) : activeStep === 6 ? (
-        <FinishResume
-          handleReset={handleReset}
-          handleButtonClick={handleButtonClick}
-          onToggleModal={onToggleModal}
-          isOpen={isOpen}
-        />
+        <FinishResume handleReset={handleReset} handleButtonClick={handleButtonClick} />
       ) : (
         <Box>
           <FormProvider {...methods}>
@@ -360,31 +347,6 @@ const CvTemplate = () => {
                   </Button>
                 ))}
               </Box>
-              {activeStep === steps.length && (
-                <Paper
-                  square
-                  elevation={0}
-                  sx={{ p: 3, boxShadow: '0px 0px 5px rgba(0, 0, 0, 0.3)' }}
-                  className={classes.cvTemlpate__stepContent}
-                >
-                  <Typography variant="h4">Choose template for your resume</Typography>
-
-                  <Button onClick={onToggleModal} sx={buttonStyle}>
-                    Modern
-                  </Button>
-                  <Button onClick={onToggleModal} sx={buttonStyle}>
-                    Classic
-                  </Button>
-                  <DemoCvModal
-                    content={<CvTemplatePDF />}
-                    isOpen={isOpen}
-                    onClose={onToggleModal}
-                  />
-                  <Button onClick={handleReset} sx={buttonStyle}>
-                    AT FIRST
-                  </Button>
-                </Paper>
-              )}
               {steps.map((step) => {
                 if (step.state === 'active') {
                   return (

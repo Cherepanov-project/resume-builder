@@ -61,22 +61,22 @@ export const templatePDFStyles: StylesType = {
         width: '100%',
       },
 
-      Experiences: { marginBottom: 10 },
-      Experience: { fontSize: 7 },
-      ExperienceTime: { fontSize: 7 },
-      ExperienceTitle: { fontSize: 7 },
-      ExperiencePosition: { fontSize: 7 },
-      EducationTime: { fontSize: 7 },
-      EducationPosition: { fontSize: 7 },
+      Experiences: { marginBottom: 20 },
+      Experience: { fontSize: 14 },
+      ExperienceTime: { fontSize: 14 },
+      ExperienceTitle: { fontSize: 14 },
+      ExperiencePosition: { fontSize: 14 },
+      EducationTime: { fontSize: 14 },
+      EducationPosition: { fontSize: 14 },
       Educations: { marginBottom: 10 },
       Education: { fontSize: 7 },
-      EducationTitle: { fontSize: 7 },
+      EducationTitle: { fontSize: 14 },
 
       Socials: { marginBottom: 10 },
       Social: {},
       SocialTitle: {
         fontFamily: 'Times-Bold',
-        fontSize: 7,
+        fontSize: 14,
         textTransform: 'uppercase',
       },
 
@@ -86,7 +86,7 @@ export const templatePDFStyles: StylesType = {
       },
       HobbieBullets: {
         fontFamily: 'Times-Roman',
-        fontSize: 7,
+        fontSize: 14,
         marginRight: 5,
       },
 
@@ -104,7 +104,7 @@ export const templatePDFStyles: StylesType = {
       ContactLink: {
         fontFamily: 'Times-Roman',
         textDecoration: 'none',
-        fontSize: 7,
+        fontSize: 14,
       },
       ContactIcon: {
         width: 0,
@@ -115,12 +115,12 @@ export const templatePDFStyles: StylesType = {
       },
       Title: {
         fontFamily: 'Times-Roman',
-        fontSize: 15,
+        fontSize: 30,
         fontWeight: 700,
       },
       Subtitle: {
         fontFamily: 'Times-Bold',
-        fontSize: 12,
+        fontSize: 24,
         fontWeight: 700,
       },
       SubtitleNone: {
@@ -129,18 +129,18 @@ export const templatePDFStyles: StylesType = {
       },
       Text: {
         fontFamily: 'Times-Bold',
-        fontSize: 9,
+        fontSize: 18,
       },
       TextSpecial: {
         fontFamily: 'Times-Bold',
-        fontSize: 5,
+        fontSize: 10,
         textTransform: 'uppercase',
         marginBottom: 15,
       },
       Img: {
         marginTop: 20,
-        width: 30,
-        height: 30,
+        width: 60,
+        height: 60,
         borderRadius: '50%',
       },
     },
@@ -153,12 +153,12 @@ export const templatePDFStyles: StylesType = {
       main: {},
     },
     style: {
-      Page: { flexDirection: 'row-reverse', minHeight: '100%' },
-      SidebarPage: { flex: 2 },
+      Page: { flexDirection: 'row-reverse' },
+      SidebarPage: { flex: 2, minHeight: '100%' },
       MainPage: { backgroundColor: '#ffffff', color: 'black', flex: 3 },
 
       Sidebar: {
-        fontSize: 15,
+        fontSize: 30,
         type: 'sydney',
         minHeight: '100%',
         backgroundColor: '#082a4d',
@@ -176,24 +176,23 @@ export const templatePDFStyles: StylesType = {
         flexWrap: 'wrap',
         backgroundColor: 'white',
         flexDirection: 'column',
-        padding: '2%',
       },
 
       Experiences: {},
       Experience: { marginBottom: 15 },
-      ExperienceTitle: { color: 'black', fontWeight: 700, fontSize: 10 },
-      ExperienceTime: { fontSize: 10 },
-      ExperiencePosition: { fontSize: 10 },
+      ExperienceTitle: { color: 'black', fontWeight: 700, fontSize: 20 },
+      ExperienceTime: { fontSize: 20 },
+      ExperiencePosition: { fontSize: 20 },
 
       Educations: {},
       Education: { marginBottom: 10 },
       EducationTitle: {
         color: 'black',
         fontWeight: 700,
-        fontSize: 10,
+        fontSize: 20,
       },
-      EducationTime: { fontSize: 10 },
-      EducationPosition: { fontSize: 10 },
+      EducationTime: { fontSize: 20 },
+      EducationPosition: { fontSize: 20 },
 
       Socials: {
         marginBottom: 10,
@@ -201,7 +200,7 @@ export const templatePDFStyles: StylesType = {
       Social: {},
       SocialTitle: {
         fontFamily: 'Times-Bold',
-        fontSize: 7,
+        fontSize: 14,
         color: 'white',
         textTransform: 'uppercase',
       },
@@ -212,7 +211,7 @@ export const templatePDFStyles: StylesType = {
       },
       HobbieBullets: {
         fontFamily: 'Times-Roman',
-        fontSize: 7,
+        fontSize: 14,
         marginRight: 5,
       },
 
@@ -220,7 +219,7 @@ export const templatePDFStyles: StylesType = {
       Contact: {},
       ContactLink: {
         fontFamily: 'Times-Roman',
-        fontSize: 7,
+        fontSize: 14,
         color: 'white',
       },
       ContactIcon: {
@@ -231,13 +230,14 @@ export const templatePDFStyles: StylesType = {
 
       Title: {
         fontFamily: 'Times-Roman',
-        fontSize: 20,
+        fontSize: 40,
         fontWeight: 700,
         color: '#000000',
       },
       Subtitle: {
         fontFamily: 'Times-Bold',
         fontWeight: 700,
+        fontSize: 24,
       },
       SubtitleWrapper: {
         marginBottom: '10px',
@@ -248,17 +248,17 @@ export const templatePDFStyles: StylesType = {
       },
       Text: {
         fontFamily: 'Times-Bold',
-        fontSize: 7,
+        fontSize: 14,
       },
       TextSpecial: {
         fontFamily: 'Times-Bold',
-        fontSize: 7,
+        fontSize: 14,
         textTransform: 'uppercase',
       },
       Img: {
         marginRight: '15px',
-        width: 40,
-        height: 40,
+        width: 80,
+        height: 80,
         borderRadius: '50%',
       },
     },
@@ -277,9 +277,7 @@ export const templatePDFStyles: StylesType = {
       Main: {
         display: 'flex',
         flexWrap: 'wrap',
-        height: '100%',
-        maxHeight: '500px',
-        flexDirection: 'column',
+        flexDirection: 'row',
         padding: '2%',
       },
 
@@ -294,22 +292,23 @@ export const templatePDFStyles: StylesType = {
         width: '100%',
       },
 
-      Experiences: {
-        minHeight: '60%',
-        maxHeight: '100%',
-      },
+      Experiences: {},
       Experience: { marginBottom: 100, width: 270 },
-      ExperienceTime: {},
+      ExperienceTime: {
+        fontSize: 23,
+      },
       ExperienceTitle: {
         background: 'black',
         color: 'white',
         fontWeight: 700,
-        fontSize: 15,
+        fontSize: 25,
         display: 'inline-block',
       },
-      ExperiencePosition: { fontSize: 13 },
-      EducationTime: {},
-      EducationPosition: { fontSize: 13 },
+      ExperiencePosition: { fontSize: 26 },
+      EducationTime: {
+        fontSize: 23,
+      },
+      EducationPosition: { fontSize: 26 },
       Educations: {
         marginBottom: '10px',
       },
@@ -318,12 +317,11 @@ export const templatePDFStyles: StylesType = {
         background: 'black',
         color: 'white',
         fontWeight: 700,
-        fontSize: 15,
+        fontSize: 25,
         display: 'inline-block',
       },
 
       Socials: {
-        width: 170,
         marginLeft: 'auto',
         background: '#eeeeee',
         borderRadius: '20px',
@@ -334,12 +332,11 @@ export const templatePDFStyles: StylesType = {
       Social: {},
       SocialTitle: {
         fontFamily: 'Times-Bold',
-        fontSize: 10,
+        fontSize: 20,
         textTransform: 'uppercase',
       },
 
       Hobbies: {
-        width: 170,
         marginLeft: 'auto',
         background: '#eeeeee',
         borderRadius: '20px',
@@ -351,7 +348,7 @@ export const templatePDFStyles: StylesType = {
       },
       HobbieBullets: {
         fontFamily: 'Times-Roman',
-        fontSize: 9,
+        fontSize: 18,
         marginRight: 5,
       },
 
@@ -366,7 +363,7 @@ export const templatePDFStyles: StylesType = {
       ContactLink: {
         fontFamily: 'Times-Roman',
         textDecoration: 'none',
-        fontSize: 10,
+        fontSize: 15,
         color: 'black',
       },
       ContactIcon: {
@@ -377,13 +374,13 @@ export const templatePDFStyles: StylesType = {
 
       Title: {
         fontFamily: 'Times-Roman',
-        fontSize: 40,
+        fontSize: 60,
         fontWeight: 700,
         color: '#000000',
       },
       Subtitle: {
         fontFamily: 'Times-Bold',
-        fontSize: 20,
+        fontSize: 30,
         fontWeight: 700,
         color: '#000000',
       },
@@ -393,16 +390,16 @@ export const templatePDFStyles: StylesType = {
       },
       Text: {
         fontFamily: 'Times-Bold',
-        fontSize: 9,
+        fontSize: 18,
       },
       TextSpecial: {
         fontFamily: 'Times-Bold',
-        fontSize: 11,
+        fontSize: 22,
         fontWeight: 700,
       },
       Img: {
-        width: 50,
-        height: 70,
+        width: 60,
+        height: 100,
       },
     },
   },
