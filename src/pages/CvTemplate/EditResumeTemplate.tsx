@@ -1,6 +1,5 @@
 import { Box, Button, Typography } from '@mui/material';
-import { FC, useRef, useState } from 'react';
-import { CvTemplatePDF } from '../CvTemplatePDF';
+import { FC, useState } from 'react';
 import { buttonStyle } from '@/assets/style/buttonStyle';
 import EditColor from './EditColor';
 import { templatePDFStyles } from '../CvTemplatePDF/const';
@@ -14,7 +13,6 @@ interface IProps {
 
 const EditResumeTemplate: FC<IProps> = ({ handleButtonClick }) => {
   const [chooseTemplate, setChooseTemplate] = useState(0);
-  const componentRef = useRef();
 
   return (
     <>
