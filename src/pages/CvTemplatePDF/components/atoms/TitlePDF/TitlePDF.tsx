@@ -1,6 +1,5 @@
-import { Text } from '@react-pdf/renderer';
-
 import { StyleType } from '../../../const';
+import { Typography } from '@mui/material';
 
 interface ITitlePDF {
   fullName: string;
@@ -10,5 +9,5 @@ interface ITitlePDF {
 export const TitlePDF = (props: ITitlePDF) => {
   const { fullName, style } = props;
 
-  return <Text style={style}>{fullName}</Text>;
+  return <Typography style={style}>{fullName}</Typography>;
 };
