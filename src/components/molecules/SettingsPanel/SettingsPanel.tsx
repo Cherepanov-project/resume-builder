@@ -55,6 +55,8 @@ const SettingsPanel: React.FC = () => {
       return props?.LayoutBlockSlider;
     } else if (name === 'MasonryGallery') {
       return props?.MasonryGallery;
+    } else if (name === 'Avatars') {
+      return props?.Avatars
     }
   }
 
@@ -73,6 +75,7 @@ const SettingsPanel: React.FC = () => {
     setItemsList(currentList || []);
     setPrevElementsSize(size || 1);
     setElementsSize(size || 1);
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [currentElement, size]);
 
   function СheckingLabel(list: ISettingsInputItem[]) {
@@ -83,7 +86,7 @@ const SettingsPanel: React.FC = () => {
     return false;
   }
 
-  const accessNames = ['RadioGroup', 'CheckboxGroup', 'SelectList', 'MasonryGallery'];
+  const accessNames = ['RadioGroup', 'CheckboxGroup', 'SelectList', 'MasonryGallery', 'Avatars'];
 
   const isButtonsPanelVisible = accessNames.includes(name || '');
 

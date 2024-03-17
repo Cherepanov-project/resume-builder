@@ -33,7 +33,7 @@ const DynamicComponentRenderer: React.FC<DynamicComponentRendererProps> = ({
     DynamicComponent = lazy(() => import(`@molecules/${Component}/index.ts`));
   }
   if (source === 'atoms') {
-    DynamicComponent = lazy(() => import(`@atoms/${Component}/index.ts`));
+    DynamicComponent = lazy(() => import(`@atoms/${/* @vite-ignore */Component}/index.ts`));
   }
 
   return (
@@ -50,7 +50,7 @@ const DynamicComponentRenderer: React.FC<DynamicComponentRendererProps> = ({
 };
 // ========================================================================== \\
 
-const ContainerDIV: React.FC<ContainerDIVProps> = ({ children, layout, columns, props }) => {
+const ContainerDIV: React.FC<ContainerDIVProps> = ({ children, layout, columns, props }: any) => {
   const dispatch = useAppDispatch();
   const containerRef = useRef(null);
   const [width, setWidth] = useState(0);
@@ -71,6 +71,7 @@ const ContainerDIV: React.FC<ContainerDIVProps> = ({ children, layout, columns, 
     return () => {
       window.removeEventListener('resize', handleResize);
     };
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [layout.w, window.innerWidth]); // Мониторим изменения ширины родителя и окна браузера.
 
   const handleDropElement = (_layout: Layout[], layoutItem: Layout, event: Event) => {
@@ -83,9 +84,9 @@ const ContainerDIV: React.FC<ContainerDIVProps> = ({ children, layout, columns, 
 
   const workspaceLayout = children.reduce((acc: Layout[], el: T_BlockElement) => {
     return [...acc, el.layout];
-  }, []);
+  });
 
-  let style;
+  let style: any;
   try {
     style = props.style;
   } catch {

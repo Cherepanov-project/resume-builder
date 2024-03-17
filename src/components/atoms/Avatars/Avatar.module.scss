@@ -1,0 +1,30 @@
+.wrapper {
+    display: flex;
+    width: 90%;
+    height: 90%;
+    justify-content: center;
+    align-items: center;
+    flex-direction: column;
+}
+
+.avatar {
+    width: 60%;
+    height: 60%;
+    display: flex;
+    cursor: pointer;
+}
+
+.avatarImg {
+    background: none;
+}
+
+.nick {
+    text-align: center;
+    display: block;
+    width: 80%;
+    height: 20px;
+    //border: 1px solid gray;
+    border-radius: 6px;
+    margin-top: 20px !important;
+    margin-left: 0 !important;
+}

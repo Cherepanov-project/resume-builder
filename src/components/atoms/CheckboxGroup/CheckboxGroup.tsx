@@ -16,7 +16,7 @@ const CheckboxGroup = ({ props, layout }: IElementsProps) => {
       const firstItem = { id: layout.i, values: [{ id: nanoid(), value: '' }] };
       dispatch(setProps(firstItem));
     }
-  }, []);
+  });
 
   return currentList.map((item: ISettingsInputItem) => (
     <FormControlLabel
