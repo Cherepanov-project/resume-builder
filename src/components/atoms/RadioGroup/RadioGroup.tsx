@@ -16,7 +16,7 @@ const RadioGroup = ({ props, layout }: IElementsProps) => {
       const firstItem = { id: layout.i, values: [{ id: nanoid(), value: '' }] };
       dispatch(setProps(firstItem));
     }
-  }, []);
+  });
 
   return (
     <MuiRadioGroup aria-labelledby="radio-buttons-group" name="radio-buttons-group">

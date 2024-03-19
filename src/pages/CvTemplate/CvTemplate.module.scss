@@ -13,9 +13,8 @@
 .cvTemlpate__header {
   display: flex;
   justify-content: space-between;
-  
+  color: white;
   background-color: #462174;
-  padding: 60px 100px 10px;
   margin: 0;
   z-index: 1;
   height: 170px;
@@ -23,7 +22,6 @@
   font-size: 22px;
   font-family: 'Nunito', sans-serif;
 }
-
 
 .cvTemlpate__container {
   max-width: 1500px;
@@ -59,7 +57,6 @@
   height: 100%;
 }
 
-
 // Весь степпер
 .cvTemlpate__stepper {
   position: relative;
@@ -72,10 +69,10 @@
 // Кнопка с формой
 .cvTemlpate__step {
   position: relative;
-  display:  flex;
-  
+  display: flex;
+
   margin-right: 50px;
-  flex-direction: column; 
+  flex-direction: column;
   box-shadow: 0px 0px 5px rgba(0, 0, 0, 0.3); /* Тень с параметрами */
   border-radius: 10px;
   padding: 40px 10px;
@@ -93,14 +90,14 @@
 
 .cvTemlpate__stepButton {
   position: relative;
-  display:  inline-block;
+  display: inline-block;
   width: 322px;
   height: 70px;
 
   margin: 15px;
-  color: #4E4D4D;
+  color: #4e4d4d;
   background-color: white;
-  border: 1px solid #4E4D4D;
+  border: 1px solid #4e4d4d;
 }
 
 // Форма степа
@@ -125,7 +122,7 @@
   padding: 0 20px;
 }
 
-.cvTemlpate__stepContentButton button:first-child{
+.cvTemlpate__stepContentButton button:first-child {
   background-image: url('../../assets/images/back.svg');
   border: none;
   background-repeat: no-repeat;

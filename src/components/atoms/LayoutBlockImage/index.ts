@@ -2,7 +2,7 @@ import LayoutBlockImage from './LayoutBlockImage';
 
 export const props = {
   name: 'LayoutBlockImage',
-  type: 'Simple Elements',
+  type: 'LayoutBlocks',
   source: 'atoms',
   props: {
     text: 'https://tinyjpg.com/images/social/website.jpg',

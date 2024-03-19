@@ -1,11 +1,10 @@
-import { View } from '@react-pdf/renderer';
-
 import { uniqueKey } from '../../../../../assets/lib';
 import { PersonalDataType, AvatarDataType } from '../../../../../assets/const';
 import { StyleOptionType } from '../../../const';
 
 import { TitlePDF, TextPDF, ImagePDF } from '../../atoms';
-import { ContactsPDF } from '../../molecules';
+import { AboutPDF, ContactsPDF } from '../../molecules';
+import { Box, Divider } from '@mui/material';
 
 interface IHeaderPDFProps {
   data: {
@@ -22,14 +21,15 @@ export const HeaderPDF = (props: IHeaderPDFProps) => {
   const {
     Header,
     HeaderWrapper,
-    ContactsWrapeer,
     Contact,
     ContactLink,
     ContactIcon,
+    ContactWrapper,
     Title,
     Text,
     TextSpecial,
     SubtitleNone,
+    Subtitle,
     Img,
   } = style;
 
@@ -38,7 +38,7 @@ export const HeaderPDF = (props: IHeaderPDFProps) => {
   const propsImage = { imgPath: photoData.avatar, style: Img };
   const propsSubtitle = {
     str: personalData.position,
-    style: { Text: { ...Text, ...TextSpecial } },
+    style: { ...TextSpecial },
   };
   const propsConcats = {
     data: {
@@ -47,23 +47,67 @@ export const HeaderPDF = (props: IHeaderPDFProps) => {
       website: personalData.website,
       email: personalData.email,
     },
-    style: { Subtitle: SubtitleNone, Contact, ContactLink, ContactIcon, Text },
+    style: { Subtitle: SubtitleNone, Contact, ContactLink, ContactIcon, Text, ContactWrapper },
   };
+  const propsAbout = { bio: personalData.bio, style: { Text, Subtitle: Subtitle } };
 
   return (
-    <View style={Header}>
-      <View style={style.HeaderWrapper}>
-        <ImagePDF {...propsImage} />
-      </View>
-      <View style={HeaderWrapper}>
-        {fullNameTitiles.map((str) => (
-          <TitlePDF key={uniqueKey()} {...{ fullName: str, style: Title }} />
-        ))}
-        <TextPDF {...propsSubtitle} />
-      </View>
-      <View style={ContactsWrapeer}>
-        <ContactsPDF {...propsConcats} />
-      </View>
-    </View>
+    <>
+      {Header.name === 'toronto' ? (
+        <>
+          <Box style={Header} sx={{ display: 'flex' }}>
+            <Box sx={{ mr: 4 }}>
+              <ImagePDF {...propsImage} />
+              <TextPDF {...propsSubtitle} />
+              <ContactsPDF {...propsConcats} />
+            </Box>
+            <Box style={HeaderWrapper}>
+              <TitlePDF
+                key={uniqueKey()}
+                {...{ fullName: fullNameTitiles[0] + ' ' + fullNameTitiles[1], style: Title }}
+              />
+              <Box sx={{ background: '#eeeeee', borderRadius: '20px', p: '2%', pl: '3%' }}>
+                <AboutPDF {...propsAbout} />
+              </Box>
+            </Box>
+          </Box>
+          <Divider variant="middle" />
+        </>
+      ) : Header.name === 'oslo' ? (
+        <>
+          <Box style={Header} sx={{ display: 'flex', height: '200px' }}>
+            <Box
+              sx={{ display: 'flex', flexDirection: 'column', alignItems: 'center', width: '100%' }}
+            >
+              <ImagePDF {...propsImage} />
+              <TitlePDF
+                key={uniqueKey()}
+                {...{ fullName: fullNameTitiles[0] + ' ' + fullNameTitiles[1], style: Title }}
+              />
+              <TextPDF {...propsSubtitle} />
+              <div
+                style={{
+                  borderTop: '1px solid #c0c0c0',
+                  width: '100%',
+                  marginBottom: 10,
+                }}
+              ></div>
+              <ContactsPDF {...propsConcats} />
+            </Box>
+          </Box>
+        </>
+      ) : (
+        <Box style={Header} sx={{ display: 'flex' }}>
+          <ImagePDF {...propsImage} />
+          <Box style={HeaderWrapper}>
+            {fullNameTitiles.map((str) => (
+              <TitlePDF key={uniqueKey()} {...{ fullName: str, style: Title }} />
+            ))}
+            <TextPDF {...propsSubtitle} />
+          </Box>
+          <ContactsPDF {...propsConcats} />
+        </Box>
+      )}
+    </>
   );
 };

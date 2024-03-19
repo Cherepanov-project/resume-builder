@@ -27,16 +27,14 @@ export const DemoCvModal = (props: DemoCvModalProps) => {
   `;
 
   return (
-    <>
-      <Modal name="DemoCv" isOpen={isOpen} onClose={onClose}>
-        <ReactToPrint
-          // trigger={reactToPrintTrigger}
-          content={reactToPrintContent}
-          documentTitle="CV"
-          pageStyle={pageStyle}
-        />
-        <ComponentToPrint content={content} ref={componentRef} />
-      </Modal>
-    </>
+    <Modal name="DemoCv" isOpen={isOpen} onClose={onClose}>
+      <ReactToPrint
+        // trigger={reactToPrintTrigger}
+        content={reactToPrintContent}
+        documentTitle="CV"
+        pageStyle={pageStyle}
+      />
+      <ComponentToPrint content={content} ref={componentRef} />
+    </Modal>
   );
 };
