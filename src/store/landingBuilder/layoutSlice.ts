@@ -15,11 +15,21 @@ type GridContainers = {
   id: string;
   height: number;
   elements: ElementsType;
+  isButtonHover: boolean;
+  // isHover: boolean;
+  layout: {
+    i: null | string;
+    w: number;
+    h: number;
+    x: number;
+    y: number;
+  };
 };
 
 type stateProps = {
   gridContainers: GridContainers[];
   currentContainer: string;
+  isHover: null | string;
 };
 
 const nanoid = customAlphabet('ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz', 15);
@@ -33,9 +43,19 @@ const initialState: stateProps = {
         activeElements: [],
         currentDraggableItem: null,
       },
+      isButtonHover: false,
+      // isHover: false,
+      layout: {
+        i: null,
+        w: 1,
+        h: 1,
+        x: 10,
+        y: 0,
+      },
     },
   ],
   currentContainer: '',
+  isHover: null,
 };
 
 const layoutSlice = createSlice({
@@ -44,6 +64,7 @@ const layoutSlice = createSlice({
   reducers: {
     // Добавляем блок в рабочую область
     addElement(state, action) {
+      // console.log('action add', action.payload)
       const { draggableItem, layoutItem, parentElement, id } = action.payload;
       // Задаем уникальный ID блоку и параметры
       //при дропе добавляем скрипт с эвент листенером в виде строки
@@ -76,9 +97,9 @@ const layoutSlice = createSlice({
       state.gridContainers = state.gridContainers.map((container) => {
         // console.log('kuku', container.id, id);
         if (container.id === id) {
-          console.log('container', container);
+          // console.log('container', container);
           container.elements.activeElements = [...(renewElements as T_BlockElement[])];
-          console.log('elems', container.elements.activeElements);
+          // console.log('elems', container.elements.activeElements);
         }
         return container;
       });
@@ -136,21 +157,75 @@ const layoutSlice = createSlice({
       });
     },
     addGridContainer(state) {
-      state.gridContainers.push({
+      const indx = state.gridContainers.findIndex(
+        (container) => container.id === state.currentContainer,
+      );
+      console.log(indx);
+      const newContainer = {
         id: nanoid(),
         height: 30,
         elements: {
           activeElements: [],
           currentDraggableItem: null,
         },
-      });
-      // console.log(state.gridContainers);
+        isButtonHover: false,
+        // isHover: false,
+        layout: {
+          i: null,
+          w: 1,
+          h: 1,
+          x: 10,
+          y: 0,
+        },
+      };
+      state.gridContainers.splice(indx + 1, 0, newContainer);
     },
-    deleteGridContainer(state, action) {
-      // console.log(action.payload);
-      state.gridContainers = state.gridContainers.filter(
-        (container) => container.id !== action.payload,
+    setContainerButtonHover(state, action) {
+      state.gridContainers.forEach((container) => {
+        if (container.id === action.payload.id)
+          container.isButtonHover = action.payload.isButtonHover;
+      });
+    },
+    setIsContainerHover(state, action) {
+      state.isHover = action.payload;
+    },
+    copyGridContainer(state) {
+      const indx = state.gridContainers.findIndex(
+        (container) => container.id === state.currentContainer,
       );
+      const copy = {
+        ...state.gridContainers[indx],
+        id: nanoid(),
+      };
+      state.gridContainers.splice(indx + 1, 0, copy);
+    },
+    moveUpGridContainer(state) {
+      const indx = state.gridContainers.findIndex(
+        (container) => container.id === state.currentContainer,
+      );
+      [state.gridContainers[indx], state.gridContainers[indx - 1]] = [
+        state.gridContainers[indx - 1],
+        state.gridContainers[indx],
+      ];
+    },
+    moveDownGridContainer(state) {
+      const indx = state.gridContainers.findIndex(
+        (container) => container.id === state.currentContainer,
+      );
+      [state.gridContainers[indx + 1], state.gridContainers[indx]] = [
+        state.gridContainers[indx],
+        state.gridContainers[indx + 1],
+      ];
+    },
+    deleteGridContainer(state) {
+      if (state.gridContainers.length === 1) {
+        state.gridContainers[0].elements.activeElements = [];
+        state.gridContainers[0].elements.currentDraggableItem = null;
+      } else {
+        state.gridContainers = state.gridContainers.filter(
+          (container) => container.id !== state.currentContainer,
+        );
+      }
     },
     setCurrentContainer(state, action) {
       state.currentContainer = action.payload;
@@ -168,9 +243,6 @@ const layoutSlice = createSlice({
           container.elements.activeElements[indx].columns += 1;
         }
       });
-
-      // state.gridContainers[containerID].elements.activeElements[indx].layout.w = state.gridContainers[containerID].elements.activeElements[indx].layout.w + 1;
-      // state.gridContainers[containerID].elements.activeElements[indx].columns = state.gridContainers[containerID].elements.activeElements[indx].columns! + 1;
     },
     // Уменьшаем количество колонок в блоке
     decreaseElementColumns(state, action) {
@@ -185,19 +257,21 @@ const layoutSlice = createSlice({
           container.elements.activeElements[indx].columns -= 1;
         }
       });
-      // state.gridContainers[containerID].elements.activeElements[indx].layout.w = state.gridContainers[containerID].elements.activeElements[indx].layout.w - 1;
-      // state.gridContainers[containerID].elements.activeElements[indx].columns = state.gridContainers[containerID].elements.activeElements[indx].columns! - 1;
     },
     // Помещаем информацию о текущем перемещаемом блоке в стор
     setDraggableItem(state, action) {
-      // console.log('setDraggableItem', action.payload.item);
-      const containerID = action.payload.currentContainer;
-      state.gridContainers = state.gridContainers.map((container) => {
+      // console.log('setDraggableItem', action.payload);
+      const containerID =
+        state.gridContainers.length === 1
+          ? state.gridContainers[0].id
+          : action.payload.currentContainer;
+      // console.log(action.payload, containerID)
+      state.gridContainers.forEach((container) => {
+        // console.log(container.id === containerID)
         if (container.id === containerID)
           container.elements.currentDraggableItem = action.payload.item;
-        // console.log('setDraggableItem', container);
-        return container;
       });
+      // console.log('setDraggableItem', state.gridContainers);
     },
     setSectionStyle(state, action) {
       const containerID = state.currentContainer;
@@ -228,8 +302,10 @@ const layoutSlice = createSlice({
       state.gridContainers.forEach((container) => {
         if (container.id === containerID) {
           indx = container.elements.activeElements.findIndex(
-            (element) => element.layout.i === action.payload.i,
+            (element) => element.layout.i === action.payload.id,
           );
+          // console.log('i', action.payload.id);
+          // console.log('payload', action.payload);
           container.elements.activeElements[indx] = {
             ...container.elements.activeElements[indx],
             props: {
@@ -249,7 +325,12 @@ export const {
   addElement,
   addGridContainer,
   deleteGridContainer,
+  copyGridContainer,
+  moveDownGridContainer,
+  moveUpGridContainer,
   setCurrentContainer,
+  setContainerButtonHover,
+  setIsContainerHover,
   copyElement,
   changeElement,
   deleteElement,

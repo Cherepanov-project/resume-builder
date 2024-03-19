@@ -5,8 +5,10 @@ import {
   addElement,
   addGridContainer,
   changeElement,
-  deleteGridContainer,
+  setContainerButtonHover,
+  // deleteGridContainer,
   setCurrentContainer,
+  setIsContainerHover,
 } from '@store/landingBuilder/layoutSlice';
 import { useAppDispatch, useAppSellector } from '@hooks/cvTemplateHooks';
 import ComponentPreloader from '@components/atoms/ComponentPreloader';
@@ -16,6 +18,8 @@ import 'react-grid-layout/css/styles.css';
 import 'react-resizable/css/styles.css';
 import classes from './WorkSpace.module.scss';
 import { DynamicComponentRendererProps, T_BlockElement } from '@/types/landingBuilder';
+import { PlusCircleFilled, PlusCircleOutlined } from '@ant-design/icons';
+import ContainerToolsPanel from '../ContainerToolsPanel';
 // import DefaultButton from '@/components/atoms/DefaultButton';
 
 // ========================================================================== \\
@@ -30,7 +34,6 @@ const DynamicComponentRenderer: React.FC<DynamicComponentRendererProps> = ({
   layout,
 }) => {
   const DynamicComponent = lazy(() => import(`../../${source}/${Component}/index.ts`));
-
   return (
     <Suspense fallback={<ComponentPreloader />}>
       <DynamicComponent
@@ -49,9 +52,10 @@ const DynamicComponentRenderer: React.FC<DynamicComponentRendererProps> = ({
 const WorkSpace: React.FC = () => {
   const dispatch = useAppDispatch();
   const [width, setWidth] = useState(window.innerWidth);
-  const [isHover, setIsHover] = useState(false);
+  // const [isHover, setIsHover] = useState(false);
   const gridContainers = useAppSellector((state) => state.layout.gridContainers);
   const currentContainer = useAppSellector((state) => state.layout.currentContainer);
+  const isHover = useAppSellector((state) => state.layout.isHover);
   // console.log(gridContainers);
   // const draggableItem = useAppSellector((state) => state.layout.currentDraggableItem);
   // const activeElements = useAppSellector((state) => state.layout.activeElements);
@@ -87,7 +91,7 @@ const WorkSpace: React.FC = () => {
       dispatch(changeElement(item));
     });
   };
-
+  console.log('all');
   return (
     <div className={classes['workspace']}>
       <div className={classes['wrapper']}>
@@ -96,11 +100,23 @@ const WorkSpace: React.FC = () => {
             key={container.id}
             className={classes['container']}
             onMouseEnter={() => {
-              setIsHover(true);
+              if (isHover !== container.id) {
+                dispatch(setIsContainerHover(container.id));
+              }
               if (container.id !== currentContainer) dispatch(setCurrentContainer(container.id));
             }}
-            onMouseLeave={() => setIsHover(false)}
+            onMouseLeave={() => {
+              if (isHover === container.id) {
+                dispatch(setIsContainerHover(null));
+              }
+            }}
+            onDragOver={(evt) => {
+              evt.preventDefault();
+              // console.log('onDragOver', container.id);
+              if (container.id !== currentContainer) dispatch(setCurrentContainer(container.id));
+            }}
           >
+            <ContainerToolsPanel /*layout={container.layout}*/ />
             <ResponsiveGridLayout
               className={classes['grid']}
               layout={workspaceLayout}
@@ -115,7 +131,7 @@ const WorkSpace: React.FC = () => {
               onDrop={(layout: Layout[], layoutItem: Layout) => {
                 const draggableItem = container.elements.currentDraggableItem;
                 const id = container.id;
-                // console.log(draggableItem);
+                console.log('dragg', draggableItem);
                 dispatch(addElement({ draggableItem, layoutItem, layout, id }));
               }}
               draggableHandle=".drag-area"
@@ -139,20 +155,31 @@ const WorkSpace: React.FC = () => {
                 );
               })}
             </ResponsiveGridLayout>
-            {/* <button className={classes['button']} onClick={() => dispatch(addGridContainer())}/> */}
-            {isHover && currentContainer === container.id && (
-              <>
-                <button
-                  className={classes['add-button']}
-                  onClick={() => dispatch(addGridContainer())}
-                />
-                {gridContainers.length > 1 && (
-                  <button
-                    className={classes['delete-button']}
-                    onClick={() => dispatch(deleteGridContainer(container.id))}
-                  />
+            {isHover === container.id && (
+              <button
+                className={classes['add-button']}
+                onClick={() => dispatch(addGridContainer())}
+                onMouseEnter={() => {
+                  if (!container.isButtonHover) {
+                    const id = container.id;
+                    const isButtonHover = true;
+                    dispatch(setContainerButtonHover({ id, isButtonHover }));
+                  }
+                }}
+                onMouseLeave={() => {
+                  if (container.isButtonHover) {
+                    const id = container.id;
+                    const isButtonHover = false;
+                    dispatch(setContainerButtonHover({ id, isButtonHover }));
+                  }
+                }}
+              >
+                {!container.isButtonHover ? (
+                  <PlusCircleOutlined style={{ color: '#2dc08d', fontSize: 30 }} />
+                ) : (
+                  <PlusCircleFilled style={{ color: '#2dc08d', fontSize: 30 }} />
                 )}
-              </>
+              </button>
             )}
           </div>
         ))}

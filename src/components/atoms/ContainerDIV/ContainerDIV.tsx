@@ -33,7 +33,7 @@ const DynamicComponentRenderer: React.FC<DynamicComponentRendererProps> = ({
     DynamicComponent = lazy(() => import(`@molecules/${Component}/index.ts`));
   }
   if (source === 'atoms') {
-    DynamicComponent = lazy(() => import(`@atoms/${/* @vite-ignore */Component}/index.ts`));
+    DynamicComponent = lazy(() => import(`@atoms/${Component}/index.ts`));
   }
 
   return (
@@ -50,11 +50,12 @@ const DynamicComponentRenderer: React.FC<DynamicComponentRendererProps> = ({
 };
 // ========================================================================== \\
 
-const ContainerDIV: React.FC<ContainerDIVProps> = ({ children, layout, columns, props }: any) => {
+const ContainerDIV: React.FC<ContainerDIVProps> = ({ children, layout, columns, props }) => {
   const dispatch = useAppDispatch();
   const containerRef = useRef(null);
   const [width, setWidth] = useState(0);
-  const draggableItem = useAppSellector((state) => state.layout.currentDraggableItem);
+  const currentContainer = useAppSellector((state) => state.layout.currentContainer);
+  const gridContainers = useAppSellector((state) => state.layout.gridContainers);
 
   useEffect(() => {
     // Для выравнивания дочерних элементов указываем начальное значение ширины родителя.
@@ -78,15 +79,19 @@ const ContainerDIV: React.FC<ContainerDIVProps> = ({ children, layout, columns, 
     const targetElement = event.target as HTMLElement;
     const parentElement = targetElement.closest('.wrapper') as HTMLElement;
     const element = parentElement?.dataset.id;
+    const draggableItem = gridContainers.filter((container) => {
+      if (container.id === currentContainer) return container.elements.currentDraggableItem;
+    });
+    const id = currentContainer;
 
-    dispatch(addElement({ draggableItem, layoutItem, element }));
+    dispatch(addElement({ draggableItem, layoutItem, element, id }));
   };
 
   const workspaceLayout = children.reduce((acc: Layout[], el: T_BlockElement) => {
     return [...acc, el.layout];
-  });
+  }, []);
 
-  let style: any;
+  let style;
   try {
     style = props.style;
   } catch {
