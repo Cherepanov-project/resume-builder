@@ -1,8 +1,7 @@
-import { View } from '@react-pdf/renderer';
-
 import { PersonalDataType } from '../../../../../assets/const';
 import { StyleOptionType } from '../../../const';
 import { TitlePDF, TextPDF } from '../../atoms';
+import { Box } from '@mui/material';
 
 interface IHeaderShortPDF extends PersonalDataType {
   style: StyleOptionType;
@@ -16,13 +15,13 @@ export const HeaderShortPDF = (props: IHeaderShortPDF) => {
   const propsText = { str: position, style: { ...Text, ...TextSpecial } };
 
   return (
-    <View style={HeaderShort}>
-      <View style={HeaderShortWrapper}>
+    <Box style={HeaderShort}>
+      <Box style={HeaderShortWrapper}>
         <TitlePDF {...propsTitle} />
-      </View>
-      <View style={HeaderShortWrapper}>
+      </Box>
+      <Box style={HeaderShortWrapper}>
         <TextPDF {...propsText} />
-      </View>
-    </View>
+      </Box>
+    </Box>
   );
 };
