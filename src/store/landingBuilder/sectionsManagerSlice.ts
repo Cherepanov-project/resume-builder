@@ -5,8 +5,9 @@ type layoutDateType = { [key: number]: T_BlockElement[] };
 
 interface IinitialState {
   layoutDate: layoutDateType;
-  settingsMenuOpened: boolean;
   curId: string;
+  text: string;
+  url: string;
 }
 
 const initialState: IinitialState = {
@@ -27,8 +28,9 @@ const initialState: IinitialState = {
       },
     ],
   },
-  settingsMenuOpened: false,
   curId: '',
+  text: '',
+  url: '',
 };
 
 const sectionsManagerSlice = createSlice({
@@ -48,12 +50,27 @@ const sectionsManagerSlice = createSlice({
     },
     // состояние меню параметров
     handleSettingsMenu(state, action) {
-      state.settingsMenuOpened = false;
-      if (action.payload) {
-        state.curId = action.payload;
-        state.settingsMenuOpened = true;
-      } else {
-        state.settingsMenuOpened = false;
+      switch (action.payload.type) {
+        case 'UPDATE_ID': {
+          if (action.payload.value !== state.curId) {
+            return { ...state, curId: action.payload.value };
+          }
+          return state;
+        }
+        case 'UPDATE_TEXT': {
+          if (action.payload.value !== state.text) {
+            return { ...state, text: action.payload.value };
+          }
+          return state;
+        }
+        case 'UPDATE_URL': {
+          if (action.payload.value !== state.url) {
+            return { ...state, url: action.payload.value };
+          }
+          return state;
+        }
+        default:
+          return state;
       }
     },
   },

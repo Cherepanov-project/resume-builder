@@ -2,6 +2,7 @@ import { createSlice } from '@reduxjs/toolkit';
 
 const initialState = {
   isDraggable: false,
+  previewOpened: '',
 };
 
 const utilitySlice = createSlice({
@@ -12,8 +13,11 @@ const utilitySlice = createSlice({
       state.isDraggable = action.payload;
       console.log(state.isDraggable);
     },
+    setPreview(state, action) {
+      state.previewOpened = action.payload;
+    },
   },
 });
 
 export default utilitySlice.reducer;
-export const { setDraggable } = utilitySlice.actions;
+export const { setDraggable, setPreview } = utilitySlice.actions;

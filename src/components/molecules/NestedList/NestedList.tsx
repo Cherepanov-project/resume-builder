@@ -39,7 +39,7 @@ const NestedList: React.FC<NestedListProps> = ({ name, items }) => {
             {items?.map((item) => {
               return (
                 <ListItemButton
-                  key={item.name}
+                  key={item.title ? item.title : item.name}
                   sx={{ pl: 4 }}
                   draggable={true}
                   unselectable="on"

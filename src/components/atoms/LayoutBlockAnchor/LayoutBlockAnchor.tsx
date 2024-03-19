@@ -11,7 +11,7 @@ const LayoutBlockAnchor: React.FC<ILayoutBlock> = ({ props }) => {
   const defaultFontSize = '30';
 
   const [text, setText] = useState<string>(props.text);
-  const [url, setUrl] = useState<string>('');
+  const [url, setUrl] = useState<string>(props.url || '');
   const [fs, setFs] = useState<string | number>(props?.textStyle?.fontSize || defaultFontSize);
   const [isEditing, setIsEditing] = useState<boolean>(false);
 
