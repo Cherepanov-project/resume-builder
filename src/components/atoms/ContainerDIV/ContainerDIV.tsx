@@ -54,8 +54,7 @@ const ContainerDIV: React.FC<ContainerDIVProps> = ({ children, layout, columns, 
   const dispatch = useAppDispatch();
   const containerRef = useRef(null);
   const [width, setWidth] = useState(0);
-  const currentContainer = useAppSellector((state) => state.layout.currentContainer);
-  const gridContainers = useAppSellector((state) => state.layout.gridContainers);
+  const draggableItem = useAppSellector((state) => state.layout.currentDraggableItem);
 
   useEffect(() => {
     // Для выравнивания дочерних элементов указываем начальное значение ширины родителя.
@@ -79,12 +78,10 @@ const ContainerDIV: React.FC<ContainerDIVProps> = ({ children, layout, columns, 
     const targetElement = event.target as HTMLElement;
     const parentElement = targetElement.closest('.wrapper') as HTMLElement;
     const element = parentElement?.dataset.id;
-    const draggableItem = gridContainers.filter((container) => {
-      if (container.id === currentContainer) return container.elements.currentDraggableItem;
-    });
-    const id = currentContainer;
 
-    dispatch(addElement({ draggableItem, layoutItem, element, id }));
+    // const id = currentContainer;
+
+    dispatch(addElement({ draggableItem, layoutItem, element }));
   };
 
   const workspaceLayout = children.reduce((acc: Layout[], el: T_BlockElement) => {

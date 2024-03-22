@@ -5,16 +5,14 @@ import RadioButtonCheckedIcon from '@mui/icons-material/RadioButtonChecked';
 import ExpandLess from '@mui/icons-material/ExpandLess';
 import ExpandMore from '@mui/icons-material/ExpandMore';
 
-import { useAppDispatch, useAppSellector } from '@/hooks/cvTemplateHooks';
+import { useAppDispatch } from '@/hooks/cvTemplateHooks';
 import { setDraggableItem } from '@/store/landingBuilder/layoutSlice';
 import { NestedListProps } from '@/types/landingBuilder';
 
 import classes from './NestedList.module.scss';
 
 const NestedList: React.FC<NestedListProps> = ({ name, items }) => {
-  // console.log(items)
   const dispatch = useAppDispatch();
-  const currentContainer = useAppSellector((state) => state.layout.currentContainer);
   const [isOpen, setOpen] = useState(false);
 
   const handleClick = () => {
@@ -39,14 +37,13 @@ const NestedList: React.FC<NestedListProps> = ({ name, items }) => {
         <Collapse in={isOpen} timeout="auto" unmountOnExit>
           <List className={classes['list']} component="div" disablePadding>
             {items?.map((item) => {
-              // {console.log('disp setDrag', item)}
               return (
                 <ListItemButton
                   key={item.name}
                   sx={{ pl: 4 }}
                   draggable={true}
                   unselectable="on"
-                  onDragStart={() => dispatch(setDraggableItem({ item, currentContainer }))}
+                  onDragStart={() => dispatch(setDraggableItem({ item }))}
                 >
                   <ListItemIcon>
                     <RadioButtonCheckedIcon

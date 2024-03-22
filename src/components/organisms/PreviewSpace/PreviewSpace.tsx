@@ -38,10 +38,15 @@ const MemoDynamicComponentRenderer = memo(DynamicComponentRenderer);
 // ========================================================================== \\
 
 const PreviewSpace = () => {
-  const activeElements = useAppSellector((state) => state.layout.activeElements);
+  const gridContainers = useAppSellector((state) => state.layout.gridContainers);
+  const activeElements: T_BlockElement[] = [];
+  for (const container of gridContainers) {
+    activeElements.concat(container.elements.activeElements);
+  }
 
   // мемоизируем массив Layout
   const previewLayout: ResponsiveGridLayout.Layout[] = useMemo(() => {
+    // console.log('memo')
     return activeElements.reduce((acc: Layout[], el: T_BlockElement) => {
       const previewElem = { ...el.layout };
       previewElem.isDraggable = false;

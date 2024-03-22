@@ -19,11 +19,11 @@ import { useAppDispatch } from '@hooks/cvTemplateHooks';
 import classes from './ContainerToolsPanel.module.scss';
 // import { initPanel } from '@/store/landingBuilder/settingsPanelSlice';
 
-// type ContainerToolsPanelProps = {
-//   layout: Layout;
-// };
+type ContainerToolsPanelProps = {
+  id: string;
+};
 
-const ContainerToolsPanel: React.FC /*<ContainerToolsPanelProps>*/ = (/*{ layout }*/) => {
+const ContainerToolsPanel: React.FC<ContainerToolsPanelProps> = (id: ContainerToolsPanelProps) => {
   const dispatch = useAppDispatch();
   // const currentContainer = useAppSellector((state) => state.layout.currentContainer);
 
@@ -37,7 +37,7 @@ const ContainerToolsPanel: React.FC /*<ContainerToolsPanelProps>*/ = (/*{ layout
         aria-label="Move Up Container"
         title="Сдвинуть вверх"
         color="primary"
-        onClick={() => dispatch(moveUpGridContainer())}
+        onClick={() => dispatch(moveUpGridContainer(id))}
       >
         <ArrowUpward />
       </IconButton>
@@ -45,7 +45,7 @@ const ContainerToolsPanel: React.FC /*<ContainerToolsPanelProps>*/ = (/*{ layout
         aria-label="Move Down Container"
         title="Сдвинуть вниз"
         color="primary"
-        onClick={() => dispatch(moveDownGridContainer())}
+        onClick={() => dispatch(moveDownGridContainer(id))}
       >
         <ArrowDownward />
       </IconButton>
@@ -61,7 +61,7 @@ const ContainerToolsPanel: React.FC /*<ContainerToolsPanelProps>*/ = (/*{ layout
         aria-label="Copy Container"
         title="Скопировать блок"
         color="primary"
-        onClick={() => dispatch(copyGridContainer())}
+        onClick={() => dispatch(copyGridContainer(id))}
       >
         <ContentCopy />
       </IconButton>
@@ -69,7 +69,7 @@ const ContainerToolsPanel: React.FC /*<ContainerToolsPanelProps>*/ = (/*{ layout
         aria-label="Remove Item"
         title="Удалить блок"
         color="primary"
-        onClick={() => dispatch(deleteGridContainer())}
+        onClick={() => dispatch(deleteGridContainer(id))}
       >
         <Delete />
       </IconButton>
