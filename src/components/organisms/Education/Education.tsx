@@ -3,7 +3,6 @@ import { Box, Button } from '@mui/material';
 import EducationForm from '../../molecules/EducationForm';
 import { buttonStyle } from '../../../assets/style/buttonStyle';
 
-import Accordion from '@mui/material/Accordion';
 import AccordionSummary from '@mui/material/AccordionSummary';
 import AccordionDetails from '@mui/material/AccordionDetails';
 import Typography from '@mui/material/Typography';
@@ -56,30 +55,30 @@ const Education = () => {
   return (
     <Box className={classes.education}>
       {getValues('educationData').map((_: EducationType, index: number) => {
-        const fieldName = `educationData[${index}]`;
         return (
-          <Accordion disableGutters sx={{ mb: 2 }} key={index}>
+          <Box>
             <AccordionSummary aria-controls="panel1a-content" id="panel1a-header">
-              <div className="AccordionSummary__content">
+              {index > 0 ? (
+                <>
+                  <Typography>
+                    Education {index + 1}
+                    <Button onClick={() => removeField(index)} variant="contained" sx={buttonStyle}>
+                      Remove
+                    </Button>
+                  </Typography>
+                </>
+              ) : (
                 <Typography>Education {index + 1}</Typography>
-
-                {index > 0 ? (
-                  <Button onClick={() => removeField(index)} variant="contained" sx={buttonStyle}>
-                    Remove
-                  </Button>
-                ) : null}
-              </div>
+              )}
             </AccordionSummary>
             <AccordionDetails>
-              <fieldset name={fieldName} key={fieldName}>
-                <EducationForm fieldName={fieldName} />
-              </fieldset>
+              <EducationForm fieldName={`educationData[${index}]`} />
             </AccordionDetails>
-          </Accordion>
+          </Box>
         );
       })}
       <Button onClick={addField} variant="contained" sx={buttonStyle}>
-        Add another Education
+        Add Education
       </Button>
     </Box>
   );

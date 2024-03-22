@@ -1,8 +1,8 @@
-import BasicTooltip from "./BasicTooltip";
+import BasicTooltip from './BasicTooltip';
 
 export const props = {
   name: 'BasicTooltip',
-  type: 'Simple Elements',
+  type: 'Simple Blocks',
   columns: 2,
   source: 'atoms',
   props: {

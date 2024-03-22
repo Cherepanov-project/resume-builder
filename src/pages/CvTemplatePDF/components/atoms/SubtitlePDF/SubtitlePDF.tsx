@@ -1,6 +1,5 @@
-import { Text } from '@react-pdf/renderer';
-
 import { StyleOptionType, StyleType } from '../../../const';
+import { Typography } from '@mui/material';
 
 interface ISubtitleProps {
   str: string;
@@ -10,5 +9,5 @@ interface ISubtitleProps {
 export const SubtitlePDF = (props: ISubtitleProps) => {
   const { str, style } = props;
 
-  return <Text style={style}>{str}</Text>;
+  return <Typography style={style}>{str}</Typography>;
 };

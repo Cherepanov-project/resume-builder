@@ -1,5 +1,3 @@
-import { Image } from '@react-pdf/renderer';
-
 import { StyleType } from '../../../const';
 
 interface IImagePDFProps {
@@ -9,5 +7,5 @@ interface IImagePDFProps {
 
 export const ImagePDF = (props: IImagePDFProps) => {
   const { imgPath, style } = props;
-  return <Image src={imgPath} style={style} />;
+  return <img src={imgPath} style={style} />;
 };

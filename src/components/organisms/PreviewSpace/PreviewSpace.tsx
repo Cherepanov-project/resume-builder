@@ -39,10 +39,63 @@ const MemoDynamicComponentRenderer = memo(DynamicComponentRenderer);
 
 const PreviewSpace = () => {
   const gridContainers = useAppSellector((state) => state.layout.gridContainers);
-  const activeElements: T_BlockElement[] = [];
+  let activeElements: T_BlockElement[] = [];
   for (const container of gridContainers) {
     activeElements.concat(container.elements.activeElements);
   }
+  const previewSetting = useAppSellector((state) => state.utility.previewOpened);
+  const layoutDate = useAppSellector((state) => state.sectionsManager.layoutDate);
+  // расчет координаты x элемента ( зависит от суммы w предыдущих в ряду )
+  const calcX = (row: number, col: number) => {
+    if (col !== 1) {
+      let sum = 0;
+      for (let i = 1; i < col; i++) {
+        sum += layoutDate[row][i - 1].layout.w;
+      }
+      return sum;
+    } else {
+      return 0;
+    }
+  };
+
+  // расчет координаты y элемента ( зависит от суммы max h предыдущих строк )
+  const calcY = (row: number) => {
+    if (row > 1) {
+      let x = 1;
+      for (let i = 0; i < layoutDate[row - 1].length; i++) {
+        if (layoutDate[row - 1][i].layout.h > x) {
+          x = layoutDate[row - 1][i].layout.h;
+        }
+      }
+      return x;
+    } else {
+      return 0;
+    }
+  };
+  if (previewSetting === 'section') {
+    const arr = [];
+    const data = Object.values(layoutDate);
+    for (let i = 0; i < data.length; i++) {
+      arr.push(...data[i]);
+    }
+
+    // сохранение только координат блоков, у которых выбраны элементы из Select options
+    const filteredArr = arr.filter((el) => el.name);
+
+    activeElements = filteredArr.map((el) => ({
+      name: el.name,
+      source: 'atoms',
+      layout: {
+        i: String(el.layout.i),
+        x: calcX(Number(String(el.layout.i).slice(0, 1)), Number(String(el.layout.i).slice(1))),
+        y: calcY(Number(String(el.layout.i).slice(0, 1))), // el.y,
+        w: el.layout.w,
+        h: el.layout.h,
+      },
+      props: el.props,
+    }));
+  }
+  console.log(activeElements);
 
   // мемоизируем массив Layout
   const previewLayout: ResponsiveGridLayout.Layout[] = useMemo(() => {

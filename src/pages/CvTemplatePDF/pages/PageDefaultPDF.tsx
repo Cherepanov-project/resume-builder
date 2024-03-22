@@ -1,8 +1,7 @@
-import { View } from '@react-pdf/renderer';
-
 import { ITemporaryCvDataSliceProps } from '../../../assets/const';
 import { StyleOptionType } from '../const';
 import { HeaderShortPDF, SidebarShortPDF, MainPDF } from '../components/organisms';
+import { Box } from '@mui/material';
 
 interface IPageDefaultPDF extends ITemporaryCvDataSliceProps {
   style: StyleOptionType;
@@ -14,19 +13,19 @@ export const PageDefaultPDF = (props: IPageDefaultPDF) => {
 
   const propsHeader = { ...personalData, style: otherStyle };
   const propsSidebar = { data: { personalData, photoData }, style: otherStyle };
-  const propsMain = { data: otherDate, style: otherStyle };
+  const propsMain = { data: { personalData, photoData, ...otherDate }, style: otherStyle };
 
   return (
-    <View>
+    <Box>
       <HeaderShortPDF {...propsHeader} />
-      <View style={PageWrapper}>
-        <View style={SidebarPage}>
+      <Box style={PageWrapper}>
+        <Box style={SidebarPage}>
           <SidebarShortPDF {...propsSidebar} />
-        </View>
-        <View style={MainPage}>
+        </Box>
+        <Box style={MainPage}>
           <MainPDF {...propsMain} />
-        </View>
-      </View>
-    </View>
+        </Box>
+      </Box>
+    </Box>
   );
 };
