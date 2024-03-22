@@ -8,7 +8,7 @@ const Header = () => {
   return (
     <header className={classes.header}>
       <HeaderNav />
-      <PreviewButtonsContainer />
+      <PreviewButtonsContainer label="Preview" preview="landing" />
       <LoginButtonsContainer />
     </header>
   );
