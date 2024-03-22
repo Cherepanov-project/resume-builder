@@ -2,7 +2,7 @@ import LayoutBlockButton from './LayoutBlockButton';
 
 export const props = {
   name: 'LayoutBlockButton',
-  type: 'LayoutBlocks',
+  type: 'Simple Blocks',
   source: 'atoms',
   props: {
     text: 'CLICK ME',
