@@ -119,9 +119,10 @@ const layoutSlice = createSlice({
             ...action.payload.style,
           },
           key: '',
-          text: '',
-          wrapperStyle: { '': '' },
-          textStyle: { '': '' },
+          text: action.payload.text,
+          wrapperStyle: action.payload.wrapperStyle,
+          textStyle: action.payload.textStyle,
+          inputStyle: action.payload.InputStyle,
         },
       };
     },

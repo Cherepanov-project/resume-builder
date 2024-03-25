@@ -5,22 +5,30 @@ import Typography from '@mui/material/Typography';
 import Modal from '@mui/material/Modal';
 import { ILayoutBlock } from '@/types/landingBuilder';
 
-const style = {
-  position: 'absolute',
-  top: '50%',
-  left: '50%',
-  transform: 'translate(-50%, -50%)',
-  width: 400,
-  bgcolor: 'background.paper',
-  border: '2px solid #000',
-  boxShadow: 24,
-  p: 4,
-};
 
 const BasicModal: FC<ILayoutBlock> = ({ props }) => {
   const [open, setOpen] = React.useState(false);
   const handleOpen = () => setOpen(true);
   const handleClose = () => setOpen(false);
+
+  const bgColor = props?.style?.backgroundColor
+  const border = props?.style?.border
+  const col = props?.style?.color
+
+console.log(props)
+  const style = {
+    position: 'absolute',
+    top: '50%',
+    left: '50%',
+    transform: 'translate(-50%, -50%)',
+    width: 400,
+    bgcolor: bgColor ? bgColor : 'background.paper',
+    border: border? border: '2px solid #000',
+    color: col? col: '#1976d2',
+    boxShadow: 24,
+    p: 4,
+  };
+
 
   return (
     <div>

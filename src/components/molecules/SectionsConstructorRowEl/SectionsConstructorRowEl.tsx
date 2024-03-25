@@ -84,6 +84,7 @@ const SectionsConstructorRowEl: React.FC<SectionsConstructorRowElType> = ({ row 
 
   const renderColumns = () => {
     const r: string = String(row);
+    console.log(layoutRow)
     return layoutRow.map((el, idx) => {
       const i = idx + 1;
 
