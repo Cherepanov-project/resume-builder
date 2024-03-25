@@ -1,7 +1,6 @@
-import { View, Text } from '@react-pdf/renderer';
-
 import { uniqueKey } from '../../../../../assets/lib';
 import { StyleOptionType } from '../../../const';
+import { Box, Typography } from '@mui/material';
 
 type TitlePropsType = {
   name: string;
@@ -19,14 +18,18 @@ export const ListTitlePDF = (props: ITitleProps) => {
   const { data, style } = props;
 
   const { name, position, fromYear, toYear } = data;
-  const { ExperienceTitle } = style;
+  const { ExperienceTitle, ExperienceTime, ExperiencePosition } = style;
+  const { EducationTitle, EducationTime, EducationPosition } = style;
 
   return (
-    <View>
-      <Text key={uniqueKey()} style={ExperienceTitle}>
-        {`${name} | ${fromYear} -- ${toYear}`}
-      </Text>
-      <Text style={ExperienceTitle}>{position}</Text>
-    </View>
+    <Box>
+      <Typography key={uniqueKey()} style={{ ...ExperienceTitle, ...EducationTitle }}>
+        {`${name}`}
+      </Typography>
+      <Typography style={{ ...ExperienceTime, ...EducationTime }}>
+        {`${fromYear} - ${toYear}`}
+      </Typography>
+      <Typography style={{ ...ExperiencePosition, ...EducationPosition }}>{position}</Typography>
+    </Box>
   );
 };

@@ -3,7 +3,6 @@ import { Button, Box } from '@mui/material';
 import ExperienceForm from '../../molecules/ExperienceForm';
 import { buttonStyle } from '../../../assets/style/buttonStyle';
 
-import Accordion from '@mui/material/Accordion';
 import AccordionSummary from '@mui/material/AccordionSummary';
 import AccordionDetails from '@mui/material/AccordionDetails';
 import Typography from '@mui/material/Typography';
@@ -59,7 +58,7 @@ const Experience = () => {
         const fieldName = `experienceData[${index}]`;
 
         return (
-          <Accordion disableGutters sx={{ mb: 2 }} key={index}>
+          <Box key={index}>
             <AccordionSummary
               // expandIcon={<ExpandMoreIcon />}
               aria-controls="panel1a-content"
@@ -80,7 +79,7 @@ const Experience = () => {
                 <ExperienceForm fieldName={fieldName} />
               </fieldset>
             </AccordionDetails>
-          </Accordion>
+          </Box>
         );
       })}
       <Button
