@@ -74,8 +74,11 @@ const ElementSpecificSettings = () => {
       case 'type': {
         const label = getLabel(value);
         newValue[i].name = value;
-        newValue[i].type = value;
-        newValue[i].props.key = label.title.key;
+        newValue[i].type = label.label;
+        newValue[i].props.key = label.key;
+        if (label.value) {
+          newValue[i].props.value = label.title.value;
+        }
         dispatch(editRowDate({ row, date: newValue }));
         break;
       }
@@ -185,26 +188,15 @@ const ElementSpecificSettings = () => {
             // inputStyle: { width: '100%', border: 'none' },
           },
         };
-      case 'Avatars':
+      case 'BasicRating':
         return {
-          label: 'Avatars',
-          value: 'Avatars',
-          key: 'avatars',
+          label: 'Basic Elements',
+          value: 'BasicRating',
+          key: 'rating',
           title: {
-            key: 'avatars',
-            src: '',
-            title: '',
-          },
-        };
-      case 'MasonryGallery':
-        return {
-          label: 'MasonryGallery',
-          value: 'MasonryGallery',
-          key: 'masonryGallery',
-          title: {
-            key: 'masonryGallery',
-            src: '',
-            title: '',
+            key: 'rating',
+            value: '0',
+            text: false,
           },
         };
     }
