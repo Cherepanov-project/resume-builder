@@ -1,4 +1,4 @@
-import { lazy, Suspense, useRef, useEffect, useState, ComponentType } from 'react';
+import { lazy, Suspense, useRef, useEffect, useState, ComponentType, CSSProperties } from 'react';
 import ResponsiveGridLayout, { Layout } from 'react-grid-layout';
 
 import { addElement } from '@/store/landingBuilder/layoutSlice';
@@ -33,7 +33,7 @@ const DynamicComponentRenderer: React.FC<DynamicComponentRendererProps> = ({
     DynamicComponent = lazy(() => import(`@molecules/${Component}/index.ts`));
   }
   if (source === 'atoms') {
-    DynamicComponent = lazy(() => import(`@atoms/${/* @vite-ignore */Component}/index.ts`));
+    DynamicComponent = lazy(() => import(`@atoms/${/* @vite-ignore */ Component}/index.ts`));
   }
 
   return (
@@ -50,7 +50,7 @@ const DynamicComponentRenderer: React.FC<DynamicComponentRendererProps> = ({
 };
 // ========================================================================== \\
 
-const ContainerDIV: React.FC<ContainerDIVProps> = ({ children, layout, columns, props }: any) => {
+const ContainerDIV: React.FC<ContainerDIVProps> = ({ children, layout, columns, props }) => {
   const dispatch = useAppDispatch();
   const containerRef = useRef(null);
   const [width, setWidth] = useState(0);
@@ -86,7 +86,7 @@ const ContainerDIV: React.FC<ContainerDIVProps> = ({ children, layout, columns, 
     return [...acc, el.layout];
   }, []);
 
-  let style: any;
+  let style: CSSProperties;
   try {
     style = props.style;
   } catch {

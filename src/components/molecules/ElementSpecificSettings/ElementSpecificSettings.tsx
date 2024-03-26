@@ -49,11 +49,23 @@ const ElementSpecificSettings = () => {
   const dispatch = useDispatch();
 
   const settingsOptionsValues = [
+    'Avatars',
+    'MasonryGallery',
+    'BasicRating',
+    'BasicTooltip',
+    'CheckboxGroup',
+    'RadioGroup',
+    'ToggleButtonsMultiple',
     'LayoutBlockTitle',
     'LayoutBlockParagraph',
     'LayoutBlockImage',
     'LayoutBlockButton',
     'LayoutBlockAnchor',
+    'LayoutBlockSlider',
+    'LayoutBlockVideoPlayer',
+    'LayoutBlockModal',
+    'SelectList',
+    'TitleH1',
   ];
 
   const handleUpdate = (type: string, value: string, i: number): void => {
@@ -83,6 +95,7 @@ const ElementSpecificSettings = () => {
     }
   };
 
+  // Надо добавить все варианты элементов из списка опций, wrapperStyle и textStyle должны меняться в зависимости от настроек стиля
   const getLabel = (blockValue: string) => {
     switch (blockValue) {
       default:
@@ -170,6 +183,28 @@ const ElementSpecificSettings = () => {
             wrapperStyle: { textAlign: 'center', width: '100%', height: '100%' },
             textStyle: { fontSize: '16px', margin: '0px', width: '100%' },
             // inputStyle: { width: '100%', border: 'none' },
+          },
+        };
+      case 'Avatars':
+        return {
+          label: 'Avatars',
+          value: 'Avatars',
+          key: 'avatars',
+          title: {
+            key: 'avatars',
+            src: '',
+            title: '',
+          },
+        };
+      case 'MasonryGallery':
+        return {
+          label: 'MasonryGallery',
+          value: 'MasonryGallery',
+          key: 'masonryGallery',
+          title: {
+            key: 'masonryGallery',
+            src: '',
+            title: '',
           },
         };
     }
