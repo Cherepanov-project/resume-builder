@@ -33,7 +33,7 @@ const DynamicComponentRenderer: React.FC<DynamicComponentRendererProps> = ({
     DynamicComponent = lazy(() => import(`@molecules/${Component}/index.ts`));
   }
   if (source === 'atoms') {
-    DynamicComponent = lazy(() => import(`@atoms/${/* @vite-ignore */Component}/index.ts`));
+    DynamicComponent = lazy(() => import(`@atoms/${Component}/index.ts`));
   }
 
   return (
@@ -50,7 +50,7 @@ const DynamicComponentRenderer: React.FC<DynamicComponentRendererProps> = ({
 };
 // ========================================================================== \\
 
-const ContainerDIV: React.FC<ContainerDIVProps> = ({ children, layout, columns, props }: any) => {
+const ContainerDIV: React.FC<ContainerDIVProps> = ({ children, layout, columns, props }) => {
   const dispatch = useAppDispatch();
   const containerRef = useRef(null);
   const [width, setWidth] = useState(0);
@@ -79,6 +79,8 @@ const ContainerDIV: React.FC<ContainerDIVProps> = ({ children, layout, columns, 
     const parentElement = targetElement.closest('.wrapper') as HTMLElement;
     const element = parentElement?.dataset.id;
 
+    // const id = currentContainer;
+
     dispatch(addElement({ draggableItem, layoutItem, element }));
   };
 
@@ -86,7 +88,7 @@ const ContainerDIV: React.FC<ContainerDIVProps> = ({ children, layout, columns, 
     return [...acc, el.layout];
   }, []);
 
-  let style: any;
+  let style;
   try {
     style = props.style;
   } catch {

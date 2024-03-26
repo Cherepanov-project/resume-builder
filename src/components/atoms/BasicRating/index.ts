@@ -1,4 +1,4 @@
-import BasicRating from "./BasicRating";
+import BasicRating from './BasicRating';
 
 export const props = {
   name: 'BasicRating',
