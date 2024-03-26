@@ -1,4 +1,4 @@
-import BasicTooltip from "./BasicTooltip";
+import BasicTooltip from './BasicTooltip';
 
 export const props = {
   name: 'BasicTooltip',

@@ -11,7 +11,8 @@ export const props = {
       source: 'atoms',
       props: {
         text: 'Default Title',
-        titleStyle: { textAlign: 'center', fontSize: 30 },
+        wrapperStyle: { textAlign: 'center' },
+        textStyle: { fontSize: 30, marginTop: 16 },
         inputStyle: { width: '100%', border: 'none', fontWeight: 'bold' },
       },
       layout: { i: '1', x: 0, y: 0, w: 2, h: 2 },
@@ -28,7 +29,7 @@ export const props = {
       layout: { i: '2', x: 0, y: 0, w: 2, h: 3 },
     },
   ],
-  layout: { i: null, x: 0, y: 0, w: 2, h: 5 },
+  layout: { i: '', x: 0, y: 0, w: 2, h: 5 },
 };
 
 export default LayoutBlockArticle;
