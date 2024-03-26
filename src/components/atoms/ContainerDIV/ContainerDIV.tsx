@@ -1,4 +1,4 @@
-import { lazy, Suspense, useRef, useEffect, useState, ComponentType, CSSProperties } from 'react';
+import { lazy, Suspense, useRef, useEffect, useState, ComponentType } from 'react';
 import ResponsiveGridLayout, { Layout } from 'react-grid-layout';
 
 import { addElement } from '@/store/landingBuilder/layoutSlice';
