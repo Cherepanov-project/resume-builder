@@ -6,6 +6,7 @@ import { DynamicComponentRendererProps, T_BlockElement } from '@/types/landingBu
 import ComponentPreloader from '@atoms/ComponentPreloader';
 import Box from '@mui/material/Box';
 import Typography from '@mui/material/Typography';
+import { GridContainers } from '@/store/landingBuilder/layoutSlice';
 
 // ========================================================================== \\
 // Отрисовываем динамический компонент
@@ -39,10 +40,6 @@ const MemoDynamicComponentRenderer = memo(DynamicComponentRenderer);
 
 const PreviewSpace = () => {
   const gridContainers = useAppSellector((state) => state.layout.gridContainers);
-  let activeElements: T_BlockElement[] = [];
-  for (const container of gridContainers) {
-    activeElements.concat(container.elements.activeElements);
-  }
   const previewSetting = useAppSellector((state) => state.utility.previewOpened);
   const layoutDate = useAppSellector((state) => state.sectionsManager.layoutDate);
   // расчет координаты x элемента ( зависит от суммы w предыдущих в ряду )
@@ -72,6 +69,8 @@ const PreviewSpace = () => {
       return 0;
     }
   };
+  const gridContainersPreview: GridContainers[] = JSON.parse(JSON.stringify(gridContainers));
+  let activeElements: T_BlockElement[] = [];
   if (previewSetting === 'section') {
     const arr = [];
     const data = Object.values(layoutDate);
@@ -81,21 +80,22 @@ const PreviewSpace = () => {
 
     // сохранение только координат блоков, у которых выбраны элементы из Select options
     const filteredArr = arr.filter((el) => el.name);
-
-    activeElements = filteredArr.map((el) => ({
-      name: el.name,
-      source: 'atoms',
-      layout: {
-        i: String(el.layout.i),
-        x: calcX(Number(String(el.layout.i).slice(0, 1)), Number(String(el.layout.i).slice(1))),
-        y: calcY(Number(String(el.layout.i).slice(0, 1))), // el.y,
-        w: el.layout.w,
-        h: el.layout.h,
-      },
-      props: el.props,
-    }));
+    for (const container of gridContainersPreview) {
+      activeElements = activeElements.concat(container.elements.activeElements);
+      container.elements.activeElements = filteredArr.map((el) => ({
+        name: el.name,
+        source: 'atoms',
+        layout: {
+          i: String(el.layout.i),
+          x: calcX(Number(String(el.layout.i).slice(0, 1)), Number(String(el.layout.i).slice(1))),
+          y: calcY(Number(String(el.layout.i).slice(0, 1))), // el.y,
+          w: el.layout.w,
+          h: el.layout.h,
+        },
+        props: el.props,
+      }));
+    }
   }
-  console.log(activeElements);
 
   // мемоизируем массив Layout
   const previewLayout: ResponsiveGridLayout.Layout[] = useMemo(() => {
@@ -139,45 +139,48 @@ const PreviewSpace = () => {
         alignItems: 'center',
       }}
     >
-      <Box
-        sx={{
-          display: 'grid',
-          gridAutoRows: '30px',
-          gridAutoFlow: 'row',
-          gridTemplateColumns: ' repeat(6, 1fr)',
-          width: '100%',
-          p: '0 1em',
-          gap: '8px',
-          alignItems: 'stretch',
-          justifyItems: 'stretch',
-        }}
-      >
-        {activeElements.map((el) => {
-          return (
-            <Box
-              key={el.layout.i}
-              sx={{
-                gridColumnStart: `${el.layout.x + 1}`,
-                gridColumnEnd: `span ${el.layout.w}`,
-                gridRowStart: `${el.layout.y + 1}`,
-                gridRowEnd: `span ${el.layout.h}`,
-                backgroundColor: 'white',
-                borderRadius: '2px',
-              }}
-              className={`${el.layout.i}`}
-            >
-              <MemoDynamicComponentRenderer
-                Component={el.name}
-                source={el.source || 'atoms'}
-                props={el.props}
-                columns={el.columns || 1}
-                children={el.children}
-                layout={el.layout}
-              />
-            </Box>
-          );
-        })}
-      </Box>
+      {gridContainersPreview.map((container) => (
+        <Box
+          key={container.id}
+          sx={{
+            display: 'grid',
+            gridAutoRows: '30px',
+            gridAutoFlow: 'row',
+            gridTemplateColumns: ' repeat(6, 1fr)',
+            width: '100%',
+            p: '0 1em',
+            gap: '8px',
+            alignItems: 'stretch',
+            justifyItems: 'stretch',
+          }}
+        >
+          {container.elements.activeElements.map((el) => {
+            return (
+              <Box
+                key={el.layout.i}
+                sx={{
+                  gridColumnStart: `${el.layout.x + 1}`,
+                  gridColumnEnd: `span ${el.layout.w}`,
+                  gridRowStart: `${el.layout.y + 1}`,
+                  gridRowEnd: `span ${el.layout.h}`,
+                  backgroundColor: 'white',
+                  borderRadius: '2px',
+                }}
+                className={`${el.layout.i}`}
+              >
+                <MemoDynamicComponentRenderer
+                  Component={el.name}
+                  source={el.source || 'atoms'}
+                  props={el.props}
+                  columns={el.columns || 1}
+                  children={el.children}
+                  layout={el.layout}
+                />
+              </Box>
+            );
+          })}
+        </Box>
+      ))}
       <Typography component="span" display="inline" sx={{ pt: '20px' }}>
         Copyright © 2024 Landing Builder DreamTeam ltd
       </Typography>

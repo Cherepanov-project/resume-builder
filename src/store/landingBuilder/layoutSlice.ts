@@ -59,6 +59,7 @@ const layoutSlice = createSlice({
     // Добавляем блок в рабочую область
     addElement(state, action) {
       const { draggableItem, layoutItem, parentElement, id } = action.payload;
+      const containerId = id;
       // Задаем уникальный ID блоку и параметры
       //при дропе добавляем скрипт с эвент листенером в виде строки
       const elemId = nanoid();
@@ -80,14 +81,39 @@ const layoutSlice = createSlice({
         },
       };
       let activeElements: T_BlockElement[] = [];
-      state.gridContainers.forEach((container) => {
-        if (container.id === id) {
+      state.gridContainers.forEach((container /*, index*/) => {
+        if (container.id === containerId) {
+          for (const el of container.elements.activeElements) {
+            if (
+              newElement.layout.x >= el.layout.x &&
+              newElement.layout.x < el.layout.x + el.layout.w
+            ) {
+              newElement.layout.y += el.layout.h;
+              // const newContainer = {
+              //   id: nanoid(),
+              //   height: 30,
+              //   elements: {
+              //     activeElements: [],
+              //   },
+              //   layout: {
+              //     i: null,
+              //     w: 1,
+              //     h: 1,
+              //     x: 10,
+              //     y: 0,
+              //   },
+              // };
+              // state.gridContainers.splice(index + 1, 0, newContainer);
+              // containerId = newContainer.id;
+              // return activeElements = newContainer.elements.activeElements as T_BlockElement[];
+            }
+          }
           return (activeElements = container.elements.activeElements as T_BlockElement[]);
         }
       });
       const renewElements = insertChild(activeElements, parentElement, newElement);
       state.gridContainers = state.gridContainers.map((container) => {
-        if (container.id === id) {
+        if (container.id === containerId) {
           container.elements.activeElements = [...(renewElements as T_BlockElement[])];
         }
         return container;
@@ -106,6 +132,9 @@ const layoutSlice = createSlice({
             ...container.elements.activeElements[indx],
             layout: {
               ...container.elements.activeElements[indx].layout,
+              y:
+                container.elements.activeElements[indx].layout.y +
+                container.elements.activeElements[indx].layout.h,
               i: nanoid(),
             },
           };
@@ -116,16 +145,16 @@ const layoutSlice = createSlice({
     // Изменяем положение блока в рабочей области
     changeElement(state, action) {
       let indx: number;
-      state.gridContainers.forEach((container) => {
-        if (container.id === action.payload.id) {
+      state.gridContainers.forEach((container, index) => {
+        if (container.id === state.currentContainer) {
           indx = container.elements.activeElements.findIndex(
-            (element) => element.layout.i === action.payload.layout.i,
+            (element) => element.layout.i === action.payload.i,
           );
 
-          container.elements.activeElements[indx] = {
+          state.gridContainers[index].elements.activeElements[indx] = {
             ...container.elements.activeElements[indx],
             layout: {
-              ...action.payload.layout,
+              ...action.payload,
             },
           };
         }
@@ -260,7 +289,6 @@ const layoutSlice = createSlice({
         if (container.id === containerID) {
           container.elements.activeElements.forEach((el, index) => {
             if (el.layout.i === action.payload.id) {
-              console.log(state.gridContainers[i].elements.activeElements[index]);
               state.gridContainers[i].elements.activeElements[index] = {
                 ...el,
                 props: {
