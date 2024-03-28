@@ -176,7 +176,8 @@ export interface IElementProps {
   SelectList?: ISettingsInputItem[];
   LayoutBlockSlider?: ISettingsInputItem[];
   MasonryGallery?: ISettingsInputItem[];
-  Avatars?: ISettingsInputItem[]
+  Avatars?: ISettingsInputItem[];
+  BasicRating?: ISettingsInputItem[]
 }
 
 export interface StateSelectList {
@@ -210,7 +211,8 @@ export type T_SectionElementProps = {
   SelectList?: ISettingsInputItem[];
   LayoutBlockSlider?: ISettingsInputItem[];
   MasonryGallery?: ISettingsInputItem[];
-  Avatars?: ISettingsInputItem[]
+  BasicRating?: ISettingsInputItem[];
+  Avatars?: ISettingsInputItem[];
   size?: number;
 };
 

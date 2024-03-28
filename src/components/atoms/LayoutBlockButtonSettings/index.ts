@@ -1,0 +1,2 @@
+import LayoutBlockButtonSettings from './LayoutBlockButtonSettings';
+export default LayoutBlockButtonSettings

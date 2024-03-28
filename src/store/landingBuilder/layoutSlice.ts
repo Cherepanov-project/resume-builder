@@ -261,6 +261,24 @@ const layoutSlice = createSlice({
       state.currentDraggableItem = action.payload.item;
     },
     setSectionStyle(state, action) {
+
+      const indx = state.activeElements.findIndex(
+        (element) => element.layout.i === action.payload.i,
+      );
+
+      state.activeElements[indx] = {
+        ...state.activeElements[indx],
+        props: {
+          style: {
+            ...action.payload.style,
+          },
+          key: '',
+          text: action.payload.text,
+          wrapperStyle: action.payload.wrapperStyle,
+          textStyle: action.payload.textStyle,
+          inputStyle: action.payload.InputStyle,
+        },
+      };
       const containerID = state.currentContainer;
       state.gridContainers.forEach((container, i) => {
         if (container.id === containerID) {
@@ -271,12 +289,13 @@ const layoutSlice = createSlice({
                 props: {
                   style: {
                     ...action.payload.style,
-                  },
-                  key: '',
-                  text: '',
-                  wrapperStyle: { '': '' },
-                  textStyle: { '': '' },
-                },
+                    },
+                    key: '',
+                    text: action.payload.text,
+                    wrapperStyle: action.payload.wrapperStyle,
+                    textStyle: action.payload.textStyle,
+                    inputStyle: action.payload.InputStyle,
+        },
               };
             }
           });

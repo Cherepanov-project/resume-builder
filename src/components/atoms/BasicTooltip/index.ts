@@ -1,4 +1,5 @@
-import BasicTooltip from './BasicTooltip';
+import BasicTooltip from "./BasicTooltip";
+import { nanoid } from "nanoid";
 
 export const props = {
   name: 'BasicTooltip',
@@ -11,7 +12,7 @@ export const props = {
     },
   },
   children: [],
-  layout: { i: '', x: 0, y: 0, w: 1, h: 1 },
+  layout: { i: nanoid(), x: 0, y: 0, w: 1, h: 1 },
 };
 
 export default BasicTooltip;
