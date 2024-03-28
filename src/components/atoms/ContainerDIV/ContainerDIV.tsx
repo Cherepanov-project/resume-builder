@@ -33,7 +33,7 @@ const DynamicComponentRenderer: React.FC<DynamicComponentRendererProps> = ({
     DynamicComponent = lazy(() => import(`@molecules/${Component}/index.ts`));
   }
   if (source === 'atoms') {
-    DynamicComponent = lazy(() => import(`@atoms/${Component}/index.ts`));
+    DynamicComponent = lazy(() => import(`../${/* @vite-ignore */ Component}/index.ts`));
   }
 
   return (
