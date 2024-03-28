@@ -1,12 +1,16 @@
 import JSZip from 'jszip';
 import store from '@store/store.ts';
+import { T_BlockElement } from '@/types/landingBuilder';
 
 const createZip = async () => {
   //тут мы получили список активных элементов
   //в каждом должно лежать свойство со значением - текст скрипта.
   //их мы будем собирать в scriptContent
   const state = store.getState();
-  const activeElements = state.layout.activeElements;
+  const activeElements: T_BlockElement[] = [];
+  for (const container of state.layout.gridContainers) {
+    activeElements.concat(container.elements.activeElements);
+  }
 
   const zip = new JSZip();
   const htmlElement = document.querySelector('[class^="previewSpace"]');
