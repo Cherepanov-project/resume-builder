@@ -12,7 +12,6 @@ import { NestedListProps } from '@/types/landingBuilder';
 import classes from './NestedList.module.scss';
 
 const NestedList: React.FC<NestedListProps> = ({ name, items }) => {
-  console.log(items)
   const dispatch = useAppDispatch();
   const [isOpen, setOpen] = useState(false);
 
@@ -30,7 +29,6 @@ const NestedList: React.FC<NestedListProps> = ({ name, items }) => {
           <ListItemText primary={name} />
           {isOpen ? (
             <ExpandLess className={classes['icon__expand']} />
-  
           ) : (
             <ExpandMore className={classes['icon__expand']} />
           )}
@@ -41,11 +39,11 @@ const NestedList: React.FC<NestedListProps> = ({ name, items }) => {
             {items?.map((item) => {
               return (
                 <ListItemButton
-                  key={item.name}
+                  key={item.title ? item.title : item.name}
                   sx={{ pl: 4 }}
                   draggable={true}
                   unselectable="on"
-                  onDragStart={() => dispatch(setDraggableItem(item))}
+                  onDragStart={() => dispatch(setDraggableItem({ item }))}
                 >
                   <ListItemIcon>
                     <RadioButtonCheckedIcon

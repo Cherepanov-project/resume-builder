@@ -2,7 +2,7 @@ import ContainerDIV from './ContainerDIV';
 
 export const props = {
   name: 'ContainerDIV',
-  type: 'Simple Elements',
+  type: 'Simple Blocks',
   columns: 2,
   source: 'atoms',
   props: {

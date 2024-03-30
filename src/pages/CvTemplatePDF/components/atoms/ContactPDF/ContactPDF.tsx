@@ -1,5 +1,3 @@
-import { View, Link, Image } from '@react-pdf/renderer';
-
 import phoneIcon from '../../../assets/icons/icon-phone.png';
 import mailIcon from '../../../assets/icons/icon-mail.png';
 import siteIcon from '../../../assets/icons/icon-site.png';
@@ -7,6 +5,7 @@ import adressIcon from '../../../assets/icons/icon-adress.png';
 
 import { StyleOptionType, StyleType } from '../../../const';
 import { TextPDF } from '../../atoms';
+import { Box, Typography } from '@mui/material';
 
 type ContactNameType = 'phone' | 'email' | 'website' | 'address';
 
@@ -22,51 +21,44 @@ const TextContact = (contactData: string, style: StyleType) => {
   return <TextPDF {...textContactProps} />;
 };
 
-const LinkContact = (srcLink: string, contactData: string, ContactLink: StyleType) => {
-  return (
-    <Link src={srcLink} style={ContactLink}>
-      {contactData}
-    </Link>
-  );
+const LinkContact = (contactData: string, ContactLink: StyleType) => {
+  return <Typography style={ContactLink}>{contactData}</Typography>;
 };
 
 export const ContactPDF = ({ contactName, contactData, style }: IContactPDF) => {
-  const { Contact, ContactLink, ContactIcon, Text } = style;
-  let srcLink = `${contactName}:${contactData}`;
+  const { Contact, ContactLink, ContactIcon } = style;
   let iconName, contactPDFContent;
 
   switch (contactName) {
     case 'phone':
-      contactPDFContent = LinkContact(srcLink, contactData, ContactLink);
+      contactPDFContent = LinkContact(contactData, ContactLink);
       iconName = phoneIcon;
       break;
 
     case 'email':
-      contactPDFContent = LinkContact(srcLink, contactData, ContactLink);
+      contactPDFContent = LinkContact(contactData, ContactLink);
       iconName = mailIcon;
       break;
 
     case 'website':
-      srcLink = contactName;
-      contactPDFContent = LinkContact(srcLink, contactData, ContactLink);
+      contactPDFContent = LinkContact(contactData, ContactLink);
       iconName = siteIcon;
       break;
 
     case 'address':
-      contactPDFContent = TextContact(contactData, Text);
+      contactPDFContent = TextContact(contactData, ContactLink);
       iconName = adressIcon;
       break;
 
     default:
       contactPDFContent = '';
-      srcLink = '';
       iconName = '';
   }
 
   return (
-    <View style={Contact}>
-      <Image style={ContactIcon} src={iconName} />
+    <Box style={Contact} display="flex">
+      <img style={ContactIcon} src={iconName} />
       {contactPDFContent}
-    </View>
+    </Box>
   );
 };

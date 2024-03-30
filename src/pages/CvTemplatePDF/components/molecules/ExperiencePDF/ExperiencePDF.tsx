@@ -1,10 +1,9 @@
-import { View } from '@react-pdf/renderer';
-
 import { SubtitlePDF, ListTitlePDF, TextPDF } from '../../atoms';
 
 import { ExperienceDataType } from '../../../../../assets/const';
 import { StyleOptionType } from '../../../const';
 import { uniqueKey } from '../../../../../assets/lib';
+import { Box } from '@mui/material';
 
 interface IExperienceProps {
   data: ExperienceDataType[];
@@ -17,17 +16,20 @@ const experienceContent = (data: ExperienceDataType[] | undefined, style: StyleO
     return null;
   }
   const children = data.map((experience) => {
-    const { Experience, ExperienceTitle, Text } = style;
+    const { Experience, ExperienceTitle, Text, ExperienceTime, ExperiencePosition } = style;
     const { description, ...otherData } = experience;
 
     const propsText = { str: description, style: Text };
-    const listTitleProps = { data: otherData, style: { ExperienceTitle } };
+    const listTitleProps = {
+      data: otherData,
+      style: { ExperienceTitle, ExperienceTime, ExperiencePosition },
+    };
 
     return (
-      <View key={uniqueKey()} style={Experience}>
+      <Box key={uniqueKey()} style={Experience}>
         <ListTitlePDF {...listTitleProps} />
         <TextPDF key={uniqueKey()} {...propsText} />
-      </View>
+      </Box>
     );
   });
 
@@ -39,15 +41,23 @@ export const ExperiencePDF = (props: IExperienceProps) => {
   if (!data) {
     return null;
   }
-  const { Experiences, Experience, ExperienceTitle, Subtitle, Text } = style;
+  const {
+    Experiences,
+    Experience,
+    ExperienceTitle,
+    Subtitle,
+    Text,
+    ExperienceTime,
+    ExperiencePosition,
+  } = style;
 
   const propsSubtitle = { str: experienceName, style: Subtitle };
-  const currStyle = { Experience, ExperienceTitle, Text };
+  const currStyle = { Experience, ExperienceTitle, Text, ExperienceTime, ExperiencePosition };
 
   return (
-    <View style={Experiences}>
+    <Box style={Experiences}>
       <SubtitlePDF {...propsSubtitle} />
       {experienceContent(data, currStyle)}
-    </View>
+    </Box>
   );
 };

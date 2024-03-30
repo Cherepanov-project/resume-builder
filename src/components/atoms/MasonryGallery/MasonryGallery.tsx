@@ -8,7 +8,6 @@ import { Alert, Box } from '@mui/material';
 
 const MasonryGallery = ({ props, layout }: IElementsProps) => {
   const dispatch = useAppDispatch();
-  console.log(props)
   const { MasonryGallery } = props;
   const currentList = MasonryGallery || [];
 

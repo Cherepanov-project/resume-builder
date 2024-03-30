@@ -1,0 +1,1 @@
+export { EducationPDF } from './EducationPDF';
