@@ -70,7 +70,7 @@ const PreviewSpace = () => {
     }
   };
   const gridContainersPreview: GridContainers[] = JSON.parse(JSON.stringify(gridContainers));
-  let activeElements: T_BlockElement[] = [];
+  let activeElements: T_BlockElement[];
   if (previewSetting === 'section') {
     const arr = [];
     const data = Object.values(layoutDate);
