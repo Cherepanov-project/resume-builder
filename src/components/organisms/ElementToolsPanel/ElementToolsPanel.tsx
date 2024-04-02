@@ -22,10 +22,12 @@ import { initPanel } from '@/store/landingBuilder/settingsPanelSlice';
 
 type ElementToolsPanelProps = {
   layout: Layout;
+  id: string;
 };
 
-const ElementToolsPanel: React.FC<ElementToolsPanelProps> = ({ layout }) => {
+const ElementToolsPanel: React.FC<ElementToolsPanelProps> = ({ layout, id }) => {
   const dispatch = useAppDispatch();
+  // const currentContainer = useAppSellector((state) => state.layout.currentContainer);
 
   const handleSettings = () => {
     dispatch(initPanel({ type: 'section', sectionID: layout.i, moduleID: '0' }));
@@ -40,7 +42,7 @@ const ElementToolsPanel: React.FC<ElementToolsPanelProps> = ({ layout }) => {
         aria-label="Decrease Item Width"
         title="Убрать колонку"
         color="primary"
-        onClick={() => dispatch(decreaseElementColumns(layout))}
+        onClick={() => dispatch(decreaseElementColumns({ layout, id }))}
       >
         <RemoveCircleOutline />
       </IconButton>
@@ -48,7 +50,7 @@ const ElementToolsPanel: React.FC<ElementToolsPanelProps> = ({ layout }) => {
         aria-label="Increase Item Width"
         title="Добавить колонку"
         color="primary"
-        onClick={() => dispatch(increaseElementColumns(layout))}
+        onClick={() => dispatch(increaseElementColumns({ layout, id }))}
       >
         <AddCircleOutline />
       </IconButton>
@@ -64,7 +66,7 @@ const ElementToolsPanel: React.FC<ElementToolsPanelProps> = ({ layout }) => {
         aria-label="Copy Item"
         title="Скопировать блок"
         color="primary"
-        onClick={() => dispatch(copyElement(layout))}
+        onClick={() => dispatch(copyElement({ layout, id }))}
       >
         <ContentCopy />
       </IconButton>
@@ -72,7 +74,7 @@ const ElementToolsPanel: React.FC<ElementToolsPanelProps> = ({ layout }) => {
         aria-label="Remove Item"
         title="Удалить блок"
         color="primary"
-        onClick={() => dispatch(deleteElement(layout))}
+        onClick={() => dispatch(deleteElement({ layout, id }))}
       >
         <Delete />
       </IconButton>

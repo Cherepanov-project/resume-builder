@@ -79,6 +79,8 @@ const ContainerDIV: React.FC<ContainerDIVProps> = ({ children, layout, columns, 
     const parentElement = targetElement.closest('.wrapper') as HTMLElement;
     const element = parentElement?.dataset.id;
 
+    // const id = currentContainer;
+
     dispatch(addElement({ draggableItem, layoutItem, element }));
   };
 

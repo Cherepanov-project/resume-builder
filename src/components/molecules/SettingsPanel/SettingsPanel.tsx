@@ -6,7 +6,7 @@ import React, { useEffect, useLayoutEffect, useRef, useState } from 'react';
 import ContainerDIVSettings from '@/components/atoms/ContainerDIVSettings';
 import InputUpdate from '../InputUpdate';
 import ButtonsSettingsPanel from '@/components/atoms/ButtonsSettingsPanel';
-import { IElementProps, ISettingsInputItem } from '@/types/landingBuilder';
+import { IElementProps, ISettingsInputItem, T_BlockElement } from '@/types/landingBuilder';
 import SliderSettings from '../SliderSettings';
 import { Alert, Box, Typography } from '@mui/material';
 import BasicRatingSettings from '@/components/atoms/BasicRatingSettings';
@@ -42,9 +42,11 @@ const SettingsPanel: React.FC = () => {
     dispatch(closePanel());
   };
 
-  const { activeElements } = useAppSellector((state) => state.layout);
-  
-  
+  const { gridContainers } = useAppSellector((state) => state.layout);
+  const activeElements: T_BlockElement[] = [];
+  for (let i = 0; i < gridContainers.length; i++) {
+    gridContainers[i].elements.activeElements.forEach((elem) => activeElements.push(elem));
+  }
   const currentElement = activeElements.find((item) => item.layout.i === id);
   const props: IElementProps | undefined = currentElement?.props;
   const name = currentElement?.name;
