@@ -1,8 +1,6 @@
 import SwiperPreview from '@/components/atoms/SwiperPreview';
 import { swiperPresets } from '@/utils';
 
-import classes from './SwiperPresetList.module.scss';
-
 const SwiperPresetList = () => {
   const verticalParams = {
     name: swiperPresets.vertical.name,

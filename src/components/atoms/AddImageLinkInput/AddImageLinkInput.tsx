@@ -4,12 +4,12 @@ import { nanoid } from 'nanoid';
 
 const AddImageLinkInput = ({ itemlist, setItemList }) => {
   const [inputLink, setInputLink] = useState('');
-  const clickHandler = ({ target }): void => {
+  const clickHandler = (): void => {
     setInputLink('');
   };
 
   const addImageLinkHandler = (): void => {
-    const RegExpLink: RegExp = /(^https?:\/\/)?([a-z0-9~_\-\.]+)\.([a-z]{2,9})(\/|:|\?[!-~]*)?/;
+    const RegExpLink: RegExp = /(^https?:\/\/)?([a-z0-9~_\-.]+)\.([a-z]{2,9})(\/|:|\?[!-~]*)?/;
     if (RegExpLink.test(inputLink)) {
       setItemList([...itemlist, { id: nanoid(), value: inputLink }]);
     }
