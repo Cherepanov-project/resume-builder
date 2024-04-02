@@ -22,7 +22,7 @@ const marks = [
 ];
 
 export interface IPropsToolTip {
-    elSize: {}
+    elSize: unknown,
     setElSize: React.Dispatch<React.SetStateAction<React.CSSProperties>>;
   }
 

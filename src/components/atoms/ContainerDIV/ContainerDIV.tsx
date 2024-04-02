@@ -50,7 +50,7 @@ const DynamicComponentRenderer: React.FC<DynamicComponentRendererProps> = ({
 };
 // ========================================================================== \\
 
-const ContainerDIV: React.FC<ContainerDIVProps> = ({ children, layout, columns, props }: any) => {
+const ContainerDIV: React.FC<ContainerDIVProps> = ({ children, layout, columns, props }) => {
   const dispatch = useAppDispatch();
   const containerRef = useRef(null);
   const [width, setWidth] = useState(0);
@@ -86,7 +86,7 @@ const ContainerDIV: React.FC<ContainerDIVProps> = ({ children, layout, columns, 
     return [...acc, el.layout];
   }, []);
 
-  let style: any;
+  let style;
   try {
     style = props.style;
   } catch {

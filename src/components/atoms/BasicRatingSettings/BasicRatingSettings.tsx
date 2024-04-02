@@ -5,7 +5,7 @@ import { useEffect, useLayoutEffect, useRef, useState } from 'react';
 import { HexColorPicker } from 'react-colorful';
 
 export interface IProps {
-    colorCSS: {}
+    colorCSS: unknown,
     setColorCSS: React.Dispatch<React.SetStateAction<React.CSSProperties>>;
   }
 
@@ -48,10 +48,11 @@ const BasicRatingSettings: React.FC<IProps> = ({setColorCSS}) => {
       }
     };
 
-    const handleNumberInput = (e: any) => {
+    const handleNumberInput = (e: React.ChangeEvent<HTMLInputElement>) => {
         const subtitle = document.querySelector('.number-input__subtitle')
-        setCount(e.target.value)
-        if (e.target.value > 20) {
+        const value: number = Number(e.target.value)
+        setCount(value)
+        if (value > 20) {
             e.target.value = ''
             
             subtitle.classList.remove('hidden')

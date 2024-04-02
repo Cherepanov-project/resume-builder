@@ -3,13 +3,14 @@ import { useAppDispatch, useAppSellector } from '@/hooks/cvTemplateHooks';
 import { setSectionStyle } from '@/store/landingBuilder/layoutSlice';
 import React, { useEffect, useLayoutEffect, useRef, useState } from 'react';
 import { HexColorPicker } from 'react-colorful';
+import { nanoid } from 'nanoid';
 import './LayoutBlockButtonSettings.scss';
 
-// export interface IProps {
-//     setColors: React.Dispatch<React.SetStateAction<React.CSSProperties>>;
-//   }
+export interface IProps {
+    setStyle: React.Dispatch<React.SetStateAction<React.CSSProperties>>;
+  }
 
-const LayoutBlockButtonSettings = () => {
+const LayoutBlockButtonSettings = ({setStyle}) => {
     const dispatch = useAppDispatch();
 
     const [bgColor, setBGColor] = useState('#ffff');
@@ -39,6 +40,8 @@ const LayoutBlockButtonSettings = () => {
   
     useEffect(() => {
       // вывести в отдельную функцию
+      setStyle({i: layout, style: {backgroundColor: bgColor, border: `2px solid ${borderColor}`, color: textColor}, text:  text, url: url,  wrapperStyle: { textAlign: 'center' }, 
+      textStyle: { fontSize: '16px'}, inputStyle: { width: '100%', height: '100%', border: 'none' }})
       dispatch(setSectionStyle({i: layout, style: {backgroundColor: bgColor, border: `2px solid ${borderColor}`, color: textColor}, text:  text, url: url,  wrapperStyle: { textAlign: 'center' }, 
       textStyle: { fontSize: '16px'}, inputStyle: { width: '100%', height: '100%', border: 'none' }}))
       // eslint-disable-next-line react-hooks/exhaustive-deps
@@ -88,7 +91,7 @@ const LayoutBlockButtonSettings = () => {
             <HexColorPicker color={bgColor} onChange={setBGColor} />
           </>
           ) : (
-            <div style={{flexDirection: 'column'}} id='flex' className='settings-panel__bgcolor rating'>
+            <div style={{flexDirection: 'column'}} id={nanoid()} className='settings-panel__bgcolor rating'>
               <span>set background color</span>
               <div className="bg-form">
                 <input value={bgColor} onChange={(e) => handleBGColorInput(e)} />

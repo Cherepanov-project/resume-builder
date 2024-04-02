@@ -12,16 +12,19 @@ const ButtonsSettingsPanel = ({
   СheckingLabel,
   onClose,
   elementsSize,
+  style,
   setElementsSize, // id, style
 }: IButtonsSettingsPanelProps) => {
   const dispatch = useAppDispatch();
 
   const [error, setError] = useState(false);
+  console.log(style)
 
   const objForStore = {
     id: elementId,
     values: itemsList,
     size: elementsSize,
+    style: style ? style : {}
   };
 
   const handleApply = () => {

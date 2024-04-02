@@ -152,7 +152,8 @@ const SettingsPanel: React.FC = () => {
       )}
 
       {showLayoutBlockButtonSettings && (
-        <LayoutBlockButtonSettings 
+        <LayoutBlockButtonSettings
+          setStyle={setStyle}
         />
       )}
 
