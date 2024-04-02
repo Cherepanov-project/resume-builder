@@ -227,8 +227,8 @@ const SectionsConstructorRowEl: React.FC<SectionsConstructorRowElType> = ({
           sx={{
             opacity: '0.2',
             position: 'absolute',
-            top: '-40px',
-            right: '0',
+            right: '100%',
+            top: '-10px',
             '& .MuiFab-primary': { width: 36, height: 36 },
             '&:hover': {
               opacity: '1',
