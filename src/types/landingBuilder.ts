@@ -50,8 +50,8 @@ export interface IStyleFormObj {
 export type T_BlockElement = {
   name: string;
   title?: string;
-  url?: string,
-  value?: number,
+  url?: string;
+  value?: number;
   type?: string;
   source: string;
   columns?: number;
@@ -169,14 +169,13 @@ export interface IAvatars {
   };
 }
 
-
 export interface IElementProps {
   RadioGroup?: ISettingsInputItem[];
   CheckboxGroup?: ISettingsInputItem[];
   SelectList?: ISettingsInputItem[];
   LayoutBlockSlider?: ISettingsInputItem[];
   MasonryGallery?: ISettingsInputItem[];
-  Avatars?: ISettingsInputItem[]
+  Avatars?: ISettingsInputItem[];
 }
 
 export interface StateSelectList {
@@ -210,10 +209,29 @@ export type T_SectionElementProps = {
   SelectList?: ISettingsInputItem[];
   LayoutBlockSlider?: ISettingsInputItem[];
   MasonryGallery?: ISettingsInputItem[];
-  Avatars?: ISettingsInputItem[]
+  Avatars?: ISettingsInputItem[];
   size?: number;
 };
 
 export interface ILayoutBlock {
   props: T_SectionElementProps;
 }
+
+export type T_SwiperReduxPayload = {
+  payload: {
+    presetName: string;
+  };
+};
+
+export type T_SwiperPreset = {
+  name: string;
+  params: object;
+};
+
+export type T_SwiperPresetList = {
+  default: T_SwiperPreset;
+  navigation: T_SwiperPreset;
+  pagination: T_SwiperPreset;
+  vertical: T_SwiperPreset;
+  multiple: T_SwiperPreset;
+};

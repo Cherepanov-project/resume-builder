@@ -1,12 +1,14 @@
 import JSZip from 'jszip';
 import store from '@store/store.ts';
 import { T_BlockElement } from '@/types/landingBuilder';
+import { stylesImport, logicImport } from './';
 
 const createZip = async () => {
   //тут мы получили список активных элементов
   //в каждом должно лежать свойство со значением - текст скрипта.
   //их мы будем собирать в scriptContent
   const state = store.getState();
+  console.log(state);
   const activeElements: T_BlockElement[] = [];
   for (const container of state.layout.gridContainers) {
     activeElements.concat(container.elements.activeElements);
@@ -41,7 +43,8 @@ const createZip = async () => {
     jsContent += script.outerHTML;
   }
   jsContent += scriptContent;
-  console.log(jsContent);
+
+  const presetName = state.swiper.presetName;
 
   if (htmlElement && htmlContent && cssContent && jsContent) {
     zip.file('styles.css', new Blob([cssContent], { type: 'text/css' }));
@@ -54,12 +57,13 @@ const createZip = async () => {
       <meta name="viewport" content="width=device-width, initial-scale=1.0">
       <title>My New Website</title>
       <link rel="stylesheet" href="styles.css">
+      ${stylesImport(htmlContent)}
     </head>
     <body>
     <div style="display:flex; flex-direction:column;align-items:center;">
       ${htmlContent}
       </div>
-      ${jsContent}
+      ${logicImport(htmlContent, presetName)}
     </body>
     </html>
   `;
