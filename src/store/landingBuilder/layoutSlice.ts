@@ -201,22 +201,30 @@ const layoutSlice = createSlice({
       state.gridContainers.splice(indx + 1, 0, copy);
     },
     moveUpGridContainer(state, action) {
-      const indx = state.gridContainers.findIndex(
-        (container) => container.id === action.payload.id,
-      );
-      [state.gridContainers[indx], state.gridContainers[indx - 1]] = [
-        state.gridContainers[indx - 1],
-        state.gridContainers[indx],
-      ];
+      if (state.gridContainers.length !== 1) {
+        const indx = state.gridContainers.findIndex(
+          (container) => container.id === action.payload.id,
+        );
+        if (indx !== 0) {
+          [state.gridContainers[indx], state.gridContainers[indx - 1]] = [
+            state.gridContainers[indx - 1],
+            state.gridContainers[indx],
+          ];
+        }
+      }
     },
     moveDownGridContainer(state, action) {
-      const indx = state.gridContainers.findIndex(
-        (container) => container.id === action.payload.id,
-      );
-      [state.gridContainers[indx + 1], state.gridContainers[indx]] = [
-        state.gridContainers[indx],
-        state.gridContainers[indx + 1],
-      ];
+      if (state.gridContainers.length !== 1) {
+        const indx = state.gridContainers.findIndex(
+          (container) => container.id === action.payload.id,
+        );
+        if (indx !== state.gridContainers.length - 1) {
+          [state.gridContainers[indx + 1], state.gridContainers[indx]] = [
+            state.gridContainers[indx],
+            state.gridContainers[indx + 1],
+          ];
+        }
+      }
     },
     deleteGridContainer(state, action) {
       if (state.gridContainers.length === 1) {
