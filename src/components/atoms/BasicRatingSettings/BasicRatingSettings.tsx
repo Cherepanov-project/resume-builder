@@ -22,8 +22,6 @@ const BasicRatingSettings: React.FC<IProps> = ({ setColorCSS }) => {
   const elements = gridContainers.find((el) =>
     el.elements.activeElements.filter((el) => el.name === 'BasicRating'),
   );
-  //const props = elements.elements.activeElements.filter(el => el.name === 'BasicRating').find(el => el.props)
-  // const findName = activeElements.find(el => el.name === 'BasicRating'? el: null)
   const layout = elements?.layout.i;
 
   useLayoutEffect(() => {
@@ -58,9 +56,9 @@ const BasicRatingSettings: React.FC<IProps> = ({ setColorCSS }) => {
     if (value > 20) {
       e.target.value = '';
 
-      subtitle.classList.remove('hidden');
+      subtitle!.classList.remove('hidden');
     } else {
-      subtitle.classList.add('hidden');
+      subtitle!.classList.add('hidden');
     }
   };
 

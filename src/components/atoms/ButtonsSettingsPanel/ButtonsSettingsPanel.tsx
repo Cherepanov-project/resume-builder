@@ -18,15 +18,15 @@ const ButtonsSettingsPanel = ({
   const dispatch = useAppDispatch();
 
   const [error, setError] = useState(false);
-  console.log(style)
 
   const objForStore = {
     id: elementId,
     values: itemsList,
     size: elementsSize,
-    style: style ? style : {}
+    style: style ? style : {},
   };
 
+  console.log(objForStore);
   const handleApply = () => {
     const check = СheckingLabel(itemsList);
 

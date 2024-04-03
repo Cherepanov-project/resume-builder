@@ -10,7 +10,7 @@ type ElementsType = {
   activeElements: T_BlockElement[];
 };
 
-export type GridContainers = {
+export type IGridContainers = {
   id: string;
   height: number;
   elements: ElementsType;
@@ -24,7 +24,7 @@ export type GridContainers = {
 };
 
 type stateProps = {
-  gridContainers: GridContainers[];
+  gridContainers: IGridContainers[];
   currentDraggableItem: Layout | null;
   currentContainer: string;
 };
@@ -239,7 +239,7 @@ const layoutSlice = createSlice({
             (element) => element.layout.i === action.payload.layout.i,
           );
           container.elements.activeElements[indx].layout.w += 1;
-          container.elements.activeElements[indx].columns += 1;
+          container.elements.activeElements[indx].columns! += 1;
         }
       });
     },
@@ -252,7 +252,7 @@ const layoutSlice = createSlice({
             (element) => element.layout.i === action.payload.layout.i,
           );
           container.elements.activeElements[indx].layout.w -= 1;
-          container.elements.activeElements[indx].columns -= 1;
+          container.elements.activeElements[indx].columns! -= 1;
         }
       });
     },
@@ -261,24 +261,6 @@ const layoutSlice = createSlice({
       state.currentDraggableItem = action.payload.item;
     },
     setSectionStyle(state, action) {
-
-      const indx = state.activeElements.findIndex(
-        (element) => element.layout.i === action.payload.i,
-      );
-
-      state.activeElements[indx] = {
-        ...state.activeElements[indx],
-        props: {
-          style: {
-            ...action.payload.style,
-          },
-          key: '',
-          text: action.payload.text,
-          wrapperStyle: action.payload.wrapperStyle,
-          textStyle: action.payload.textStyle,
-          inputStyle: action.payload.InputStyle,
-        },
-      };
       const containerID = state.currentContainer;
       state.gridContainers.forEach((container, i) => {
         if (container.id === containerID) {
@@ -289,13 +271,12 @@ const layoutSlice = createSlice({
                 props: {
                   style: {
                     ...action.payload.style,
-                    },
-                    key: '',
-                    text: action.payload.text,
-                    wrapperStyle: action.payload.wrapperStyle,
-                    textStyle: action.payload.textStyle,
-                    inputStyle: action.payload.InputStyle,
-        },
+                  },
+                  key: '',
+                  text: '',
+                  wrapperStyle: { '': '' },
+                  textStyle: { '': '' },
+                },
               };
             }
           });
@@ -314,6 +295,7 @@ const layoutSlice = createSlice({
                   [el.name]: [...action.payload.values],
                   text: '',
                   size: action.payload.size === 0 ? 1 : action.payload.size,
+                  style: action.payload.style,
                 },
               };
             }
