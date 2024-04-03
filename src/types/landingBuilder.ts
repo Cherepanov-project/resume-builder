@@ -102,6 +102,7 @@ export type NestedListProps = {
 export type DynamicBlockProps = {
   columns: number;
   props: {
+    style: { [key: string]: string };
     text: string;
     wrapperStyle: { [key: string]: string | number };
     textStyle: { [key: string]: string | number };
@@ -204,8 +205,15 @@ export type T_SectionElementProps = {
   textStyle?: { [key: string]: string };
   inputStyle?: { [key: string]: string };
   url?: string;
-  style?: { [key: string]: string };
-  props?: { [key: string]: string };
+  style: {
+    backgroundColor: string;
+    text: string;
+    color: string;
+    border: string;
+  };
+  props?: {
+    [key: string]: string;
+  };
   RadioGroup?: ISettingsInputItem[];
   CheckboxGroup?: ISettingsInputItem[];
   SelectList?: ISettingsInputItem[];
