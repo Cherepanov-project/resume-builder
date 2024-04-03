@@ -1,28 +1,25 @@
-import { ILayoutBlock } from '@/types/landingBuilder';
-import { FC, useState } from 'react';
+import { ILayoutBlock, T_SwiperPreset } from '@/types/landingBuilder';
+import { FC, useEffect, useState } from 'react';
+import { useAppSellector } from '@/hooks/cvTemplateHooks';
 import { Swiper, SwiperSlide } from 'swiper/react';
+import { swiperPresets } from '@/utils';
 import 'swiper/css';
 import 'swiper/css/navigation';
 import 'swiper/css/pagination';
-import { Navigation, Pagination } from 'swiper/modules';
-import './LayoutBlockSlider.scss';
+import classes from './LayoutBlockSlider.module.scss';
 
 const LayoutBlockSlider: FC<ILayoutBlock> = ({ props }) => {
-  const [filter, setFilter] = useState<string>('default');
+  const presetName = useAppSellector((state) => state.swiper.presetName);
   const { LayoutBlockSlider } = props;
   const slidesList = LayoutBlockSlider;
-
-  const handleClick = (filterValue: string) => {
-    setFilter(filterValue);
-  };
-
+  const [currentPreset, setCurrentPreset] = useState<T_SwiperPreset>(swiperPresets[presetName]);
   const slides = () => {
     return (
       <>
         {slidesList?.map((el) => {
           return (
             <SwiperSlide key={el.id || '123'}>
-              <img src={`${el.value}`} className="sliderPics" />
+              <img src={`${el.value}`} className={classes['slider-pics']} />
             </SwiperSlide>
           );
         })}
@@ -30,90 +27,16 @@ const LayoutBlockSlider: FC<ILayoutBlock> = ({ props }) => {
     );
   };
 
-  const defaultSwiper = () => {
-    return <Swiper>{slides()}</Swiper>;
-  };
+  const swiperInitialization = (preset: object): JSX.Element => (
+    <Swiper {...preset}>{slides()}</Swiper>
+  );
 
-  const navigationSwiper = () => {
-    return (
-      <Swiper navigation={true} modules={[Navigation]} className="mySwiper">
-        {slides()}
-      </Swiper>
-    );
-  };
-
-  const paginationSwiper = () => {
-    return (
-      <Swiper pagination={true} modules={[Pagination]} className="mySwiper">
-        {slides()}
-      </Swiper>
-    );
-  };
-
-  const verticalSwiper = () => {
-    return (
-      <Swiper
-        direction={'vertical'}
-        pagination={{
-          clickable: true,
-        }}
-        modules={[Pagination]}
-        className="mySwiper"
-      >
-        {slides()}
-      </Swiper>
-    );
-  };
-
-  const multipleSwiper = () => {
-    return (
-      <Swiper
-        slidesPerView={3}
-        spaceBetween={30}
-        pagination={{
-          clickable: true,
-        }}
-        modules={[Pagination]}
-        className="mySwiper"
-      >
-        {slides()}
-      </Swiper>
-    );
-  };
-
-  const activeFiler = (value: string) => {
-    let classes = 'slider-filters__filter';
-    if (value === filter) {
-      classes += ' activeSliderFilter';
-    }
-    return classes;
-  };
+  useEffect(() => {
+    setCurrentPreset(swiperPresets[presetName]);
+  }, [presetName]);
 
   return (
-    <div className="slider-global">
-      <div className="slider-filters">
-        <button className={activeFiler('default')} onClick={() => handleClick('default')}>
-          default
-        </button>
-        <button className={activeFiler('navigation')} onClick={() => handleClick('navigation')}>
-          navigation
-        </button>
-        <button className={activeFiler('pagination')} onClick={() => handleClick('pagination')}>
-          pagination
-        </button>
-        <button className={activeFiler('vertical')} onClick={() => handleClick('vertical')}>
-          vertical
-        </button>
-        <button className={activeFiler('multiple')} onClick={() => handleClick('multiple')}>
-          multiple slides
-        </button>
-      </div>
-      {filter === 'default' && defaultSwiper()}
-      {filter === 'navigation' && navigationSwiper()}
-      {filter === 'pagination' && paginationSwiper()}
-      {filter === 'vertical' && verticalSwiper()}
-      {filter === 'multiple' && multipleSwiper()}
-    </div>
+    <div className={classes['slider-global']}>{swiperInitialization(currentPreset.params)}</div>
   );
 };
 

@@ -3,6 +3,8 @@ import { Form, Upload } from 'antd';
 import classes from './SliderSettings.module.scss';
 import { nanoid } from 'nanoid';
 import { ISettingsInputUpdateProps } from '@/types/landingBuilder';
+import SwiperPresetList from '../SwiperPresetList/SwiperPresetList';
+import AddImageLinkInput from '@/components/atoms/AddImageLinkInput';
 
 const SliderSettings = ({ itemsList, setItemsList }: ISettingsInputUpdateProps) => {
   const formItemLayout = {
@@ -31,9 +33,10 @@ const SliderSettings = ({ itemsList, setItemsList }: ISettingsInputUpdateProps) 
       }}
       className={classes.form}
     >
-      {itemsList?.map((image) => {
+      <SwiperPresetList />
+      {/* {itemsList?.map((image) => {
         return <img src={`${image.value}`} key={nanoid()} className={classes.pic}></img>;
-      })}
+      })} */}
 
       <Form.Item>
         <Form.Item name="dragger" valuePropName="fileList" getValueFromEvent={normFile} noStyle>
@@ -52,6 +55,7 @@ const SliderSettings = ({ itemsList, setItemsList }: ISettingsInputUpdateProps) 
             <p className="ant-upload-text">Click or drag file to this area to add slides</p>
           </Upload.Dragger>
         </Form.Item>
+        <AddImageLinkInput itemlist={itemsList} setItemList={setItemsList} />
       </Form.Item>
     </Form>
   );

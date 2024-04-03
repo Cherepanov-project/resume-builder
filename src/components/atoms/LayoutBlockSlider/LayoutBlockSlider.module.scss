@@ -1,6 +1,8 @@
 .swiper {
   width: 100%;
-  height: calc(100% - 80px);
+  height: 100%;
+  padding-right: 5px;
+  padding-bottom: 5px;
 }
 
 .swiper-slide {
@@ -41,5 +43,5 @@
 }
 
 .slider-global {
-  height: calc(100% - 25px);
+  height: 91%;
 }
