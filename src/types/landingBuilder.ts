@@ -225,7 +225,5 @@ export type T_SectionElementProps = {
 };
 
 export interface ILayoutBlock {
-  text: string;
-  color: string;
   props: T_SectionElementProps;
 }
