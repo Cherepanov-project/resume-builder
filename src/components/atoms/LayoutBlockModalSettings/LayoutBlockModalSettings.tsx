@@ -25,10 +25,11 @@ const LayoutBlockModalSettings = () => {
   const colorRef = useRef<HTMLDivElement>(null);
 
   const { gridContainers } = useAppSellector((state) => state.layout);
-  const findName = gridContainers.find((el) =>
-    el.elements.activeElements.find((el) => (el.name === 'LayoutBlockModal' ? el : null)),
+  console.log(gridContainers);
+  const elements = gridContainers.find((el) =>
+    el.elements.activeElements.find((el) => el.name === 'LayoutBlockModal'),
   );
-  const layout = findName?.layout.i;
+  const layout = elements?.layout.i;
 
   useLayoutEffect(() => {
     document.addEventListener('mousedown', handleClick);
