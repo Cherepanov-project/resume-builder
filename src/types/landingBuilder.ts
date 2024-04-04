@@ -177,7 +177,6 @@ export interface IElementProps {
   LayoutBlockSlider?: ISettingsInputItem[];
   MasonryGallery?: ISettingsInputItem[];
   Avatars?: ISettingsInputItem[];
-  BasicRating?: ISettingsInputItem[];
 }
 
 export interface StateSelectList {
