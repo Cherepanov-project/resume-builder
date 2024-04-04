@@ -36,7 +36,6 @@ const BasicToolTipSettings: React.FC<IPropsToolTip> = ({ setElSize }) => {
   const elements = gridContainers.find((el) =>
     el.elements.activeElements.find((el) => el.name === 'BasicRating'),
   );
-  console.log(elements);
   const layout = elements?.layout.i;
 
   useEffect(() => {
