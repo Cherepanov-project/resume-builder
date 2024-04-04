@@ -303,6 +303,11 @@ const layoutSlice = createSlice({
         }
       });
     },
+    clearStore(state) {
+      state.gridContainers = initialState.gridContainers;
+      state.currentDraggableItem = null;
+      state.currentContainer = '';
+    },
   },
 });
 
@@ -323,4 +328,5 @@ export const {
   setCurrentContainer,
   setSectionStyle,
   setProps,
+  clearStore,
 } = layoutSlice.actions;
