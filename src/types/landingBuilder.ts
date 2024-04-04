@@ -219,7 +219,6 @@ export type T_SectionElementProps = {
   SelectList?: ISettingsInputItem[];
   LayoutBlockSlider?: ISettingsInputItem[];
   MasonryGallery?: ISettingsInputItem[];
-  BasicRating?: ISettingsInputItem[];
   Avatars?: ISettingsInputItem[];
   size?: number;
 };
@@ -227,3 +226,22 @@ export type T_SectionElementProps = {
 export interface ILayoutBlock {
   props: T_SectionElementProps;
 }
+
+export type T_SwiperReduxPayload = {
+  payload: {
+    presetName: string;
+  };
+};
+
+export type T_SwiperPreset = {
+  name: string;
+  params: object;
+};
+
+export type T_SwiperPresetList = {
+  default: T_SwiperPreset;
+  navigation: T_SwiperPreset;
+  pagination: T_SwiperPreset;
+  vertical: T_SwiperPreset;
+  multiple: T_SwiperPreset;
+};

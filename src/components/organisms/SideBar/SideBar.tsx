@@ -17,8 +17,8 @@ import classes from './SideBar.module.scss';
 const SideBar: React.FC = () => {
   const [currentTab, setCurrentTab] = useState(0);
   const [isActiveTab, setSctiveTab] = useState(false);
-  const [isPromiseResolve, setPromiseResolved] = useState(false);
   const [sidebarMenuList, setSidebarMenuList] = useState({});
+  const sideMenuTabs = ['Sections', 'Elements', 'Templates', 'Manage'];
   const tabsIcons = [<DashboardIcon />, <ExtensionIcon />, <ViewCarouselIcon />, <Settings />];
 
   useEffect(() => {
@@ -26,7 +26,6 @@ const SideBar: React.FC = () => {
       setSidebarMenuList({ ...sidebarMenuList, ...data });
     });
 
-    setPromiseResolved(true);
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
@@ -43,70 +42,57 @@ const SideBar: React.FC = () => {
   };
 
   const navigate = useNavigate();
-
   return (
     <>
-      {isPromiseResolve && (
-        <Tabs
-          className={classes['sidebar']}
-          value={currentTab}
-          orientation="vertical"
-          aria-label="sidebar"
-          onChange={handleChangeTab}
-        >
-          {Object.keys(sidebarMenuList).map((item, indx) => {
-            return (
-              <Tab
-                key={item}
-                className={classes['tab']}
-                icon={tabsIcons[indx]}
-                aria-label={item}
-                onClick={openPanel}
-              />
-            );
-          })}
-        </Tabs>
-      )}
-
-      {isPromiseResolve &&
-        Object.entries(sidebarMenuList).map(([key, items], indx) => {
+      <Tabs
+        className={classes['sidebar']}
+        value={currentTab}
+        orientation="vertical"
+        aria-label="sidebar"
+        onChange={handleChangeTab}
+      >
+        {sideMenuTabs.map((item, indx) => {
           return (
-            isActiveTab && (
-              <TabPanel
-                key={key}
-                value={currentTab}
-                index={indx}
-                label={key}
-                closePanel={closePanel}
-              >
-                {key === 'Manage' && (
-                  <>
-                    <ManagerButton
-                      onClick={() => {
-                        closePanel();
-                        navigate('sections-creator');
-                      }}
-                      name="Section Creator"
-                    />
-                    <ManagerButton
-                      onClick={() => {
-                        closePanel();
-                        navigate('template-creator');
-                      }}
-                      name="Template Creator"
-                    />
-                  </>
-                )}
-
-                {(items as T_SidebarMenuItem[]).map((item) => {
-                  return (
-                    <NestedList key={item.name} name={item.name} items={item.list}></NestedList>
-                  );
-                })}
-              </TabPanel>
-            )
+            <Tab
+              key={item}
+              className={classes['tab']}
+              icon={tabsIcons[indx]}
+              aria-label={item}
+              onClick={openPanel}
+            />
           );
         })}
+      </Tabs>
+      {Object.entries(sidebarMenuList).map(([key, items], indx) => {
+        return (
+          isActiveTab && (
+            <TabPanel key={key} value={currentTab} index={indx} label={key} closePanel={closePanel}>
+              {key === 'Manage' && (
+                <>
+                  <ManagerButton
+                    onClick={() => {
+                      closePanel();
+                      navigate('sections-creator');
+                    }}
+                    name="Section Creator"
+                  />
+                  <ManagerButton
+                    onClick={() => {
+                      closePanel();
+                      navigate('template-creator');
+                    }}
+                    name="Template Creator"
+                  />
+                </>
+              )}
+
+              {(items as T_SidebarMenuItem[]).map((item) => {
+                return <NestedList key={item.name} name={item.name} items={item.list}></NestedList>;
+              })}
+            </TabPanel>
+          )
+        );
+      })}
     </>
   );
 };
