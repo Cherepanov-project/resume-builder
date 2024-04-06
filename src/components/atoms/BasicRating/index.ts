@@ -1,8 +1,6 @@
 import BasicRating from "./BasicRating";
 import { nanoid } from "nanoid";
 
-console.log(nanoid())
-
 export const props = {
   name: 'BasicRating',
   type: 'Simple Blocks',

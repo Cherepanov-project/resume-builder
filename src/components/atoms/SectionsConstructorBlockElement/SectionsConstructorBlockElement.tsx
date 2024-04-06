@@ -13,7 +13,7 @@ const SectionsConstructorBlockElement: React.FC<SectionsConstructorBlockElementT
   params,
 }) => {
   const props = params;
-  console.log(props)
+  console.log(props);
 
   const isImg = false || params.key === 'image';
   const isBtn = false || params.key === 'button';

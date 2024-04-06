@@ -49,11 +49,23 @@ const ElementSpecificSettings = () => {
   const dispatch = useDispatch();
 
   const settingsOptionsValues = [
+    'Avatars',
+    'MasonryGallery',
+    'BasicRating',
+    'BasicTooltip',
+    'CheckboxGroup',
+    'RadioGroup',
+    'ToggleButtonsMultiple',
     'LayoutBlockTitle',
     'LayoutBlockParagraph',
     'LayoutBlockImage',
     'LayoutBlockButton',
     'LayoutBlockAnchor',
+    'LayoutBlockSlider',
+    'LayoutBlockVideoPlayer',
+    'LayoutBlockModal',
+    'SelectList',
+    'TitleH1',
   ];
 
   const handleUpdate = (type: string, value: string, i: number): void => {
@@ -62,8 +74,11 @@ const ElementSpecificSettings = () => {
       case 'type': {
         const label = getLabel(value);
         newValue[i].name = value;
-        newValue[i].type = value;
-        newValue[i].props.key = label.title.key;
+        newValue[i].type = label.label;
+        newValue[i].props.key = label.key;
+        if (label.value) {
+          newValue[i].props.value = label.title.value;
+        }
         dispatch(editRowDate({ row, date: newValue }));
         break;
       }
@@ -83,6 +98,7 @@ const ElementSpecificSettings = () => {
     }
   };
 
+  // Надо добавить все варианты элементов из списка опций, wrapperStyle и textStyle должны меняться в зависимости от настроек стиля
   const getLabel = (blockValue: string) => {
     switch (blockValue) {
       default:
@@ -170,6 +186,17 @@ const ElementSpecificSettings = () => {
             wrapperStyle: { textAlign: 'center', width: '100%', height: '100%' },
             textStyle: { fontSize: '16px', margin: '0px', width: '100%' },
             // inputStyle: { width: '100%', border: 'none' },
+          },
+        };
+      case 'BasicRating':
+        return {
+          label: 'Basic Elements',
+          value: 'BasicRating',
+          key: 'rating',
+          title: {
+            key: 'rating',
+            value: '0',
+            text: false,
           },
         };
     }

@@ -6,7 +6,7 @@ import React, { useEffect, useLayoutEffect, useRef, useState } from 'react';
 import ContainerDIVSettings from '@/components/atoms/ContainerDIVSettings';
 import InputUpdate from '../InputUpdate';
 import ButtonsSettingsPanel from '@/components/atoms/ButtonsSettingsPanel';
-import { IElementProps, ISettingsInputItem } from '@/types/landingBuilder';
+import { IElementProps, ISettingsInputItem, T_BlockElement } from '@/types/landingBuilder';
 import SliderSettings from '../SliderSettings';
 import { Alert, Box, Typography } from '@mui/material';
 import BasicRatingSettings from '@/components/atoms/BasicRatingSettings';
@@ -42,9 +42,11 @@ const SettingsPanel: React.FC = () => {
     dispatch(closePanel());
   };
 
-  const { activeElements } = useAppSellector((state) => state.layout);
-  
-  
+  const { gridContainers } = useAppSellector((state) => state.layout);
+  const activeElements: T_BlockElement[] = [];
+  for (let i = 0; i < gridContainers?.length; i++) {
+    gridContainers[i].elements.activeElements.forEach((elem) => activeElements.push(elem));
+  }
   const currentElement = activeElements.find((item) => item.layout.i === id);
   const props: IElementProps | undefined = currentElement?.props;
   const name = currentElement?.name;
@@ -62,7 +64,7 @@ const SettingsPanel: React.FC = () => {
     } else if (name === 'MasonryGallery') {
       return props?.MasonryGallery;
     } else if (name === 'Avatars') {
-      return props?.Avatars
+      return props?.Avatars;
     }
   }
 
@@ -75,8 +77,8 @@ const SettingsPanel: React.FC = () => {
   const [prevElementsSize, setPrevElementsSize] = useState(size || 1);
   const [style, setStyle] = useState({});
   const [prevList, setPrevList] = useState(currentList || []);
-  const [colorCSS, setColorCSS] = useState({})
-  const [elSize, setElSize] = useState({})
+  const [colorCSS, setColorCSS] = useState({});
+  const [elSize, setElSize] = useState({});
 
   useEffect(() => {
     setPrevList(currentList || []);
@@ -102,7 +104,7 @@ const SettingsPanel: React.FC = () => {
   const showRatingSettings = name == 'BasicRating';
   const showBasicToolTipSettings = name === 'BasicTooltip';
   const showLayoutBlockButtonSettings = name === 'LayoutBlockButton';
-  const showLayoutBlockModalSettings = name === 'LayoutBlockModal'
+  const showLayoutBlockModalSettings = name === 'LayoutBlockModal';
 
   return isShown ? (
     <Box ref={panelRef} className="list__wrap">
@@ -126,7 +128,7 @@ const SettingsPanel: React.FC = () => {
           setElementsSize={setElementsSize}
         />
       )}
-      
+
       {isButtonsPanelVisible && (
         <InputUpdate
           itemsList={itemsList}
@@ -137,19 +139,9 @@ const SettingsPanel: React.FC = () => {
         />
       )}
 
-      {showRatingSettings && (
-        <BasicRatingSettings
-          colorCSS={colorCSS}
-          setColorCSS={setColorCSS}
-        />
-      )}
+      {showRatingSettings && <BasicRatingSettings colorCSS={colorCSS} setColorCSS={setColorCSS} />}
 
-      {showBasicToolTipSettings && (
-      <BasicToolTipSettings 
-        elSize={elSize}
-        setElSize={setElSize}
-        />
-      )}
+      {showBasicToolTipSettings && <BasicToolTipSettings elSize={elSize} setElSize={setElSize} />}
 
       {showLayoutBlockButtonSettings && (
         <LayoutBlockButtonSettings 
@@ -157,13 +149,14 @@ const SettingsPanel: React.FC = () => {
         />
       )}
 
-      {showLayoutBlockModalSettings && (
-        <LayoutBlockModalSettings 
-        />
-      )}
+      {showLayoutBlockModalSettings && <LayoutBlockModalSettings />}
 
       <Box className="settings-panel">
-        {type === 'section' && !showBasicToolTipSettings && !showRatingSettings && !showLayoutBlockButtonSettings && !showLayoutBlockModalSettings && <ContainerDIVSettings setStyle={setStyle} />}
+        {type === 'section' &&
+          !showBasicToolTipSettings &&
+          !showRatingSettings &&
+          !showLayoutBlockButtonSettings &&
+          !showLayoutBlockModalSettings && <ContainerDIVSettings setStyle={setStyle} />}
       </Box>
 
       <ButtonsSettingsPanel
@@ -181,4 +174,3 @@ const SettingsPanel: React.FC = () => {
 };
 
 export default SettingsPanel;
- 

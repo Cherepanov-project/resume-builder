@@ -87,7 +87,7 @@ const SectionsConstructorRowEl: React.FC<SectionsConstructorRowElType> = ({
 
   const renderColumns = () => {
     const r: string = String(row);
-    console.log(layoutRow)
+    console.log(layoutRow);
     return layoutRow.map((el, idx) => {
       const i = idx + 1;
 
@@ -227,8 +227,8 @@ const SectionsConstructorRowEl: React.FC<SectionsConstructorRowElType> = ({
           sx={{
             opacity: '0.2',
             position: 'absolute',
-            top: '-40px',
-            right: '0',
+            right: '100%',
+            top: '-10px',
             '& .MuiFab-primary': { width: 36, height: 36 },
             '&:hover': {
               opacity: '1',
@@ -243,7 +243,7 @@ const SectionsConstructorRowEl: React.FC<SectionsConstructorRowElType> = ({
               key={action.name}
               icon={action.icon}
               tooltipTitle={action.name}
-              onClick={() => action.onClick(action.type, action.value)}
+              onClick={() => action.onClick(action.type!, action.value!)}
             />
           ))}
         </SpeedDial>

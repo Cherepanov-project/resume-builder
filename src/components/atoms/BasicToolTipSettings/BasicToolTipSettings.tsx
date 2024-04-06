@@ -6,7 +6,7 @@ import { useEffect } from 'react';
 import Box from '@mui/material/Box';
 import Slider from '@mui/material/Slider';
 import Typography from '@mui/material/Typography';
-import './BasicToolTipSettings.scss'
+import './BasicToolTipSettings.scss';
 
 const MAX = 20;
 const MIN = 0;
@@ -22,62 +22,55 @@ const marks = [
 ];
 
 export interface IPropsToolTip {
-    elSize: {}
-    setElSize: React.Dispatch<React.SetStateAction<React.CSSProperties>>;
-  }
+  elSize: unknown;
+  setElSize: React.Dispatch<React.SetStateAction<React.CSSProperties>>;
+}
 
-const BasicToolTipSettings: React.FC<IPropsToolTip> = ({setElSize}) => {
-    const dispatch = useAppDispatch();
-    
-    const [val, setVal] = React.useState<number>(MIN);
+const BasicToolTipSettings: React.FC<IPropsToolTip> = ({ setElSize }) => {
+  const dispatch = useAppDispatch();
 
-    const { activeElements } = useAppSellector((state) => state.layout);
-    const findName = activeElements.find(el => el.name === 'BasicTooltip'? el: null)
-    const layout = findName?.layout.i
-  
-    useEffect(() => {
-      // вывести в отдельную функцию
-      setElSize({width: val})
-      dispatch(setSectionStyle({i:layout, style: {size: val}}))
-      // eslint-disable-next-line react-hooks/exhaustive-deps
-    }, [val]);
-  
-  
-  
+  const [val, setVal] = React.useState<number>(MIN);
+
+  const { gridContainers } = useAppSellector((state) => state.layout);
+  console.log(gridContainers);
+  const elements = gridContainers.find((el) =>
+    el.elements.activeElements.find((el) => el.name === 'BasicRating'),
+  );
+  const layout = elements?.layout.i;
+
+  useEffect(() => {
+    // вывести в отдельную функцию
+    setElSize({ width: val });
+    dispatch(setSectionStyle({ i: layout, style: { size: val } }));
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [val]);
+
   const handleChange = (_: Event, newValue: number | number[]) => {
     setVal(newValue as number);
   };
 
   return (
     <>
-      <span className='title'>set size</span>
-    <Box className='wrapper' sx={{ width: 250 }}>
-      <Slider
-        marks={marks}
-        step={5}
-        value={val}
-        valueLabelDisplay="auto"
-        min={MIN}
-        max={MAX}
-        onChange={handleChange}
-      />
-      <Box sx={{ display: 'flex', justifyContent: 'space-between' }}>
-        <Typography
-          variant="body2"
-          onClick={() => setVal(MIN)}
-          sx={{ cursor: 'pointer' }}
-        >
-          {MIN} min
-        </Typography>
-        <Typography
-          variant="body2"
-          onClick={() => setVal(MAX)}
-          sx={{ cursor: 'pointer' }}
-        >
-          {MAX} max
-        </Typography>
+      <span className="title">set size</span>
+      <Box className="wrapper" sx={{ width: 250 }}>
+        <Slider
+          marks={marks}
+          step={5}
+          value={val}
+          valueLabelDisplay="auto"
+          min={MIN}
+          max={MAX}
+          onChange={handleChange}
+        />
+        <Box sx={{ display: 'flex', justifyContent: 'space-between' }}>
+          <Typography variant="body2" onClick={() => setVal(MIN)} sx={{ cursor: 'pointer' }}>
+            {MIN} min
+          </Typography>
+          <Typography variant="body2" onClick={() => setVal(MAX)} sx={{ cursor: 'pointer' }}>
+            {MAX} max
+          </Typography>
+        </Box>
       </Box>
-    </Box>
     </>
   );
 };

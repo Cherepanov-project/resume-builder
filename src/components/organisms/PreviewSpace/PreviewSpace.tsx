@@ -6,6 +6,7 @@ import { DynamicComponentRendererProps, T_BlockElement } from '@/types/landingBu
 import ComponentPreloader from '@atoms/ComponentPreloader';
 import Box from '@mui/material/Box';
 import Typography from '@mui/material/Typography';
+import { IGridContainers } from '@/store/landingBuilder/layoutSlice';
 
 // ========================================================================== \\
 // Отрисовываем динамический компонент
@@ -38,8 +39,8 @@ const MemoDynamicComponentRenderer = memo(DynamicComponentRenderer);
 // ========================================================================== \\
 
 const PreviewSpace = () => {
+  const gridContainers = useAppSellector((state) => state.layout.gridContainers);
   const previewSetting = useAppSellector((state) => state.utility.previewOpened);
-  let activeElements = useAppSellector((state) => state.layout.activeElements);
   const layoutDate = useAppSellector((state) => state.sectionsManager.layoutDate);
   // расчет координаты x элемента ( зависит от суммы w предыдущих в ряду )
   const calcX = (row: number, col: number) => {
@@ -68,8 +69,10 @@ const PreviewSpace = () => {
       return 0;
     }
   };
+  const gridContainersPreview: IGridContainers[] = JSON.parse(JSON.stringify(gridContainers));
+  let activeElements: T_BlockElement[] = useMemo(() => [], []);
   if (previewSetting === 'section') {
-    const arr = [];
+    const arr: T_BlockElement[] = [];
     const data = Object.values(layoutDate);
     for (let i = 0; i < data.length; i++) {
       arr.push(...data[i]);
@@ -77,30 +80,33 @@ const PreviewSpace = () => {
 
     // сохранение только координат блоков, у которых выбраны элементы из Select options
     const filteredArr = arr.filter((el) => el.name);
-
-    activeElements = filteredArr.map((el) => ({
-      name: el.name,
-      source: 'atoms',
-      layout: {
-        i: String(el.layout.i),
-        x: calcX(Number(String(el.layout.i).slice(0, 1)), Number(String(el.layout.i).slice(1))),
-        y: calcY(Number(String(el.layout.i).slice(0, 1))), // el.y,
-        w: el.layout.w,
-        h: el.layout.h,
-      },
-      props: el.props,
-    }));
+    for (const container of gridContainersPreview) {
+      activeElements = activeElements.concat(container.elements.activeElements);
+      container.elements.activeElements = filteredArr.map((el) => ({
+        name: el.name,
+        source: 'atoms',
+        layout: {
+          i: String(el.layout.i),
+          x: calcX(Number(String(el.layout.i).slice(0, 1)), Number(String(el.layout.i).slice(1))),
+          y: calcY(Number(String(el.layout.i).slice(0, 1))), // el.y,
+          w: el.layout.w,
+          h: el.layout.h,
+        },
+        props: el.props,
+      }));
+    }
   }
-  console.log(activeElements);
 
   // мемоизируем массив Layout
   const previewLayout: ResponsiveGridLayout.Layout[] = useMemo(() => {
+    // console.log('memo')
     return activeElements.reduce((acc: Layout[], el: T_BlockElement) => {
       const previewElem = { ...el.layout };
       previewElem.isDraggable = false;
       previewElem.static = true;
       return [...acc, previewElem];
     }, []);
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [activeElements]);
 
   //сортировка может потребоваться для настройки респонсива
@@ -134,45 +140,48 @@ const PreviewSpace = () => {
         alignItems: 'center',
       }}
     >
-      <Box
-        sx={{
-          display: 'grid',
-          gridAutoRows: '30px',
-          gridAutoFlow: 'row',
-          gridTemplateColumns: ' repeat(6, 1fr)',
-          width: '100%',
-          p: '0 1em',
-          gap: '8px',
-          alignItems: 'stretch',
-          justifyItems: 'stretch',
-        }}
-      >
-        {activeElements.map((el) => {
-          return (
-            <Box
-              key={el.layout.i}
-              sx={{
-                gridColumnStart: `${el.layout.x + 1}`,
-                gridColumnEnd: `span ${el.layout.w}`,
-                gridRowStart: `${el.layout.y + 1}`,
-                gridRowEnd: `span ${el.layout.h}`,
-                backgroundColor: 'white',
-                borderRadius: '2px',
-              }}
-              className={`${el.layout.i}`}
-            >
-              <MemoDynamicComponentRenderer
-                Component={el.name}
-                source={el.source || 'atoms'}
-                props={el.props}
-                columns={el.columns || 1}
-                children={el.children}
-                layout={el.layout}
-              />
-            </Box>
-          );
-        })}
-      </Box>
+      {gridContainersPreview.map((container) => (
+        <Box
+          key={container.id}
+          sx={{
+            display: 'grid',
+            gridAutoRows: '30px',
+            gridAutoFlow: 'row',
+            gridTemplateColumns: ' repeat(6, 1fr)',
+            width: '100%',
+            p: '0 1em',
+            gap: '8px',
+            alignItems: 'stretch',
+            justifyItems: 'stretch',
+          }}
+        >
+          {container.elements.activeElements.map((el) => {
+            return (
+              <Box
+                key={el.layout.i}
+                sx={{
+                  gridColumnStart: `${el.layout.x + 1}`,
+                  gridColumnEnd: `span ${el.layout.w}`,
+                  gridRowStart: `${el.layout.y + 1}`,
+                  gridRowEnd: `span ${el.layout.h}`,
+                  backgroundColor: 'white',
+                  borderRadius: '2px',
+                }}
+                className={`${el.layout.i}`}
+              >
+                <MemoDynamicComponentRenderer
+                  Component={el.name}
+                  source={el.source || 'atoms'}
+                  props={el.props}
+                  columns={el.columns || 1}
+                  children={el.children}
+                  layout={el.layout}
+                />
+              </Box>
+            );
+          })}
+        </Box>
+      ))}
       <Typography component="span" display="inline" sx={{ pt: '20px' }}>
         Copyright © 2024 Landing Builder DreamTeam ltd
       </Typography>
