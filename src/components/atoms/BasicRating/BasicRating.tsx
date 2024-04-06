@@ -6,13 +6,14 @@ import Rating from '@mui/material/Rating';
 import FavoriteIcon from '@mui/icons-material/Favorite';
 import FavoriteBorderIcon from '@mui/icons-material/FavoriteBorder';
 
-const BasicRating = () => {
+const BasicRating = (props) => {
   const { activeElements } = useAppSellector((state) => state.layout);
   const findName = activeElements.find(el => el.name === 'BasicRating'? el: null)
 
 
   const color = activeElements?.map(el => el.props.style?.color)
   const count: number = Number(activeElements?.map(el => el.props.style?.count).join())
+  console.log(props)
 
   const StyledRating = styled(Rating)({
     '& .MuiRating-iconFilled': {

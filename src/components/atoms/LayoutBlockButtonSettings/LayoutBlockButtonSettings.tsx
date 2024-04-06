@@ -5,11 +5,12 @@ import React, { useEffect, useLayoutEffect, useRef, useState } from 'react';
 import { HexColorPicker } from 'react-colorful';
 import './LayoutBlockButtonSettings.scss';
 
-// export interface IProps {
-//     setColors: React.Dispatch<React.SetStateAction<React.CSSProperties>>;
-//   }
+export interface IProps {
+    style: {},
+    setStyle: React.Dispatch<React.SetStateAction<React.CSSProperties>>;
+  }
 
-const LayoutBlockButtonSettings = () => {
+const LayoutBlockButtonSettings = ({setStyle}) => {
     const dispatch = useAppDispatch();
 
     const [bgColor, setBGColor] = useState('#ffff');
@@ -39,6 +40,7 @@ const LayoutBlockButtonSettings = () => {
   
     useEffect(() => {
       // вывести в отдельную функцию
+      setStyle({style: {backgroundColor: bgColor, border: `2px solid ${borderColor}`, color: textColor}, text:  text, url: url,  wrapperStyle: { textAlign: 'center' },textStyle: { fontSize: '16px'}, inputStyle: { width: '100%', height: '100%', border: 'none' }})
       dispatch(setSectionStyle({i: layout, style: {backgroundColor: bgColor, border: `2px solid ${borderColor}`, color: textColor}, text:  text, url: url,  wrapperStyle: { textAlign: 'center' }, 
       textStyle: { fontSize: '16px'}, inputStyle: { width: '100%', height: '100%', border: 'none' }}))
       // eslint-disable-next-line react-hooks/exhaustive-deps

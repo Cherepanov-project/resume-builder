@@ -12,6 +12,7 @@ const ButtonsSettingsPanel = ({
   СheckingLabel,
   onClose,
   elementsSize,
+  style,
   setElementsSize, // id, style
 }: IButtonsSettingsPanelProps) => {
   const dispatch = useAppDispatch();
@@ -22,6 +23,7 @@ const ButtonsSettingsPanel = ({
     id: elementId,
     values: itemsList,
     size: elementsSize,
+    style: style
   };
 
   const handleApply = () => {
