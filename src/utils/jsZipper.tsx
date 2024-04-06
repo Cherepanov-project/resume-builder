@@ -16,7 +16,7 @@ const createZip = async () => {
 
     const zip = new JSZip();
     const htmlElement = document.querySelector('[class^="previewSpace"]');
-    const htmlContent = htmlElement?.innerHTML;
+    const htmlContent = htmlElement!.innerHTML;
     const styleSheetsArray = Array.from(document.styleSheets) as CSSStyleSheet[];
     let cssContent = '';
     for (const styleSheet of styleSheetsArray) {
