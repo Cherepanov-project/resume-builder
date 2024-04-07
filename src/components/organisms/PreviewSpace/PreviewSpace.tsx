@@ -6,7 +6,7 @@ import { DynamicComponentRendererProps, T_BlockElement } from '@/types/landingBu
 import ComponentPreloader from '@atoms/ComponentPreloader';
 import Box from '@mui/material/Box';
 import Typography from '@mui/material/Typography';
-import { GridContainers } from '@/store/landingBuilder/layoutSlice';
+import { IGridContainers } from '@/store/landingBuilder/layoutSlice';
 
 // ========================================================================== \\
 // Отрисовываем динамический компонент
@@ -69,10 +69,10 @@ const PreviewSpace = () => {
       return 0;
     }
   };
-  const gridContainersPreview: GridContainers[] = JSON.parse(JSON.stringify(gridContainers));
-  let activeElements: T_BlockElement[] = [];
+  const gridContainersPreview: IGridContainers[] = JSON.parse(JSON.stringify(gridContainers));
+  let activeElements: T_BlockElement[] = useMemo(() => [], []);
   if (previewSetting === 'section') {
-    const arr = [];
+    const arr: T_BlockElement[] = [];
     const data = Object.values(layoutDate);
     for (let i = 0; i < data.length; i++) {
       arr.push(...data[i]);
@@ -106,6 +106,7 @@ const PreviewSpace = () => {
       previewElem.static = true;
       return [...acc, previewElem];
     }, []);
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [activeElements]);
 
   //сортировка может потребоваться для настройки респонсива

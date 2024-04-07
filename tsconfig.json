@@ -13,6 +13,9 @@
     "jsx": "react-jsx",
     "noEmit": true, // or "emitDeclarationOnly": true, depending on your needs
     "skipLibCheck": true,
+    "strict": true,
+    "forceConsistentCasingInFileNames": true,
+    "noImplicitAny": false,
 
     "paths": {
       "@/*": ["./src/*"],

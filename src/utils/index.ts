@@ -115,8 +115,10 @@ const paramsFixer = (innerParams: { modules?: object; pagination?; navigation? }
   return innerParams;
 };
 
-export const logicImport = (content: string, swiperPreset?: string): string => {
-  let importString: string = ``;
+export const logicImport = (content: string, swiperPreset: string) => {
+  // eslint-disable-next-line no-useless-catch
+  try {
+    let importString: string = ``;
 
   const innerParams = paramsFixer({ ...swiperPresets[swiperPreset].params });
   if (content.includes('swiper')) {
@@ -129,7 +131,12 @@ export const logicImport = (content: string, swiperPreset?: string): string => {
     `;
     return importString;
   }
+  } catch (error) {
+    throw(error)
+  }
 };
+
+//dfdfdfdddddddddddddddddddddddddddddddddd
 
 export const swiperPresets: T_SwiperPresetList = {
   default: {
