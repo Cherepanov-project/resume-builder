@@ -69,6 +69,7 @@ const ElementSpecificSettings = () => {
   ];
 
   const handleUpdate = (type: string, value: string, i: number): void => {
+    console.log('f', type, value);
     const newValue = JSON.parse(JSON.stringify(layoutRow));
     switch (type) {
       case 'type': {
@@ -76,9 +77,12 @@ const ElementSpecificSettings = () => {
         newValue[i].name = value;
         newValue[i].type = label.label;
         newValue[i].props.key = label.key;
+        newValue[i].layout = label.layout;
         if (label.value) {
           newValue[i].props.value = label.title.value;
         }
+        if (label.url) newValue[i].url = label.url;
+        // console.log(row, newValue);
         dispatch(editRowDate({ row, date: newValue }));
         break;
       }
@@ -105,6 +109,7 @@ const ElementSpecificSettings = () => {
         return {
           value: '',
           label: '',
+          url: '',
           title: {
             key: '',
             text: '',
@@ -112,11 +117,29 @@ const ElementSpecificSettings = () => {
             textStyle: { display: 'block' },
           },
         };
+      case 'Avatars':
+        return {
+          label: 'Avatar & Images',
+          value: 'Avatars',
+          key: 'avatar',
+          layout: { i: '', x: 0, y: 0, w: 1, h: 7 },
+          url: url,
+          props: {
+            Avatars: [],
+          },
+          title: {
+            key: 'avatar',
+            text: '',
+            wrapperStyle: { textAlign: 'center' },
+            textStyle: { border: 'none', height: '100%', width: '100%' },
+          },
+        };
       case 'LayoutBlockTitle':
         return {
           label: 'Block Title',
           value: 'LayoutBlockTitle',
           key: 'title',
+          layout: { i: '', x: 0, y: 0, w: 1, h: 3 },
           title: {
             key: 'title',
             text: text,
@@ -130,6 +153,7 @@ const ElementSpecificSettings = () => {
           label: 'Block Paragraph',
           value: 'LayoutBlockParagraph',
           key: 'paragraph',
+          layout: { i: '', x: 0, y: 0, w: 1, h: 6 },
           title: {
             key: 'paragraph',
             text: text,
@@ -140,9 +164,10 @@ const ElementSpecificSettings = () => {
         };
       case 'LayoutBlockImage':
         return {
-          label: 'Block Image',
+          label: 'Avatar & Images',
           value: 'LayoutBlockImage',
           key: 'image',
+          layout: { i: null, x: 0, y: 0, w: 1, h: 6 },
           title: {
             key: 'image',
             text: text,
@@ -152,9 +177,10 @@ const ElementSpecificSettings = () => {
         };
       case 'LayoutBlockButton':
         return {
-          label: 'Block Button',
+          label: 'Simple Blocks',
           value: 'LayoutBlockButton',
           key: 'button',
+          layout: { i: null, x: 0, y: 0, w: 1, h: 2 },
           title: {
             key: 'button',
             text: text,
@@ -179,6 +205,7 @@ const ElementSpecificSettings = () => {
           label: 'Block Anchor',
           value: 'LayoutBlockAnchor',
           key: 'anchor',
+          layout: { i: '', x: 0, y: 0, w: 1, h: 1 },
           title: {
             key: 'anchor',
             text: text,
@@ -190,13 +217,60 @@ const ElementSpecificSettings = () => {
         };
       case 'BasicRating':
         return {
-          label: 'Basic Elements',
+          label: 'Simple Blocks',
           value: 'BasicRating',
           key: 'rating',
+          layout: { i: '', x: 0, y: 0, w: 1, h: 1 },
+          children: [],
           title: {
             key: 'rating',
             value: '0',
             text: false,
+          },
+        };
+      case 'BasicTooltip':
+        return {
+          label: 'Simple Blocks',
+          value: 'BasicTooltip',
+          key: 'tooltip',
+          layout: { i: '', x: 0, y: 0, w: 1, h: 2 },
+          children: [],
+          title: {
+            key: 'tooltip',
+            value: '0',
+            text: false,
+          },
+        };
+      case 'CheckboxGroup':
+        return {
+          label: 'CheckBoxes',
+          value: 'CheckboxGroup',
+          key: 'checkbox',
+          layout: { i: null, x: 0, y: 0, w: 1, h: 3 },
+          children: [],
+          title: {
+            key: 'checkbox',
+            value: '0',
+            text: false,
+          },
+          props: {
+            CheckboxGroup: [],
+          },
+        };
+      case 'RadioGroup':
+        return {
+          label: 'CheckBoxes',
+          value: 'RadioGroup',
+          key: 'radiobox',
+          layout: { i: null, x: 0, y: 0, w: 1, h: 3 },
+          children: [],
+          title: {
+            key: 'radiobox',
+            value: '0',
+            text: false,
+          },
+          props: {
+            RadioGroup: [],
           },
         };
     }
@@ -233,19 +307,7 @@ const ElementSpecificSettings = () => {
                   </Select>
                 </FormControl>
               </Item>
-              <Item>
-                <FormControl>
-                  <TextField
-                    label="Enter target text:"
-                    value={text}
-                    onChange={(e: React.ChangeEvent<HTMLTextAreaElement>) => {
-                      text = e.target.value;
-                      handleUpdate('text', e.target.value, col - 1);
-                    }}
-                  />
-                </FormControl>
-              </Item>
-              {type === 'LayoutBlockAnchor' ? (
+              {type === 'LayoutBlockAnchor' || type === 'Avatars' || type === 'LayoutBlockImage' ? (
                 <Item>
                   <FormControl>
                     <TextField
@@ -259,6 +321,20 @@ const ElementSpecificSettings = () => {
                   </FormControl>
                 </Item>
               ) : null}
+              {type !== 'LayoutBlockImage' && (
+                <Item>
+                  <FormControl>
+                    <TextField
+                      label="Enter target text:"
+                      value={text}
+                      onChange={(e: React.ChangeEvent<HTMLTextAreaElement>) => {
+                        text = e.target.value;
+                        handleUpdate('text', e.target.value, col - 1);
+                      }}
+                    />
+                  </FormControl>
+                </Item>
+              )}
             </Stack>
           </form>
         </AccordionDetails>

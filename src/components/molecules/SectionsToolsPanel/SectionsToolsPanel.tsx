@@ -113,16 +113,16 @@ const SectionsToolsPanel = ({ setError, setSeverity }) => {
 
   // расчет координаты x элемента ( зависит от суммы w предыдущих в ряду )
   const calcX = (row: number, col: number) => {
-    console.log(row, col);
+    // console.log(row, col);
     if (col !== 1) {
       let sum = 0;
       for (let i = 1; i < col; i++) {
-        console.log(layoutDate[row][i].layout.w);
+        // console.log(layoutDate[row][i].layout.w);
         sum += layoutDate[row][i - 1].layout.w;
       }
       return sum;
     } else {
-      console.log(layoutDate[row][col - 1].layout.w);
+      // console.log(layoutDate[row][col - 1].layout.w);
       return 0;
     }
   };

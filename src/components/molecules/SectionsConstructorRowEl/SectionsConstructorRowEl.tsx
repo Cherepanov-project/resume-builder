@@ -34,6 +34,7 @@ const SectionsConstructorRowEl: React.FC<SectionsConstructorRowElType> = ({
 
   const layoutDate = useAppSellector((state) => state.sectionsManager.layoutDate);
   const layoutRow = layoutDate[row];
+  // console.log(layoutRow);
   const columns = layoutRow.length;
   const [gridLayoutStyle, setGridLayoutStyle] = useState({
     display: 'grid',
@@ -105,6 +106,7 @@ const SectionsConstructorRowEl: React.FC<SectionsConstructorRowElType> = ({
           opacity: '0.8',
         },
       };
+      console.log('el', el);
       return (
         <Box
           key={i}
@@ -113,7 +115,7 @@ const SectionsConstructorRowEl: React.FC<SectionsConstructorRowElType> = ({
         >
           {`${r}${i}` === id ? renderControlOfSize() : null}
           {/* Предпросмотр содержимого секции */}
-          <SectionsConstructorBlockElement params={el.props} />
+          <SectionsConstructorBlockElement params={el} />
         </Box>
       );
     });

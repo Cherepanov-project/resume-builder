@@ -72,7 +72,7 @@ const layoutSlice = createSlice({
           x: layoutItem.x,
           y: layoutItem.y,
           w: draggableItem.layout.w,
-          h: draggableItem.layout.h,
+          h: draggableItem.layout.h + 1,
           minW: draggableItem.layout.minW || 0,
           maxW: draggableItem.layout.maxW ?? 6,
           minH: draggableItem.layout.minW || 0,
@@ -297,6 +297,7 @@ const layoutSlice = createSlice({
         if (container.id === containerID) {
           container.elements.activeElements.forEach((el, index) => {
             if (el.layout.i === action.payload.id) {
+              // console.log('h', action.payload)
               state.gridContainers[i].elements.activeElements[index] = {
                 ...el,
                 props: {

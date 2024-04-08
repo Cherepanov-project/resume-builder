@@ -1,24 +1,21 @@
 import * as React from 'react';
 import Box from '@mui/material/Box';
-import {default as Rate} from '@mui/material/Rating';
-import { T_BlockElement } from '@/types/landingBuilder';
+import { default as Rate } from '@mui/material/Rating';
 
-const BasicRating: React.FC<T_BlockElement> = ( props ) => {
-
+const BasicRating: React.FC = () => {
   return (
     <Box
       sx={{
         '& > legend': { mt: 2 },
       }}
     >
-       <Rate
+      <Rate
         name="simple-controlled"
-        value={props.value}
         onChange={(newValue) => {
-          console.log(newValue)
+          console.log(newValue);
         }}
-      />      
+      />
     </Box>
   );
-}
+};
 export default BasicRating;

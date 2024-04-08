@@ -40,13 +40,13 @@ const sectionsManagerSlice = createSlice({
     // изменение всей секции
     setLayoutDate(state, action) {
       state.layoutDate = action.payload;
-      console.log(state.layoutDate);
+      // console.log('action', action.payload);
     },
     // изменение ряда
     editRowDate(state, action) {
       const { row, date } = action.payload;
       state.layoutDate = { ...state.layoutDate, [row]: date };
-      console.log(state.layoutDate);
+      console.log('data', date);
     },
     // состояние меню параметров
     handleSettingsMenu(state, action) {

@@ -2,17 +2,18 @@ import { ILayoutBlock } from '@/types/landingBuilder';
 import { useState, FC, useEffect } from 'react';
 
 const LayoutBlockImage: FC<ILayoutBlock> = ({ props }) => {
-  const [url, setUrl] = useState<string>(props.text);
+  const [url, setUrl] = useState<string>(props.url);
 
   const [isEditing, setIsEditing] = useState<boolean>(false);
 
   useEffect(() => {
-    setUrl(props.text);
+    setUrl(props.url);
+    console.log('hello', props.url);
   }, [props]);
 
   const wrapperStyle = {
     ...props.textStyle,
-    backgroundImage: `url(${url})`,
+    // backgroundImage: `url(${url})`,
     backgroundSize: 'contain',
     height: '100%',
     width: 'auto',
@@ -53,11 +54,14 @@ const LayoutBlockImage: FC<ILayoutBlock> = ({ props }) => {
       </div>
     );
   };
-
+  console.log('vgq', props, url);
   return (
     <>
-      <div style={wrapperStyle} onContextMenu={(e) => handleDoubleClick(e)}>
-        .{isEditing && inputPannel()}
+      <div
+        style={{ ...wrapperStyle, backgroundImage: `url(${url || props.text})` }}
+        onContextMenu={(e) => handleDoubleClick(e)}
+      >
+        {isEditing && inputPannel()}
       </div>
     </>
   );

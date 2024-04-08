@@ -109,19 +109,20 @@ const ContainerDIV: React.FC<ContainerDIVProps> = ({ children, layout, columns, 
         isDroppable
         onDrop={handleDropElement}
       >
-        {children.map((el, indx) => {
-          return (
-            <div className={classes['item']} key={workspaceLayout[indx].i}>
-              <DynamicComponentRenderer
-                Component={el.name}
-                props={el.props}
-                source={el.source}
-                children={el.children}
-                layout={el.layout}
-              />
-            </div>
-          );
-        })}
+        {children &&
+          children.map((el, indx) => {
+            return (
+              <div className={classes['item']} key={workspaceLayout[indx].i}>
+                <DynamicComponentRenderer
+                  Component={el.name}
+                  props={el.props}
+                  source={el.source}
+                  children={el.children}
+                  layout={el.layout}
+                />
+              </div>
+            );
+          })}
       </ResponsiveGridLayout>
     </div>
   );

@@ -11,7 +11,7 @@ export const props = {
     },
   },
   children: [],
-  layout: { i: '', x: 0, y: 0, w: 1, h: 1 },
+  layout: { i: '', x: 0, y: 0, w: 1, h: 2 },
 };
 
 export default BasicTooltip;
