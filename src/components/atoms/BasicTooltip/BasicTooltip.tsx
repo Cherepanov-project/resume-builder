@@ -1,13 +1,22 @@
+// import { useAppSellector } from '@/hooks/cvTemplateHooks';
 import DeleteIcon from '@mui/icons-material/Delete';
 import IconButton from '@mui/material/IconButton';
 import { default as Tool } from '@mui/material/Tooltip';
-import React from 'react';
 
-const BasicTooltip: React.FC = () => {
+import './BasicToolTip.scss';
+type BasicToolTipType = {
+  props: number,
+}
+const BasicTooltip: React.FC<BasicToolTipType> = (props) => {
+
   return (
     <Tool title="Delete">
       <IconButton>
-        <DeleteIcon />
+        <DeleteIcon
+          sx={{
+            fontSize: props ? 30 : 30 + props,
+          }}
+        />
       </IconButton>
     </Tool>
   );

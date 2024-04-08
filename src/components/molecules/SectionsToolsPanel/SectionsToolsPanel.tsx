@@ -3,7 +3,7 @@ import MemoizedElementSettings from '../ElementSpecificSettings';
 import RowSpecificSettings from '../RowSpecificSettings';
 import SectionSpecificSettings from '../SectionSpecificSettings';
 import { useState } from 'react';
-import { T_SectionElements } from '@/types/landingBuilder';
+import { T_BlockElement, T_SectionElements } from '@/types/landingBuilder';
 import { handleSettingsMenu, setLayoutDate } from '@/store/landingBuilder/sectionsManagerSlice';
 import { useDispatch } from 'react-redux';
 import { useAppSellector } from '@/hooks/cvTemplateHooks';
@@ -16,7 +16,7 @@ const SectionsToolsPanel = ({ setError, setSeverity }) => {
   const rows = Object.keys(layoutDate).length;
   // Сохранение необходимых параметров для отображения секции в конструкторе
   const submitSection = () => {
-    const arr = [];
+    const arr: T_BlockElement[] = [];
     const data = Object.values(layoutDate);
     for (let i = 0; i < data.length; i++) {
       arr.push(...data[i]);
@@ -156,7 +156,7 @@ const SectionsToolsPanel = ({ setError, setSeverity }) => {
     }
     return h;
   };
-  const [toggleMenu, setToggleMenu] = useState(null);
+  const [toggleMenu, setToggleMenu] = useState<unknown>(null);
 
   const handleToggleMenu = (e: React.MouseEvent<HTMLElement>) => {
     const target = e.target as HTMLButtonElement;

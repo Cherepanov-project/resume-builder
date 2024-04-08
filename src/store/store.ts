@@ -16,11 +16,12 @@ import educationReducer from './cvTemplate/educationSlice';
 import experienceReducer from './cvTemplate/experienceSlice';
 import socialReducer from './cvTemplate/socialSlice';
 import hobbiesReducer from './cvTemplate/hobbiesSlice';
-import layoutReduser from './landingBuilder/layoutSlice';
+import layoutReducer from './landingBuilder/layoutSlice';
 import utilityReducer from './landingBuilder/utilitySlice';
 import cardReducer from './cardSlice';
 import sectionsManagerSlice from './landingBuilder/sectionsManagerSlice';
 import settingsPanelSlice from './landingBuilder/settingsPanelSlice';
+import swiperSlice from './landingBuilder/swiperSlice';
 
 //конфиг для persist
 const persistConfig = {
@@ -35,11 +36,12 @@ const rootReducer = combineReducers({
   experience: experienceReducer,
   social: socialReducer,
   hobbies: hobbiesReducer,
-  layout: layoutReduser,
+  layout: layoutReducer,
   utility: utilityReducer,
   card: cardReducer,
   sectionsManager: sectionsManagerSlice,
   settingsPanel: settingsPanelSlice,
+  swiper: swiperSlice,
 });
 
 //преобразование редьюсера для persist

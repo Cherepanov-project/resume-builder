@@ -3,7 +3,10 @@ import {
   T_BlockElement,
   T_ComponentProps,
   T_SidebarMenuItem,
+  T_SwiperPresetList,
 } from '@/types/landingBuilder.ts';
+
+import { Navigation, Pagination } from 'swiper/modules';
 
 export const insertChild = (
   obj: unknown,
@@ -85,4 +88,104 @@ export const importFiles = async () => {
     Templates: templates,
     Manage: [],
   };
+};
+
+export const stylesImport = (content: string): string => {
+  let importString: string = ``;
+  if (content.includes('swiper')) {
+    importString += `<link
+    rel="stylesheet"
+    href="https://cdn.jsdelivr.net/npm/swiper@11/swiper-bundle.min.css"
+    />`;
+  }
+  return importString;
+};
+
+const paramsFixer = (innerParams: { modules?: object; pagination?; navigation? }): object => {
+  if (JSON.stringify(innerParams).includes('modules')) {
+    innerParams.modules = [];
+  }
+  if (JSON.stringify(innerParams).includes('pagination')) {
+    innerParams.pagination.el = '.swiper-pagination';
+  }
+  if (JSON.stringify(innerParams).includes('navigation')) {
+    innerParams.navigation.nextEl = '.swiper-button-next';
+    innerParams.navigation.prevEl = '.swiper-button-prev';
+  }
+  return innerParams;
+};
+
+export const logicImport = (content: string, swiperPreset: string) => {
+  // eslint-disable-next-line no-useless-catch
+  try {
+    let importString: string = ``;
+
+  const innerParams = paramsFixer({ ...swiperPresets[swiperPreset].params });
+  if (content.includes('swiper')) {
+    importString += `
+    <script type="module">
+      import Swiper from 'https://cdn.jsdelivr.net/npm/swiper@11/swiper-bundle.min.mjs'         
+      const preset = ${JSON.stringify(innerParams)}
+      const swiper = new Swiper('.swiper', preset)
+    </script>       
+    `;
+    return importString;
+  }
+  } catch (error) {
+    throw(error)
+  }
+};
+
+//dfdfdfdddddddddddddddddddddddddddddddddd
+
+export const swiperPresets: T_SwiperPresetList = {
+  default: {
+    name: 'default',
+    params: {
+      spaceBetween: 10,
+    },
+  },
+  navigation: {
+    name: 'navigation',
+    params: {
+      modules: [Navigation],
+      spaceBetween: 10,
+      navigation: {
+        enabled: true,
+      },
+    },
+  },
+  pagination: {
+    name: 'pagination',
+    params: {
+      modules: [Pagination],
+      spaceBetween: 10,
+      pagination: {
+        clickable: true,
+      },
+    },
+  },
+  vertical: {
+    name: 'vertical',
+    params: {
+      modules: [Pagination],
+      loop: false,
+      spaceBetween: 10,
+      direction: 'vertical',
+      pagination: {
+        clickable: true,
+      },
+    },
+  },
+  multiple: {
+    name: 'multiple',
+    params: {
+      slidesPerView: 3,
+      spaceBetween: 0,
+      pagination: {
+        clickable: true,
+      },
+      modules: [Pagination],
+    },
+  },
 };

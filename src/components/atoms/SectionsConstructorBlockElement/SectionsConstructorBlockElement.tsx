@@ -45,7 +45,7 @@ const SectionsConstructorBlockElement: React.FC<SectionsConstructorBlockElementT
           layout={params.layout}
         />
       )}
-      {isTooltip && <BasicTooltip />}
+      {isTooltip && <BasicTooltip props={props.size || 0} />}
       {isCheckBox && (
         <CheckboxGroup
           props={{ CheckboxGroup: [{ id: nanoid(), value: props.text }] }}

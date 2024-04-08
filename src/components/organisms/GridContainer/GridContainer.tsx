@@ -1,4 +1,4 @@
-import { GridContainers, setCurrentContainer } from '@/store/landingBuilder/layoutSlice';
+import { IGridContainers, setCurrentContainer } from '@/store/landingBuilder/layoutSlice';
 import ResponsiveGridLayout, { Layout } from 'react-grid-layout';
 import ContainerToolsPanel from '../ContainerToolsPanel';
 import { useAppDispatch, useAppSellector } from '@/hooks/cvTemplateHooks';
@@ -33,7 +33,7 @@ const DynamicComponentRenderer: React.FC<DynamicComponentRendererProps> = memo(
 );
 // ========================================================================== \\
 
-export const GridContainer: React.FC<GridContainers> = (container) => {
+export const GridContainer = (container: IGridContainers) => {
   const dispatch = useAppDispatch();
   const currentDraggableItem = useAppSellector((state) => state.layout.currentDraggableItem);
   const [width, setWidth] = useState(window.innerWidth);

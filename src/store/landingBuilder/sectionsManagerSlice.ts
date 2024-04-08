@@ -22,7 +22,7 @@ const initialState: IinitialState = {
           key: '',
           wrapperStyle: { display: 'block' },
           textStyle: { display: 'block' },
-          style: { '': '' },
+          style: { backgroundColor: '', color: '', text: '', border: '' },
         },
         layout: { i: '11', x: 0, y: 0, w: 1, h: 1 },
       },
