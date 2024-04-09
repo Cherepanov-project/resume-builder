@@ -2,13 +2,13 @@ import { ILayoutBlock } from '@/types/landingBuilder';
 import { useState, FC, useEffect } from 'react';
 
 const LayoutBlockImage: FC<ILayoutBlock> = ({ props }) => {
-  const [url, setUrl] = useState<string>(props.url);
+  const [url, setUrl] = useState<string>(props.url!);
 
   const [isEditing, setIsEditing] = useState<boolean>(false);
 
   useEffect(() => {
-    setUrl(props.url);
-    console.log('hello', props.url);
+    if (props.url) setUrl(props.url);
+    // console.log('hi', props)
   }, [props]);
 
   const wrapperStyle = {
@@ -54,7 +54,6 @@ const LayoutBlockImage: FC<ILayoutBlock> = ({ props }) => {
       </div>
     );
   };
-  console.log('vgq', props, url);
   return (
     <>
       <div

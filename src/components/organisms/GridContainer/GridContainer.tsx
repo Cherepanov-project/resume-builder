@@ -120,7 +120,7 @@ export const GridContainer = (container: IGridContainers) => {
               layout={el.layout}
             />
             {/* Если есть дочерние элементы, отображаем их */}
-            {el.children &&
+            {/* {el.children &&
               el.children.map((childEl) => (
                 <div key={childEl.layout.i} className={classes['item']}>
                   <ElementToolsPanel layout={childEl.layout} id={container.id} />
@@ -132,7 +132,7 @@ export const GridContainer = (container: IGridContainers) => {
                     layout={childEl.layout}
                   />
                 </div>
-              ))}
+              ))} */}
           </div>
         ))}
       </ResponsiveGridLayout>

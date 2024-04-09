@@ -13,10 +13,10 @@ const SelectList = ({ props, layout }: IElementsProps) => {
   const firstItem = { id: layout.i, values: [{ id: nanoid(), value: 'Text' }] };
 
   const [selectList, setSelectList] = useState<StateSelectList>({
-    value: '',
-    array: firstItem.values,
+    value: currentList[0] && currentList[0].value ? currentList[0].value : '',
+    array: currentList || firstItem.values,
   });
-
+  
   const handleChange = (event: T_Value) => {
     setSelectList((prev) => ({ ...prev, value: event }));
   };
@@ -37,7 +37,7 @@ const SelectList = ({ props, layout }: IElementsProps) => {
     }
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [currentList]);
-
+  console.log('c', currentList, props);
   return (
     <Select
       sx={{ minWidth: '100%', height: '40px' }}

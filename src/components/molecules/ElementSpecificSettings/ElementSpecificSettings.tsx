@@ -153,7 +153,7 @@ const ElementSpecificSettings = () => {
           label: 'Block Paragraph',
           value: 'LayoutBlockParagraph',
           key: 'paragraph',
-          layout: { i: '', x: 0, y: 0, w: 1, h: 6 },
+          layout: { i: '', x: 0, y: 0, w: 2, h: 6 },
           title: {
             key: 'paragraph',
             text: text,
@@ -168,6 +168,9 @@ const ElementSpecificSettings = () => {
           value: 'LayoutBlockImage',
           key: 'image',
           layout: { i: null, x: 0, y: 0, w: 1, h: 6 },
+          props: {
+            url: '',
+          },
           title: {
             key: 'image',
             text: text,
@@ -220,6 +223,7 @@ const ElementSpecificSettings = () => {
           label: 'Simple Blocks',
           value: 'BasicRating',
           key: 'rating',
+          columns: 2,
           layout: { i: '', x: 0, y: 0, w: 1, h: 1 },
           children: [],
           title: {
@@ -273,6 +277,121 @@ const ElementSpecificSettings = () => {
             RadioGroup: [],
           },
         };
+      case 'ToggleButtonsMultiple':
+        return {
+          label: 'CheckBoxes',
+          value: 'ToggleButtonsMultiple',
+          key: 'toggleButtons',
+          layout: { i: '', x: 0, y: 0, w: 2, h: 3 },
+          children: [],
+          title: {
+            key: 'toggleButtons',
+            value: '0',
+            text: false,
+          },
+      };
+      case 'TitleH1':
+        return {
+          label: 'Text Blocks',
+          value: 'TitleH1',
+          key: 'h1title',
+          layout: { i: null, x: 0, y: 0, w: 1, h: 1 },
+          children: [],
+          title: {
+            key: 'h1title',
+            value: '0',
+            text: false,
+          },
+        };
+      case 'MasonryGallery':
+        return {
+          label: 'Avatar & Images',
+          value: 'MasonryGallery',
+          key: 'gallery',
+          layout: { i: null, x: 0, y: 0, w: 2, h: 13 },
+          children: [],
+          url: url,
+          title: {
+            key: 'gallery',
+            value: '0',
+            text: '',
+          },
+          props: {
+            MasonryGallery: [],
+          },
+        };
+      case 'LayoutBlockVideoPlayer':
+        return {
+          label: 'Composite Blocks',
+          value: 'LayoutBlockVideoPlayer',
+          key: 'video',
+          layout: { i: null, x: 0, y: 0, w: 3, h: 10 },
+          children: [],
+          title: {
+            key: 'video',
+            value: '0',
+            text: false,
+          },
+          props: {
+            url: '',
+            text: '',
+          }
+        };
+      case 'SelectList':
+        return {
+          label: 'Text Blocks',
+          value: 'SelectList',
+          key: 'selectlist',
+          layout: { i: null, x: 0, y: 0, w: 2, h: 2 },
+          children: [],
+          title: {
+            key: 'selectlist',
+            value: '0',
+            text: false,
+          },
+          props: {
+            SelectList: [],
+          },
+        };
+      case 'LayoutBlockModal':
+        return {
+          label: 'Text Blocks',
+          value: 'LayoutBlockModal',
+          key: 'modal',
+          layout: { i: null, x: 0, y: 0, w: 1.5, h: 3 },
+          children: [],
+          title: {
+            key: 'modal',
+            value: '0',
+            text: false,
+          },
+          props: {
+            text: ['Click here to open modal', 'Here is your modal title', 'Wow! You opened modal.'],
+            wrapperStyle: { height: 'calc(100% - 38px)' },
+            textStyle: { width: '100%', height: '100%', border: 'none' },
+            style: { backgroundColor: '', color: '', border: '', text: '' },
+          }
+        };
+      case 'LayoutBlockSlider':
+        return {
+          label: 'Composite Blocks',
+          value: 'LayoutBlockSlider',
+          key: 'slider',
+          children: [],
+          title: {
+            key: 'slider',
+            value: '0',
+            text: false,
+          },
+          props: {
+            text: '',
+            LayoutBlockSlider: [],
+            wrapperStyle: { height: '100%' },
+            textStyle: { width: '100%', height: '100%', border: 'none' },
+            style: { backgroundColor: '', color: '', border: '', text: '' },
+          },
+          layout: { i: null, x: 0, y: 0, w: 3, h: 15 },
+        };
     }
   };
 
@@ -307,7 +426,7 @@ const ElementSpecificSettings = () => {
                   </Select>
                 </FormControl>
               </Item>
-              {type === 'LayoutBlockAnchor' || type === 'Avatars' || type === 'LayoutBlockImage' ? (
+              {type === 'LayoutBlockAnchor' || type === 'Avatars' || type === 'LayoutBlockImage' || type === 'MasonryGallery'  || type === 'LayoutBlockVideoPlayer' || type === 'LayoutBlockSlider' ? (
                 <Item>
                   <FormControl>
                     <TextField
@@ -321,7 +440,7 @@ const ElementSpecificSettings = () => {
                   </FormControl>
                 </Item>
               ) : null}
-              {type !== 'LayoutBlockImage' && (
+              {type !== 'LayoutBlockImage' && type !== 'LayoutBlockVideoPlayer' && type !== 'LayoutBlockSlider' && (
                 <Item>
                   <FormControl>
                     <TextField
