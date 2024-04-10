@@ -52,7 +52,7 @@ const SectionsConstructorBlockElement: React.FC<SectionsConstructorBlockElementT
       {isBtn && <LayoutBlockButton props={props} />}
       {isParagraph && <LayoutBlockParagraph props={props} />}
       {isAnchor && <LayoutBlockAnchor props={props} />}
-      {isRating && <BasicRating props={params.columns || 2}/>}
+      {isRating && <BasicRating props={params.columns || 5}/>}
       {isAvatar && (
         <Avatars
           props={{ Avatars: [{ id: nanoid(), img: props.url, title: props.text }] }}

@@ -46,7 +46,7 @@ const sectionsManagerSlice = createSlice({
     editRowDate(state, action) {
       const { row, date } = action.payload;
       state.layoutDate = { ...state.layoutDate, [row]: date };
-      console.log('data', date);
+      console.log('data', row, date);
     },
     // состояние меню параметров
     handleSettingsMenu(state, action) {

@@ -41,9 +41,9 @@ const initialState: stateProps = {
       },
       layout: {
         i: null,
-        w: 1,
-        h: 1,
-        x: 10,
+        w: 6,
+        h: 2,
+        x: 0,
         y: 0,
       },
     },
@@ -97,9 +97,9 @@ const layoutSlice = createSlice({
               //   },
               //   layout: {
               //     i: null,
-              //     w: 1,
-              //     h: 1,
-              //     x: 10,
+              //     w: 6,
+              //     h: 2,
+              //     x: 0,
               //     y: 0,
               //   },
               // };
@@ -293,11 +293,11 @@ const layoutSlice = createSlice({
     },
     setProps(state, action) {
       const containerID = state.currentContainer;
+      // console.log('h', action.payload)
       state.gridContainers.forEach((container, i) => {
         if (container.id === containerID) {
           container.elements.activeElements.forEach((el, index) => {
             if (el.layout.i === action.payload.id) {
-              // console.log('h', action.payload)
               state.gridContainers[i].elements.activeElements[index] = {
                 ...el,
                 props: {
@@ -307,6 +307,21 @@ const layoutSlice = createSlice({
                   style: action.payload.style,
                 },
               };
+            } else if (el.children && el.children.length > 0) {
+              el.children.forEach((child, indx) =>  {
+                if (child.layout.i === action.payload.id) {
+                  // console.log('he')
+                  state.gridContainers[i].elements.activeElements[index].children![indx] = {
+                    ...child,
+                    props: {
+                      [child.name]: [...action.payload.values],
+                      text: '',
+                      size: action.payload.size === 0 ? 1 : action.payload.size,
+                      style: action.payload.style,
+                    }
+                  }
+                }
+              })
             }
           });
         }

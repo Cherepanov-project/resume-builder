@@ -13,6 +13,7 @@ import {
 import 'react-grid-layout/css/styles.css';
 import 'react-resizable/css/styles.css';
 import classes from './ContainerDIV.module.scss';
+import { nanoid } from 'nanoid';
 
 // ========================================================================== \\
 // Отрисовываем динамический компонент
@@ -96,7 +97,7 @@ const ContainerDIV: React.FC<ContainerDIVProps> = ({ children, layout, columns, 
       backgroundColor: 'white',
     };
   }
-
+// console.log('hi', children, layout, columns)
   return (
     <div ref={containerRef} className="wrapper" data-id={layout.i} style={style}>
       <ResponsiveGridLayout
@@ -111,8 +112,9 @@ const ContainerDIV: React.FC<ContainerDIVProps> = ({ children, layout, columns, 
       >
         {children &&
           children.map((el, indx) => {
+            // console.log(el)
             return (
-              <div className={classes['item']} key={workspaceLayout[indx].i}>
+              <div className={classes['item']} key={workspaceLayout[indx].i || nanoid()}>
                 <DynamicComponentRenderer
                   Component={el.name}
                   props={el.props}

@@ -111,6 +111,7 @@ export const GridContainer = (container: IGridContainers) => {
         {/* Динамически подгружаем компоненты и прокидывааем в них пропсы из одноимменных объектов */}
         {container.elements.activeElements.map((el) => (
           <div key={el.layout.i} className={classes['item']}>
+            {/* {console.log(el)} */}
             <ElementToolsPanel layout={el.layout} id={container.id} />
             <DynamicComponentRenderer
               Component={el.name}
@@ -118,12 +119,14 @@ export const GridContainer = (container: IGridContainers) => {
               props={el.props}
               columns={el.columns || 1}
               layout={el.layout}
+              children={el.children}
             />
             {/* Если есть дочерние элементы, отображаем их */}
             {/* {el.children &&
               el.children.map((childEl) => (
                 <div key={childEl.layout.i} className={classes['item']}>
-                  <ElementToolsPanel layout={childEl.layout} id={container.id} />
+                  { {console.log(childEl)} }
+                  { <ElementToolsPanel layout={childEl.layout} id={container.id} /> }
                   <DynamicComponentRenderer
                     Component={childEl.name}
                     source={childEl.source || 'atoms'}

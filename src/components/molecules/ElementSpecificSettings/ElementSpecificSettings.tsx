@@ -167,7 +167,7 @@ const ElementSpecificSettings = () => {
           label: 'Avatar & Images',
           value: 'LayoutBlockImage',
           key: 'image',
-          layout: { i: null, x: 0, y: 0, w: 1, h: 6 },
+          layout: { i: '', x: 0, y: 0, w: 1, h: 6 },
           props: {
             url: '',
           },
@@ -183,7 +183,7 @@ const ElementSpecificSettings = () => {
           label: 'Simple Blocks',
           value: 'LayoutBlockButton',
           key: 'button',
-          layout: { i: null, x: 0, y: 0, w: 1, h: 2 },
+          layout: { i: '', x: 0, y: 0, w: 1, h: 2 },
           title: {
             key: 'button',
             text: text,
@@ -250,7 +250,7 @@ const ElementSpecificSettings = () => {
           label: 'CheckBoxes',
           value: 'CheckboxGroup',
           key: 'checkbox',
-          layout: { i: null, x: 0, y: 0, w: 1, h: 3 },
+          layout: { i: '', x: 0, y: 0, w: 1, h: 3 },
           children: [],
           title: {
             key: 'checkbox',
@@ -266,7 +266,7 @@ const ElementSpecificSettings = () => {
           label: 'CheckBoxes',
           value: 'RadioGroup',
           key: 'radiobox',
-          layout: { i: null, x: 0, y: 0, w: 1, h: 3 },
+          layout: { i: '', x: 0, y: 0, w: 1, h: 3 },
           children: [],
           title: {
             key: 'radiobox',
@@ -295,7 +295,7 @@ const ElementSpecificSettings = () => {
           label: 'Text Blocks',
           value: 'TitleH1',
           key: 'h1title',
-          layout: { i: null, x: 0, y: 0, w: 1, h: 1 },
+          layout: { i: '', x: 0, y: 0, w: 1, h: 1 },
           children: [],
           title: {
             key: 'h1title',
@@ -308,7 +308,7 @@ const ElementSpecificSettings = () => {
           label: 'Avatar & Images',
           value: 'MasonryGallery',
           key: 'gallery',
-          layout: { i: null, x: 0, y: 0, w: 2, h: 13 },
+          layout: { i: '', x: 0, y: 0, w: 2, h: 13 },
           children: [],
           url: url,
           title: {
@@ -325,7 +325,7 @@ const ElementSpecificSettings = () => {
           label: 'Composite Blocks',
           value: 'LayoutBlockVideoPlayer',
           key: 'video',
-          layout: { i: null, x: 0, y: 0, w: 3, h: 10 },
+          layout: { i: '', x: 0, y: 0, w: 3, h: 10 },
           children: [],
           title: {
             key: 'video',
@@ -342,7 +342,7 @@ const ElementSpecificSettings = () => {
           label: 'Text Blocks',
           value: 'SelectList',
           key: 'selectlist',
-          layout: { i: null, x: 0, y: 0, w: 2, h: 2 },
+          layout: { i: '', x: 0, y: 0, w: 2, h: 2 },
           children: [],
           title: {
             key: 'selectlist',
@@ -358,7 +358,7 @@ const ElementSpecificSettings = () => {
           label: 'Text Blocks',
           value: 'LayoutBlockModal',
           key: 'modal',
-          layout: { i: null, x: 0, y: 0, w: 1.5, h: 3 },
+          layout: { i: '', x: 0, y: 0, w: 1.5, h: 3 },
           children: [],
           title: {
             key: 'modal',
@@ -390,7 +390,7 @@ const ElementSpecificSettings = () => {
             textStyle: { width: '100%', height: '100%', border: 'none' },
             style: { backgroundColor: '', color: '', border: '', text: '' },
           },
-          layout: { i: null, x: 0, y: 0, w: 3, h: 15 },
+          layout: { i: '', x: 0, y: 0, w: 3, h: 15 },
         };
     }
   };
