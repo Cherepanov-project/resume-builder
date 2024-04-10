@@ -9,7 +9,7 @@ interface IProps {
 }
 
 const FinishResume: FC<IProps> = ({ handleButtonClick, handleReset }) => {
-  const componentRef = useRef();
+  const componentRef = useRef(null);
   const handlePrint = useReactToPrint({
     content: () => componentRef.current,
   });

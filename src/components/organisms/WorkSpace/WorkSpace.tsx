@@ -1,4 +1,4 @@
-import { GridContainers } from '@store/landingBuilder/layoutSlice';
+import { IGridContainers } from '@store/landingBuilder/layoutSlice';
 import { useAppSellector } from '@hooks/cvTemplateHooks';
 
 import 'react-grid-layout/css/styles.css';
@@ -10,10 +10,11 @@ import { GridContainer } from '../GridContainer/GridContainer';
 
 const WorkSpace: React.FC = () => {
   const gridContainers = useAppSellector((state) => state.layout.gridContainers);
+  console.log(gridContainers);
   return (
     <div className={classes['workspace']}>
       <div className={classes['wrapper']}>
-        {gridContainers.map((container: GridContainers) => (
+        {gridContainers.map((container: IGridContainers) => (
           <GridContainer key={container.id} {...container} />
         ))}
       </div>

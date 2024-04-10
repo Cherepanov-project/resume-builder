@@ -10,7 +10,7 @@ type ElementsType = {
   activeElements: T_BlockElement[];
 };
 
-export type GridContainers = {
+export type IGridContainers = {
   id: string;
   height: number;
   elements: ElementsType;
@@ -24,7 +24,7 @@ export type GridContainers = {
 };
 
 type stateProps = {
-  gridContainers: GridContainers[];
+  gridContainers: IGridContainers[];
   currentDraggableItem: Layout | null;
   currentContainer: string;
 };
@@ -247,7 +247,7 @@ const layoutSlice = createSlice({
             (element) => element.layout.i === action.payload.layout.i,
           );
           container.elements.activeElements[indx].layout.w += 1;
-          container.elements.activeElements[indx].columns += 1;
+          container.elements.activeElements[indx].columns! += 1;
         }
       });
     },
@@ -260,7 +260,7 @@ const layoutSlice = createSlice({
             (element) => element.layout.i === action.payload.layout.i,
           );
           container.elements.activeElements[indx].layout.w -= 1;
-          container.elements.activeElements[indx].columns -= 1;
+          container.elements.activeElements[indx].columns! -= 1;
         }
       });
     },
@@ -303,12 +303,18 @@ const layoutSlice = createSlice({
                   [el.name]: [...action.payload.values],
                   text: '',
                   size: action.payload.size === 0 ? 1 : action.payload.size,
+                  style: action.payload.style,
                 },
               };
             }
           });
         }
       });
+    },
+    clearStore(state) {
+      state.gridContainers = initialState.gridContainers;
+      state.currentDraggableItem = null;
+      state.currentContainer = '';
     },
   },
 });
@@ -330,4 +336,5 @@ export const {
   setCurrentContainer,
   setSectionStyle,
   setProps,
+  clearStore,
 } = layoutSlice.actions;
