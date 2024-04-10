@@ -32,7 +32,7 @@ const createZip = async () => {
 
     const jsContent = logicImport(htmlContent, presetName);
 
-    if (htmlElement && htmlContent && cssContent) {
+    if (htmlElement && htmlContent && cssContent && jsContent) {
       zip.file('styles.css', new Blob([cssContent], { type: 'text/css' }));
       zip.file('script.js', new Blob([jsContent], { type: 'text/javascript' }));
       const newHTMLContent = `
