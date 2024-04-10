@@ -4,6 +4,7 @@ import LayoutBlockImage from '../LayoutBlockImage';
 import LayoutBlockParagraph from '../LayoutBlockParagraph';
 import LayoutBlockTitle from '../LayoutBlockTitle';
 import LayoutBlockAnchor from '../LayoutBlockAnchor';
+import Logo from '../Logo';
 
 interface SectionsConstructorBlockElementType {
   params: T_SectionElementProps;
@@ -19,6 +20,7 @@ const SectionsConstructorBlockElement: React.FC<SectionsConstructorBlockElementT
   const isTitle = false || params.key === 'title';
   const isParagraph = false || params.key === 'paragraph';
   const isAnchor = false || params.key === 'anchor';
+  const isLogo = false || params.key === 'logo';
 
   return (
     <>
@@ -27,6 +29,7 @@ const SectionsConstructorBlockElement: React.FC<SectionsConstructorBlockElementT
       {isBtn && <LayoutBlockButton props={props} />}
       {isParagraph && <LayoutBlockParagraph props={props} />}
       {isAnchor && <LayoutBlockAnchor props={props} />}
+      {isLogo && <Logo props={props} />}
     </>
   );
 };

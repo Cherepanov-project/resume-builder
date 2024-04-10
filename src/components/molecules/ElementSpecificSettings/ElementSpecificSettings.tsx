@@ -64,6 +64,7 @@ const ElementSpecificSettings = () => {
     'LayoutBlockSlider',
     'LayoutBlockVideoPlayer',
     'LayoutBlockModal',
+    'Logo',
     'SelectList',
     'TitleH1',
   ];
@@ -181,6 +182,20 @@ const ElementSpecificSettings = () => {
           key: 'anchor',
           title: {
             key: 'anchor',
+            text: text,
+            url: url,
+            wrapperStyle: { textAlign: 'center', width: '100%', height: '100%' },
+            textStyle: { fontSize: '16px', margin: '0px', width: '100%' },
+            // inputStyle: { width: '100%', border: 'none' },
+          },
+        };
+      case 'Logo':
+        return {
+          label: 'Logo',
+          value: 'Logo',
+          key: 'logo',
+          title: {
+            key: 'logo',
             text: text,
             url: url,
             wrapperStyle: { textAlign: 'center', width: '100%', height: '100%' },
