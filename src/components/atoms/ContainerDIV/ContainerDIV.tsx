@@ -116,6 +116,8 @@ const ContainerDIV: React.FC<ContainerDIVProps> = ({ children, layout, columns, 
             // console.log(el)
             return (
               <div className={classes['item']} key={workspaceLayout[indx].i || nanoid()}>
+                {/* Вот в этом месте ElementToolsPanel отображается хорошо, но кнопки не срабатывают, поскольку редюсеры
+                в стейте не рассчитаны на изменение компонента внутри другого компонента, нужно закопаться в layoutslice*/}
                 {/* <ElementToolsPanel layout={el.layout} id={layout.i} /> */}
                 <DynamicComponentRenderer
                   Component={el.name}

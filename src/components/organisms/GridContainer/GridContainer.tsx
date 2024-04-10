@@ -121,21 +121,6 @@ export const GridContainer = (container: IGridContainers) => {
               layout={el.layout}
               children={el.children}
             />
-            {/* Если есть дочерние элементы, отображаем их */}
-            {/* {el.children &&
-              el.children.map((childEl) => (
-                <div key={childEl.layout.i} className={classes['item']}>
-                  { {console.log(childEl)} }
-                  { <ElementToolsPanel layout={childEl.layout} id={container.id} /> }
-                  <DynamicComponentRenderer
-                    Component={childEl.name}
-                    source={childEl.source || 'atoms'}
-                    props={childEl.props}
-                    columns={childEl.columns || 1}
-                    layout={childEl.layout}
-                  />
-                </div>
-              ))} */}
           </div>
         ))}
       </ResponsiveGridLayout>
