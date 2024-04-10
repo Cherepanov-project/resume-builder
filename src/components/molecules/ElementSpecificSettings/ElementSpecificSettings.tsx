@@ -260,7 +260,7 @@ const ElementSpecificSettings = () => {
                   />
                 </FormControl>
               </Item>
-              {type === 'LayoutBlockAnchor' ? (
+              {type === 'LayoutBlockAnchor' || type === 'Logo' ? (
                 <Item>
                   <FormControl>
                     <TextField
