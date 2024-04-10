@@ -14,6 +14,7 @@ import 'react-grid-layout/css/styles.css';
 import 'react-resizable/css/styles.css';
 import classes from './ContainerDIV.module.scss';
 import { nanoid } from 'nanoid';
+// import ElementToolsPanel from '@/components/organisms/ElementToolsPanel';
 
 // ========================================================================== \\
 // Отрисовываем динамический компонент
@@ -115,6 +116,7 @@ const ContainerDIV: React.FC<ContainerDIVProps> = ({ children, layout, columns, 
             // console.log(el)
             return (
               <div className={classes['item']} key={workspaceLayout[indx].i || nanoid()}>
+                {/* <ElementToolsPanel layout={el.layout} id={layout.i} /> */}
                 <DynamicComponentRenderer
                   Component={el.name}
                   props={el.props}

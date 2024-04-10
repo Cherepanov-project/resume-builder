@@ -123,7 +123,7 @@ const layoutSlice = createSlice({
     // Копируем блок
     copyElement(state, action) {
       let indx: number;
-      state.gridContainers.forEach((container) => {
+      state.gridContainers.forEach((container, index) => {
         if (container.id === action.payload.id) {
           indx = container.elements.activeElements.findIndex(
             (element) => element.layout.i === action.payload.layout.i,
@@ -138,7 +138,7 @@ const layoutSlice = createSlice({
               i: nanoid(),
             },
           };
-          container.elements.activeElements.splice(indx + 1, 0, newElement);
+          state.gridContainers[index].elements.activeElements.splice(indx + 1, 0, newElement);
         }
       });
     },

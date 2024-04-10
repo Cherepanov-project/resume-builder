@@ -45,8 +45,22 @@ const sectionsManagerSlice = createSlice({
     // изменение ряда
     editRowDate(state, action) {
       const { row, date } = action.payload;
-      state.layoutDate = { ...state.layoutDate, [row]: date };
-      console.log('data', row, date);
+      const [, curCol] = state.curId.split('');
+      // state.layoutDate = { ...state.layoutDate, [row]: date };
+      const newDate = date.map((col, index) => {
+        if (+curCol - 1 === index) {
+         return {
+          ...col,
+          layout: {
+            ...col.layout,
+            i: state.curId
+          }
+         } 
+        }
+        return col;
+      })
+      state.layoutDate = { ...state.layoutDate, [row]: newDate};
+      console.log('data', row, date, date[+curCol - 1]);
     },
     // состояние меню параметров
     handleSettingsMenu(state, action) {
