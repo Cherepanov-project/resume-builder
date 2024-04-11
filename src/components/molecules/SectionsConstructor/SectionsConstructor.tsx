@@ -12,6 +12,7 @@ const SectionsConstructor: React.FC<SectionsConstructorType> = ({ setError, setS
   const rowsArr = Object.keys(useAppSellector((state) => state.sectionsManager.layoutDate));
   // отображение рядов секции
   const rowEls = () => {
+    // console.log('arr', rowsArr);
     return rowsArr.map((row) => (
       <MemoizedConstructorRowEl
         key={row}

@@ -24,8 +24,10 @@ const SectionsToolsPanel = ({ setError, setSeverity }) => {
 
     // сохранение только координат блоков, у которых выбраны элементы из Select options
     const filteredArr = arr.filter((el) => el.name);
-
-    const elements = filteredArr.map((el) => ({
+    // console.log('filt', filteredArr)
+    const elements = filteredArr.map((el) => { 
+      console.log(el, el.layout.i, el.layout.i.slice(0,1))
+      return {
       name: el.name,
       source: 'atoms',
       layout: {
@@ -36,7 +38,7 @@ const SectionsToolsPanel = ({ setError, setSeverity }) => {
         h: el.layout.h,
       },
       props: el.props,
-    }));
+    }});
 
     const section: T_SectionElements = {
       name: 'ContainerDIV', // указание имени элмента-обертки (molecules)
@@ -113,16 +115,16 @@ const SectionsToolsPanel = ({ setError, setSeverity }) => {
 
   // расчет координаты x элемента ( зависит от суммы w предыдущих в ряду )
   const calcX = (row: number, col: number) => {
-    console.log(row, col);
+    // console.log(row, col);
     if (col !== 1) {
       let sum = 0;
       for (let i = 1; i < col; i++) {
-        console.log(layoutDate[row][i].layout.w);
+        // console.log(layoutDate[row][i].layout.w);
         sum += layoutDate[row][i - 1].layout.w;
       }
       return sum;
     } else {
-      console.log(layoutDate[row][col - 1].layout.w);
+      // console.log(layoutDate[row][col - 1].layout.w);
       return 0;
     }
   };
@@ -131,6 +133,7 @@ const SectionsToolsPanel = ({ setError, setSeverity }) => {
   const calcY = (row: number) => {
     if (row > 1) {
       let x = 1;
+      console.log(layoutDate, row)
       for (let i = 0; i < layoutDate[row - 1].length; i++) {
         if (layoutDate[row - 1][i].layout.h > x) {
           x = layoutDate[row - 1][i].layout.h;

@@ -1,14 +1,16 @@
-import Avatars from "./Avatars";
+import { nanoid } from 'nanoid';
+import Avatars from './Avatars';
 
 export const props = {
   name: 'Avatars',
   type: 'Avatar & Images',
   columns: 1,
   source: 'atoms',
-  url: '',
-  props: {},
+  props: {
+    url: '',
+  },
   children: [],
-  layout: { i: '', x: 0, y: 0, w: 1, h: 7 },
+  layout: { i: nanoid(), x: 0, y: 0, w: 1, h: 7 },
 };
 
 export default Avatars;
