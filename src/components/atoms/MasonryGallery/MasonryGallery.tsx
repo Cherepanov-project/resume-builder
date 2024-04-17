@@ -28,8 +28,8 @@ const MasonryGallery = ({ props, layout }: IElementsProps) => {
     }
   });
 
-  const elementsContainsPicture = currentList.some((item) => String(item.img).length > 0);
-
+  const elementsContainsPicture = currentList.some((item) => String(item.img).length > 0 && item.img);
+  
   return (
     <>
       {elementsContainsPicture ? (

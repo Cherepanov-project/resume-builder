@@ -4,8 +4,11 @@ import { styled } from '@mui/material/styles';
 import Rating from '@mui/material/Rating';
 import FavoriteIcon from '@mui/icons-material/Favorite';
 import FavoriteBorderIcon from '@mui/icons-material/FavoriteBorder';
+type BasicRatingType = {
+  props: number;
+}
 
-const BasicRating = (props) => {
+const BasicRating = ({props}: BasicRatingType) => {
 
   const { gridContainers } = useAppSellector((state) => state.layout);
   const elements = gridContainers.find((el) =>
@@ -27,14 +30,14 @@ const BasicRating = (props) => {
     >
       <StyledRating
         name="customized-color"
-        size={props.columns === 2 ? 'small' : props.columns === 3 ? 'medium' : 'large'}
+        size={props === 2 ? 'small' : props === 3 ? 'medium' : 'large'}
         defaultValue={2}
-        max={props?.columns !== 0 && props?.columns < 20 ? props?.columns : 5}
+        max={props !== 0 && props < 20 ? props : 5}
         getLabelText={(value: number) => `${value} Heart${value !== 1 ? 'l' : ''}`}
         precision={1}
         icon={
           <FavoriteIcon
-            fontSize={props.columns === 2 ? 'small' : props.columns === 3 ? 'medium' : 'large'}
+            fontSize={props === 2 ? 'small' : props === 3 ? 'medium' : 'large'}
           />
         }
         emptyIcon={<FavoriteBorderIcon fontSize="inherit" />}
