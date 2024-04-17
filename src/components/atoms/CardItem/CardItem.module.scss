@@ -1,0 +1,39 @@
+.cardItem {
+    border: 1px solid grey;
+    border-radius: 10px;
+    padding: 10px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    text-align: center;
+}
+
+.cardItem__img {
+    width: 50%;
+}
+
+.cardItem__title {
+    font-size: 1.5rem;
+    font-weight: 700;
+    margin-top: 10px;
+    margin-bottom: 5px;
+}
+
+.cardItem__description {
+    font-size: .9rem;
+    font-weight: 500;
+    margin-top: 5px;
+    margin-bottom: 5px;
+}
+
+.cardItem__text {
+    font-size: .7rem;
+    font-weight: 400;
+}
+
+.cardItem__button {
+    background-color: transparent;
+    border: 1px solid black;
+    margin-top: 10px;
+}
+

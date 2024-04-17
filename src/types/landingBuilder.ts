@@ -50,8 +50,8 @@ export interface IStyleFormObj {
 export type T_BlockElement = {
   name: string;
   title?: string;
-  url?: string,
-  value?: number,
+  url?: string;
+  value?: number;
   type?: string;
   source: string;
   columns?: number;
@@ -169,14 +169,13 @@ export interface IAvatars {
   };
 }
 
-
 export interface IElementProps {
   RadioGroup?: ISettingsInputItem[];
   CheckboxGroup?: ISettingsInputItem[];
   SelectList?: ISettingsInputItem[];
   LayoutBlockSlider?: ISettingsInputItem[];
   MasonryGallery?: ISettingsInputItem[];
-  Avatars?: ISettingsInputItem[]
+  Avatars?: ISettingsInputItem[];
 }
 
 export interface StateSelectList {
@@ -199,18 +198,23 @@ export type T_SectionElements = {
 
 export type T_SectionElementProps = {
   key?: string;
+  title?: string;
+  description?: string;
   text: string;
   wrapperStyle?: { [key: string]: string };
   textStyle?: { [key: string]: string };
   inputStyle?: { [key: string]: string };
   url?: string;
+  imgUrl?: string;
+  buttonText?: string;
+  accordion?: Array<[string, string]>;
   style?: { [key: string]: string };
   RadioGroup?: ISettingsInputItem[];
   CheckboxGroup?: ISettingsInputItem[];
   SelectList?: ISettingsInputItem[];
   LayoutBlockSlider?: ISettingsInputItem[];
   MasonryGallery?: ISettingsInputItem[];
-  Avatars?: ISettingsInputItem[]
+  Avatars?: ISettingsInputItem[];
   size?: number;
 };
 

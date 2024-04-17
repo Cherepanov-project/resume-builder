@@ -5,7 +5,7 @@ type StyleType = {
   [key: string]: string | number;
 };
 
-const Logo: React.FC<ILayoutBlock> = ({ props }) => {
+const SocialMediaIcon: React.FC<ILayoutBlock> = ({ props }) => {
   const [text, setText] = useState<string>(props?.text || '');
   const [url, setUrl] = useState<string>(props?.url || '');
   const [imgUrl, setImgUrl] = useState<string>(props?.imgUrl || '');
@@ -19,7 +19,6 @@ const Logo: React.FC<ILayoutBlock> = ({ props }) => {
 
   const wrapperStyle: StyleType = {
     ...props?.wrapperStyle,
-    // backgroundImage: `url(${imgUrl})`,
     display: 'flex',
     alignItems: 'center',
     justifyContent: 'center',
@@ -90,8 +89,7 @@ const Logo: React.FC<ILayoutBlock> = ({ props }) => {
   const content = () => {
     return (
       <a href={url} style={{ height: '100%' }} onContextMenu={(e) => handleDoubleClick(e)}>
-        {imgUrl ? <img src={imgUrl} alt={text}></img> : text}
-        {/* {text} */}
+        <img src={imgUrl} alt={text}></img>
       </a>
     );
   };
@@ -104,4 +102,4 @@ const Logo: React.FC<ILayoutBlock> = ({ props }) => {
   );
 };
 
-export default Logo;
+export default SocialMediaIcon;

@@ -5,6 +5,9 @@ import LayoutBlockParagraph from '../LayoutBlockParagraph';
 import LayoutBlockTitle from '../LayoutBlockTitle';
 import LayoutBlockAnchor from '../LayoutBlockAnchor';
 import Logo from '../Logo';
+import SocialMediaIcon from '../SocialMediaIcon';
+import CardItem from '../CardItem';
+import Accordion from '../Accordion';
 
 interface SectionsConstructorBlockElementType {
   params: T_SectionElementProps;
@@ -21,6 +24,9 @@ const SectionsConstructorBlockElement: React.FC<SectionsConstructorBlockElementT
   const isParagraph = false || params.key === 'paragraph';
   const isAnchor = false || params.key === 'anchor';
   const isLogo = false || params.key === 'logo';
+  const isSMIcon = false || params.key === 'smIcon';
+  const isCardItem = false || params.key === 'cardItem';
+  const isAccordion = false || params.key === 'accordion';
 
   return (
     <>
@@ -30,6 +36,9 @@ const SectionsConstructorBlockElement: React.FC<SectionsConstructorBlockElementT
       {isParagraph && <LayoutBlockParagraph props={props} />}
       {isAnchor && <LayoutBlockAnchor props={props} />}
       {isLogo && <Logo props={props} />}
+      {isSMIcon && <SocialMediaIcon props={props} />}
+      {isCardItem && <CardItem props={props} />}
+      {isAccordion && <Accordion props={props} />}
     </>
   );
 };

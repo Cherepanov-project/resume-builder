@@ -2,7 +2,7 @@ import { useDispatch } from 'react-redux';
 
 import { editRowDate } from '../../../store/landingBuilder/sectionsManagerSlice';
 
-import { memo } from 'react';
+import { memo, useState } from 'react';
 import { useAppSellector } from '@/hooks/cvTemplateHooks';
 import {
   Accordion,
@@ -20,6 +20,7 @@ import {
 } from '@mui/material';
 import { ExpandMore } from '@mui/icons-material';
 import Item from '@/components/atoms/StyledPaperItem';
+// import { strict } from 'assert';
 
 const ElementSpecificSettings = () => {
   const layoutDate = useAppSellector((state) => state.sectionsManager.layoutDate);
@@ -42,17 +43,25 @@ const ElementSpecificSettings = () => {
     col = 1;
   }
 
+  type AccordionData = Array<[string, string]>;
+
   let type: string = layoutElement.name || '';
+  let title: string = layoutElement.props.title || '';
+  let description: string = layoutElement.props.description || '';
   let text: string = layoutElement.props.text || '';
   let url: string = layoutElement.props.url || '';
+  let imgUrl: string = layoutElement.props.imgUrl || '';
+  let buttonText: string = layoutElement.props.buttonText || '';
 
   const dispatch = useDispatch();
 
   const settingsOptionsValues = [
+    'Accordion',
     'Avatars',
     'MasonryGallery',
     'BasicRating',
     'BasicTooltip',
+    'CardItem',
     'CheckboxGroup',
     'RadioGroup',
     'ToggleButtonsMultiple',
@@ -66,14 +75,17 @@ const ElementSpecificSettings = () => {
     'LayoutBlockModal',
     'Logo',
     'SelectList',
+    'SocialMediaIcon',
     'TitleH1',
   ];
 
-  const handleUpdate = (type: string, value: string, i: number): void => {
+  const [accordion, setAccordion] = useState<AccordionData>(layoutElement.props.accordion || []);
+
+  const handleUpdate = (type: string, value: string | AccordionData, i: number): void => {
     const newValue = JSON.parse(JSON.stringify(layoutRow));
     switch (type) {
       case 'type': {
-        const label = getLabel(value);
+        const label = typeof value === 'string' ? getLabel(value) : getLabel(value[0][0]);
         newValue[i].name = value;
         newValue[i].type = label.label;
         newValue[i].props.key = label.key;
@@ -88,8 +100,33 @@ const ElementSpecificSettings = () => {
         dispatch(editRowDate({ row, date: newValue }));
         break;
       }
+      case 'title': {
+        newValue[i].props.title = value;
+        dispatch(editRowDate({ row, date: newValue }));
+        break;
+      }
       case 'text': {
         newValue[i].props.text = value;
+        dispatch(editRowDate({ row, date: newValue }));
+        break;
+      }
+      case 'description': {
+        newValue[i].props.description = value;
+        dispatch(editRowDate({ row, date: newValue }));
+        break;
+      }
+      case 'imgUrl': {
+        newValue[i].props.imgUrl = value;
+        dispatch(editRowDate({ row, date: newValue }));
+        break;
+      }
+      case 'buttonText': {
+        newValue[i].props.buttonText = value;
+        dispatch(editRowDate({ row, date: newValue }));
+        break;
+      }
+      case 'accordion': {
+        newValue[i].props.accordion = value;
         dispatch(editRowDate({ row, date: newValue }));
         break;
       }
@@ -111,6 +148,39 @@ const ElementSpecificSettings = () => {
             text: '',
             wrapperStyle: { display: 'block' },
             textStyle: { display: 'block' },
+          },
+        };
+      case 'Accordion':
+        return {
+          label: 'Accordion',
+          value: 'accordion',
+          key: 'accordion',
+          title: {
+            key: 'accordion',
+            title: title,
+            description: description,
+            accordion: accordion,
+            wrapperStyle: { textAlign: 'center', width: '100%', height: '100%' },
+            textStyle: { fontSize: '16px', margin: '0px', width: '100%' },
+            // inputStyle: { width: '100%', border: 'none' },
+          },
+        };
+      case 'CardItem':
+        return {
+          label: 'CardItem',
+          value: 'cardItem',
+          key: 'cardItem',
+          title: {
+            key: 'cardItem',
+            title: title,
+            description: description,
+            text: text,
+            url: url,
+            imgUrl: imgUrl,
+            buttonText: buttonText,
+            wrapperStyle: { textAlign: 'center', width: '100%', height: '100%' },
+            textStyle: { fontSize: '16px', margin: '0px', width: '100%' },
+            // inputStyle: { width: '100%', border: 'none' },
           },
         };
       case 'LayoutBlockTitle':
@@ -198,6 +268,23 @@ const ElementSpecificSettings = () => {
             key: 'logo',
             text: text,
             url: url,
+            imgUrl: imgUrl,
+            wrapperStyle: { textAlign: 'center', width: '100%', height: '100%' },
+            textStyle: { fontSize: '16px', margin: '0px', width: '100%' },
+            // inputStyle: { width: '100%', border: 'none' },
+          },
+        };
+      case 'SocialMediaIcon':
+        return {
+          label: 'SocialMediaIcon',
+          value: 'SocialMediaIcon',
+          key: 'smIcon',
+          title: {
+            key: 'smIcon',
+            title: title,
+            text: text,
+            url: url,
+            imgUrl: imgUrl,
             wrapperStyle: { textAlign: 'center', width: '100%', height: '100%' },
             textStyle: { fontSize: '16px', margin: '0px', width: '100%' },
             // inputStyle: { width: '100%', border: 'none' },
@@ -248,19 +335,94 @@ const ElementSpecificSettings = () => {
                   </Select>
                 </FormControl>
               </Item>
-              <Item>
-                <FormControl>
-                  <TextField
-                    label="Enter target text:"
-                    value={text}
-                    onChange={(e: React.ChangeEvent<HTMLTextAreaElement>) => {
-                      text = e.target.value;
-                      handleUpdate('text', e.target.value, col - 1);
-                    }}
-                  />
-                </FormControl>
-              </Item>
-              {type === 'LayoutBlockAnchor' || type === 'Logo' ? (
+              {type === 'Accordion' ? (
+                <Item>
+                  <FormControl>
+                    {accordion.map((item, index) => (
+                      <div key={index}>
+                        <TextField
+                          label={`Enter target accordion ${index + 1} title:`}
+                          value={item[0]}
+                          onChange={(e: React.ChangeEvent<HTMLInputElement>) => {
+                            const updatedAccordion = [...accordion];
+                            // updatedAccordion[index][0] = e.target.value;
+                            updatedAccordion[index] = [e.target.value, updatedAccordion[index][1]];
+                            setAccordion(updatedAccordion);
+                            handleUpdate('accordion', updatedAccordion, col - 1);
+                          }}
+                        />
+                        <TextField
+                          label={`Enter target accordion ${index + 1} description:`}
+                          value={item[1]}
+                          onChange={(e: React.ChangeEvent<HTMLInputElement>) => {
+                            const updatedAccordion = [...accordion];
+                            // updatedAccordion[index][1] = e.target.value;
+                            updatedAccordion[index] = [updatedAccordion[index][0], e.target.value];
+                            setAccordion(updatedAccordion);
+                            handleUpdate('accordion', updatedAccordion, col - 1);
+                          }}
+                        />
+                      </div>
+                    ))}
+                    <button
+                      onClick={(e) => {
+                        e.preventDefault();
+                        const updatedAccordion: AccordionData = [...accordion, ['', '']];
+                        setAccordion(updatedAccordion);
+                        handleUpdate('accordion', updatedAccordion, col - 1);
+                      }}
+                    >
+                      Add Item
+                    </button>
+                  </FormControl>
+                </Item>
+              ) : null}
+              {type === 'CardItem' ? (
+                <Item>
+                  <FormControl>
+                    <TextField
+                      label="Enter target title:"
+                      value={title}
+                      onChange={(e: React.ChangeEvent<HTMLTextAreaElement>) => {
+                        title = e.target.value;
+                        handleUpdate('title', e.target.value, col - 1);
+                      }}
+                    />
+                  </FormControl>
+                </Item>
+              ) : null}
+              {type === 'CardItem' ? (
+                <Item>
+                  <FormControl>
+                    <TextField
+                      label="Enter target description:"
+                      value={description}
+                      onChange={(e: React.ChangeEvent<HTMLTextAreaElement>) => {
+                        description = e.target.value;
+                        handleUpdate('description', e.target.value, col - 1);
+                      }}
+                    />
+                  </FormControl>
+                </Item>
+              ) : null}
+              {type !== 'Accordion' ? (
+                <Item>
+                  <FormControl>
+                    <TextField
+                      label="Enter target text:"
+                      value={text}
+                      onChange={(e: React.ChangeEvent<HTMLTextAreaElement>) => {
+                        text = e.target.value;
+                        handleUpdate('text', e.target.value, col - 1);
+                      }}
+                    />
+                  </FormControl>
+                </Item>
+              ) : null}
+              {type === 'LayoutBlockAnchor' ||
+              type === 'Logo' ||
+              type === 'SocialMediaIcon' ||
+              type === 'CardItem' ? (
                 <Item>
                   <FormControl>
                     <TextField
@@ -269,6 +431,34 @@ const ElementSpecificSettings = () => {
                       onChange={(e: React.ChangeEvent<HTMLTextAreaElement>) => {
                         url = e.target.value;
                         handleUpdate('url', e.target.value, col - 1);
+                      }}
+                    />
+                  </FormControl>
+                </Item>
+              ) : null}
+              {type === 'Logo' || type === 'SocialMediaIcon' || type === 'CardItem' ? (
+                <Item>
+                  <FormControl>
+                    <TextField
+                      label="Enter target image URL:"
+                      value={imgUrl}
+                      onChange={(e: React.ChangeEvent<HTMLTextAreaElement>) => {
+                        imgUrl = e.target.value;
+                        handleUpdate('imgUrl', e.target.value, col - 1);
+                      }}
+                    />
+                  </FormControl>
+                </Item>
+              ) : null}
+              {type === 'CardItem' ? (
+                <Item>
+                  <FormControl>
+                    <TextField
+                      label="Enter target button text:"
+                      value={buttonText}
+                      onChange={(e: React.ChangeEvent<HTMLTextAreaElement>) => {
+                        buttonText = e.target.value;
+                        handleUpdate('buttonText', e.target.value, col - 1);
                       }}
                     />
                   </FormControl>
