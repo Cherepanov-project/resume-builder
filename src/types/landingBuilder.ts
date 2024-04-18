@@ -102,6 +102,7 @@ export type NestedListProps = {
 export type DynamicBlockProps = {
   columns: number;
   props: {
+    style: { [key: string]: string };
     text: string;
     wrapperStyle: { [key: string]: string | number };
     textStyle: { [key: string]: string | number };
@@ -205,10 +206,22 @@ export type T_SectionElementProps = {
   textStyle?: { [key: string]: string };
   inputStyle?: { [key: string]: string };
   url?: string;
+<<<<<<< HEAD
+  style: {
+    backgroundColor: string;
+    text: string;
+    color: string;
+    border: string;
+  };
+  props?: {
+    [key: string]: string;
+  };
+=======
   imgUrl?: string;
   buttonText?: string;
   accordion?: Array<[string, string]>;
   style?: { [key: string]: string };
+>>>>>>> e8ce8009d90ec39a115860cad17ad25974f6b2b8
   RadioGroup?: ISettingsInputItem[];
   CheckboxGroup?: ISettingsInputItem[];
   SelectList?: ISettingsInputItem[];
@@ -221,3 +234,22 @@ export type T_SectionElementProps = {
 export interface ILayoutBlock {
   props: T_SectionElementProps;
 }
+
+export type T_SwiperReduxPayload = {
+  payload: {
+    presetName: string;
+  };
+};
+
+export type T_SwiperPreset = {
+  name: string;
+  params: object;
+};
+
+export type T_SwiperPresetList = {
+  default: T_SwiperPreset;
+  navigation: T_SwiperPreset;
+  pagination: T_SwiperPreset;
+  vertical: T_SwiperPreset;
+  multiple: T_SwiperPreset;
+};

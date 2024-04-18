@@ -18,8 +18,10 @@ import IntroPage from './pages/IntroPage';
 import NotFoundPage from './pages/NotFoundPage';
 import WorkSpace from '@organisms/WorkSpace';
 import LandingPreview from '@pages/LandingPreview';
+import { LandingBuilderStartPage } from './pages/LandingBuilderStartPage copy';
 
 function App() {
+  
   return (
     <>
       <Routes>
@@ -27,6 +29,7 @@ function App() {
         <Route path="/sign-in" element={<AuthPage />} />
         <Route path="/sign-up" element={<AuthPage />} />
         <Route path="/intro" element={<IntroPage />} />
+        <Route path="/landing-builder-start-page" element={<LandingBuilderStartPage />} />
         <Route
           path="/landing-builder"
           element={

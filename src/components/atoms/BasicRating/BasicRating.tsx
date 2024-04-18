@@ -1,9 +1,26 @@
-import * as React from 'react';
 import Box from '@mui/material/Box';
-import {default as Rate} from '@mui/material/Rating';
-import { T_BlockElement } from '@/types/landingBuilder';
+import { useAppSellector } from '@/hooks/cvTemplateHooks';
+import { styled } from '@mui/material/styles';
+import Rating from '@mui/material/Rating';
+import FavoriteIcon from '@mui/icons-material/Favorite';
+import FavoriteBorderIcon from '@mui/icons-material/FavoriteBorder';
+type BasicRatingType = {
+  props: number;
+}
 
-const BasicRating: React.FC<T_BlockElement> = ( props ) => {
+const BasicRating = ({props}: BasicRatingType) => {
+
+  const { gridContainers } = useAppSellector((state) => state.layout);
+  const elements = gridContainers.find((el) =>
+    el.elements.activeElements.filter((el) => el.name === 'BasicRating'),
+  );
+  console.log(elements)
+
+  const StyledRating = styled(Rating)({
+    '& .MuiRating-iconFilled': {
+      color: '#eba434',
+    },
+  });
 
   return (
     <Box
@@ -11,14 +28,21 @@ const BasicRating: React.FC<T_BlockElement> = ( props ) => {
         '& > legend': { mt: 2 },
       }}
     >
-       <Rate
-        name="simple-controlled"
-        value={props.value}
-        onChange={(newValue) => {
-          console.log(newValue)
-        }}
-      />      
+      <StyledRating
+        name="customized-color"
+        size={props === 2 ? 'small' : props === 3 ? 'medium' : 'large'}
+        defaultValue={2}
+        max={props !== 0 && props < 20 ? props : 5}
+        getLabelText={(value: number) => `${value} Heart${value !== 1 ? 'l' : ''}`}
+        precision={1}
+        icon={
+          <FavoriteIcon
+            fontSize={props === 2 ? 'small' : props === 3 ? 'medium' : 'large'}
+          />
+        }
+        emptyIcon={<FavoriteBorderIcon fontSize="inherit" />}
+      />
     </Box>
   );
-}
+};
 export default BasicRating;

@@ -23,8 +23,8 @@ import Item from '@/components/atoms/StyledPaperItem';
 // import { strict } from 'assert';
 
 const ElementSpecificSettings = () => {
-  const layoutDate = useAppSellector((state) => state.sectionsManager.layoutDate);
-  const id: string = useAppSellector((state) => state.sectionsManager.curId);
+  const layoutDate = useAppSellector((state: { sectionsManager: { layoutDate: any; }; }) => state.sectionsManager.layoutDate);
+  const id: string = useAppSellector((state: { sectionsManager: { curId: any; }; }) => state.sectionsManager.curId);
 
   let [r, w] = String(id).split('');
   let row: number = Number(r);
@@ -89,9 +89,12 @@ const ElementSpecificSettings = () => {
         newValue[i].name = value;
         newValue[i].type = label.label;
         newValue[i].props.key = label.key;
+        newValue[i].layout = label.layout;
         if (label.value) {
           newValue[i].props.value = label.title.value;
         }
+        if (label.url) newValue[i].url = label.url;
+        // console.log(row, newValue);
         dispatch(editRowDate({ row, date: newValue }));
         break;
       }
@@ -143,11 +146,29 @@ const ElementSpecificSettings = () => {
         return {
           value: '',
           label: '',
+          url: '',
           title: {
             key: '',
             text: '',
             wrapperStyle: { display: 'block' },
             textStyle: { display: 'block' },
+          },
+        };
+      case 'Avatars':
+        return {
+          label: 'Avatar & Images',
+          value: 'Avatars',
+          key: 'avatar',
+          layout: { i: '', x: 0, y: 0, w: 1, h: 7 },
+          url: url,
+          props: {
+            Avatars: [],
+          },
+          title: {
+            key: 'avatar',
+            text: '',
+            wrapperStyle: { textAlign: 'center' },
+            textStyle: { border: 'none', height: '100%', width: '100%' },
           },
         };
       case 'Accordion':
@@ -188,6 +209,7 @@ const ElementSpecificSettings = () => {
           label: 'Block Title',
           value: 'LayoutBlockTitle',
           key: 'title',
+          layout: { i: '', x: 0, y: 0, w: 1, h: 3 },
           title: {
             key: 'title',
             text: text,
@@ -201,6 +223,7 @@ const ElementSpecificSettings = () => {
           label: 'Block Paragraph',
           value: 'LayoutBlockParagraph',
           key: 'paragraph',
+          layout: { i: '', x: 0, y: 0, w: 2, h: 6 },
           title: {
             key: 'paragraph',
             text: text,
@@ -211,9 +234,13 @@ const ElementSpecificSettings = () => {
         };
       case 'LayoutBlockImage':
         return {
-          label: 'Block Image',
+          label: 'Avatar & Images',
           value: 'LayoutBlockImage',
           key: 'image',
+          layout: { i: '', x: 0, y: 0, w: 1, h: 6 },
+          props: {
+            url: '',
+          },
           title: {
             key: 'image',
             text: text,
@@ -223,9 +250,10 @@ const ElementSpecificSettings = () => {
         };
       case 'LayoutBlockButton':
         return {
-          label: 'Block Button',
+          label: 'Simple Blocks',
           value: 'LayoutBlockButton',
           key: 'button',
+          layout: { i: '', x: 0, y: 0, w: 1, h: 2 },
           title: {
             key: 'button',
             text: text,
@@ -250,6 +278,7 @@ const ElementSpecificSettings = () => {
           label: 'Block Anchor',
           value: 'LayoutBlockAnchor',
           key: 'anchor',
+          layout: { i: '', x: 0, y: 0, w: 1, h: 1 },
           title: {
             key: 'anchor',
             text: text,
@@ -292,14 +321,177 @@ const ElementSpecificSettings = () => {
         };
       case 'BasicRating':
         return {
-          label: 'Basic Elements',
+          label: 'Simple Blocks',
           value: 'BasicRating',
           key: 'rating',
+          columns: 2,
+          layout: { i: '', x: 0, y: 0, w: 1, h: 1 },
+          children: [],
           title: {
             key: 'rating',
             value: '0',
             text: false,
           },
+        };
+      case 'BasicTooltip':
+        return {
+          label: 'Simple Blocks',
+          value: 'BasicTooltip',
+          key: 'tooltip',
+          layout: { i: '', x: 0, y: 0, w: 1, h: 2 },
+          children: [],
+          title: {
+            key: 'tooltip',
+            value: '0',
+            text: false,
+          },
+        };
+      case 'CheckboxGroup':
+        return {
+          label: 'CheckBoxes',
+          value: 'CheckboxGroup',
+          key: 'checkbox',
+          layout: { i: '', x: 0, y: 0, w: 1, h: 3 },
+          children: [],
+          title: {
+            key: 'checkbox',
+            value: '0',
+            text: false,
+          },
+          props: {
+            CheckboxGroup: [],
+          },
+        };
+      case 'RadioGroup':
+        return {
+          label: 'CheckBoxes',
+          value: 'RadioGroup',
+          key: 'radiobox',
+          layout: { i: '', x: 0, y: 0, w: 1, h: 3 },
+          children: [],
+          title: {
+            key: 'radiobox',
+            value: '0',
+            text: false,
+          },
+          props: {
+            RadioGroup: [],
+          },
+        };
+      case 'ToggleButtonsMultiple':
+        return {
+          label: 'CheckBoxes',
+          value: 'ToggleButtonsMultiple',
+          key: 'toggleButtons',
+          layout: { i: '', x: 0, y: 0, w: 2, h: 3 },
+          children: [],
+          title: {
+            key: 'toggleButtons',
+            value: '0',
+            text: false,
+          },
+      };
+      case 'TitleH1':
+        return {
+          label: 'Text Blocks',
+          value: 'TitleH1',
+          key: 'h1title',
+          layout: { i: '', x: 0, y: 0, w: 1, h: 1 },
+          children: [],
+          title: {
+            key: 'h1title',
+            value: '0',
+            text: false,
+          },
+        };
+      case 'MasonryGallery':
+        return {
+          label: 'Avatar & Images',
+          value: 'MasonryGallery',
+          key: 'gallery',
+          layout: { i: '', x: 0, y: 0, w: 2, h: 13 },
+          children: [],
+          url: url,
+          title: {
+            key: 'gallery',
+            value: '0',
+            text: '',
+          },
+          props: {
+            MasonryGallery: [],
+          },
+        };
+      case 'LayoutBlockVideoPlayer':
+        return {
+          label: 'Composite Blocks',
+          value: 'LayoutBlockVideoPlayer',
+          key: 'video',
+          layout: { i: '', x: 0, y: 0, w: 3, h: 10 },
+          children: [],
+          title: {
+            key: 'video',
+            value: '0',
+            text: false,
+          },
+          props: {
+            url: '',
+            text: '',
+          }
+        };
+      case 'SelectList':
+        return {
+          label: 'Text Blocks',
+          value: 'SelectList',
+          key: 'selectlist',
+          layout: { i: '', x: 0, y: 0, w: 2, h: 2 },
+          children: [],
+          title: {
+            key: 'selectlist',
+            value: '0',
+            text: false,
+          },
+          props: {
+            SelectList: [],
+          },
+        };
+      case 'LayoutBlockModal':
+        return {
+          label: 'Text Blocks',
+          value: 'LayoutBlockModal',
+          key: 'modal',
+          layout: { i: '', x: 0, y: 0, w: 1.5, h: 3 },
+          children: [],
+          title: {
+            key: 'modal',
+            value: '0',
+            text: false,
+          },
+          props: {
+            text: ['Click here to open modal', 'Here is your modal title', 'Wow! You opened modal.'],
+            wrapperStyle: { height: 'calc(100% - 38px)' },
+            textStyle: { width: '100%', height: '100%', border: 'none' },
+            style: { backgroundColor: '', color: '', border: '', text: '' },
+          }
+        };
+      case 'LayoutBlockSlider':
+        return {
+          label: 'Composite Blocks',
+          value: 'LayoutBlockSlider',
+          key: 'slider',
+          children: [],
+          title: {
+            key: 'slider',
+            value: '0',
+            text: false,
+          },
+          props: {
+            text: '',
+            LayoutBlockSlider: [],
+            wrapperStyle: { height: '100%' },
+            textStyle: { width: '100%', height: '100%', border: 'none' },
+            style: { backgroundColor: '', color: '', border: '', text: '' },
+          },
+          layout: { i: '', x: 0, y: 0, w: 3, h: 15 },
         };
     }
   };
@@ -335,10 +527,22 @@ const ElementSpecificSettings = () => {
                   </Select>
                 </FormControl>
               </Item>
+              {type !== 'LayoutBlockImage' && type !== 'LayoutBlockVideoPlayer' && type !== 'LayoutBlockSlider' && <Item>
+                <FormControl>
+                  <TextField
+                    label="Enter target text:"
+                    value={text}
+                    onChange={(e: React.ChangeEvent<HTMLTextAreaElement>) => {
+                      text = e.target.value;
+                      handleUpdate('text', e.target.value, col - 1);
+                    }}
+                  />
+                </FormControl>
+              </Item>}
               {type === 'Accordion' ? (
                 <Item>
                   <FormControl>
-                    {accordion.map((item, index) => (
+                    {accordion.map((item: any[], index: number) => (
                       <div key={index}>
                         <TextField
                           label={`Enter target accordion ${index + 1} title:`}
@@ -365,7 +569,7 @@ const ElementSpecificSettings = () => {
                       </div>
                     ))}
                     <button
-                      onClick={(e) => {
+                      onClick={(e: { preventDefault: () => void; }) => {
                         e.preventDefault();
                         const updatedAccordion: AccordionData = [...accordion, ['', '']];
                         setAccordion(updatedAccordion);
@@ -419,10 +623,15 @@ const ElementSpecificSettings = () => {
                   </FormControl>
                 </Item>
               ) : null}
-              {type === 'LayoutBlockAnchor' ||
-              type === 'Logo' ||
+              {type === 'LayoutBlockAnchor' || 
+              type === 'Avatars' || 
+              type === 'LayoutBlockImage' || 
+              type === 'MasonryGallery'  || 
+              type === 'LayoutBlockVideoPlayer' || 
+              type === 'LayoutBlockSlider' || 
               type === 'SocialMediaIcon' ||
-              type === 'CardItem' ? (
+              type === 'CardItem' ||
+              type === 'Logo'? (
                 <Item>
                   <FormControl>
                     <TextField

@@ -6,7 +6,7 @@ export const props = {
   source: 'atoms',
   props: {},
   children: [],
-  layout: { i: null, x: 0, y: 0, w: 2, h: 3 },
+  layout: { i: null, x: 0, y: 0, w: 2, h: 12 },
 };
 
 export default MasonryGallery;

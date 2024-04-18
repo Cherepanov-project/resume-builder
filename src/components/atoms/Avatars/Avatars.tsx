@@ -1,3 +1,4 @@
+
 import { IElementsProps } from '@/types/landingBuilder';
 import Avatar from '@mui/material/Avatar';
 import Stack from '@mui/material/Stack';
@@ -15,7 +16,7 @@ const Avatars = ({ props, layout }: IElementsProps) => {
   useEffect(() => {
     if (currentList.length === 0) {
       const secondItem = {
-        id: layout.i,
+        id: layout.i || nanoid(),
         values: [
           {
             id: nanoid(),
@@ -25,29 +26,39 @@ const Avatars = ({ props, layout }: IElementsProps) => {
         ],
         size: 1,
       };
+      console.log('ava', secondItem)
       dispatch(setProps(secondItem));
     }
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
-
+  
   return (
-    <Stack direction="row" spacing={2} className={classes.wrapper}>
+    <Stack key={nanoid()} direction="row" spacing={2}  className={classes.wrapper} sx={{ flexDirection: 'column' }}>
       {currentList ? (
         currentList.map((item) => (
-          <>
+          <div key={item.id}  className={classes.wrap}>
             <Avatar
               className={classes.avatar}
-              key={item.id}
               src={`${item.img}?w=162&auto=format`}
               alt={String(item.title)}
+              sx={{ width: '60%', height: '60%' }}
             />
-            <div className={classes.nick}>{item.title}</div>
-          </>
+            <div className={classes.nick}>
+              {item.title || 'Enter name'}
+            </div>
+          </div>
         ))
       ) : (
-        <Avatar className={classes.avatar} alt="avatar" src={'url'} />
+        <>
+          <Avatar
+            className={classes.avatar}
+            alt="avatar"
+            src={'url'}
+            sx={{ width: '60%', height: '60%' }}
+          />
+          <div key={nanoid()} className={classes.nick}>Enter name</div>
+        </>
       )}
-      <div className={classes.nick}></div>
     </Stack>
   );
 };
