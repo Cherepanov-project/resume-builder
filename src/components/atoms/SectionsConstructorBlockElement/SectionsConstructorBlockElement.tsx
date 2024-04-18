@@ -18,6 +18,9 @@ import LayoutBlockVideoPlayer from '../LayoutBlockVideoPlayer';
 import SelectList from '../SelectList';
 import LayoutBlockModal from '../LayoutBlockModal';
 import LayoutBlockSlider from '../LayoutBlockSlider';
+import SocialMediaIcon from '../SocialMediaIcon';
+import CardItem from '../CardItem';
+import Accordion from '../Accordion';
 
 interface SectionsConstructorBlockElementType {
   params: T_BlockElement;
@@ -56,6 +59,10 @@ const SectionsConstructorBlockElement: React.FC<SectionsConstructorBlockElementT
   const isSlider = props.key === 'slider';
   const isLogo = false || params.key === 'logo';
   // console.log('pa', params);
+  const isSMIcon = false || params.key === 'smIcon';
+  const isCardItem = false || params.key === 'cardItem';
+  const isAccordion = false || params.key === 'accordion';
+
   return (
     <>
       {isImg && <LayoutBlockImage props={props} />}
@@ -91,6 +98,9 @@ const SectionsConstructorBlockElement: React.FC<SectionsConstructorBlockElementT
       {isSelectList && <SelectList layout={params.layout} props={{SelectList: [{id: nanoid(), value: props.text || 'Text'}]}}/>}
       {isModal && <LayoutBlockModal props={props}/>}
       {isSlider && <LayoutBlockSlider props={props} />}
+      {isSMIcon && <SocialMediaIcon props={props} />}
+      {isCardItem && <CardItem props={props} />}
+      {isAccordion && <Accordion props={props} />}
     </>
   );
 };

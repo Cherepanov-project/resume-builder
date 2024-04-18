@@ -1,7 +1,7 @@
-import Logo from './Logo';
+import SocialMediaIcon from './SocialMediaIcon';
 
 export const props = {
-  name: 'Logo',
+  name: 'SocialMediaIcon',
   type: 'Composite Blocks',
   source: 'atoms',
   props: {
@@ -16,4 +16,4 @@ export const props = {
   layout: { i: '', x: 0, y: 0, w: 1, h: 1 },
 };
 
-export default Logo;
+export default SocialMediaIcon;
