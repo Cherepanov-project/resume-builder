@@ -13,7 +13,6 @@ const FinishResume: FC<IProps> = ({ handleButtonClick, handleReset }) => {
   const handlePrint = useReactToPrint({
     content: () => componentRef.current,
   });
-
   return (
     <Box>
       <Box display="flex" justifyContent="space-between" alignItems="flex-end" sx={{ mb: 3 }}>

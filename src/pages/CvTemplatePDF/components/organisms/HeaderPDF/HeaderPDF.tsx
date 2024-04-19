@@ -50,7 +50,6 @@ export const HeaderPDF = (props: IHeaderPDFProps) => {
     style: { Subtitle: SubtitleNone, Contact, ContactLink, ContactIcon, Text, ContactWrapper },
   };
   const propsAbout = { bio: personalData.bio, style: { Text, Subtitle: Subtitle } };
-
   return (
     <>
       {Header.name === 'toronto' ? (
