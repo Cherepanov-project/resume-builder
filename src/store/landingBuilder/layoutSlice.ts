@@ -10,7 +10,7 @@ type ElementsType = {
   activeElements: T_BlockElement[];
 };
 
-export type GridContainers = {
+export type IGridContainers = {
   id: string;
   height: number;
   elements: ElementsType;
@@ -24,7 +24,7 @@ export type GridContainers = {
 };
 
 type stateProps = {
-  gridContainers: GridContainers[];
+  gridContainers: IGridContainers[];
   currentDraggableItem: Layout | null;
   currentContainer: string;
 };
@@ -41,9 +41,9 @@ const initialState: stateProps = {
       },
       layout: {
         i: null,
-        w: 1,
-        h: 1,
-        x: 10,
+        w: 6,
+        h: 2,
+        x: 0,
         y: 0,
       },
     },
@@ -72,7 +72,7 @@ const layoutSlice = createSlice({
           x: layoutItem.x,
           y: layoutItem.y,
           w: draggableItem.layout.w,
-          h: draggableItem.layout.h,
+          h: draggableItem.layout.h + 1,
           minW: draggableItem.layout.minW || 0,
           maxW: draggableItem.layout.maxW ?? 6,
           minH: draggableItem.layout.minW || 0,
@@ -97,9 +97,9 @@ const layoutSlice = createSlice({
               //   },
               //   layout: {
               //     i: null,
-              //     w: 1,
-              //     h: 1,
-              //     x: 10,
+              //     w: 6,
+              //     h: 2,
+              //     x: 0,
               //     y: 0,
               //   },
               // };
@@ -123,7 +123,7 @@ const layoutSlice = createSlice({
     // Копируем блок
     copyElement(state, action) {
       let indx: number;
-      state.gridContainers.forEach((container) => {
+      state.gridContainers.forEach((container, index) => {
         if (container.id === action.payload.id) {
           indx = container.elements.activeElements.findIndex(
             (element) => element.layout.i === action.payload.layout.i,
@@ -138,7 +138,7 @@ const layoutSlice = createSlice({
               i: nanoid(),
             },
           };
-          container.elements.activeElements.splice(indx + 1, 0, newElement);
+          state.gridContainers[index].elements.activeElements.splice(indx + 1, 0, newElement);
         }
       });
     },
@@ -201,22 +201,30 @@ const layoutSlice = createSlice({
       state.gridContainers.splice(indx + 1, 0, copy);
     },
     moveUpGridContainer(state, action) {
-      const indx = state.gridContainers.findIndex(
-        (container) => container.id === action.payload.id,
-      );
-      [state.gridContainers[indx], state.gridContainers[indx - 1]] = [
-        state.gridContainers[indx - 1],
-        state.gridContainers[indx],
-      ];
+      if (state.gridContainers.length !== 1) {
+        const indx = state.gridContainers.findIndex(
+          (container) => container.id === action.payload.id,
+        );
+        if (indx !== 0) {
+          [state.gridContainers[indx], state.gridContainers[indx - 1]] = [
+            state.gridContainers[indx - 1],
+            state.gridContainers[indx],
+          ];
+        }
+      }
     },
     moveDownGridContainer(state, action) {
-      const indx = state.gridContainers.findIndex(
-        (container) => container.id === action.payload.id,
-      );
-      [state.gridContainers[indx + 1], state.gridContainers[indx]] = [
-        state.gridContainers[indx],
-        state.gridContainers[indx + 1],
-      ];
+      if (state.gridContainers.length !== 1) {
+        const indx = state.gridContainers.findIndex(
+          (container) => container.id === action.payload.id,
+        );
+        if (indx !== state.gridContainers.length - 1) {
+          [state.gridContainers[indx + 1], state.gridContainers[indx]] = [
+            state.gridContainers[indx],
+            state.gridContainers[indx + 1],
+          ];
+        }
+      }
     },
     deleteGridContainer(state, action) {
       if (state.gridContainers.length === 1) {
@@ -239,7 +247,7 @@ const layoutSlice = createSlice({
             (element) => element.layout.i === action.payload.layout.i,
           );
           container.elements.activeElements[indx].layout.w += 1;
-          container.elements.activeElements[indx].columns += 1;
+          container.elements.activeElements[indx].columns! += 1;
         }
       });
     },
@@ -252,7 +260,7 @@ const layoutSlice = createSlice({
             (element) => element.layout.i === action.payload.layout.i,
           );
           container.elements.activeElements[indx].layout.w -= 1;
-          container.elements.activeElements[indx].columns -= 1;
+          container.elements.activeElements[indx].columns! -= 1;
         }
       });
     },
@@ -285,6 +293,7 @@ const layoutSlice = createSlice({
     },
     setProps(state, action) {
       const containerID = state.currentContainer;
+      // console.log('h', action.payload)
       state.gridContainers.forEach((container, i) => {
         if (container.id === containerID) {
           container.elements.activeElements.forEach((el, index) => {
@@ -295,12 +304,33 @@ const layoutSlice = createSlice({
                   [el.name]: [...action.payload.values],
                   text: '',
                   size: action.payload.size === 0 ? 1 : action.payload.size,
+                  style: action.payload.style,
                 },
               };
+            } else if (el.children && el.children.length > 0) {
+              el.children.forEach((child, indx) =>  {
+                if (child.layout.i === action.payload.id) {
+                  // console.log('he')
+                  state.gridContainers[i].elements.activeElements[index].children![indx] = {
+                    ...child,
+                    props: {
+                      [child.name]: [...action.payload.values],
+                      text: '',
+                      size: action.payload.size === 0 ? 1 : action.payload.size,
+                      style: action.payload.style,
+                    }
+                  }
+                }
+              })
             }
           });
         }
       });
+    },
+    clearStore(state) {
+      state.gridContainers = initialState.gridContainers;
+      state.currentDraggableItem = null;
+      state.currentContainer = '';
     },
   },
 });
@@ -322,4 +352,5 @@ export const {
   setCurrentContainer,
   setSectionStyle,
   setProps,
+  clearStore,
 } = layoutSlice.actions;

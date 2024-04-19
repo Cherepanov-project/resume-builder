@@ -6,9 +6,8 @@ import FormatColorFillIcon from '@mui/icons-material/FormatColorFill';
 import ArrowDropDownIcon from '@mui/icons-material/ArrowDropDown';
 import ToggleButton from '@mui/material/ToggleButton';
 import ToggleButtonGroup from '@mui/material/ToggleButtonGroup';
-import { T_BlockElement } from '@/types/landingBuilder';
 
-const ToggleButtonsMultiple: React.FC<T_BlockElement> = () => {
+const ToggleButtonsMultiple: React.FC = () => {
   const [formats, setFormats] = React.useState(() => ['bold', 'italic']);
 
   const handleFormat = (

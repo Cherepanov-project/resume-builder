@@ -333,7 +333,7 @@ const EditWithHeader: FC<IProps> = ({ setChooseTemplate }) => {
     };
   }, []);
 
-  const componentRef = useRef();
+  const componentRef = useRef(null);
   const handlePrint = useReactToPrint({
     content: () => componentRef.current,
   });

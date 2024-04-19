@@ -11,9 +11,9 @@ export const props: T_BlockElement = {
     wrapperStyle: { textAlign: 'center' },
     textStyle: { fontSize: '16px', margin: '0px' },
     inputStyle: { width: '100%', border: 'none' },
-    style: { '': '' },
+    style: { backgroundColor: '', color: '', border: '', text: '' },
   },
-  layout: { i: '', x: 0, y: 0, w: 1, h: 4 },
+  layout: { i: '', x: 0, y: 0, w: 2, h: 4 },
 };
 
 export default LayoutBlockParagraph;

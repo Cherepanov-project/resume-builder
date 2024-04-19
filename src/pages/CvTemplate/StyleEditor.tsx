@@ -483,8 +483,8 @@ const StyleEditor_v2 = ({
         Object.keys(componentProps.style[el]).map((subElement, id) => {
           const Component = styleComponents[subElement];
           return (
-            Component &&
-            componentProps.style[el][subElement] && (
+              (Component &&
+            componentProps.style[el][subElement]) && (
               <Container>
                 <Component place_={el} subKey={subElement} key={el + String(id)} />
               </Container>

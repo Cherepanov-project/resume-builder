@@ -1,10 +1,10 @@
-import { GridContainers, setCurrentContainer } from '@/store/landingBuilder/layoutSlice';
+import { IGridContainers, setCurrentContainer } from '@/store/landingBuilder/layoutSlice';
 import ResponsiveGridLayout, { Layout } from 'react-grid-layout';
 import ContainerToolsPanel from '../ContainerToolsPanel';
 import { useAppDispatch, useAppSellector } from '@/hooks/cvTemplateHooks';
 import { DynamicComponentRendererProps, T_BlockElement } from '@/types/landingBuilder';
 import { addElement, addGridContainer, changeElement } from '@store/landingBuilder/layoutSlice';
-import { Suspense, lazy, memo, useEffect, useState } from 'react';
+import React, { Suspense, lazy, memo, useEffect, useState } from 'react';
 import ComponentPreloader from '@/components/atoms/ComponentPreloader';
 import ElementToolsPanel from '../ElementToolsPanel';
 import { PlusCircleFilled, PlusCircleOutlined } from '@ant-design/icons';
@@ -33,7 +33,7 @@ const DynamicComponentRenderer: React.FC<DynamicComponentRendererProps> = memo(
 );
 // ========================================================================== \\
 
-export const GridContainer = (container: GridContainers) => {
+export const GridContainer = (container: IGridContainers) => {
   const dispatch = useAppDispatch();
   const currentDraggableItem = useAppSellector((state) => state.layout.currentDraggableItem);
   const [width, setWidth] = useState(window.innerWidth);
@@ -109,21 +109,20 @@ export const GridContainer = (container: GridContainers) => {
         onDragStop={handleChangeLayout}
       >
         {/* Динамически подгружаем компоненты и прокидывааем в них пропсы из одноимменных объектов */}
-        {container.elements.activeElements.map((el) => {
-          return (
-            <div key={el.layout.i} className={classes['item']}>
-              <ElementToolsPanel layout={el.layout} id={container.id} />
-              <DynamicComponentRenderer
-                Component={el.name}
-                source={el.source || 'atoms'}
-                props={el.props}
-                columns={el.columns || 1}
-                children={el.children}
-                layout={el.layout}
-              />
-            </div>
-          );
-        })}
+        {container.elements.activeElements.map((el) => (
+          <div key={el.layout.i} className={classes['item']}>
+            {/* {console.log(el)} */}
+            <ElementToolsPanel layout={el.layout} id={container.id} />
+            <DynamicComponentRenderer
+              Component={el.name}
+              source={el.source || 'atoms'}
+              props={el.props}
+              columns={el.columns || 1}
+              layout={el.layout}
+              children={el.children}
+            />
+          </div>
+        ))}
       </ResponsiveGridLayout>
       {isHover && (
         <button
