@@ -14,7 +14,7 @@ import {
 } from '@pages/CvTemplatePDF/components/molecules';
 import { ImagePDF, SubtitlePDF, TextPDF, TitlePDF } from '@pages/CvTemplatePDF/components/atoms';
 import { EducationPDF } from '@pages/CvTemplatePDF/components/molecules/EducationPDF';
-import StyleEditor from '@pages/CvTemplate/StyleEditor.tsx';
+import { StyleEditor_v2 } from '@pages/CvTemplate/StyleEditor.tsx';
 
 interface IProps {
   setChooseTemplate: React.Dispatch<React.SetStateAction<number>>;
@@ -174,6 +174,7 @@ const EditWithHeader: FC<IProps> = ({ setChooseTemplate }) => {
         Text: ['fontSize', 'fontFamily'],
       },
       complex: true,
+      propName: 'about',
     },
     Contacts: {
       component: ContactsPDF,
@@ -185,6 +186,7 @@ const EditWithHeader: FC<IProps> = ({ setChooseTemplate }) => {
         Text: ['fontSize', 'fontFamily'],
       },
       complex: true,
+      propName: 'contact',
     },
     Image: {
       component: ImagePDF,
@@ -192,6 +194,7 @@ const EditWithHeader: FC<IProps> = ({ setChooseTemplate }) => {
       data: { ...propsImage },
       styles: ['width', 'height', 'borderRadius'],
       place: 'Img',
+      propName: 'img',
     },
     Title: {
       component: TitlePDF,
@@ -199,6 +202,7 @@ const EditWithHeader: FC<IProps> = ({ setChooseTemplate }) => {
       data: { fullName: fullNameTitiles[0] + ' ' + fullNameTitiles[1], style: Title },
       styles: ['fontSize', 'fontFamily', 'color'],
       place: 'Title',
+      propName: 'title',
     },
     Text: {
       component: TextPDF,
@@ -206,6 +210,7 @@ const EditWithHeader: FC<IProps> = ({ setChooseTemplate }) => {
       data: { ...propsSubtitle },
       styles: ['fontSize', 'fontFamily', 'color'],
       place: 'TextSpecial',
+      propName: 'text',
     },
     Experience: {
       component: ExperiencePDF,
@@ -220,6 +225,7 @@ const EditWithHeader: FC<IProps> = ({ setChooseTemplate }) => {
         Text: ['fontSize', 'fontFamily'],
       },
       complex: true,
+      propName: 'expirience',
     },
     Social: {
       component: SocialPDF,
@@ -232,6 +238,7 @@ const EditWithHeader: FC<IProps> = ({ setChooseTemplate }) => {
         Text: ['fontSize', 'fontFamily'],
       },
       complex: true,
+      propName: 'social',
     },
     Hobbies: {
       component: HobbiesPDF,
@@ -243,6 +250,7 @@ const EditWithHeader: FC<IProps> = ({ setChooseTemplate }) => {
         Text: ['fontSize', 'fontFamily'],
       },
       complex: true,
+      propName: 'hobbies',
     },
     Education: {
       component: EducationPDF,
@@ -257,12 +265,14 @@ const EditWithHeader: FC<IProps> = ({ setChooseTemplate }) => {
         EducationPosition: ['fontSize'],
         Text: ['fontSize', 'fontFamily'],
       },
+      propName: 'education',
     },
     Subtitle: {
       component: SubtitlePDF,
       title: 'Подзаголовок',
       styles: ['fontSize', 'fontFamily'],
       data: { ...propsSubtitle },
+      propName: 'subtitle',
     },
   };
 
@@ -327,8 +337,6 @@ const EditWithHeader: FC<IProps> = ({ setChooseTemplate }) => {
   const handlePrint = useReactToPrint({
     content: () => componentRef.current,
   });
-
-  const MemoizedStyleEditor = React.memo(StyleEditor);
 
   return (
     <ErrorBoundary>
@@ -398,14 +406,25 @@ const EditWithHeader: FC<IProps> = ({ setChooseTemplate }) => {
               >
                 <Box component="fieldset">
                   <legend>{pdfComponents[currentSubComponent].title}</legend>
-                  <MemoizedStyleEditor
-                    setNewStyleValue={setNewStyleValue}
+                  {/*<StyleEditor*/}
+                  {/*  setNewStyleValue={setNewStyleValue}*/}
+                  {/*  Component={PDFSubComponent}*/}
+                  {/*  componentProps={pdfComponents[currentSubComponent].data}*/}
+                  {/*  data={pdfComponents[currentSubComponent].styles || []}*/}
+                  {/*  place={pdfComponents[currentSubComponent].place}*/}
+                  {/*  updateParent={updateFlag}*/}
+                  {/*  propName={pdfComponents[currentSubComponent].propName}*/}
+                  {/*  isComplex={pdfComponents[currentSubComponent].complex}*/}
+                  {/*/>*/}
+
+                  <StyleEditor_v2
+                    updateParent={updateFlag}
                     Component={PDFSubComponent}
                     componentProps={pdfComponents[currentSubComponent].data}
-                    data={pdfComponents[currentSubComponent].styles || []}
-                    place={pdfComponents[currentSubComponent].place}
-                    updateParent={updateFlag}
                     isComplex={pdfComponents[currentSubComponent].complex}
+                    setNewStyleValue={setNewStyleValue}
+                    propName={pdfComponents[currentSubComponent].propName}
+                    place={pdfComponents[currentSubComponent].place}
                   />
                 </Box>
               </Box>
