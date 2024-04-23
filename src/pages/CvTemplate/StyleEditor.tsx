@@ -1,5 +1,5 @@
 import React, { FC, useState, useEffect } from 'react';
-import { Box, FormControl, Input, MenuItem, Select } from '@mui/material';
+import { Box, FormControl, Input, MenuItem, Select , SelectChangeEvent  } from '@mui/material';
 import { Colorful } from '@uiw/react-color';
 
 interface IProps {
@@ -107,10 +107,10 @@ const StyleEditor: FC<IProps> = ({
     );
   };
 
-  const ColorFieldWithState = ({ place_, subKey = null }) => {
+  const ColorFieldWithState = ({ place_, subKey = '' }) => {
     const [data, setData] = useState({
-      label: null,
-      value: null,
+      label: '',
+      value: '',
     });
     useEffect(() => {
       if (isComplex) {
@@ -126,7 +126,7 @@ const StyleEditor: FC<IProps> = ({
     return (
       <div>
         <h3>
-          {data.label} : <span style={{ color: data.value }}>{data.value || '#000000'}</span>
+          {data.label} : <span style={{ color: data.value || '#000000' }}>{data.value || '#000000'}</span>
         </h3>
         <Colorful
           color={data.value || '#000000'}
@@ -141,10 +141,10 @@ const StyleEditor: FC<IProps> = ({
     );
   };
 
-  const InputFieldWithState = ({ place_, subKey = null }) => {
+  const InputFieldWithState = ({ place_, subKey = '' }) => {
     const [data, setData] = useState({
-      label: null,
-      value: null,
+      label: '',
+      value: '',
     });
 
     useEffect(() => {
@@ -192,10 +192,10 @@ const StyleEditor: FC<IProps> = ({
     );
   };
 
-  const SelectFieldWithState = ({ place_, subKey = null }) => {
+  const SelectFieldWithState = ({ place_, subKey = '' }) => {
     const [data, setData] = useState({
-      label: null,
-      value: null,
+      label: '',
+      value: '',
     });
 
     useEffect(() => {
@@ -219,9 +219,9 @@ const StyleEditor: FC<IProps> = ({
           <Select
             labelId="demo-simple-select-label"
             id="demo-simple-select"
-            value={data.value || fontFamily[0]}
+            value={data.value || fontFamily[0].value}
             autoWidth
-            onChange={(event: React.ChangeEvent<HTMLInputElement>) =>
+            onChange={(event: SelectChangeEvent) =>
               isComplex
                 ? handleChange(setData, event.target.value, subKey, place_)
                 : handleChange(setData, event.target.value, place_)
@@ -250,7 +250,7 @@ const StyleEditor: FC<IProps> = ({
   };
 
   const renderData = React.useMemo(() => {
-    let result = [];
+    let result: (React.ReactElement | React.ReactElement[])[] = [];
     if (isComplex) {
       const keys = Object.keys(data);
       result = keys.map((el) =>
@@ -297,7 +297,7 @@ const StyleEditor_v2 = ({
   componentProps,
   updateParent,
   setNewStyleValue,
-  place = null,
+  place = '',
   Component,
   isComplex = false,
   propName,
@@ -333,10 +333,10 @@ const StyleEditor_v2 = ({
     );
   };
 
-  const ColorFieldWithState = ({ place_, subKey = null }) => {
+  const ColorFieldWithState = ({ place_, subKey = '' }) => {
     const [data, setData] = useState({
-      label: null,
-      value: null,
+      label: '',
+      value: '',
     });
     useEffect(() => {
       if (isComplex) {
@@ -367,10 +367,10 @@ const StyleEditor_v2 = ({
     );
   };
 
-  const InputFieldWithState = ({ place_, subKey = null }) => {
+  const InputFieldWithState = ({ place_, subKey = '' }) => {
     const [data, setData] = useState({
-      label: null,
-      value: null,
+      label: '',
+      value: '',
     });
 
     useEffect(() => {
@@ -418,10 +418,10 @@ const StyleEditor_v2 = ({
     );
   };
 
-  const SelectFieldWithState = ({ place_, subKey = null }) => {
+  const SelectFieldWithState = ({ place_, subKey = '' }) => {
     const [data, setData] = useState({
-      label: null,
-      value: null,
+      label: '',
+      value: '',
     });
 
     useEffect(() => {
@@ -445,9 +445,9 @@ const StyleEditor_v2 = ({
           <Select
             labelId="demo-simple-select-label"
             id="demo-simple-select"
-            value={data.value || fontFamily[0]}
+            value={data.value || fontFamily[0].value}
             autoWidth
-            onChange={(event: React.ChangeEvent<HTMLInputElement>) =>
+            onChange={(event: SelectChangeEvent) =>
               isComplex
                 ? handleChange(setData, event.target.value, subKey, place_)
                 : handleChange(setData, event.target.value, place_)
@@ -476,17 +476,16 @@ const StyleEditor_v2 = ({
   };
 
   const renderData = React.useMemo(() => {
-    let res = [];
+    let res: ((false | React.ReactElement)[] | (false | React.ReactElement)[][]) = [];
     if (isComplex) {
       const keys = Object.keys(componentProps.style);
       res = keys.map((el) =>
         Object.keys(componentProps.style[el]).map((subElement, id) => {
           const Component = styleComponents[subElement];
           return (
-              (Component &&
-            componentProps.style[el][subElement]) && (
-              <Container>
-                <Component place_={el} subKey={subElement} key={el + String(id)} />
+              !!(Component && componentProps.style[el][subElement])  && (
+              <Container  key={el + String(id)}>
+                <Component place_={el} subKey={subElement} />
               </Container>
             )
           );
@@ -496,10 +495,9 @@ const StyleEditor_v2 = ({
       res = Object.keys(componentProps.style).map((el, id) => {
         const Component = styleComponents[el];
         return (
-          Component &&
-          componentProps.style[el] && (
-            <Container>
-              <Component place_={el} key={el + String(id)} />
+            !!(Component && componentProps.style[el]) && (
+            <Container key={el + String(id)}>
+              <Component place_={el}  />
             </Container>
           )
         );
@@ -510,9 +508,7 @@ const StyleEditor_v2 = ({
 
   return (
     <div style={{ minWidth: '500px' }}>
-      {/*<pre>*/}
-      {/*    {JSON.stringify(componentProps.style)}*/}
-      {/*</pre>*/}
+
       <fieldset>
         <legend>preview</legend>
         <Component {...componentProps} />
