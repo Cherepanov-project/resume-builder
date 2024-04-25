@@ -2,8 +2,8 @@ import { T_BlockElement } from '@/types/landingBuilder';
 
 //объект с типами интерактивных элементов
 const elemTypes: { [key: string]: string[] } = {
-  button: ['LayoutBlockButton'],
-  slider: ['LayoutBlockSlider'],
+  button: ['ButtonBlock'],
+  slider: ['Slider'],
 };
 
 //получаем элемент по селектору

@@ -16,7 +16,7 @@ const InputUpdate = ({
   elementsSize,
   setElementsSize,
 }: ISettingsInputUpdateProps) => {
-  const checkIsMasonry = name === 'MasonryGallery' || name === 'Avatars';
+  const checkIsMasonry = name === 'PhotoGallery' || name === 'Avatar';
 
   const handleAddInput = () => {
     let updatedItemsList;
