@@ -53,16 +53,16 @@ const SettingsPanel: React.FC = () => {
   const size = currentElement?.props?.size;
 
   function findPropsName(props: IElementProps | undefined): ISettingsInputItem[] | undefined {
-    if (name === 'RadioGroup') {
-      return props?.RadioGroup;
-    } else if (name === 'CheckboxGroup') {
-      return props?.CheckboxGroup;
-    } else if (name === 'SelectList') {
-      return props?.SelectList;
-    } else if (name === 'LayoutBlockSlider') {
-      return props?.LayoutBlockSlider;
-    } else if (name === 'MasonryGallery') {
-      return props?.MasonryGallery;
+    if (name === 'RadioButtons') {
+      return props?.RadioButtons;
+    } else if (name === 'Checkboxes') {
+      return props?.Checkboxes;
+    } else if (name === 'DropdownList') {
+      return props?.DropdownList;
+    } else if (name === 'Slider') {
+      return props?.Slider;
+    } else if (name === 'PhotoGallery') {
+      return props?.PhotoGallery;
     } else if (name === 'Avatars') {
       return props?.Avatars;
     }
@@ -89,22 +89,22 @@ const SettingsPanel: React.FC = () => {
   }, [currentElement, size]);
 
   function СheckingLabel(list: ISettingsInputItem[]) {
-    if (name && name !== 'MasonryGallery') {
+    if (name && name !== 'PhotoGallery') {
       const labelsList = list.map((item) => item.value);
       return new Set(labelsList).size !== labelsList.length;
     }
     return false;
   }
 
-  const accessNames = ['RadioGroup', 'CheckboxGroup', 'SelectList', 'MasonryGallery', 'Avatars'];
+  const accessNames = ['RadioButtons', 'Checkboxes', 'DropdownList', 'PhotoGallery', 'Avatars'];
 
   const isButtonsPanelVisible = accessNames.includes(name || '');
 
-  const showSliderSettings = name === 'LayoutBlockSlider';
-  const showRatingSettings = name == 'BasicRating';
-  const showBasicToolTipSettings = name === 'BasicTooltip';
-  const showLayoutBlockButtonSettings = name === 'LayoutBlockButton';
-  const showLayoutBlockModalSettings = name === 'LayoutBlockModal';
+  const showSliderSettings = name === 'Slider';
+  const showRatingSettings = name == 'RatingSystem';
+  const showBasicToolTipSettings = name === 'Tooltip';
+  const showLayoutBlockButtonSettings = name === 'ButtonBlock';
+  const showLayoutBlockModalSettings = name === 'ModalWindow';
 
   return isShown ? (
     <Box ref={panelRef} className="list__wrap">

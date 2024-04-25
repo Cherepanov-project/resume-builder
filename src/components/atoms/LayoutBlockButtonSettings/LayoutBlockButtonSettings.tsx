@@ -32,9 +32,9 @@ const LayoutBlockButtonSettings = ({ setStyle }) => {
 
   const { gridContainers } = useAppSellector((state) => state.layout);
   const elements = gridContainers.find((el) =>
-    el.elements.activeElements.filter((el) => el.name === 'BasicRating'),
+    el.elements.activeElements.filter((el) => el.name === 'RatingSystem'),
   );
-  //const props = elements.elements.activeElements.filter(el => el.name === 'BasicRating').find(el => el.props)
+  //const props = elements.elements.activeElements.filter(el => el.name === 'RatingSystem').find(el => el.props)
   const layout = elements?.layout.i;
 
   useLayoutEffect(() => {

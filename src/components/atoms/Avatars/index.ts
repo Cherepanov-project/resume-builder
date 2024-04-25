@@ -3,7 +3,7 @@ import Avatars from './Avatars';
 
 export const props = {
   name: 'Avatars',
-  type: 'Avatar & Images',
+  type: 'Images',
   columns: 1,
   source: 'atoms',
   props: {
