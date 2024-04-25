@@ -34,6 +34,7 @@ const CardItem: React.FC<ILayoutBlock> = ({ props }) => {
     flexDirection: 'column',
     backgroundSize: 'contain',
     width: 'auto',
+    maxWidth: '250px',
     backgroundRepeat: 'no-repeat',
   };
 

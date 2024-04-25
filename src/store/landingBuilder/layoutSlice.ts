@@ -72,7 +72,7 @@ const layoutSlice = createSlice({
           x: layoutItem.x,
           y: layoutItem.y,
           w: draggableItem.layout.w,
-          h: draggableItem.layout.h + 1,
+          h: draggableItem.layout.h,
           minW: draggableItem.layout.minW || 0,
           maxW: draggableItem.layout.maxW ?? 6,
           minH: draggableItem.layout.minW || 0,

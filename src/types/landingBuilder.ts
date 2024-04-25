@@ -75,7 +75,7 @@ export type T_ComponentProps = {
 export type DynamicComponentRendererProps = {
   Component?: string;
   props?: {
-    [key: string]: string | number | { [key: string]: string | number } | ISettingsInputItem[];
+    [key: string]: string | number | { [key: string]: string | number } | ISettingsInputItem[] | [string, string][];
   };
   columns?: number;
   source: string;
@@ -206,7 +206,6 @@ export type T_SectionElementProps = {
   textStyle?: { [key: string]: string };
   inputStyle?: { [key: string]: string };
   url?: string;
-<<<<<<< HEAD
   style: {
     backgroundColor: string;
     text: string;
@@ -216,12 +215,9 @@ export type T_SectionElementProps = {
   props?: {
     [key: string]: string;
   };
-=======
   imgUrl?: string;
   buttonText?: string;
   accordion?: Array<[string, string]>;
-  style?: { [key: string]: string };
->>>>>>> e8ce8009d90ec39a115860cad17ad25974f6b2b8
   RadioGroup?: ISettingsInputItem[];
   CheckboxGroup?: ISettingsInputItem[];
   SelectList?: ISettingsInputItem[];

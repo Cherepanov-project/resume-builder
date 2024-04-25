@@ -1,7 +1,7 @@
 import CardItem from './CardItem';
 
 export const props = {
-  name: 'SocialMediaIcon',
+  name: 'CardItem',
   type: 'Composite Blocks',
   source: 'atoms',
   props: {

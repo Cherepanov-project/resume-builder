@@ -33,6 +33,7 @@ const DynamicComponentRenderer: React.FC<DynamicComponentRendererProps> = memo(
 );
 // ========================================================================== \\
 
+
 export const GridContainer = (container: IGridContainers) => {
   const dispatch = useAppDispatch();
   const currentDraggableItem = useAppSellector((state) => state.layout.currentDraggableItem);
@@ -111,7 +112,7 @@ export const GridContainer = (container: IGridContainers) => {
         {/* Динамически подгружаем компоненты и прокидывааем в них пропсы из одноимменных объектов */}
         {container.elements.activeElements.map((el) => (
           <div key={el.layout.i} className={classes['item']}>
-            {/* {console.log(el)} */}
+            {/* {`ВЫСОТА - ${el.layout.h}`} */}
             <ElementToolsPanel layout={el.layout} id={container.id} />
             <DynamicComponentRenderer
               Component={el.name}
@@ -140,9 +141,9 @@ export const GridContainer = (container: IGridContainers) => {
           }}
         >
           {!isButtonHover ? (
-            <PlusCircleOutlined style={{ color: '#2dc08d', fontSize: 30 }} />
+            <PlusCircleOutlined style={{ color: '#2dc08d', fontSize: 30 }} onPointerEnterCapture={undefined} onPointerLeaveCapture={undefined}/>
           ) : (
-            <PlusCircleFilled style={{ color: '#2dc08d', fontSize: 30 }} />
+            <PlusCircleFilled style={{ color: '#2dc08d', fontSize: 30 }} onPointerEnterCapture={undefined} onPointerLeaveCapture={undefined} />
           )}
         </button>
       )}

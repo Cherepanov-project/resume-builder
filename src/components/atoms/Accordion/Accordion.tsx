@@ -2,6 +2,7 @@ import { ILayoutBlock } from '@/types/landingBuilder';
 import { useEffect, useState } from 'react';
 
 import style from './Accordion.module.scss';
+import { nanoid } from 'nanoid';
 type StyleType = {
   [key: string]: string | number;
 };
@@ -22,7 +23,7 @@ const Accordion: React.FC<ILayoutBlock> = ({ props }) => {
     display: 'flex',
     alignItems: 'center',
     justifyContent: 'center',
-    height: '100%',
+    // height: '100%',
     flexDirection: 'column',
     backgroundSize: 'contain',
     width: 'auto',
@@ -43,9 +44,9 @@ const Accordion: React.FC<ILayoutBlock> = ({ props }) => {
 
   const content = () => {
     return (
-      <div style={{ width: '100%' }}>
+      <div style={{ width: '100%'}}>
         {accordion.map((item, index) => (
-          <div className={style['accordion-item']} key={index}>
+          <div className={style['accordion-item']} key={nanoid()}>
             <div className={style['accordion-title']} onClick={() => handleAccordionClick(index)}>
               {/* Заголовок аккордеона */}
               <h3 className={style['accordion-title']}>{item[0]}</h3>

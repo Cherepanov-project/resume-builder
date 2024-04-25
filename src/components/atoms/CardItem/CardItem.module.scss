@@ -6,6 +6,7 @@
     flex-direction: column;
     align-items: center;
     text-align: center;
+    max-width: 200px;
 }
 
 .cardItem__img {
@@ -17,6 +18,7 @@
     font-weight: 700;
     margin-top: 10px;
     margin-bottom: 5px;
+    overflow-wrap: break-word;
 }
 
 .cardItem__description {
@@ -24,11 +26,13 @@
     font-weight: 500;
     margin-top: 5px;
     margin-bottom: 5px;
+    overflow-wrap: break-word;
 }
 
 .cardItem__text {
     font-size: .7rem;
     font-weight: 400;
+    overflow-wrap: break-word;
 }
 
 .cardItem__button {

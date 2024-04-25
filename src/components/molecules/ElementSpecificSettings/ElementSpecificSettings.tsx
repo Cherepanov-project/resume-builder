@@ -23,8 +23,8 @@ import Item from '@/components/atoms/StyledPaperItem';
 // import { strict } from 'assert';
 
 const ElementSpecificSettings = () => {
-  const layoutDate = useAppSellector((state: { sectionsManager: { layoutDate: any; }; }) => state.sectionsManager.layoutDate);
-  const id: string = useAppSellector((state: { sectionsManager: { curId: any; }; }) => state.sectionsManager.curId);
+  const layoutDate = useAppSellector((state) => state.sectionsManager.layoutDate);
+  const id: string = useAppSellector((state) => state.sectionsManager.curId);
 
   let [r, w] = String(id).split('');
   let row: number = Number(r);
@@ -52,6 +52,7 @@ const ElementSpecificSettings = () => {
   let url: string = layoutElement.props.url || '';
   let imgUrl: string = layoutElement.props.imgUrl || '';
   let buttonText: string = layoutElement.props.buttonText || '';
+
 
   const dispatch = useDispatch();
 
@@ -176,10 +177,9 @@ const ElementSpecificSettings = () => {
           label: 'Accordion',
           value: 'accordion',
           key: 'accordion',
+          layout: { i: '', x: 0, y: 0, w: 1, h: 1 },
           title: {
             key: 'accordion',
-            title: title,
-            description: description,
             accordion: accordion,
             wrapperStyle: { textAlign: 'center', width: '100%', height: '100%' },
             textStyle: { fontSize: '16px', margin: '0px', width: '100%' },
@@ -191,6 +191,7 @@ const ElementSpecificSettings = () => {
           label: 'CardItem',
           value: 'cardItem',
           key: 'cardItem',
+          layout: { i: '', x: 0, y: 0, w: 1, h: 3 },
           title: {
             key: 'cardItem',
             title: title,
@@ -293,6 +294,7 @@ const ElementSpecificSettings = () => {
           label: 'Logo',
           value: 'Logo',
           key: 'logo',
+          layout: { i: '', x: 0, y: 0, w: 1, h: 1 },
           title: {
             key: 'logo',
             text: text,
@@ -308,6 +310,7 @@ const ElementSpecificSettings = () => {
           label: 'SocialMediaIcon',
           value: 'SocialMediaIcon',
           key: 'smIcon',
+          layout: { i: '', x: 0, y: 0, w: 1, h: 1 },
           title: {
             key: 'smIcon',
             title: title,
@@ -527,7 +530,7 @@ const ElementSpecificSettings = () => {
                   </Select>
                 </FormControl>
               </Item>
-              {type !== 'LayoutBlockImage' && type !== 'LayoutBlockVideoPlayer' && type !== 'LayoutBlockSlider' && <Item>
+              {type !== 'LayoutBlockImage' && type !== 'LayoutBlockVideoPlayer' && type !== 'LayoutBlockSlider' &&  type !== 'Accordion'  && <Item>
                 <FormControl>
                   <TextField
                     label="Enter target text:"
@@ -542,7 +545,7 @@ const ElementSpecificSettings = () => {
               {type === 'Accordion' ? (
                 <Item>
                   <FormControl>
-                    {accordion.map((item: any[], index: number) => (
+                    {accordion.map((item: string[], index: number) => (
                       <div key={index}>
                         <TextField
                           label={`Enter target accordion ${index + 1} title:`}
@@ -604,20 +607,6 @@ const ElementSpecificSettings = () => {
                       onChange={(e: React.ChangeEvent<HTMLTextAreaElement>) => {
                         description = e.target.value;
                         handleUpdate('description', e.target.value, col - 1);
-                      }}
-                    />
-                  </FormControl>
-                </Item>
-              ) : null}
-              {type !== 'Accordion' ? (
-                <Item>
-                  <FormControl>
-                    <TextField
-                      label="Enter target text:"
-                      value={text}
-                      onChange={(e: React.ChangeEvent<HTMLTextAreaElement>) => {
-                        text = e.target.value;
-                        handleUpdate('text', e.target.value, col - 1);
                       }}
                     />
                   </FormControl>
