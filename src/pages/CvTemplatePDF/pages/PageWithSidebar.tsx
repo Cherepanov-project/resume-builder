@@ -16,12 +16,13 @@ export const PageWithSidebarPDF = (props: IPageDefaultPDF) => {
 
   return (
     <Box style={Page} display="flex" sx={{ minHeight: '1123px' }}>
-      <Box style={SidebarPage}>
-        <SidebarPDF {...propsSidebar} />
-      </Box>
+        <Box style={SidebarPage}>
+            <SidebarPDF {...propsSidebar} />
+        </Box>
       <Box style={MainPage}>
         <MainPDF {...propsMain} />
       </Box>
+
     </Box>
   );
 };

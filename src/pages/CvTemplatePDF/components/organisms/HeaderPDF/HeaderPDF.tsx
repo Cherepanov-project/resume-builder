@@ -55,7 +55,7 @@ export const HeaderPDF = (props: IHeaderPDFProps) => {
       {Header.name === 'toronto' ? (
         <>
           <Box style={Header} sx={{ display: 'flex' }}>
-            <Box sx={{ mr: 4 }}>
+            <Box sx={{ mr: 4, maxWidth:'50%', wordBreak : 'break-word'}}>
               <ImagePDF {...propsImage} />
               <TextPDF {...propsSubtitle} />
               <ContactsPDF {...propsConcats} />
@@ -74,7 +74,7 @@ export const HeaderPDF = (props: IHeaderPDFProps) => {
         </>
       ) : Header.name === 'oslo' ? (
         <>
-          <Box style={Header} sx={{ display: 'flex', height: '200px' }}>
+          <Box style={Header} sx={{ display: 'flex', minHeight: '200px' }}>
             <Box
               sx={{ display: 'flex', flexDirection: 'column', alignItems: 'center', width: '100%' }}
             >
