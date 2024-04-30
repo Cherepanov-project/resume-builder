@@ -20,7 +20,7 @@ const BasicRatingSettings: React.FC<IProps> = ({ setColorCSS }) => {
 
   const { gridContainers } = useAppSellector((state) => state.layout);
   const elements = gridContainers.find((el) =>
-    el.elements.activeElements.filter((el) => el.name === 'BasicRating'),
+    el.elements.activeElements.filter((el) => el.name === 'RatingSystem'),
   );
   const layout = elements?.layout.i;
 

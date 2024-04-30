@@ -7,7 +7,7 @@ export const props = {
   columns: 2,
   children: [
     {
-      name: 'LayoutBlockTitle',
+      name: 'Title',
       source: 'atoms',
       props: {
         text: 'Default Title',
@@ -18,7 +18,7 @@ export const props = {
       layout: { i: '1', x: 0, y: 0, w: 2, h: 2 },
     },
     {
-      name: 'LayoutBlockParagraph',
+      name: 'Paragraph',
       source: 'atoms',
       props: {
         text: 'You can create awesome and powerful landing pages with megapack and pixfort builder.',

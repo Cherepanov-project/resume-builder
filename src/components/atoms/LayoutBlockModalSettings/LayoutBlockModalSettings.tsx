@@ -27,7 +27,7 @@ const LayoutBlockModalSettings = () => {
   const { gridContainers } = useAppSellector((state) => state.layout);
   console.log(gridContainers);
   const elements = gridContainers.find((el) =>
-    el.elements.activeElements.find((el) => el.name === 'LayoutBlockModal'),
+    el.elements.activeElements.find((el) => el.name === 'ModalWindow'),
   );
   const layout = elements?.layout.i;
 

@@ -1,22 +1,22 @@
 import { T_BlockElement } from '@/types/landingBuilder';
-import LayoutBlockButton from '../LayoutBlockButton';
-import LayoutBlockImage from '../LayoutBlockImage';
-import LayoutBlockParagraph from '../LayoutBlockParagraph';
-import LayoutBlockTitle from '../LayoutBlockTitle';
-import LayoutBlockAnchor from '../LayoutBlockAnchor';
-import BasicRating from '../BasicRating';
+import ButtonBlock from '../ButtonBlock';
+import Image from '../Image';
+import Paragraph from '../Paragraph';
+import Title from '../Title';
+import Anchor from '../Anchor';
+import RatingSystem from '../RatingSystem';
 import Avatars from '../Avatars';
-import BasicTooltip from '../BasicTooltip';
-import CheckboxGroup from '../CheckboxGroup';
-import RadioGroup from '../RadioGroup';
+import Tooltip from '../Tooltip';
+import Checkboxes from '../Checkboxes';
+import RadioButtons from '../RadioButtons';
 import { nanoid } from 'nanoid';
-import ToggleButtonsMultiple from '../ToggleButtonsMultiple';
-import TitleH1 from '../TitleH1';
-import MasonryGallery from '../MasonryGallery';
-import LayoutBlockVideoPlayer from '../LayoutBlockVideoPlayer';
-import SelectList from '../SelectList';
-import LayoutBlockModal from '../LayoutBlockModal';
-import LayoutBlockSlider from '../LayoutBlockSlider';
+import MultiToggle from '../MultiToggle';
+import HeaderTitle from '../HeaderTitle';
+import Gallery from '../Gallery';
+import VideoPlayer from '../VideoPlayer';
+import DropdownList from '../DropdownList';
+import ModalWindow from '../ModalWindow';
+import Slider from '../Slider';
 
 interface SectionsConstructorBlockElementType {
   params: T_BlockElement;
@@ -45,40 +45,41 @@ const SectionsConstructorBlockElement: React.FC<SectionsConstructorBlockElementT
   const isModal = props.key === 'modal';
   const isSlider = props.key === 'slider';
   // console.log('pa', params);
+  console.log(props.key)
   return (
     <>
-      {isImg && <LayoutBlockImage props={props} />}
-      {isTitle && <LayoutBlockTitle props={props} />}
-      {isBtn && <LayoutBlockButton props={props} />}
-      {isParagraph && <LayoutBlockParagraph props={props} />}
-      {isAnchor && <LayoutBlockAnchor props={props} />}
-      {isRating && <BasicRating props={params.columns || 5}/>}
+      {isImg && <Image props={props} />}
+      {isTitle && <Title props={props} />}
+      {isBtn && <ButtonBlock props={props} />}
+      {isParagraph && <Paragraph props={props} />}
+      {isAnchor && <Anchor props={props} />}
+      {isRating && <RatingSystem props={params.columns || 5}/>}
       {isAvatar && (
         <Avatars
           props={{ Avatars: [{ id: nanoid(), img: props.url, title: props.text }] }}
           layout={params.layout}
         />
       )}
-      {isTooltip && <BasicTooltip props={props.size || 0} />}
+      {isTooltip && <Tooltip props={props.size || 0} />}
       {isCheckBox && (
-        <CheckboxGroup
-          props={{ CheckboxGroup: [{ id: nanoid(), value: props.text }] }}
+        <Checkboxes
+          props={{ Checkboxes: [{ id: nanoid(), value: props.text }] }}
           layout={params.layout}
         />
       )}
       {isRadiobox && (
-        <RadioGroup
-          props={{ RadioGroup: [{ id: nanoid(), value: props.text }] }}
+        <RadioButtons
+          props={{ RadioButtons: [{ id: nanoid(), value: props.text }] }}
           layout={params.layout}
         />
       )}
-      {isToggleButtons && <ToggleButtonsMultiple />}
-      {isH1Title && <TitleH1 props={props} />}
-      {isGallery && <MasonryGallery layout={params.layout} props={{MasonryGallery: [{id: nanoid(), img: props.url, title: props.text}]}}/>}
-      {isVideo && <LayoutBlockVideoPlayer props={props}/>}
-      {isSelectList && <SelectList layout={params.layout} props={{SelectList: [{id: nanoid(), value: props.text || 'Text'}]}}/>}
-      {isModal && <LayoutBlockModal props={props}/>}
-      {isSlider && <LayoutBlockSlider props={props} />}
+      {isToggleButtons && <MultiToggle />}
+      {isH1Title && <HeaderTitle props={props} />}
+      {isGallery && <Gallery layout={params.layout} props={{Gallery: [{id: nanoid(), img: props.url, title: props.text}]}}/>}
+      {isVideo && <VideoPlayer props={props}/>}
+      {isSelectList && <DropdownList layout={params.layout} props={{DropdownList: [{id: nanoid(), value: props.text || 'Text'}]}}/>}
+      {isModal && <ModalWindow props={props}/>}
+      {isSlider && <Slider props={props} />}
     </>
   );
 };
