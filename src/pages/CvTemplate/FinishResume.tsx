@@ -1,4 +1,4 @@
-import { Box, Button, Typography } from '@mui/material';
+import {Box, Button, Paper, Typography} from '@mui/material';
 import { FC, useRef } from 'react';
 import { CvTemplatePDF } from '../CvTemplatePDF';
 import { buttonStyle } from '@/assets/style/buttonStyle';
@@ -36,7 +36,9 @@ const FinishResume: FC<IProps> = ({ handleButtonClick, handleReset }) => {
           </Box>
         </Box>
 
-        <CvTemplatePDF styleName={'toronto'} ref={componentRef} />
+        <Paper elevation={12}>
+          <CvTemplatePDF styleName={'toronto'} ref={componentRef} />
+        </Paper>
       </Box>
 
       <Box sx={{ mb: 4, ml: 7 }}>

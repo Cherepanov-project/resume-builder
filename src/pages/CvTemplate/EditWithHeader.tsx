@@ -1,6 +1,6 @@
 import React, {FC, ReactNode, useRef, useState, ErrorInfo} from 'react';
 import {templatePDFStyles} from '../CvTemplatePDF/const';
-import {Box, Button, MenuItem, Select, InputLabel, FormControl, ButtonGroup} from '@mui/material';
+import {Box, Button, MenuItem, Select, InputLabel, FormControl, ButtonGroup, Paper} from '@mui/material';
 import {buttonStyle} from '@/assets/style/buttonStyle';
 import {CvTemplatePDF} from '../CvTemplatePDF';
 import {useReactToPrint} from 'react-to-print';
@@ -14,7 +14,7 @@ import {
 } from '@pages/CvTemplatePDF/components/molecules';
 import {ImagePDF, SubtitlePDF, TextPDF, TitlePDF} from '@pages/CvTemplatePDF/components/atoms';
 import {EducationPDF} from '@pages/CvTemplatePDF/components/molecules/EducationPDF';
-import {StyleEditor_v2} from '@pages/CvTemplate/StyleEditor.tsx';
+import StyleEditor_v2 from '@pages/CvTemplate/StyleEditor.tsx';
 
 interface IProps {
     setChooseTemplate: React.Dispatch<React.SetStateAction<number>>;
@@ -172,7 +172,6 @@ const EditWithHeader: FC<IProps> = ({setChooseTemplate}) => {
         },
     };
 
-    console.log(propsAbout,propsContacts,propsImage,propsAbout,propsSubtitle);
     // eslint-disable-next-line @typescript-eslint/no-unused-vars
     const pdfComponents : { [key: string]: ComponentProps } = {
         About: {
@@ -257,10 +256,16 @@ const EditWithHeader: FC<IProps> = ({setChooseTemplate}) => {
     templatePDFStyles.custom.structure.sidebar.isPresented && mainComponents.push('SideBar');
 
     const subComponents: { [key: string]: string[] } = {
-        Header: ['Image', 'Title', 'Text', 'Contacts'],
+        Header: [],
         Main: [],
         SideBar: [],
     }; // компоненты основных компонентов
+
+    if (templatePDFStyles.custom.style.Header) {
+        if (templatePDFStyles.custom.style.Header.name == 'toronto')
+            subComponents['Header'] = ['Image', 'Text', 'Contacts','Title','About'];
+        else subComponents['Header'] = ['Image', 'Title', 'Text', 'Contacts'];
+    }
 
     if (templatePDFStyles.custom.style.Sidebar) {
         if (templatePDFStyles.custom.style.Sidebar.type == 'sydney')
@@ -272,7 +277,7 @@ const EditWithHeader: FC<IProps> = ({setChooseTemplate}) => {
         if (templatePDFStyles.custom.style.Main.type == 'sydney')
             subComponents['Main'] = ['Image', 'Title', 'Text', 'About', 'Experience', 'Education'];
         else if (templatePDFStyles.custom.style.Main.type == 'oslo')
-            subComponents['Main'] = ['About', 'Experience', 'Education'];
+            subComponents['Main'] = ['About', 'Experience', 'Education', 'Social', 'Hobbies'];
         else subComponents['Main'] = ['Education', 'Experience', 'Social', 'Hobbies'];
     }
 
@@ -307,7 +312,6 @@ const EditWithHeader: FC<IProps> = ({setChooseTemplate}) => {
     const handlePrint = useReactToPrint({
         content: () => componentRef.current,
     });
-
 
     return (
         <ErrorBoundary>
@@ -377,17 +381,6 @@ const EditWithHeader: FC<IProps> = ({setChooseTemplate}) => {
                             >
                                 <Box component="fieldset">
                                     <legend>{pdfComponents[currentSubComponent].title}</legend>
-                                    {/*<StyleEditor*/}
-                                    {/*  setNewStyleValue={setNewStyleValue}*/}
-                                    {/*  Component={PDFSubComponent}*/}
-                                    {/*  componentProps={pdfComponents[currentSubComponent].data}*/}
-                                    {/*  data={pdfComponents[currentSubComponent].styles || []}*/}
-                                    {/*  place={pdfComponents[currentSubComponent].place}*/}
-                                    {/*  updateParent={updateFlag}*/}
-                                    {/*  propName={pdfComponents[currentSubComponent].propName}*/}
-                                    {/*  isComplex={pdfComponents[currentSubComponent].complex}*/}
-                                    {/*/>*/}
-
                                     <StyleEditor_v2
                                         updateParent={updateFlag}
                                         Component={PDFSubComponent}
@@ -406,7 +399,9 @@ const EditWithHeader: FC<IProps> = ({setChooseTemplate}) => {
                         )}
                     </Box>
 
-                    <CvTemplatePDF styleName={'custom'} ref={componentRef}/>
+                    <Paper elevation={12}>
+                        <CvTemplatePDF styleName={'custom'}  ref={componentRef}/>
+                    </Paper>
                 </Box>
             </Box>
         </ErrorBoundary>
