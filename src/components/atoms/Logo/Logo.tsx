@@ -23,7 +23,7 @@ const Logo: React.FC<ILayoutBlock> = ({ props }) => {
     display: 'flex',
     alignItems: 'center',
     justifyContent: 'center',
-    height: '100%',
+    height: '50%',
     flexDirection: 'column',
     backgroundSize: 'contain',
     width: 'auto',
@@ -91,7 +91,6 @@ const Logo: React.FC<ILayoutBlock> = ({ props }) => {
     return (
       <a href={url} style={{ height: '100%' }} onContextMenu={(e) => handleDoubleClick(e)}>
         {imgUrl ? <img src={imgUrl} alt={text}></img> : text}
-        {/* {text} */}
       </a>
     );
   };

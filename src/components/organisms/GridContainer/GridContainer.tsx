@@ -15,7 +15,7 @@ import classes from './GridContainer.module.scss';
 // Отрисовываем динамический компонент
 // По сути это зависимый компонент, который отвечает за рендеринг условного блока
 const DynamicComponentRenderer: React.FC<DynamicComponentRendererProps> = memo(
-  ({ Component, props, columns, source, children, layout }) => {
+  ({ Component, props, columns, source, children, layout, containerId }) => {
     const DynamicComponent = lazy(() => import(`../../${source}/${Component}/index.ts`));
     return (
       <Suspense fallback={<ComponentPreloader />}>
@@ -26,6 +26,7 @@ const DynamicComponentRenderer: React.FC<DynamicComponentRendererProps> = memo(
           source={source}
           children={children}
           layout={layout}
+          containerId={containerId}
         />
       </Suspense>
     );
@@ -40,6 +41,11 @@ export const GridContainer = (container: IGridContainers) => {
   const [width, setWidth] = useState(window.innerWidth);
   const [isHover, setIsHover] = useState(false);
   const [isButtonHover, setIsButtonHover] = useState(false);
+  const [isDraggingInnerItem, setIsDraggingInnerItem] = useState(false);
+
+  const handleSetDraggingInnerItem = (isDragging: boolean) => {
+    setIsDraggingInnerItem(isDragging);
+  };
 
   useEffect(() => {
     const handleResize = () => {
@@ -98,7 +104,8 @@ export const GridContainer = (container: IGridContainers) => {
         width={width - 76 - (width - 120) * 0.3}
         margin={[8, 8]}
         resizeHandles={['sw', 'se']}
-        isDraggable
+        // isDraggable={false}
+        isDraggable={!isDraggingInnerItem}
         isDroppable
         onDrop={(layout: Layout[], layoutItem: Layout) => {
           const draggableItem = currentDraggableItem;
@@ -113,7 +120,7 @@ export const GridContainer = (container: IGridContainers) => {
         {container.elements.activeElements.map((el) => (
           <div key={el.layout.i} className={classes['item']}>
             {/* {`ВЫСОТА - ${el.layout.h}`} */}
-            <ElementToolsPanel layout={el.layout} id={container.id} />
+            <ElementToolsPanel layout={el.layout} id={container.id} setDraggingInnerItem={handleSetDraggingInnerItem} elClass='drag-area'/>
             <DynamicComponentRenderer
               Component={el.name}
               source={el.source || 'atoms'}
@@ -121,6 +128,7 @@ export const GridContainer = (container: IGridContainers) => {
               columns={el.columns || 1}
               layout={el.layout}
               children={el.children}
+              containerId={container.id}
             />
           </div>
         ))}

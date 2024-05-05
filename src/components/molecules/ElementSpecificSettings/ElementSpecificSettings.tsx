@@ -20,6 +20,7 @@ import {
 } from '@mui/material';
 import { ExpandMore } from '@mui/icons-material';
 import Item from '@/components/atoms/StyledPaperItem';
+import { nanoid } from 'nanoid';
 // import { strict } from 'assert';
 
 const ElementSpecificSettings = () => {
@@ -177,7 +178,7 @@ const ElementSpecificSettings = () => {
           label: 'Accordion',
           value: 'accordion',
           key: 'accordion',
-          layout: { i: '', x: 0, y: 0, w: 1, h: 1 },
+          layout: { i: nanoid(), x: 0, y: 0, w: 1, h: 1 },
           title: {
             key: 'accordion',
             accordion: accordion,

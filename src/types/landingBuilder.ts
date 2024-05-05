@@ -83,6 +83,7 @@ export type DynamicComponentRendererProps = {
   interactiveType?: 'button' | 'slider';
   children?: T_BlockElement[];
   layout: Layout;
+  containerId?: string;
 };
 
 export type ContainerDIVProps = {
@@ -92,6 +93,7 @@ export type ContainerDIVProps = {
   props: {
     style: { [key: string]: string };
   };
+  containerId?: string;
 };
 
 export type NestedListProps = {

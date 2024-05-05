@@ -28,6 +28,7 @@ const Accordion: React.FC<ILayoutBlock> = ({ props }) => {
     backgroundSize: 'contain',
     width: 'auto',
     backgroundRepeat: 'no-repeat',
+    zIndex: '10',
   };
 
   const handleAccordionClick = (index: number) => {

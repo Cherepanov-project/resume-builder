@@ -57,11 +57,11 @@ const SectionsConstructorBlockElement: React.FC<SectionsConstructorBlockElementT
   const isSelectList = props.key === 'selectlist';
   const isModal = props.key === 'modal';
   const isSlider = props.key === 'slider';
-  const isLogo = false || props.key === 'logo';
+  const isLogo = props.key === 'logo';
   // console.log('pa', params);
-  const isSMIcon = false || props.key === 'smIcon';
-  const isCardItem = false || props.key === 'cardItem';
-  const isAccordion = false || props.key === 'accordion';
+  const isSMIcon = props.key === 'smIcon';
+  const isCardItem = props.key === 'cardItem';
+  const isAccordion = props.key === 'accordion';
 
   return (
     <>

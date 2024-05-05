@@ -14,6 +14,7 @@ import 'react-grid-layout/css/styles.css';
 import 'react-resizable/css/styles.css';
 import classes from './ContainerDIV.module.scss';
 import { nanoid } from 'nanoid';
+import ElementToolsPanel from '@/components/organisms/ElementToolsPanel/ElementToolsPanel';
 // import ElementToolsPanel from '@/components/organisms/ElementToolsPanel';
 
 // ========================================================================== \\
@@ -25,6 +26,7 @@ const DynamicComponentRenderer: React.FC<DynamicComponentRendererProps> = ({
   source,
   children,
   layout,
+  containerId
 }) => {
   let DynamicComponent: ComponentType<DynamicComponentRendererProps> = () => <></>;
 
@@ -46,13 +48,14 @@ const DynamicComponentRenderer: React.FC<DynamicComponentRendererProps> = ({
         source={source}
         children={children}
         layout={layout}
+        containerId={containerId}
       />
     </Suspense>
   );
 };
 // ========================================================================== \\
 
-const ContainerDIV: React.FC<ContainerDIVProps> = ({ children, layout, columns, props }) => {
+const ContainerDIV: React.FC<ContainerDIVProps> = ({ children, layout, columns, props, containerId }) => {
   const dispatch = useAppDispatch();
   const containerRef = useRef(null);
   const [width, setWidth] = useState(0);
@@ -83,7 +86,7 @@ const ContainerDIV: React.FC<ContainerDIVProps> = ({ children, layout, columns, 
 
     // const id = currentContainer;
 
-    dispatch(addElement({ draggableItem, layoutItem, element }));
+    dispatch(addElement({ draggableItem, layoutItem, element, el: children.find(el => el.layout.i === element) }));
   };
 
   const workspaceLayout = children?.reduce((acc: Layout[], el: T_BlockElement) => {
@@ -99,26 +102,42 @@ const ContainerDIV: React.FC<ContainerDIVProps> = ({ children, layout, columns, 
     };
   }
 // console.log('hi', children, layout, columns)
+
+  const [isDraggingInnerItem, setIsDraggingInnerItem] = useState(false);
+
+  const handleSetDraggingInnerItem = (isDragging: boolean) => {
+    setIsDraggingInnerItem(isDragging);
+  };
+
   return (
-    <div ref={containerRef} className="wrapper" data-id={layout.i} style={style}>
+    <div 
+    ref={containerRef} 
+    className={classes['wrapper']}
+    data-id={layout.i} 
+    style={style}
+    >
       <ResponsiveGridLayout
         layout={workspaceLayout}
         cols={columns}
         width={width}
         rowHeight={30}
-        margin={[0, 0]}
-        isDraggable
+        margin={[10, 0]} //меняем расстояние между элементами внутри секции
+        isDraggable={!isDraggingInnerItem}
         isDroppable
         onDrop={handleDropElement}
+        draggableHandle=".drag-area1"
       >
         {children &&
           children.map((el, indx) => {
-            // console.log(el)
             return (
               <div className={classes['item']} key={workspaceLayout[indx].i || nanoid()}>
-                {/* Вот в этом месте ElementToolsPanel отображается хорошо, но кнопки не срабатывают, поскольку редюсеры
-                в стейте не рассчитаны на изменение компонента внутри другого компонента, нужно закопаться в layoutslice*/}
-                {/* <ElementToolsPanel layout={el.layout} id={layout.i} /> */}
+                <ElementToolsPanel 
+                  layout={el.layout}
+                  parentLayout={layout}
+                  id={containerId} 
+                  elementId = {el.layout.i}
+                  setDraggingInnerItem={handleSetDraggingInnerItem} 
+                  elClass='drag-area1'/>
                 <DynamicComponentRenderer
                   Component={el.name}
                   props={el.props}
