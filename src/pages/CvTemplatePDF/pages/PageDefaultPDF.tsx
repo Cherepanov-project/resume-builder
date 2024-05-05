@@ -14,7 +14,6 @@ export const PageDefaultPDF = (props: IPageDefaultPDF) => {
   const propsHeader = { ...personalData, style: otherStyle };
   const propsSidebar = { data: { personalData, photoData }, style: otherStyle };
   const propsMain = { data: { personalData, photoData, ...otherDate }, style: otherStyle };
-
   return (
     <Box>
       <HeaderShortPDF {...propsHeader} />

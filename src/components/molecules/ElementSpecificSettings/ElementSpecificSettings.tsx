@@ -60,6 +60,7 @@ const ElementSpecificSettings = () => {
   const settingsOptionsValues = [
     'Accordion',
     'Avatars',
+<<<<<<< HEAD
     'MasonryGallery',
     'BasicRating',
     'BasicTooltip',
@@ -79,6 +80,24 @@ const ElementSpecificSettings = () => {
     'SelectList',
     'SocialMediaIcon',
     'TitleH1',
+=======
+    'Gallery',
+    'RatingSystem',
+    'Tooltip',
+    'Checkboxes',
+    'RadioButtons',
+    'MultiToggle',
+    'Title',
+    'Paragraph',
+    'Image',
+    'ButtonBlock',
+    'Anchor',
+    'Slider',
+    'VideoPlayer',
+    'ModalWindow',
+    'DropdownList',
+    'HeaderTitle',
+>>>>>>> origin/main
   ];
 
   const [accordion, setAccordion] = useState<AccordionData>(layoutElement.props.accordion || []);
@@ -156,9 +175,9 @@ const ElementSpecificSettings = () => {
             textStyle: { display: 'block' },
           },
         };
-      case 'Avatars':
+      case 'Avatarss':
         return {
-          label: 'Avatar & Images',
+          label: 'Images',
           value: 'Avatars',
           key: 'avatar',
           layout: { i: '', x: 0, y: 0, w: 1, h: 7 },
@@ -173,6 +192,7 @@ const ElementSpecificSettings = () => {
             textStyle: { border: 'none', height: '100%', width: '100%' },
           },
         };
+<<<<<<< HEAD
       case 'Accordion':
         return {
           label: 'Accordion',
@@ -207,9 +227,12 @@ const ElementSpecificSettings = () => {
           },
         };
       case 'LayoutBlockTitle':
+=======
+      case 'Title':
+>>>>>>> origin/main
         return {
-          label: 'Block Title',
-          value: 'LayoutBlockTitle',
+          label: 'Title',
+          value: 'Title',
           key: 'title',
           layout: { i: '', x: 0, y: 0, w: 1, h: 3 },
           title: {
@@ -220,10 +243,10 @@ const ElementSpecificSettings = () => {
             // inputStyle: { width: '100%', border: 'none', fontWeight: 'bold' },
           },
         };
-      case 'LayoutBlockParagraph':
+      case 'Paragraph':
         return {
           label: 'Block Paragraph',
-          value: 'LayoutBlockParagraph',
+          value: 'Paragraph',
           key: 'paragraph',
           layout: { i: '', x: 0, y: 0, w: 2, h: 6 },
           title: {
@@ -234,10 +257,10 @@ const ElementSpecificSettings = () => {
             // inputStyle: { width: '100%', border: 'none' },
           },
         };
-      case 'LayoutBlockImage':
+      case 'Image':
         return {
-          label: 'Avatar & Images',
-          value: 'LayoutBlockImage',
+          label: 'Images',
+          value: 'Image',
           key: 'image',
           layout: { i: '', x: 0, y: 0, w: 1, h: 6 },
           props: {
@@ -250,10 +273,10 @@ const ElementSpecificSettings = () => {
             textStyle: { border: 'none', height: '100%', width: '100%' },
           },
         };
-      case 'LayoutBlockButton':
+      case 'ButtonBlock':
         return {
-          label: 'Simple Blocks',
-          value: 'LayoutBlockButton',
+          label: 'Interactive',
+          value: 'ButtonBlock',
           key: 'button',
           layout: { i: '', x: 0, y: 0, w: 1, h: 2 },
           title: {
@@ -275,10 +298,10 @@ const ElementSpecificSettings = () => {
             // inputStyle: { width: '100%', border: 'none' },
           },
         };
-      case 'LayoutBlockAnchor':
+      case 'Anchor':
         return {
-          label: 'Block Anchor',
-          value: 'LayoutBlockAnchor',
+          label: 'Navigation',
+          value: 'Anchor',
           key: 'anchor',
           layout: { i: '', x: 0, y: 0, w: 1, h: 1 },
           title: {
@@ -290,6 +313,7 @@ const ElementSpecificSettings = () => {
             // inputStyle: { width: '100%', border: 'none' },
           },
         };
+<<<<<<< HEAD
       case 'Logo':
         return {
           label: 'Logo',
@@ -324,9 +348,12 @@ const ElementSpecificSettings = () => {
           },
         };
       case 'BasicRating':
+=======
+      case 'RatingSystem':
+>>>>>>> origin/main
         return {
-          label: 'Simple Blocks',
-          value: 'BasicRating',
+          label: 'Interactive',
+          value: 'RatingSystem',
           key: 'rating',
           columns: 2,
           layout: { i: '', x: 0, y: 0, w: 1, h: 1 },
@@ -337,10 +364,10 @@ const ElementSpecificSettings = () => {
             text: false,
           },
         };
-      case 'BasicTooltip':
+      case 'Tooltip':
         return {
-          label: 'Simple Blocks',
-          value: 'BasicTooltip',
+          label: 'Interactive',
+          value: 'Tooltip',
           key: 'tooltip',
           layout: { i: '', x: 0, y: 0, w: 1, h: 2 },
           children: [],
@@ -350,10 +377,10 @@ const ElementSpecificSettings = () => {
             text: false,
           },
         };
-      case 'CheckboxGroup':
+      case 'Checkboxes':
         return {
           label: 'CheckBoxes',
-          value: 'CheckboxGroup',
+          value: 'Checkboxes',
           key: 'checkbox',
           layout: { i: '', x: 0, y: 0, w: 1, h: 3 },
           children: [],
@@ -363,13 +390,13 @@ const ElementSpecificSettings = () => {
             text: false,
           },
           props: {
-            CheckboxGroup: [],
+            Checkboxes: [],
           },
         };
-      case 'RadioGroup':
+      case 'RadioButtons':
         return {
           label: 'CheckBoxes',
-          value: 'RadioGroup',
+          value: 'RadioButtons',
           key: 'radiobox',
           layout: { i: '', x: 0, y: 0, w: 1, h: 3 },
           children: [],
@@ -379,13 +406,13 @@ const ElementSpecificSettings = () => {
             text: false,
           },
           props: {
-            RadioGroup: [],
+            RadioButtons: [],
           },
         };
-      case 'ToggleButtonsMultiple':
+      case 'MultiToggle':
         return {
           label: 'CheckBoxes',
-          value: 'ToggleButtonsMultiple',
+          value: 'MultiToggle',
           key: 'toggleButtons',
           layout: { i: '', x: 0, y: 0, w: 2, h: 3 },
           children: [],
@@ -395,10 +422,10 @@ const ElementSpecificSettings = () => {
             text: false,
           },
       };
-      case 'TitleH1':
+      case 'HeaderTitle':
         return {
           label: 'Text Blocks',
-          value: 'TitleH1',
+          value: 'HeaderTitle',
           key: 'h1title',
           layout: { i: '', x: 0, y: 0, w: 1, h: 1 },
           children: [],
@@ -408,10 +435,10 @@ const ElementSpecificSettings = () => {
             text: false,
           },
         };
-      case 'MasonryGallery':
+      case 'Gallery':
         return {
-          label: 'Avatar & Images',
-          value: 'MasonryGallery',
+          label: 'Images',
+          value: 'Gallery',
           key: 'gallery',
           layout: { i: '', x: 0, y: 0, w: 2, h: 13 },
           children: [],
@@ -422,13 +449,13 @@ const ElementSpecificSettings = () => {
             text: '',
           },
           props: {
-            MasonryGallery: [],
+            Gallery: [],
           },
         };
-      case 'LayoutBlockVideoPlayer':
+      case 'VideoPlayer':
         return {
-          label: 'Composite Blocks',
-          value: 'LayoutBlockVideoPlayer',
+          label: 'Media',
+          value: 'VideoPlayer',
           key: 'video',
           layout: { i: '', x: 0, y: 0, w: 3, h: 10 },
           children: [],
@@ -442,10 +469,10 @@ const ElementSpecificSettings = () => {
             text: '',
           }
         };
-      case 'SelectList':
+      case 'DropdownList':
         return {
-          label: 'Text Blocks',
-          value: 'SelectList',
+          label: 'DropdownList',
+          value: 'DropdownList',
           key: 'selectlist',
           layout: { i: '', x: 0, y: 0, w: 2, h: 2 },
           children: [],
@@ -455,13 +482,13 @@ const ElementSpecificSettings = () => {
             text: false,
           },
           props: {
-            SelectList: [],
+            DropdownList: [],
           },
         };
-      case 'LayoutBlockModal':
+      case 'ModalWindow':
         return {
-          label: 'Text Blocks',
-          value: 'LayoutBlockModal',
+          label: 'Interactive',
+          value: 'ModalWindow',
           key: 'modal',
           layout: { i: '', x: 0, y: 0, w: 1.5, h: 3 },
           children: [],
@@ -477,10 +504,10 @@ const ElementSpecificSettings = () => {
             style: { backgroundColor: '', color: '', border: '', text: '' },
           }
         };
-      case 'LayoutBlockSlider':
+      case 'Slider':
         return {
-          label: 'Composite Blocks',
-          value: 'LayoutBlockSlider',
+          label: 'Media Elements',
+          value: 'Slider',
           key: 'slider',
           children: [],
           title: {
@@ -490,7 +517,7 @@ const ElementSpecificSettings = () => {
           },
           props: {
             text: '',
-            LayoutBlockSlider: [],
+            Slider: [],
             wrapperStyle: { height: '100%' },
             textStyle: { width: '100%', height: '100%', border: 'none' },
             style: { backgroundColor: '', color: '', border: '', text: '' },
@@ -531,6 +558,7 @@ const ElementSpecificSettings = () => {
                   </Select>
                 </FormControl>
               </Item>
+<<<<<<< HEAD
               {type !== 'LayoutBlockImage' && type !== 'LayoutBlockVideoPlayer' && type !== 'LayoutBlockSlider' &&  type !== 'Accordion'  && <Item>
                 <FormControl>
                   <TextField
@@ -622,6 +650,9 @@ const ElementSpecificSettings = () => {
               type === 'SocialMediaIcon' ||
               type === 'CardItem' ||
               type === 'Logo'? (
+=======
+              {type === 'Anchor' || type === 'Avatar' || type === 'Image' || type === 'Gallery'  || type === 'VideoPlayer' || type === 'Slider' ? (
+>>>>>>> origin/main
                 <Item>
                   <FormControl>
                     <TextField
@@ -635,7 +666,11 @@ const ElementSpecificSettings = () => {
                   </FormControl>
                 </Item>
               ) : null}
+<<<<<<< HEAD
               {type === 'Logo' || type === 'SocialMediaIcon' || type === 'CardItem' ? (
+=======
+              {type !== 'Image' && type !== 'VideoPlayer' && type !== 'Slider' && (
+>>>>>>> origin/main
                 <Item>
                   <FormControl>
                     <TextField

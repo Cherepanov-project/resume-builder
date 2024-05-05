@@ -2,7 +2,7 @@
 import { IElementsProps } from '@/types/landingBuilder';
 import Avatar from '@mui/material/Avatar';
 import Stack from '@mui/material/Stack';
-import classes from './Avatar.module.scss';
+import classes from './Avatars.module.scss';
 import { useEffect } from 'react';
 import { useDispatch } from 'react-redux';
 import { nanoid } from 'nanoid';

@@ -154,7 +154,7 @@ export interface IButtonsSettingsPanelProps {
   setElementsSize: React.Dispatch<React.SetStateAction<number>>;
 }
 
-export interface IMasonryGalleryProps {
+export interface IPhotoGalleryProps {
   props: {
     itemData: {
       img: string;
@@ -173,11 +173,11 @@ export interface IAvatars {
 }
 
 export interface IElementProps {
-  RadioGroup?: ISettingsInputItem[];
-  CheckboxGroup?: ISettingsInputItem[];
-  SelectList?: ISettingsInputItem[];
-  LayoutBlockSlider?: ISettingsInputItem[];
-  MasonryGallery?: ISettingsInputItem[];
+  RadioButtons?: ISettingsInputItem[];
+  Checkboxes?: ISettingsInputItem[];
+  DropdownList?: ISettingsInputItem[];
+  Slider?: ISettingsInputItem[];
+  PhotoGallery?: ISettingsInputItem[];
   Avatars?: ISettingsInputItem[];
 }
 
@@ -217,6 +217,7 @@ export type T_SectionElementProps = {
   props?: {
     [key: string]: string;
   };
+<<<<<<< HEAD
   imgUrl?: string;
   buttonText?: string;
   accordion?: Array<[string, string]>;
@@ -225,6 +226,13 @@ export type T_SectionElementProps = {
   SelectList?: ISettingsInputItem[];
   LayoutBlockSlider?: ISettingsInputItem[];
   MasonryGallery?: ISettingsInputItem[];
+=======
+  RadioButtons?: ISettingsInputItem[];
+  Checkboxes?: ISettingsInputItem[];
+  DropdownList?: ISettingsInputItem[];
+  Slider?: ISettingsInputItem[];
+  PhotoGallery?: ISettingsInputItem[];
+>>>>>>> origin/main
   Avatars?: ISettingsInputItem[];
   size?: number;
 };

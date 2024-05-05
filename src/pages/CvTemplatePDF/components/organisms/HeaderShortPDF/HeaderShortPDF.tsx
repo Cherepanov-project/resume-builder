@@ -9,11 +9,11 @@ interface IHeaderShortPDF extends PersonalDataType {
 
 export const HeaderShortPDF = (props: IHeaderShortPDF) => {
   const { fullName, position, style } = props;
+
   const { HeaderShort, HeaderShortWrapper, Title, Text, TextSpecial } = style;
 
   const propsTitle = { fullName, style: Title };
   const propsText = { str: position, style: { ...Text, ...TextSpecial } };
-
   return (
     <Box style={HeaderShort}>
       <Box style={HeaderShortWrapper}>
