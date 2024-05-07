@@ -1,4 +1,3 @@
-import { nanoid } from 'nanoid';
 import Accordion from './Accordion';
 
 export const props = {
@@ -13,7 +12,7 @@ export const props = {
     style: { backgroundColor: '', color: '', border: '', text: '' },
   },
   children: [],
-  layout: { i: nanoid(), x: 0, y: 0, w: 1, h: 1 },
+  layout: { i: '', x: 0, y: 0, w: 1, h: 1 },
 };
 
 export default Accordion;
