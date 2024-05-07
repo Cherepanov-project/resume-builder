@@ -10,13 +10,13 @@ type StyleType = {
 const Anchor: React.FC<ILayoutBlock> = ({ props }) => {
   const defaultFontSize = '30';
 
-  const [text, setText] = useState<string>(props.text);
+  const [text, setText] = useState<string>(props.text || '');
   const [url, setUrl] = useState<string>(props.url || '');
   const [fs, setFs] = useState<string | number>(props?.textStyle?.fontSize || defaultFontSize);
   const [isEditing, setIsEditing] = useState<boolean>(false);
 
   useEffect(() => {
-    setText(props.text);
+    setText(props.text || '');
   }, [props]);
 
   const wrapperStyle: StyleType = {

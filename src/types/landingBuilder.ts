@@ -208,7 +208,7 @@ export type T_SectionElementProps = {
   textStyle?: { [key: string]: string };
   inputStyle?: { [key: string]: string };
   url?: string;
-  style: {
+  style?: {
     backgroundColor: string;
     text: string;
     color: string;
@@ -217,7 +217,6 @@ export type T_SectionElementProps = {
   props?: {
     [key: string]: string;
   };
-<<<<<<< HEAD
   imgUrl?: string;
   buttonText?: string;
   accordion?: Array<[string, string]>;
@@ -226,13 +225,11 @@ export type T_SectionElementProps = {
   SelectList?: ISettingsInputItem[];
   LayoutBlockSlider?: ISettingsInputItem[];
   MasonryGallery?: ISettingsInputItem[];
-=======
   RadioButtons?: ISettingsInputItem[];
   Checkboxes?: ISettingsInputItem[];
   DropdownList?: ISettingsInputItem[];
   Slider?: ISettingsInputItem[];
   PhotoGallery?: ISettingsInputItem[];
->>>>>>> origin/main
   Avatars?: ISettingsInputItem[];
   size?: number;
 };

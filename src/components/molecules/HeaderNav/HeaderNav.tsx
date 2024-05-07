@@ -7,7 +7,7 @@ import classes from './NavLink.module.scss';
 const HeaderNav = () => {
   return (
     <nav className={classes['header-nav']}>
-      <Logo />
+      <Logo props={{text: 'Quiqly'}}/>
       <ul className={classes['header-nav-list']}>
         <Link to="/landing-builder">
           <NavLink label="Constructor" />

@@ -8,7 +8,7 @@ const ButtonBlock: React.FC<ILayoutBlock> = (props) => {
   const { text, inputStyle, textStyle, wrapperStyle } = props.props;
 
   const text2 = props.props.style!.text || props.props.text;
-  const { border, color, backgroundColor } = props.props.style;
+  const { border, color, backgroundColor } = props.props.style!;
   console.log('he', props);
   return (
     <div style={wrapperStyle}>
