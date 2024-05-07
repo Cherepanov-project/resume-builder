@@ -8,7 +8,7 @@ const BasicHeader: React.FC<DynamicBlockProps> = (props) => {
       layout={props.layout}
       columns={props.columns}
       props={{
-        style: {display: 'flex', flexDirection: 'row'},
+        style: {},
       }}
     />
   );

@@ -60,28 +60,26 @@ const ElementSpecificSettings = () => {
   const settingsOptionsValues = [
     'Accordion',
     'Avatars',
-<<<<<<< HEAD
-    'MasonryGallery',
-    'BasicRating',
-    'BasicTooltip',
+    // 'MasonryGallery',
+    // 'BasicRating',
+    // 'BasicTooltip',
     'CardItem',
     'CheckboxGroup',
-    'RadioGroup',
-    'ToggleButtonsMultiple',
-    'LayoutBlockTitle',
-    'LayoutBlockParagraph',
-    'LayoutBlockImage',
-    'LayoutBlockButton',
-    'LayoutBlockAnchor',
-    'LayoutBlockSlider',
-    'LayoutBlockVideoPlayer',
+    // 'RadioGroup',
+    // 'ToggleButtonsMultiple',
+    // 'LayoutBlockTitle',
+    // 'LayoutBlockParagraph',
+    // 'LayoutBlockImage',
+    // 'LayoutBlockButton',
+    // 'LayoutBlockAnchor',
+    // 'LayoutBlockSlider',
+    // 'LayoutBlockVideoPlayer',
     'LayoutBlockModal',
     'Logo',
     'SelectList',
     'SocialMediaIcon',
     'TitleH1',
-=======
-    'Gallery',
+    'Gallery', //
     'RatingSystem',
     'Tooltip',
     'Checkboxes',
@@ -97,7 +95,6 @@ const ElementSpecificSettings = () => {
     'ModalWindow',
     'DropdownList',
     'HeaderTitle',
->>>>>>> origin/main
   ];
 
   const [accordion, setAccordion] = useState<AccordionData>(layoutElement.props.accordion || []);
@@ -192,7 +189,6 @@ const ElementSpecificSettings = () => {
             textStyle: { border: 'none', height: '100%', width: '100%' },
           },
         };
-<<<<<<< HEAD
       case 'Accordion':
         return {
           label: 'Accordion',
@@ -226,10 +222,7 @@ const ElementSpecificSettings = () => {
             // inputStyle: { width: '100%', border: 'none' },
           },
         };
-      case 'LayoutBlockTitle':
-=======
       case 'Title':
->>>>>>> origin/main
         return {
           label: 'Title',
           value: 'Title',
@@ -313,7 +306,6 @@ const ElementSpecificSettings = () => {
             // inputStyle: { width: '100%', border: 'none' },
           },
         };
-<<<<<<< HEAD
       case 'Logo':
         return {
           label: 'Logo',
@@ -347,10 +339,7 @@ const ElementSpecificSettings = () => {
             // inputStyle: { width: '100%', border: 'none' },
           },
         };
-      case 'BasicRating':
-=======
       case 'RatingSystem':
->>>>>>> origin/main
         return {
           label: 'Interactive',
           value: 'RatingSystem',
@@ -558,7 +547,6 @@ const ElementSpecificSettings = () => {
                   </Select>
                 </FormControl>
               </Item>
-<<<<<<< HEAD
               {type !== 'LayoutBlockImage' && type !== 'LayoutBlockVideoPlayer' && type !== 'LayoutBlockSlider' &&  type !== 'Accordion'  && <Item>
                 <FormControl>
                   <TextField
@@ -641,18 +629,15 @@ const ElementSpecificSettings = () => {
                   </FormControl>
                 </Item>
               ) : null}
-              {type === 'LayoutBlockAnchor' || 
+              {type === 'Anchor' || 
               type === 'Avatars' || 
-              type === 'LayoutBlockImage' || 
-              type === 'MasonryGallery'  || 
-              type === 'LayoutBlockVideoPlayer' || 
-              type === 'LayoutBlockSlider' || 
+              type === 'Image' || 
+              type === 'Gallery'  || 
+              type === 'VideoPlayer' || 
+              type === 'Slider' || 
               type === 'SocialMediaIcon' ||
               type === 'CardItem' ||
               type === 'Logo'? (
-=======
-              {type === 'Anchor' || type === 'Avatar' || type === 'Image' || type === 'Gallery'  || type === 'VideoPlayer' || type === 'Slider' ? (
->>>>>>> origin/main
                 <Item>
                   <FormControl>
                     <TextField
@@ -666,11 +651,7 @@ const ElementSpecificSettings = () => {
                   </FormControl>
                 </Item>
               ) : null}
-<<<<<<< HEAD
-              {type === 'Logo' || type === 'SocialMediaIcon' || type === 'CardItem' ? (
-=======
-              {type !== 'Image' && type !== 'VideoPlayer' && type !== 'Slider' && (
->>>>>>> origin/main
+              {type !== 'Image' && type !== 'VideoPlayer' && type !== 'Slider' && type === 'Logo' || type === 'SocialMediaIcon' || type === 'CardItem' ? (
                 <Item>
                   <FormControl>
                     <TextField
