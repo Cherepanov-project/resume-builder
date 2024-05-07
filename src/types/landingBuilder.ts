@@ -208,7 +208,7 @@ export type T_SectionElementProps = {
   textStyle?: { [key: string]: string };
   inputStyle?: { [key: string]: string };
   url?: string;
-  style?: {
+  style: {
     backgroundColor: string;
     text: string;
     color: string;
