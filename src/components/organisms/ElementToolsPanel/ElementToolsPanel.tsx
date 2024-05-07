@@ -92,7 +92,6 @@ const ElementToolsPanel: React.FC<ElementToolsPanelProps> = ({ layout, id, eleme
         aria-label="Copy Item"
         title="Скопировать блок"
         color="primary"
-        // onClick={() => dispatch(copyElement({ layout, id }))}
         onClick={() => {
           if (elementId) {
             dispatch(copyElement({ layout, id, elementId, parentLayout }))
