@@ -98,6 +98,7 @@ const ElementSpecificSettings = () => {
   ];
 
   const [accordion, setAccordion] = useState<AccordionData>(layoutElement.props.accordion || []);
+  console.log('accordion.length ', accordion.length);
 
   const handleUpdate = (type: string, value: string | AccordionData, i: number): void => {
     const newValue = JSON.parse(JSON.stringify(layoutRow));
@@ -148,6 +149,9 @@ const ElementSpecificSettings = () => {
       }
       case 'accordion': {
         newValue[i].props.accordion = value;
+        newValue[i].layout = i !== newValue.length - 1 ? 
+          {...newValue[i].layout, h: accordion.length === 0 ? 2 : 1.85*(accordion.length)}
+          : {...newValue[i].layout, h: accordion.length === 0 ? 2 : 1.85*(accordion.length + 1)}
         dispatch(editRowDate({ row, date: newValue }));
         break;
       }
@@ -194,7 +198,7 @@ const ElementSpecificSettings = () => {
           label: 'Accordion',
           value: 'accordion',
           key: 'accordion',
-          layout: { i: nanoid(), x: 0, y: 0, w: 1, h: 1 },
+          layout: { i: nanoid(), x: 0, y: 0, w: 2, h: 1 },
           title: {
             key: 'accordion',
             accordion: accordion,
@@ -584,6 +588,7 @@ const ElementSpecificSettings = () => {
                             updatedAccordion[index] = [updatedAccordion[index][0], e.target.value];
                             setAccordion(updatedAccordion);
                             handleUpdate('accordion', updatedAccordion, col - 1);
+                            
                           }}
                         />
                       </div>
@@ -594,6 +599,7 @@ const ElementSpecificSettings = () => {
                         const updatedAccordion: AccordionData = [...accordion, ['', '']];
                         setAccordion(updatedAccordion);
                         handleUpdate('accordion', updatedAccordion, col - 1);
+                        // dispatch(editRowDate({ row, date: updatedAccordion }));
                       }}
                     >
                       Add Item

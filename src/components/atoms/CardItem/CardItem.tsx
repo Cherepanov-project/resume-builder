@@ -35,6 +35,8 @@ const CardItem: React.FC<ILayoutBlock> = ({ props }) => {
     backgroundSize: 'contain',
     width: 'auto',
     maxWidth: '250px',
+    marginTop: '5px',
+    marginBottom: '5px',
     backgroundRepeat: 'no-repeat',
   };
 

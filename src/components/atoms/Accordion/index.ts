@@ -12,7 +12,7 @@ export const props = {
     style: { backgroundColor: '', color: '', border: '', text: '' },
   },
   children: [],
-  layout: { i: '', x: 0, y: 0, w: 1, h: 1 },
+  layout: { i: '', x: 0, y: 0, w: 1, h: 10 },
 };
 
 export default Accordion;

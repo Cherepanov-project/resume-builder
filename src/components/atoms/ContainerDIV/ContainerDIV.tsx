@@ -61,6 +61,7 @@ const ContainerDIV: React.FC<ContainerDIVProps> = ({ children, layout, columns, 
   const [width, setWidth] = useState(0);
   const draggableItem = useAppSellector((state) => state.layout.currentDraggableItem);
 
+
   useEffect(() => {
     // Для выравнивания дочерних элементов указываем начальное значение ширины родителя.
     const containerWidth = (containerRef.current! as HTMLElement).getBoundingClientRect().width;
@@ -99,6 +100,7 @@ const ContainerDIV: React.FC<ContainerDIVProps> = ({ children, layout, columns, 
   } catch {
     style = {
       backgroundColor: 'white',
+      height: 'auto',
     };
   }
 // console.log('hi', children, layout, columns)
@@ -120,6 +122,8 @@ const ContainerDIV: React.FC<ContainerDIVProps> = ({ children, layout, columns, 
         layout={workspaceLayout}
         cols={columns}
         width={width}
+        // rowHeight={workspaceLayout[0].h}
+        // height={'100%'}
         rowHeight={30}
         margin={[10, 0]} //меняем расстояние между элементами внутри секции
         isDraggable={!isDraggingInnerItem}
@@ -129,15 +133,16 @@ const ContainerDIV: React.FC<ContainerDIVProps> = ({ children, layout, columns, 
       >
         {children &&
           children.map((el, indx) => {
+            console.log('el.layout.h ', el.layout.h);
             return (
               <div className={classes['item']} key={workspaceLayout[indx].i || nanoid()}>
-                <ElementToolsPanel 
+                {false && <ElementToolsPanel 
                   layout={el.layout}
                   parentLayout={layout}
                   id={containerId} 
                   elementId = {el.layout.i}
                   setDraggingInnerItem={handleSetDraggingInnerItem} 
-                  elClass='drag-area1'/>
+                  elClass='drag-area1'/>}
                 <DynamicComponentRenderer
                   Component={el.name}
                   props={el.props}

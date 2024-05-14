@@ -99,6 +99,7 @@ export const GridContainer = (container: IGridContainers) => {
         className={classes['grid']}
         layout={workspaceLayout}
         cols={6}
+        // rowHeight={container.height}
         rowHeight={container.height}
         // 76 пикселей зарезервировано под сайдбар + отступ слева.
         width={width - 76 - (width - 120) * 0.3}
