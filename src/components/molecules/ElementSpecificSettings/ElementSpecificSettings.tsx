@@ -45,7 +45,7 @@ const ElementSpecificSettings = () => {
   let type: string = layoutElement.name || '';
   let text: string = layoutElement.props.text || '';
   let url: string = layoutElement.props.url || '';
-
+  console.log('+++', type)
   const dispatch = useDispatch();
 
   const settingsOptionsValues = [
@@ -69,7 +69,7 @@ const ElementSpecificSettings = () => {
   ];
 
   const handleUpdate = (type: string, value: string, i: number): void => {
-    console.log('f', type, value);
+    console.log('ffff', type, value);
     const newValue = JSON.parse(JSON.stringify(layoutRow));
     switch (type) {
       case 'type': {
@@ -117,7 +117,7 @@ const ElementSpecificSettings = () => {
             textStyle: { display: 'block' },
           },
         };
-      case 'Avatarss':
+      case 'Avatars':
         return {
           label: 'Images',
           value: 'Avatars',
@@ -205,7 +205,7 @@ const ElementSpecificSettings = () => {
         };
       case 'Anchor':
         return {
-          label: 'Navigation',
+          label: 'Anchor',
           value: 'Anchor',
           key: 'anchor',
           layout: { i: '', x: 0, y: 0, w: 1, h: 1 },

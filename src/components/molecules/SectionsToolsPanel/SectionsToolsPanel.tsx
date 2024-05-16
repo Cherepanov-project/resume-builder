@@ -163,6 +163,7 @@ const SectionsToolsPanel = ({ setError, setSeverity }) => {
 
   const handleToggleMenu = (e: React.MouseEvent<HTMLElement>) => {
     const target = e.target as HTMLButtonElement;
+    console.log('+++', target)
     switch (target.innerText) {
       case 'SEGMENT SETTINGS':
         return setToggleMenu('SEGMENT_SETTINGS');

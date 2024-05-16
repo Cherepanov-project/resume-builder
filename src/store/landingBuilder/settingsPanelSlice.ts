@@ -18,6 +18,7 @@ const settingsPanelSlice = createSlice({
       state.type = type;
       state.sectionID = sectionID;
       state.moduleID = moduleID;
+      console.log(sectionID)
     },
     closePanel(state) {
       state.shown = false;

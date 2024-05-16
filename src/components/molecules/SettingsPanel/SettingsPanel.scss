@@ -13,6 +13,7 @@
     overflow-y: auto;
     -ms-overflow-style: none;
     scrollbar-width: none;
+    box-shadow: 0px 5px 15px rgba(0, 0, 0, 0.1);
 
     &::-webkit-scrollbar {
       display: none;
@@ -20,11 +21,13 @@
   }
 
   &__title {
+    font-weight: 400;
+    line-height: 1.5;
     display: flex;
     justify-content: space-between;
     align-items: center;
     margin: 0;
-    padding: 0 6px;
+    padding: 0 5px;
     height: 48px;
     width: 100%;
     background: $bg-sidebar-title;
@@ -45,6 +48,15 @@
   display: flex;
   flex-direction: column;
   width: 100%;
+  &::after {
+    content: '';
+    width: 90%;
+    align-self: center;
+    height: 1px;
+    margin-top: 20px;
+    border-radius: 50px;
+    background-color: rgb(137, 119, 119);
+  }
 }
 
 .hidden {
@@ -61,25 +73,32 @@
   & span {
     text-align: center;
     margin-right: 10px;
+    margin-bottom: 5px;
+    margin-top: 10px;
+    margin-bottom: 10px;
   }
 
   align-items: center;
+
+  &:last-child::after{
+    display: none;
+  }
+  &::after {
+    content: '';
+    width: 70%;
+    align-self: center;
+    height: 1px;
+    margin-top: 20px;
+    border-radius: 50px;
+    background-color: rgb(214, 214, 214);
+  }
 }
 
 .settings-panel__item {
   display: flex;
   flex-direction: column;
   justify-content: center;
-
-  &::after {
-    content: '';
-    width: 90%;
-    align-self: center;
-    height: 1px;
-    margin-top: 10px;
-    border-radius: 50px;
-    background-color: rgb(137, 119, 119);
-  }
+  gap: 10px;
 }
 
 .react-colorful {
@@ -91,31 +110,30 @@
   width: 100%;
   display: flex;
   justify-content: space-around;
-  margin-top: 10px;
+  margin-top: 20px;
+  opacity: 0.6;
 }
 
 .settings-panel__items__btns__btn {
   width: 45%;
   border: none;
-  border-radius: 3px;
+  border-radius: 10px;
   transition: all 0.3s ease-in-out;
   height: 40px;
 
   &:hover {
-    opacity: 0.6;
+    opacity: 0.5;
   }
 }
 
 .settings-panel__items__btns .settings-panel__items__btns__btn--green {
-  background-color: #2dc08d;
-
-  &:hover {
-    background-color: #2dc08d;
-  }
+  background-color: #51a480;
+  border-radius: 15px;
 }
 
 .settings-panel__items__btns .settings-panel__items__btns__btn--grey {
   background-color: grey;
+  border-radius: 15px;
 
   &:hover {
     background-color: grey;
@@ -146,24 +164,27 @@
 
 .bg-form__square {
   width: 40px;
-  height: 40px;
   border: 1px solid black;
   border-radius: 5px;
 }
-
 .settings-panel__image__block {
   position: relative;
   background-color: grey;
   width: 90%;
   align-self: center;
   border-radius: 5px;
-
+  &__bgimage{
+    background-color: #7aac98;
+    border-radius: 5px 5px 0 0;
+    padding-left: 5px;
+  }
   & input {
-    width: 100%;
+    width: 96.5%;
     height: 30px;
     bottom: 0px;
     background-color: rgb(161, 159, 159);
     font-size: 16px;
+    padding: 5px;
     border-bottom-left-radius: 5px;
     border-bottom-right-radius: 5px;
     border: none;
@@ -172,7 +193,7 @@
 
 .settings-panel__items__btns__btn--blue {
   position: absolute;
-  background-color: rgb(35, 165, 235);
+  background-color: rgb(96, 185, 233);
   border-radius: 10px;
   width: 100px;
   right: 10px;
@@ -194,7 +215,9 @@
 
 .notification {
   margin-top: 15px;
-  border: 1px #1677ff solid;
+  width: 80%;
+  margin: 15px auto;
+  border: 1px #bfd6f7 solid;
 }
 
 .notificationError {
@@ -203,7 +226,7 @@
 }
 
 .list__title .title {
-  font-family: 'Inter', sans-serif;
+  font-family: "Nunito", sans-serif;
   font-size: 20px;
   font-weight: 700;
 }
