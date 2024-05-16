@@ -75,7 +75,7 @@ export type T_ComponentProps = {
 export type DynamicComponentRendererProps = {
   Component?: string;
   props?: {
-    [key: string]: string | number | { [key: string]: string | number } | ISettingsInputItem[];
+    [key: string]: string | number | { [key: string]: string | number } | ISettingsInputItem[] | [string, string][];
   };
   columns?: number;
   source: string;
@@ -83,6 +83,7 @@ export type DynamicComponentRendererProps = {
   interactiveType?: 'button' | 'slider';
   children?: T_BlockElement[];
   layout: Layout;
+  containerId?: string;
 };
 
 export type ContainerDIVProps = {
@@ -92,6 +93,7 @@ export type ContainerDIVProps = {
   props: {
     style: { [key: string]: string };
   };
+  containerId?: string;
 };
 
 export type NestedListProps = {
@@ -199,6 +201,8 @@ export type T_SectionElements = {
 
 export type T_SectionElementProps = {
   key?: string;
+  title?: string;
+  description?: string;
   text: string;
   wrapperStyle?: { [key: string]: string };
   textStyle?: { [key: string]: string };
@@ -213,6 +217,14 @@ export type T_SectionElementProps = {
   props?: {
     [key: string]: string;
   };
+  imgUrl?: string;
+  buttonText?: string;
+  accordion?: Array<[string, string]>;
+  RadioGroup?: ISettingsInputItem[];
+  CheckboxGroup?: ISettingsInputItem[];
+  SelectList?: ISettingsInputItem[];
+  LayoutBlockSlider?: ISettingsInputItem[];
+  MasonryGallery?: ISettingsInputItem[];
   RadioButtons?: ISettingsInputItem[];
   Checkboxes?: ISettingsInputItem[];
   DropdownList?: ISettingsInputItem[];

@@ -1,4 +1,5 @@
 import { T_BlockElement } from '@/types/landingBuilder';
+import Logo from '../Logo';
 import ButtonBlock from '../ButtonBlock';
 import Image from '../Image';
 import Paragraph from '../Paragraph';
@@ -10,6 +11,9 @@ import Tooltip from '../Tooltip';
 import Checkboxes from '../Checkboxes';
 import RadioButtons from '../RadioButtons';
 import { nanoid } from 'nanoid';
+import SocialMediaIcon from '../SocialMediaIcon';
+import CardItem from '../CardItem';
+import Accordion from '../Accordion';
 import MultiToggle from '../MultiToggle';
 import HeaderTitle from '../HeaderTitle';
 import Gallery from '../Gallery';
@@ -25,6 +29,7 @@ interface SectionsConstructorBlockElementType {
 const SectionsConstructorBlockElement: React.FC<SectionsConstructorBlockElementType> = ({
   params,
 }) => {
+  
   const props = params.props;
 
   const isImg = props.key === 'image';
@@ -44,8 +49,12 @@ const SectionsConstructorBlockElement: React.FC<SectionsConstructorBlockElementT
   const isSelectList = props.key === 'selectlist';
   const isModal = props.key === 'modal';
   const isSlider = props.key === 'slider';
-  // console.log('pa', params);
-  console.log(props.key)
+  const isLogo = props.key === 'logo';
+  const isSMIcon = props.key === 'smIcon'
+  const isCardItem = props.key === 'cardItem'
+  const isAccordion = props.key === 'accordion'
+  
+  
   return (
     <>
       {isImg && <Image props={props} />}
@@ -53,6 +62,7 @@ const SectionsConstructorBlockElement: React.FC<SectionsConstructorBlockElementT
       {isBtn && <ButtonBlock props={props} />}
       {isParagraph && <Paragraph props={props} />}
       {isAnchor && <Anchor props={props} />}
+      {isLogo && <Logo props={props} />}
       {isRating && <RatingSystem props={params.columns || 5}/>}
       {isAvatar && (
         <Avatars
@@ -80,6 +90,9 @@ const SectionsConstructorBlockElement: React.FC<SectionsConstructorBlockElementT
       {isSelectList && <DropdownList layout={params.layout} props={{DropdownList: [{id: nanoid(), value: props.text || 'Text'}]}}/>}
       {isModal && <ModalWindow props={props}/>}
       {isSlider && <Slider props={props} />}
+      {isSMIcon && <SocialMediaIcon props={props} />}
+      {isCardItem && <CardItem props={props} />}
+      {isAccordion && <Accordion props={props} />}
     </>
   );
 };

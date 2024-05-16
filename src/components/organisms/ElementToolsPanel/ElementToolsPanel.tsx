@@ -22,27 +22,46 @@ import { initPanel } from '@/store/landingBuilder/settingsPanelSlice';
 
 type ElementToolsPanelProps = {
   layout: Layout;
-  id: string;
+  parentLayout?: Layout;
+  id?: string;
+  elementId?: string;
+  setDraggingInnerItem: (isDragging: boolean) => void;
+  elClass: string;
 };
 
-const ElementToolsPanel: React.FC<ElementToolsPanelProps> = ({ layout, id }) => {
+const ElementToolsPanel: React.FC<ElementToolsPanelProps> = ({ layout, id, elementId, parentLayout, setDraggingInnerItem, elClass }) => {
   const dispatch = useAppDispatch();
-  // const currentContainer = useAppSellector((state) => state.layout.currentContainer);
 
   const handleSettings = () => {
     dispatch(initPanel({ type: 'section', sectionID: layout.i, moduleID: '0' }));
   };
 
+  const handleInnerItemDragStart = () => {
+    setDraggingInnerItem(true);
+  };
+
+  const handleInnerItemDragEnd = () => {
+    setDraggingInnerItem(false);
+  };
+
   return (
     <div className={classes['tools-panel']}>
-      <IconButton aria-label="Move Item" color="primary" className="drag-area">
+      <IconButton aria-label="Move Item" color="primary" className={elClass}
+      onMouseDown={handleInnerItemDragStart}
+      onMouseUp={handleInnerItemDragEnd}>
         <OpenWith />
       </IconButton>
       <IconButton
         aria-label="Decrease Item Width"
         title="Убрать колонку"
         color="primary"
-        onClick={() => dispatch(decreaseElementColumns({ layout, id }))}
+        onClick={() => {
+          if (elementId) {
+            dispatch(decreaseElementColumns({ layout, id, elementId, parentLayout }))
+          } else {
+            dispatch(decreaseElementColumns({ layout, id }))
+          }
+        }}
       >
         <RemoveCircleOutline />
       </IconButton>
@@ -50,7 +69,13 @@ const ElementToolsPanel: React.FC<ElementToolsPanelProps> = ({ layout, id }) => 
         aria-label="Increase Item Width"
         title="Добавить колонку"
         color="primary"
-        onClick={() => dispatch(increaseElementColumns({ layout, id }))}
+        onClick={() => {
+          if (elementId) {
+            dispatch(increaseElementColumns({ layout, id, elementId, parentLayout }))
+          } else {
+            dispatch(increaseElementColumns({ layout, id }))
+          }
+        }}
       >
         <AddCircleOutline />
       </IconButton>
@@ -66,7 +91,13 @@ const ElementToolsPanel: React.FC<ElementToolsPanelProps> = ({ layout, id }) => 
         aria-label="Copy Item"
         title="Скопировать блок"
         color="primary"
-        onClick={() => dispatch(copyElement({ layout, id }))}
+        onClick={() => {
+          if (elementId) {
+            dispatch(copyElement({ layout, id, elementId, parentLayout }))
+          } else {
+            dispatch(copyElement({ layout, id }))
+          }
+        }}
       >
         <ContentCopy />
       </IconButton>
@@ -74,7 +105,13 @@ const ElementToolsPanel: React.FC<ElementToolsPanelProps> = ({ layout, id }) => 
         aria-label="Remove Item"
         title="Удалить блок"
         color="primary"
-        onClick={() => dispatch(deleteElement({ layout, id }))}
+        onClick={() => {
+          if (elementId) {
+            dispatch(deleteElement({ layout, id, elementId, parentLayout }))
+          } else {
+            dispatch(deleteElement({ layout, id }))
+          }
+        }}
       >
         <Delete />
       </IconButton>
@@ -83,3 +120,4 @@ const ElementToolsPanel: React.FC<ElementToolsPanelProps> = ({ layout, id }) => 
 };
 
 export default ElementToolsPanel;
+

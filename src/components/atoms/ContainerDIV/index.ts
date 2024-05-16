@@ -8,6 +8,8 @@ export const props = {
   props: {
     style: {
       backgroundColor: 'white',
+      display: 'flex', 
+      flexDirection: 'row',
     },
   },
   children: [],

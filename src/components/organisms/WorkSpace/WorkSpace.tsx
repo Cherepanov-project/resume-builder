@@ -10,7 +10,6 @@ import { GridContainer } from '../GridContainer/GridContainer';
 
 const WorkSpace: React.FC = () => {
   const gridContainers = useAppSellector((state) => state.layout.gridContainers);
-  // console.log(gridContainers);
   return (
     <div className={classes['workspace']}>
       <div className={classes['wrapper']}>
