@@ -24,7 +24,6 @@ const SectionsToolsPanel = ({ setError, setSeverity }) => {
 
     // сохранение только координат блоков, у которых выбраны элементы из Select options
     const filteredArr = arr.filter((el) => el.name);
-    // console.log('filt', filteredArr)
     const elements = filteredArr.map((el) => { 
       console.log(el, el.layout.i, el.layout.i.slice(0,1))
       return {
@@ -115,16 +114,13 @@ const SectionsToolsPanel = ({ setError, setSeverity }) => {
 
   // расчет координаты x элемента ( зависит от суммы w предыдущих в ряду )
   const calcX = (row: number, col: number) => {
-    // console.log(row, col);
     if (col !== 1) {
       let sum = 0;
       for (let i = 1; i < col; i++) {
-        // console.log(layoutDate[row][i].layout.w);
         sum += layoutDate[row][i - 1].layout.w;
       }
       return sum;
     } else {
-      // console.log(layoutDate[row][col - 1].layout.w);
       return 0;
     }
   };

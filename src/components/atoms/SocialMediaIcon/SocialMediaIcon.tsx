@@ -1,36 +1,32 @@
-import { useEffect, useState } from 'react';
-
-import './Anchor.scss';
 import { ILayoutBlock } from '@/types/landingBuilder';
+import { useState, useEffect } from 'react';
 
 type StyleType = {
   [key: string]: string | number;
 };
 
-const Anchor: React.FC<ILayoutBlock> = ({ props }) => {
-  const defaultFontSize = '30';
-
-  const [text, setText] = useState<string>(props.text || '');
-  const [url, setUrl] = useState<string>(props.url || '');
-  const [fs, setFs] = useState<string | number>(props?.textStyle?.fontSize || defaultFontSize);
+const SocialMediaIcon: React.FC<ILayoutBlock> = ({ props }) => {
+  const [text, setText] = useState<string>(props?.text || '');
+  const [url, setUrl] = useState<string>(props?.url || '');
+  const [imgUrl, setImgUrl] = useState<string>(props?.imgUrl || '');
   const [isEditing, setIsEditing] = useState<boolean>(false);
 
   useEffect(() => {
-    setText(props.text || '');
+    setText(props?.text || '');
+    setUrl(props?.url || '');
+    setImgUrl(props?.imgUrl || '');
   }, [props]);
 
   const wrapperStyle: StyleType = {
-    ...props.wrapperStyle,
+    ...props?.wrapperStyle,
     display: 'flex',
     alignItems: 'center',
     justifyContent: 'center',
     height: '100%',
     flexDirection: 'column',
-  };
-
-  const textStyle = {
-    ...props.textStyle,
-    fontSize: fs,
+    backgroundSize: 'contain',
+    width: 'auto',
+    backgroundRepeat: 'no-repeat',
   };
 
   const handleText: (e: React.ChangeEvent<HTMLInputElement>) => void = (e) => {
@@ -43,20 +39,20 @@ const Anchor: React.FC<ILayoutBlock> = ({ props }) => {
     setUrl(url);
   };
 
-  const handleFontSize: (e: React.ChangeEvent<HTMLInputElement>) => void = (e) => {
-    const fs = e.target.value;
-    setFs(fs);
-  };
-
-  const handleDoubleClick: (e: React.MouseEvent) => void = (e) => {
-    e.preventDefault();
-    setIsEditing(true);
+  const handleImgUrl: (e: React.ChangeEvent<HTMLInputElement>) => void = (e) => {
+    const imgUrl = e.target.value;
+    setImgUrl(imgUrl);
   };
 
   const handleKeyDown: (e: React.KeyboardEvent) => void = (e) => {
     if (e.key === 'Enter') {
       setIsEditing(false);
     }
+  };
+
+  const handleDoubleClick: (e: React.MouseEvent) => void = (e) => {
+    e.preventDefault();
+    setIsEditing(true);
   };
 
   const inputPannel = () => {
@@ -79,10 +75,10 @@ const Anchor: React.FC<ILayoutBlock> = ({ props }) => {
           ></input>
         </label>
         <label>
-          font-size:
+          image url:
           <input
-            value={fs}
-            onChange={(e) => handleFontSize(e)}
+            value={imgUrl}
+            onChange={(e) => handleImgUrl(e)}
             onKeyDown={(e) => handleKeyDown(e)}
           ></input>
         </label>
@@ -92,8 +88,8 @@ const Anchor: React.FC<ILayoutBlock> = ({ props }) => {
 
   const content = () => {
     return (
-      <a href={url} style={textStyle} onContextMenu={(e) => handleDoubleClick(e)}>
-        {text}
+      <a href={url} style={{ height: '100%' }} onContextMenu={(e) => handleDoubleClick(e)}>
+        <img src={imgUrl} alt={text}></img>
       </a>
     );
   };
@@ -106,4 +102,4 @@ const Anchor: React.FC<ILayoutBlock> = ({ props }) => {
   );
 };
 
-export default Anchor;
+export default SocialMediaIcon;

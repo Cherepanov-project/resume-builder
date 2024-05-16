@@ -13,11 +13,14 @@ export const PageWithHeaderPDF = (props: IPageDefaultPDF) => {
 
   const propsHeader = { data: { personalData, photoData }, style: otherStyle };
   const propsMain = { data: { personalData, photoData, ...otherDate }, style: otherStyle };
-
   return (
     <Box style={MainPage} sx={{ display: 'flex', flexDirection: 'column', minHeight: '1123px' }}>
-      <HeaderPDF {...propsHeader} />
-      <MainPDF {...propsMain} />
+      <div style={{pageBreakInside:'avoid'}}>
+          <HeaderPDF {...propsHeader} />
+      </div>
+      <div>
+          <MainPDF {...propsMain} />
+      </div>
     </Box>
   );
 };

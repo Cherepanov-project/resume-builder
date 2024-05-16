@@ -72,7 +72,7 @@ const layoutSlice = createSlice({
           x: layoutItem.x,
           y: layoutItem.y,
           w: draggableItem.layout.w,
-          h: draggableItem.layout.h + 1,
+          h: draggableItem.layout.h,
           minW: draggableItem.layout.minW || 0,
           maxW: draggableItem.layout.maxW ?? 6,
           minH: draggableItem.layout.minW || 0,
@@ -122,23 +122,53 @@ const layoutSlice = createSlice({
     },
     // Копируем блок
     copyElement(state, action) {
-      let indx: number;
       state.gridContainers.forEach((container, index) => {
+        let indx: number;
         if (container.id === action.payload.id) {
-          indx = container.elements.activeElements.findIndex(
-            (element) => element.layout.i === action.payload.layout.i,
-          );
-          const newElement = {
-            ...container.elements.activeElements[indx],
-            layout: {
-              ...container.elements.activeElements[indx].layout,
-              y:
-                container.elements.activeElements[indx].layout.y +
-                container.elements.activeElements[indx].layout.h,
-              i: nanoid(),
-            },
-          };
-          state.gridContainers[index].elements.activeElements.splice(indx + 1, 0, newElement);
+          if (action.payload.elementId) {
+            indx = container.elements.activeElements.findIndex(
+              (element) => element.layout.i === action.payload.parentLayout.i,
+            );
+          } else {
+            indx = container.elements.activeElements.findIndex(
+              (element) => element.layout.i === action.payload.layout.i,
+            );
+          }
+          // Если elementId передан в payload, дублируем элемент внутри секции
+          if (action.payload.elementId) {
+            // Находим индекс элемента внутри children
+            const element = container.elements.activeElements[indx];
+            const elIndx = element.children!.findIndex(
+              (child) => child.layout.i === action.payload.elementId
+            );
+    
+            // Если нашли индекс элемента внутри children, дублируем его внутри секции
+            if (elIndx !== undefined && elIndx !== -1) {
+              const newElement = {
+                ...element.children![elIndx],
+                layout: {
+                  ...element.children![elIndx].layout,
+                  // y: element.children![elIndx].layout.y + element.children![elIndx].layout.h, // если хотим чтобы скопированный элемент появлялся под элементом
+                  x: element.children![elIndx].layout.x + element.children![elIndx].layout.w, //// если хотим чтобы скопированный элемент появлялся cправа от элемента
+                  i: nanoid(),
+                },
+              };
+              // Вставляем новый элемент внутри children
+              state.gridContainers[index].elements.activeElements[indx].children?.splice(elIndx + 1, 0, newElement);
+            }
+          } else {
+            // Иначе, дублируем саму секцию
+            const newElement = {
+              ...container.elements.activeElements[indx],
+              layout: {
+                ...container.elements.activeElements[indx].layout,
+                y: container.elements.activeElements[indx].layout.y + container.elements.activeElements[indx].layout.h,
+                i: nanoid(),
+              },
+            };
+            // Вставляем новый элемент после текущего элемента
+            state.gridContainers[index].elements.activeElements.splice(indx + 1, 0, newElement);
+          }
         }
       });
     },
@@ -162,16 +192,43 @@ const layoutSlice = createSlice({
     },
     // Удаляем блок из рабочей области
     deleteElement(state, action) {
-      let indx: number;
       state.gridContainers.forEach((container) => {
+        let indx: number;
         if (container.id === action.payload.id) {
-          indx = container.elements.activeElements.findIndex(
-            (element) => element.layout.i === action.payload.layout.i,
-          );
-          container.elements.activeElements.splice(indx, 1);
+          if (action.payload.elementId) {
+            indx = container.elements.activeElements.findIndex(
+              (element) => element.layout.i === action.payload.parentLayout.i,
+            );
+          } else {
+            indx = container.elements.activeElements.findIndex(
+              (element) => element.layout.i === action.payload.layout.i,
+            );
+          }
+    
+          // Если elementId передан в payload, удаляем элемент внутри секции
+          if (action.payload.elementId) {
+            // Находим индекс элемента внутри children
+            const element = container.elements.activeElements[indx];
+            const elIndx = element.children!.findIndex(
+              (child) => child.layout.i === action.payload.elementId
+            );
+    
+            // Если нашли индекс элемента внутри children, удаляем его
+            if (elIndx !== undefined && elIndx !== -1) {
+              state.gridContainers.forEach((container) => {
+                const containerIndx = container.elements.activeElements.findIndex(
+                  (element) => element.layout.i === action.payload.parentLayout.i,
+                );
+                container.elements.activeElements[containerIndx].children!.splice(elIndx, 1);
+              });
+            }
+          } else {
+            // Иначе, удаляем саму секцию
+            container.elements.activeElements.splice(indx, 1);
+          }
         }
       });
-    },
+    },    
     addGridContainer(state, action) {
       const indx = state.gridContainers.findIndex((container) => container.id === action.payload);
       const newContainer = {
@@ -243,27 +300,80 @@ const layoutSlice = createSlice({
       let indx: number;
       state.gridContainers.forEach((container) => {
         if (container.id === action.payload.id) {
-          indx = container.elements.activeElements.findIndex(
-            (element) => element.layout.i === action.payload.layout.i,
-          );
-          container.elements.activeElements[indx].layout.w += 1;
-          container.elements.activeElements[indx].columns! += 1;
+          if (action.payload.elementId) {
+            indx = container.elements.activeElements.findIndex(
+              (element) => element.layout.i === action.payload.parentLayout.i,
+            );
+          } else {
+            indx = container.elements.activeElements.findIndex(
+              (element) => element.layout.i === action.payload.layout.i,
+            );
+          }
+          // Находим индекс элемента внутри children, если elementId определен
+          let elIndx: number | undefined;
+          // console.log('action.payload.elementId ', action.payload.elementId);
+          if (action.payload.elementId) {
+            const element = container.elements.activeElements[indx];
+            if (element && element.children) {
+              elIndx = element.children.findIndex(
+                (child) => child.layout.i === action.payload.elementId
+              );
+            }
+          }
+    
+          // Если нашли индекс элемента внутри children, уменьшаем его ширину
+          if (elIndx !== undefined) {
+            const element = container.elements.activeElements[indx];
+            console.log('element.children![elIndx].layout.w ', element.children![elIndx].layout.w);
+            element.children![elIndx].layout.w += 1;
+          } else {
+            // Иначе уменьшаем ширину самого элемента
+            container.elements.activeElements[indx].layout.w += 1;
+            container.elements.activeElements[indx].columns! += 1;
+          }
         }
       });
-    },
-    // Уменьшаем количество колонок в блоке
+      
+    },  
+    // Уменьшаем количество колонок в блоке  
     decreaseElementColumns(state, action) {
       let indx: number;
       state.gridContainers.forEach((container) => {
         if (container.id === action.payload.id) {
-          indx = container.elements.activeElements.findIndex(
-            (element) => element.layout.i === action.payload.layout.i,
-          );
-          container.elements.activeElements[indx].layout.w -= 1;
-          container.elements.activeElements[indx].columns! -= 1;
+          if (action.payload.elementId) {
+            indx = container.elements.activeElements.findIndex(
+              (element) => element.layout.i === action.payload.parentLayout.i,
+            );
+          } else {
+            indx = container.elements.activeElements.findIndex(
+              (element) => element.layout.i === action.payload.layout.i,
+            );
+          }
+          // Находим индекс элемента внутри children, если elementId определен
+          let elIndx: number | undefined;
+          // console.log('action.payload.elementId ', action.payload.elementId);
+          if (action.payload.elementId) {
+            const element = container.elements.activeElements[indx];
+            if (element && element.children) {
+              elIndx = element.children.findIndex(
+                (child) => child.layout.i === action.payload.elementId
+              );
+            }
+          }    
+          // Если нашли индекс элемента внутри children, уменьшаем его ширину
+          if (elIndx !== undefined) {
+            const element = container.elements.activeElements[indx];
+            element.children![elIndx].layout.w -= 1;
+          } else {
+            // Иначе уменьшаем ширину самого элемента
+            container.elements.activeElements[indx].layout.w -= 1;
+            container.elements.activeElements[indx].columns! -= 1;
+          }
         }
       });
-    },
+      
+    },   
+  
     // Помещаем информацию о текущем перемещаемом блоке в стор
     setDraggableItem(state, action) {
       state.currentDraggableItem = action.payload.item;

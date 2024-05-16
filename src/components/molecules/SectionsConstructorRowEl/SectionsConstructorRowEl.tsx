@@ -34,7 +34,6 @@ const SectionsConstructorRowEl: React.FC<SectionsConstructorRowElType> = ({
 
   const layoutDate = useAppSellector((state) => state.sectionsManager.layoutDate);
   const layoutRow = layoutDate[row];
-  // console.log(layoutRow);
   const columns = layoutRow.length;
   const [gridLayoutStyle, setGridLayoutStyle] = useState({
     display: 'grid',
@@ -224,7 +223,9 @@ const SectionsConstructorRowEl: React.FC<SectionsConstructorRowElType> = ({
       },
     ];
     return (
-      <Box sx={{ transform: 'translateZ(0px)' }}>
+      <Box 
+        sx={{ 
+          transform: 'translateZ(0px)'}}>
         <SpeedDial
           sx={{
             opacity: '0.2',

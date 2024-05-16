@@ -15,7 +15,7 @@ import classes from './GridContainer.module.scss';
 // Отрисовываем динамический компонент
 // По сути это зависимый компонент, который отвечает за рендеринг условного блока
 const DynamicComponentRenderer: React.FC<DynamicComponentRendererProps> = memo(
-  ({ Component, props, columns, source, children, layout }) => {
+  ({ Component, props, columns, source, children, layout, containerId }) => {
     const DynamicComponent = lazy(() => import(`../../${source}/${Component}/index.ts`));
     return (
       <Suspense fallback={<ComponentPreloader />}>
@@ -26,6 +26,7 @@ const DynamicComponentRenderer: React.FC<DynamicComponentRendererProps> = memo(
           source={source}
           children={children}
           layout={layout}
+          containerId={containerId}
         />
       </Suspense>
     );
@@ -33,12 +34,18 @@ const DynamicComponentRenderer: React.FC<DynamicComponentRendererProps> = memo(
 );
 // ========================================================================== \\
 
+
 export const GridContainer = (container: IGridContainers) => {
   const dispatch = useAppDispatch();
   const currentDraggableItem = useAppSellector((state) => state.layout.currentDraggableItem);
   const [width, setWidth] = useState(window.innerWidth);
   const [isHover, setIsHover] = useState(false);
   const [isButtonHover, setIsButtonHover] = useState(false);
+  const [isDraggingInnerItem, setIsDraggingInnerItem] = useState(false);
+
+  const handleSetDraggingInnerItem = (isDragging: boolean) => {
+    setIsDraggingInnerItem(isDragging);
+  };
 
   useEffect(() => {
     const handleResize = () => {
@@ -93,11 +100,10 @@ export const GridContainer = (container: IGridContainers) => {
         layout={workspaceLayout}
         cols={6}
         rowHeight={container.height}
-        // 76 пикселей зарезервировано под сайдбар + отступ слева.
         width={width - 76 - (width - 120) * 0.3}
         margin={[8, 8]}
         resizeHandles={['sw', 'se']}
-        isDraggable
+        isDraggable={!isDraggingInnerItem}
         isDroppable
         onDrop={(layout: Layout[], layoutItem: Layout) => {
           const draggableItem = currentDraggableItem;
@@ -111,8 +117,7 @@ export const GridContainer = (container: IGridContainers) => {
         {/* Динамически подгружаем компоненты и прокидывааем в них пропсы из одноимменных объектов */}
         {container.elements.activeElements.map((el) => (
           <div key={el.layout.i} className={classes['item']}>
-            {/* {console.log(el)} */}
-            <ElementToolsPanel layout={el.layout} id={container.id} />
+            <ElementToolsPanel layout={el.layout} id={container.id} setDraggingInnerItem={handleSetDraggingInnerItem} elClass='drag-area'/>
             <DynamicComponentRenderer
               Component={el.name}
               source={el.source || 'atoms'}
@@ -120,6 +125,7 @@ export const GridContainer = (container: IGridContainers) => {
               columns={el.columns || 1}
               layout={el.layout}
               children={el.children}
+              containerId={container.id}
             />
           </div>
         ))}
@@ -140,9 +146,9 @@ export const GridContainer = (container: IGridContainers) => {
           }}
         >
           {!isButtonHover ? (
-            <PlusCircleOutlined style={{ color: '#2dc08d', fontSize: 30 }} />
+            <PlusCircleOutlined style={{ color: '#2dc08d', fontSize: 30 }} onPointerEnterCapture={undefined} onPointerLeaveCapture={undefined}/>
           ) : (
-            <PlusCircleFilled style={{ color: '#2dc08d', fontSize: 30 }} />
+            <PlusCircleFilled style={{ color: '#2dc08d', fontSize: 30 }} onPointerEnterCapture={undefined} onPointerLeaveCapture={undefined} />
           )}
         </button>
       )}

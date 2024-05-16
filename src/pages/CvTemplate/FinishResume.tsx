@@ -1,4 +1,4 @@
-import { Box, Button, Typography } from '@mui/material';
+import {Box, Button, Paper, Typography} from '@mui/material';
 import { FC, useRef } from 'react';
 import { CvTemplatePDF } from '../CvTemplatePDF';
 import { buttonStyle } from '@/assets/style/buttonStyle';
@@ -13,7 +13,6 @@ const FinishResume: FC<IProps> = ({ handleButtonClick, handleReset }) => {
   const handlePrint = useReactToPrint({
     content: () => componentRef.current,
   });
-
   return (
     <Box>
       <Box display="flex" justifyContent="space-between" alignItems="flex-end" sx={{ mb: 3 }}>
@@ -37,7 +36,9 @@ const FinishResume: FC<IProps> = ({ handleButtonClick, handleReset }) => {
           </Box>
         </Box>
 
-        <CvTemplatePDF styleName={'toronto'} ref={componentRef} />
+        <Paper elevation={12}>
+          <CvTemplatePDF styleName={'toronto'} ref={componentRef} />
+        </Paper>
       </Box>
 
       <Box sx={{ mb: 4, ml: 7 }}>

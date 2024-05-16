@@ -25,7 +25,6 @@ export const SidebarPDF = (props: ISidebarPDFProps) => {
   const { data, style } = props;
   const { personalData, photoData, socialData, hobbyData } = data;
 
-  console.log('SIDEBAR PROPS', props);
   const {
     Socials,
     Social,
