@@ -99,13 +99,10 @@ export const GridContainer = (container: IGridContainers) => {
         className={classes['grid']}
         layout={workspaceLayout}
         cols={6}
-        // rowHeight={container.height}
         rowHeight={container.height}
-        // 76 пикселей зарезервировано под сайдбар + отступ слева.
         width={width - 76 - (width - 120) * 0.3}
         margin={[8, 8]}
         resizeHandles={['sw', 'se']}
-        // isDraggable={false}
         isDraggable={!isDraggingInnerItem}
         isDroppable
         onDrop={(layout: Layout[], layoutItem: Layout) => {
@@ -120,7 +117,6 @@ export const GridContainer = (container: IGridContainers) => {
         {/* Динамически подгружаем компоненты и прокидывааем в них пропсы из одноимменных объектов */}
         {container.elements.activeElements.map((el) => (
           <div key={el.layout.i} className={classes['item']}>
-            {/* {`ВЫСОТА - ${el.layout.h}`} */}
             <ElementToolsPanel layout={el.layout} id={container.id} setDraggingInnerItem={handleSetDraggingInnerItem} elClass='drag-area'/>
             <DynamicComponentRenderer
               Component={el.name}

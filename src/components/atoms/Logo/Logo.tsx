@@ -6,20 +6,24 @@ type StyleType = {
 };
 
 const Logo: React.FC<ILayoutBlock> = ({ props }) => {
-  const [text, setText] = useState<string>(props?.text || '');
-  const [url, setUrl] = useState<string>(props?.url || '');
-  const [imgUrl, setImgUrl] = useState<string>(props?.imgUrl || '');
-  const [isEditing, setIsEditing] = useState<boolean>(false);
+  const [stringFields, setStringFields] = useState<{[k: string]: string}>({
+    text: props?.text || '',
+    url: props?.url || '',
+    imgUrl: props?.imgUrl || '',
+    });
 
   useEffect(() => {
-    setText(props?.text || '');
-    setUrl(props?.url || '');
-    setImgUrl(props?.imgUrl || '');
+    setStringFields(
+      {
+        text: props?.text || '',
+        url: props?.url || '',
+        imgUrl: props?.imgUrl || '',
+        }
+    )
   }, [props]);
 
   const wrapperStyle: StyleType = {
     ...props?.wrapperStyle,
-    // backgroundImage: `url(${imgUrl})`,
     display: 'flex',
     alignItems: 'center',
     justifyContent: 'center',
@@ -30,75 +34,17 @@ const Logo: React.FC<ILayoutBlock> = ({ props }) => {
     backgroundRepeat: 'no-repeat',
   };
 
-  const handleText: (e: React.ChangeEvent<HTMLInputElement>) => void = (e) => {
-    const text = e.target.value;
-    setText(text);
-  };
-
-  const handleUrl: (e: React.ChangeEvent<HTMLInputElement>) => void = (e) => {
-    const url = e.target.value;
-    setUrl(url);
-  };
-
-  const handleImgUrl: (e: React.ChangeEvent<HTMLInputElement>) => void = (e) => {
-    const imgUrl = e.target.value;
-    setImgUrl(imgUrl);
-  };
-
-  const handleKeyDown: (e: React.KeyboardEvent) => void = (e) => {
-    if (e.key === 'Enter') {
-      setIsEditing(false);
-    }
-  };
-
-  const handleDoubleClick: (e: React.MouseEvent) => void = (e) => {
-    e.preventDefault();
-    setIsEditing(true);
-  };
-
-  const inputPannel = () => {
-    return (
-      <div className="anchor__input-pannel">
-        <label>
-          text:
-          <input
-            value={text}
-            onChange={(e) => handleText(e)}
-            onKeyDown={(e) => handleKeyDown(e)}
-          ></input>
-        </label>
-        <label>
-          url:
-          <input
-            value={url}
-            onChange={(e) => handleUrl(e)}
-            onKeyDown={(e) => handleKeyDown(e)}
-          ></input>
-        </label>
-        <label>
-          image url:
-          <input
-            value={imgUrl}
-            onChange={(e) => handleImgUrl(e)}
-            onKeyDown={(e) => handleKeyDown(e)}
-          ></input>
-        </label>
-      </div>
-    );
-  };
-
   const content = () => {
     return (
-      <a href={url} style={{ height: '100%' }} onContextMenu={(e) => handleDoubleClick(e)}>
-        {imgUrl ? <img src={imgUrl} alt={text}></img> : text}
+      <a href={stringFields.url} style={{ height: '100%' }}>
+        {stringFields.imgUrl ? <img src={stringFields.imgUrl} alt={stringFields.text}></img> : stringFields.text}
       </a>
     );
   };
 
   return (
     <div style={wrapperStyle}>
-      {isEditing && inputPannel()}
-      {!isEditing && content()}
+      {content()}
     </div>
   );
 };

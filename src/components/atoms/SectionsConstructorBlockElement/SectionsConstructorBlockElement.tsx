@@ -29,14 +29,6 @@ interface SectionsConstructorBlockElementType {
 const SectionsConstructorBlockElement: React.FC<SectionsConstructorBlockElementType> = ({
   params,
 }) => {
-  // const props = params;
-  // console.log(props);
-
-  // const isImg = false || params.key === 'image';
-  // const isBtn = false || params.key === 'button';
-  // const isTitle = false || params.key === 'title';
-  // const isParagraph = false || params.key === 'paragraph';
-  // const isAnchor = false || params.key === 'anchor';
   
   const props = params.props;
 
@@ -63,8 +55,6 @@ const SectionsConstructorBlockElement: React.FC<SectionsConstructorBlockElementT
   const isAccordion = props.key === 'accordion'
   
   
-  // console.log('pa', params);
-  console.log(props.key)
   return (
     <>
       {isImg && <Image props={props} />}

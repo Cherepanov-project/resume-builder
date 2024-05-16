@@ -84,6 +84,7 @@ const ContainerDIV: React.FC<ContainerDIVProps> = ({ children, layout, columns, 
     const targetElement = event.target as HTMLElement;
     const parentElement = targetElement.closest('.wrapper') as HTMLElement;
     const element = parentElement?.dataset.id;
+    
 
     // const id = currentContainer;
 
@@ -103,13 +104,13 @@ const ContainerDIV: React.FC<ContainerDIVProps> = ({ children, layout, columns, 
       height: 'auto',
     };
   }
-// console.log('hi', children, layout, columns)
 
   const [isDraggingInnerItem, setIsDraggingInnerItem] = useState(false);
 
   const handleSetDraggingInnerItem = (isDragging: boolean) => {
     setIsDraggingInnerItem(isDragging);
   };
+
 
   return (
     <div 
@@ -122,8 +123,6 @@ const ContainerDIV: React.FC<ContainerDIVProps> = ({ children, layout, columns, 
         layout={workspaceLayout}
         cols={columns}
         width={width}
-        // rowHeight={workspaceLayout[0].h}
-        // height={'100%'}
         rowHeight={30}
         margin={[10, 0]} //меняем расстояние между элементами внутри секции
         isDraggable={!isDraggingInnerItem}
@@ -133,7 +132,6 @@ const ContainerDIV: React.FC<ContainerDIVProps> = ({ children, layout, columns, 
       >
         {children &&
           children.map((el, indx) => {
-            console.log('el.layout.h ', el.layout.h);
             return (
               <div className={classes['item']} key={workspaceLayout[indx].i || nanoid()}>
                 {false && <ElementToolsPanel 

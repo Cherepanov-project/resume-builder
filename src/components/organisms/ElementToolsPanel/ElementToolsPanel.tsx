@@ -31,7 +31,6 @@ type ElementToolsPanelProps = {
 
 const ElementToolsPanel: React.FC<ElementToolsPanelProps> = ({ layout, id, elementId, parentLayout, setDraggingInnerItem, elClass }) => {
   const dispatch = useAppDispatch();
-  // const currentContainer = useAppSellector((state) => state.layout.currentContainer);
 
   const handleSettings = () => {
     dispatch(initPanel({ type: 'section', sectionID: layout.i, moduleID: '0' }));
@@ -106,7 +105,6 @@ const ElementToolsPanel: React.FC<ElementToolsPanelProps> = ({ layout, id, eleme
         aria-label="Remove Item"
         title="Удалить блок"
         color="primary"
-        // onClick={() => dispatch(deleteElement({ layout, id }))}
         onClick={() => {
           if (elementId) {
             dispatch(deleteElement({ layout, id, elementId, parentLayout }))

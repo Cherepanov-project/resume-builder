@@ -60,26 +60,14 @@ const ElementSpecificSettings = () => {
   const settingsOptionsValues = [
     'Accordion',
     'Avatars',
-    // 'MasonryGallery',
-    // 'BasicRating',
-    // 'BasicTooltip',
     'CardItem',
     'CheckboxGroup',
-    // 'RadioGroup',
-    // 'ToggleButtonsMultiple',
-    // 'LayoutBlockTitle',
-    // 'LayoutBlockParagraph',
-    // 'LayoutBlockImage',
-    // 'LayoutBlockButton',
-    // 'LayoutBlockAnchor',
-    // 'LayoutBlockSlider',
-    // 'LayoutBlockVideoPlayer',
     'LayoutBlockModal',
     'Logo',
     'SelectList',
     'SocialMediaIcon',
     'TitleH1',
-    'Gallery', //
+    'Gallery',
     'RatingSystem',
     'Tooltip',
     'Checkboxes',
@@ -98,10 +86,10 @@ const ElementSpecificSettings = () => {
   ];
 
   const [accordion, setAccordion] = useState<AccordionData>(layoutElement.props.accordion || []);
-  console.log('accordion.length ', accordion.length);
 
   const handleUpdate = (type: string, value: string | AccordionData, i: number): void => {
     const newValue = JSON.parse(JSON.stringify(layoutRow));
+    const names = ['url', 'title', 'text', 'description', 'imgUrl', 'buttonText']
     switch (type) {
       case 'type': {
         const label = typeof value === 'string' ? getLabel(value) : getLabel(value[0][0]);
@@ -113,45 +101,17 @@ const ElementSpecificSettings = () => {
           newValue[i].props.value = label.title.value;
         }
         if (label.url) newValue[i].url = label.url;
-        // console.log(row, newValue);
         dispatch(editRowDate({ row, date: newValue }));
         break;
       }
-      case 'url': {
-        newValue[i].props.url = value;
+      case names.includes(type) ? type : '' : {
+        newValue[i].props[type] = value;
         dispatch(editRowDate({ row, date: newValue }));
-        break;
-      }
-      case 'title': {
-        newValue[i].props.title = value;
-        dispatch(editRowDate({ row, date: newValue }));
-        break;
-      }
-      case 'text': {
-        newValue[i].props.text = value;
-        dispatch(editRowDate({ row, date: newValue }));
-        break;
-      }
-      case 'description': {
-        newValue[i].props.description = value;
-        dispatch(editRowDate({ row, date: newValue }));
-        break;
-      }
-      case 'imgUrl': {
-        newValue[i].props.imgUrl = value;
-        dispatch(editRowDate({ row, date: newValue }));
-        break;
-      }
-      case 'buttonText': {
-        newValue[i].props.buttonText = value;
-        dispatch(editRowDate({ row, date: newValue }));
-        break;
+        break
       }
       case 'accordion': {
         newValue[i].props.accordion = value;
-        newValue[i].layout = i !== newValue.length - 1 ? 
-          {...newValue[i].layout, h: accordion.length === 0 ? 2 : 1.85*(accordion.length)}
-          : {...newValue[i].layout, h: accordion.length === 0 ? 2 : 1.85*(accordion.length + 1)}
+        newValue[i].layout = {...newValue[i].layout, h: accordion.length === 0 ? 2 : 1.85*(accordion.length)}
         dispatch(editRowDate({ row, date: newValue }));
         break;
       }
@@ -212,7 +172,7 @@ const ElementSpecificSettings = () => {
           label: 'CardItem',
           value: 'cardItem',
           key: 'cardItem',
-          layout: { i: '', x: 0, y: 0, w: 1, h: 3 },
+          layout: { i: '', x: 0, y: 0, w: 1, h: 8 },
           title: {
             key: 'cardItem',
             title: title,
@@ -573,7 +533,6 @@ const ElementSpecificSettings = () => {
                           value={item[0]}
                           onChange={(e: React.ChangeEvent<HTMLInputElement>) => {
                             const updatedAccordion = [...accordion];
-                            // updatedAccordion[index][0] = e.target.value;
                             updatedAccordion[index] = [e.target.value, updatedAccordion[index][1]];
                             setAccordion(updatedAccordion);
                             handleUpdate('accordion', updatedAccordion, col - 1);
@@ -584,7 +543,6 @@ const ElementSpecificSettings = () => {
                           value={item[1]}
                           onChange={(e: React.ChangeEvent<HTMLInputElement>) => {
                             const updatedAccordion = [...accordion];
-                            // updatedAccordion[index][1] = e.target.value;
                             updatedAccordion[index] = [updatedAccordion[index][0], e.target.value];
                             setAccordion(updatedAccordion);
                             handleUpdate('accordion', updatedAccordion, col - 1);
@@ -599,7 +557,6 @@ const ElementSpecificSettings = () => {
                         const updatedAccordion: AccordionData = [...accordion, ['', '']];
                         setAccordion(updatedAccordion);
                         handleUpdate('accordion', updatedAccordion, col - 1);
-                        // dispatch(editRowDate({ row, date: updatedAccordion }));
                       }}
                     >
                       Add Item

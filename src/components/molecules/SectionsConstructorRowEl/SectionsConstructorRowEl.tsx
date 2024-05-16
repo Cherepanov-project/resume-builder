@@ -34,7 +34,6 @@ const SectionsConstructorRowEl: React.FC<SectionsConstructorRowElType> = ({
 
   const layoutDate = useAppSellector((state) => state.sectionsManager.layoutDate);
   const layoutRow = layoutDate[row];
-  // console.log(layoutRow);
   const columns = layoutRow.length;
   const [gridLayoutStyle, setGridLayoutStyle] = useState({
     display: 'grid',
@@ -45,7 +44,6 @@ const SectionsConstructorRowEl: React.FC<SectionsConstructorRowElType> = ({
   // задание grid-ряду свойства gridTemplateColumns при изменении количсетва блоков в ряду
   useEffect(() => {
     const v = layoutRow.map((v) => v.layout.w + 'fr').join(' ');
-    // const h = layoutRow.map((h) => h.layout.h + 'fr').join(' ');
     const style = { display: 'grid', gridTemplateColumns: v, gridTemplateRows: '1fr' };
     setGridLayoutStyle(style);
   }, [layoutRow]);
@@ -98,12 +96,10 @@ const SectionsConstructorRowEl: React.FC<SectionsConstructorRowElType> = ({
         backgroundColor: '#fff',
         textAlign: 'center',
         height: `${el.layout.h * 30}px`,
-        // height: 'auto',
         width: `${el.layout.w * 191}px`,
         cursor: 'pointer',
         '&:hover': {
           border: '1px dotted dimgrey',
-          // height: `${el.layout.h * 30 - 2}px`,
           height: `${el.layout.h * 30 - 2}px`,
           width: `${el.layout.w * 191 - 2}px`,
           borderRadius: '10px',
