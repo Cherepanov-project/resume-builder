@@ -10,7 +10,7 @@ import { importFiles } from '@/utils';
 import { T_SidebarMenuItem } from '@/types/landingBuilder';
 import TabPanel from '@molecules/TabPanel';
 import NestedList from '@molecules/NestedList';
-import ManagerButton from '@/components/atoms/ManagerButton';
+import ManagerButton from '@atoms/ManagerButton';
 
 import classes from './SideBar.module.scss';
 

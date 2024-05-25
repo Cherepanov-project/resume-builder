@@ -1,7 +1,7 @@
 import classes from './AdvertisementSection.module.scss';
 
-import DecorativeCircle from '../../atoms/DecorativeCircle';
-import SupportContainer from '../../molecules/SupportContainer';
+import DecorativeCircle from '@atoms/DecorativeCircle';
+import SupportContainer from '@molecules/SupportContainer';
 // import BarChartTwoToneIcon from '@mui/icons-material/BarChartTwoTone';
 // import ArrowBackIosNewTwoToneIcon from '@mui/icons-material/ArrowBackIosNewTwoTone';
 // import ArrowForwardIosNewTwoToneIcon from '@mui/icons-material/ArrowForwardIosTwoTone';

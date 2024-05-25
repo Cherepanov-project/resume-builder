@@ -2,12 +2,12 @@ import DotsColor from '../DotsColor/DotsColor.tsx';
 import List from '@mui/material/List';
 import { ListItem, ListItemText } from '@mui/material';
 import Typography from '@mui/material/Typography';
-import f1 from '../../../../assets/images/templatesPageImage/f1.png';
-import f2 from '../../../../assets/images/templatesPageImage/f2.png';
-import f3 from '../../../../assets/images/templatesPageImage/f3.png';
-import f4 from '../../../../assets/images/templatesPageImage/f4.png';
-import f5 from '../../../../assets/images/templatesPageImage/f5.png';
-import f6 from '../../../../assets/images/templatesPageImage/f6.png';
+import f1 from '@assets/images/templatesPageImage/f1.png';
+import f2 from '@assets/images/templatesPageImage/f2.png';
+import f3 from '@assets/images/templatesPageImage/f3.png';
+import f4 from '@assets/images/templatesPageImage/f4.png';
+import f5 from '@assets/images/templatesPageImage/f5.png';
+import f6 from '@assets/images/templatesPageImage/f6.png';
 import classes from './Specifications.module.scss';
 
 const Specifications = () => {

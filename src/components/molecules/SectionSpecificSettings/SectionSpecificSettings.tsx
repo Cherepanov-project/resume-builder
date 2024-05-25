@@ -1,4 +1,4 @@
-import Item from '@/components/atoms/StyledPaperItem';
+import Item from '@atoms/StyledPaperItem';
 import {
   Box,
   FormControl,

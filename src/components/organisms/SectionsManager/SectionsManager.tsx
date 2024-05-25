@@ -6,12 +6,12 @@ import { AddSharp, Close, EditSharp, RemoveSharp } from '@mui/icons-material/';
 
 import { setLayoutDate } from '@/store/landingBuilder/sectionsManagerSlice';
 
-import MemoizedSectionsConstructor from '@/components/molecules/SectionsConstructor';
+import MemoizedSectionsConstructor from '@molecules/SectionsConstructor';
 import { useTypedSelector } from '@/hooks/cvTemplateHooks';
-import PreviewButtonsContainer from '@/components/molecules/PreviewButtonsContainer';
-import Item from '@/components/atoms/StyledPaperItem';
-import SectionsToolsPanel from '@/components/molecules/SectionsToolsPanel/SectionsToolsPanel';
-import ErrorPopup from '@/components/atoms/ErrorPopup';
+import PreviewButtonsContainer from '@molecules/PreviewButtonsContainer';
+import Item from '@atoms/StyledPaperItem';
+import SectionsToolsPanel from '@molecules/SectionsToolsPanel/SectionsToolsPanel';
+import ErrorPopup from '@atoms/ErrorPopup';
 
 const SectionsManager: FC = () => {
   const dispatch = useDispatch();

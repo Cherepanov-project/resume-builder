@@ -1,8 +1,8 @@
 import classes from './CvTemplates.module.scss';
-import cv1 from '../../../../assets/images/templatesPageImage/demo-1.png';
+import cv1 from '@assets/images/templatesPageImage/demo-1.png';
 import ArrowRightAltIcon from '@mui/icons-material/ArrowRightAlt';
-import cv2 from '../../../../assets/images/templatesPageImage/demo-2.png';
-import cv3 from '../../../../assets/images/templatesPageImage/demo-3.png';
+import cv2 from '@assets/images/templatesPageImage/demo-2.png';
+import cv3 from '@assets/images/templatesPageImage/demo-3.png';
 import DotsColor from '../DotsColor/DotsColor';
 import { FC } from 'react';
 

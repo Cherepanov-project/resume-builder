@@ -3,7 +3,7 @@ import { useDispatch } from 'react-redux';
 import { editRowDate, handleSettingsMenu } from '@/store/landingBuilder/sectionsManagerSlice';
 
 import { memo, useEffect, useState } from 'react';
-import SectionsConstructorBlockElement from '@/components/atoms/SectionsConstructorBlockElement';
+import SectionsConstructorBlockElement from '@atoms/SectionsConstructorBlockElement';
 import { useTypedSelector } from '@/hooks/cvTemplateHooks';
 import { Box, SpeedDial, SpeedDialAction, SpeedDialIcon } from '@mui/material';
 import {

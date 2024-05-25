@@ -1,7 +1,7 @@
 import classes from './Education.module.scss';
 import { Box, Button } from '@mui/material';
-import EducationForm from '../../molecules/EducationForm';
-import { buttonStyle } from '../../../assets/style/buttonStyle';
+import EducationForm from '@molecules/EducationForm';
+import { buttonStyle } from '@assets/style/buttonStyle';
 
 import AccordionSummary from '@mui/material/AccordionSummary';
 import AccordionDetails from '@mui/material/AccordionDetails';
