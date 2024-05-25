@@ -1,7 +1,7 @@
 import { Card, CardMedia, CardContent, Typography, Button, CardActions } from '@mui/material';
 import { ArrowDropDown, ArrowDropUp } from '@mui/icons-material';
 import { useState } from 'react';
-import { useTypedSelector } from '../../../hooks/cvTemplateHooks';
+import { useTypedSelector } from '@hooks/cvTemplateHooks';
 
 import classes from './BasicCard.module.scss';
 

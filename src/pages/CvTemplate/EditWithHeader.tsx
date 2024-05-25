@@ -4,7 +4,7 @@ import {Box, Button, MenuItem, Select, InputLabel, FormControl, ButtonGroup, Pap
 import {buttonStyle} from '@/assets/style/buttonStyle';
 import {CvTemplatePDF} from '../CvTemplatePDF';
 import {useReactToPrint} from 'react-to-print';
-import {useTypedSelector} from '../../hooks/cvTemplateHooks';
+import {useTypedSelector} from '@hooks/cvTemplateHooks';
 import {
     AboutPDF,
     ContactsPDF,

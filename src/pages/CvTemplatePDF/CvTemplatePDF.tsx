@@ -1,7 +1,7 @@
-import {temporaryCvDataSlice} from '../../assets/const';
+import {temporaryCvDataSlice} from '@assets/const';
 import {renderTemplatePDF} from './lib';
 
-import {useTypedSelector} from '../../hooks/cvTemplateHooks';
+import {useTypedSelector} from '@hooks/cvTemplateHooks';
 import {Paper} from '@mui/material';
 import React from 'react';
 import {StylesNameKeys} from './const';

@@ -1,6 +1,6 @@
 import { useDispatch } from 'react-redux';
 
-import { editRowDate } from '../../../store/landingBuilder/sectionsManagerSlice';
+import { editRowDate } from '@store/landingBuilder/sectionsManagerSlice';
 
 import { memo, useState } from 'react';
 import { useTypedSelector } from '@/hooks/cvTemplateHooks';
