@@ -1,6 +1,6 @@
 import './SettingsPanel.scss';
 import CloseIcon from '@mui/icons-material/Close';
-import { useAppDispatch, useAppSellector } from '@/hooks/cvTemplateHooks';
+import { useAppDispatch, useTypedSelector } from '@/hooks/cvTemplateHooks';
 import { closePanel } from '@/store/landingBuilder/settingsPanelSlice';
 import React, { useEffect, useLayoutEffect, useRef, useState } from 'react';
 import ContainerDIVSettings from '@/components/atoms/ContainerDIVSettings';
@@ -17,9 +17,9 @@ import LayoutBlockModalSettings from '@/components/atoms/LayoutBlockModalSetting
 const SettingsPanel: React.FC = () => {
   const dispatch = useAppDispatch();
 
-  const isShown = useAppSellector((state) => state.settingsPanel.shown);
-  const { type } = useAppSellector((state) => state.settingsPanel);
-  const id = useAppSellector((state) => state.settingsPanel.sectionID);
+  const isShown = useTypedSelector((state) => state.settingsPanel.shown);
+  const { type } = useTypedSelector((state) => state.settingsPanel);
+  const id = useTypedSelector((state) => state.settingsPanel.sectionID);
 
   const panelRef = useRef<HTMLDivElement>(null);
 
@@ -42,7 +42,7 @@ const SettingsPanel: React.FC = () => {
     dispatch(closePanel());
   };
 
-  const { gridContainers } = useAppSellector((state) => state.layout);
+  const { gridContainers } = useTypedSelector((state) => state.layout);
   const activeElements: T_BlockElement[] = [];
   for (let i = 0; i < gridContainers?.length; i++) {
     gridContainers[i].elements.activeElements.forEach((elem) => activeElements.push(elem));

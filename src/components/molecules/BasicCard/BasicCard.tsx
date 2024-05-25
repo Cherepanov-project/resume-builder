@@ -1,7 +1,7 @@
 import { Card, CardMedia, CardContent, Typography, Button, CardActions } from '@mui/material';
 import { ArrowDropDown, ArrowDropUp } from '@mui/icons-material';
 import { useState } from 'react';
-import { useAppSellector } from '../../../hooks/cvTemplateHooks';
+import { useTypedSelector } from '../../../hooks/cvTemplateHooks';
 
 import classes from './BasicCard.module.scss';
 
@@ -25,7 +25,7 @@ export const BasicCard = () => {
     avatar,
     btnReadMore,
     heightImg,
-  } = useAppSellector((state) => state.card.style);
+  } = useTypedSelector((state) => state.card.style);
 
   const handleCutText = (text: string, limit = btnReadMoreLimit) => {
     text = text.trim();

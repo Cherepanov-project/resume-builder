@@ -1,5 +1,5 @@
 import Box from '@mui/material/Box';
-import { useAppSellector } from '@/hooks/cvTemplateHooks';
+import { useTypedSelector } from '@/hooks/cvTemplateHooks';
 import { styled } from '@mui/material/styles';
 import Rating from '@mui/material/Rating';
 import FavoriteIcon from '@mui/icons-material/Favorite';
@@ -10,7 +10,7 @@ type BasicRatingType = {
 
 const RatingSystem = ({props}: BasicRatingType) => {
 
-  const { gridContainers } = useAppSellector((state) => state.layout);
+  const { gridContainers } = useTypedSelector((state) => state.layout);
   const elements = gridContainers.find((el) =>
     el.elements.activeElements.filter((el) => el.name === 'RatingSystem'),
   );

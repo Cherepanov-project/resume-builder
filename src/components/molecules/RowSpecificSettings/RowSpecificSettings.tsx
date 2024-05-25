@@ -1,4 +1,4 @@
-import { useAppSellector } from '@/hooks/cvTemplateHooks';
+import { useTypedSelector } from '@/hooks/cvTemplateHooks';
 import { handleSettingsMenu } from '@/store/landingBuilder/sectionsManagerSlice';
 import { ArrowBackIosNewSharp, ExpandMore } from '@mui/icons-material';
 import { Accordion, AccordionDetails, AccordionSummary, Box, Button } from '@mui/material';
@@ -6,11 +6,11 @@ import { useEffect, useState } from 'react';
 import { useDispatch } from 'react-redux';
 
 const RowSpecificSettings = ({ setToggleMenu }) => {
-  const layoutDate = useAppSellector((state) => state.sectionsManager.layoutDate);
+  const layoutDate = useTypedSelector((state) => state.sectionsManager.layoutDate);
   const dispatch = useDispatch();
   const [showMore, setShowMore] = useState(false);
-  const id = useAppSellector((state) => state.sectionsManager.curId).split('')[0];
-  const curId = useAppSellector((state) => state.sectionsManager.curId);
+  const id = useTypedSelector((state) => state.sectionsManager.curId).split('')[0];
+  const curId = useTypedSelector((state) => state.sectionsManager.curId);
 
   useEffect(() => {
     setShowMore(false);

@@ -4,7 +4,7 @@ import { editRowDate, handleSettingsMenu } from '@/store/landingBuilder/sections
 
 import { memo, useEffect, useState } from 'react';
 import SectionsConstructorBlockElement from '@/components/atoms/SectionsConstructorBlockElement';
-import { useAppSellector } from '@/hooks/cvTemplateHooks';
+import { useTypedSelector } from '@/hooks/cvTemplateHooks';
 import { Box, SpeedDial, SpeedDialAction, SpeedDialIcon } from '@mui/material';
 import {
   AddSharp,
@@ -32,7 +32,7 @@ const SectionsConstructorRowEl: React.FC<SectionsConstructorRowElType> = ({
 }) => {
   const dispatch = useDispatch();
 
-  const layoutDate = useAppSellector((state) => state.sectionsManager.layoutDate);
+  const layoutDate = useTypedSelector((state) => state.sectionsManager.layoutDate);
   const layoutRow = layoutDate[row];
   const columns = layoutRow.length;
   const [gridLayoutStyle, setGridLayoutStyle] = useState({
@@ -143,7 +143,7 @@ const SectionsConstructorRowEl: React.FC<SectionsConstructorRowElType> = ({
   }, [columns, layoutRow]);
 
   // Обновление дисплея кнопок при переключении ряда
-  const id = useAppSellector((state) => state.sectionsManager.curId);
+  const id = useTypedSelector((state) => state.sectionsManager.curId);
   const r: string = String(row);
   useEffect(() => {
     if (r === id.split('')[0]) {

@@ -1,6 +1,6 @@
 import { lazy, memo, Suspense, useMemo } from 'react';
 import ResponsiveGridLayout, { Layout } from 'react-grid-layout';
-import { useAppSellector } from '@hooks/cvTemplateHooks.ts';
+import { useTypedSelector } from '@hooks/cvTemplateHooks.ts';
 
 import { DynamicComponentRendererProps, T_BlockElement } from '@/types/landingBuilder';
 import ComponentPreloader from '@atoms/ComponentPreloader';
@@ -39,9 +39,9 @@ const MemoDynamicComponentRenderer = memo(DynamicComponentRenderer);
 // ========================================================================== \\
 
 const PreviewSpace = () => {
-  const gridContainers = useAppSellector((state) => state.layout.gridContainers);
-  const previewSetting = useAppSellector((state) => state.utility.previewOpened);
-  const layoutDate = useAppSellector((state) => state.sectionsManager.layoutDate);
+  const gridContainers = useTypedSelector((state) => state.layout.gridContainers);
+  const previewSetting = useTypedSelector((state) => state.utility.previewOpened);
+  const layoutDate = useTypedSelector((state) => state.sectionsManager.layoutDate);
   // расчет координаты x элемента ( зависит от суммы w предыдущих в ряду )
   const calcX = (row: number, col: number) => {
     if (col !== 1) {

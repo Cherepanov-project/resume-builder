@@ -4,7 +4,7 @@ import {Box, Button, MenuItem, Select, InputLabel, FormControl, ButtonGroup, Pap
 import {buttonStyle} from '@/assets/style/buttonStyle';
 import {CvTemplatePDF} from '../CvTemplatePDF';
 import {useReactToPrint} from 'react-to-print';
-import {useAppSellector} from '../../hooks/cvTemplateHooks';
+import {useTypedSelector} from '../../hooks/cvTemplateHooks';
 import {
     AboutPDF,
     ContactsPDF,
@@ -63,7 +63,7 @@ class ErrorBoundary extends React.Component<Props, State> {
 const EditWithHeader: FC<IProps> = ({setChooseTemplate}) => {
     // eslint-disable-next-line @typescript-eslint/no-explicit-any
     const selectAllPersonaInfo = (state: { personalInfo: any }) => state.personalInfo;
-    const userTemporaryCvDataSlice = useAppSellector(selectAllPersonaInfo); // получение всех данных о резюме
+    const userTemporaryCvDataSlice = useTypedSelector(selectAllPersonaInfo); // получение всех данных о резюме
     // console.log(userTemporaryCvDataSlice);
 
     const style = templatePDFStyles.custom.style;
