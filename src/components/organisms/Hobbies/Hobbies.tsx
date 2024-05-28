@@ -1,7 +1,7 @@
 import { Box, Button } from '@mui/material';
-import BasicInput from '../../atoms/BasicInput';
+import BasicInput from '@atoms/BasicInput';
 import classes from './Hobbies.module.scss';
-import { buttonStyle } from '../../../assets/style/buttonStyle';
+import { buttonStyle } from '@assets/style/buttonStyle';
 
 import { useFormContext } from 'react-hook-form';
 import { useState } from 'react';

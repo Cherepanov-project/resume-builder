@@ -1,6 +1,6 @@
 import { Box, Stack } from '@mui/material';
-import BasicInput from '../../atoms/BasicInput';
-import BasicTextarea from '../../atoms/BasicTextarea';
+import BasicInput from '@atoms/BasicInput';
+import BasicTextarea from '@atoms/BasicTextarea';
 // import PortraitBox from '../../molecules/PortraitBox';
 import classes from './PersonalInfo.module.scss';
 

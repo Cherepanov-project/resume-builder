@@ -1,5 +1,5 @@
 //import { useAppDispatch } from '@/hooks/cvTemplateHooks';
-import { useAppDispatch, useAppSellector } from '@/hooks/cvTemplateHooks';
+import { useAppDispatch, useTypedSelector } from '@/hooks/cvTemplateHooks';
 import { setSectionStyle } from '@/store/landingBuilder/layoutSlice';
 import React, { useEffect, useLayoutEffect, useRef, useState } from 'react';
 import { HexColorPicker } from 'react-colorful';
@@ -24,7 +24,7 @@ const LayoutBlockModalSettings = () => {
   ]);
   const colorRef = useRef<HTMLDivElement>(null);
 
-  const { gridContainers } = useAppSellector((state) => state.layout);
+  const { gridContainers } = useTypedSelector((state) => state.layout);
   console.log(gridContainers);
   const elements = gridContainers.find((el) =>
     el.elements.activeElements.find((el) => el.name === 'ModalWindow'),

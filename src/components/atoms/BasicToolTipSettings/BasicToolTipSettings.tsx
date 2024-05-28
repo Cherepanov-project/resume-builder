@@ -1,6 +1,6 @@
 //import { useAppDispatch } from '@/hooks/cvTemplateHooks';
 import React from 'react';
-import { useAppDispatch, useAppSellector } from '@/hooks/cvTemplateHooks';
+import { useAppDispatch, useTypedSelector } from '@/hooks/cvTemplateHooks';
 import { setSectionStyle } from '@/store/landingBuilder/layoutSlice';
 import { useEffect } from 'react';
 import Box from '@mui/material/Box';
@@ -31,7 +31,7 @@ const BasicToolTipSettings: React.FC<IPropsToolTip> = ({ setElSize }) => {
 
   const [val, setVal] = React.useState<number>(MIN);
 
-  const { gridContainers } = useAppSellector((state) => state.layout);
+  const { gridContainers } = useTypedSelector((state) => state.layout);
   console.log(gridContainers);
   const elements = gridContainers.find((el) =>
     el.elements.activeElements.find((el) => el.name === 'RatingSystem'),

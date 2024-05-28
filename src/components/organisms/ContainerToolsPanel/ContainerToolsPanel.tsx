@@ -25,7 +25,7 @@ type ContainerToolsPanelProps = {
 
 const ContainerToolsPanel: React.FC<ContainerToolsPanelProps> = (id: ContainerToolsPanelProps) => {
   const dispatch = useAppDispatch();
-  // const currentContainer = useAppSellector((state) => state.layout.currentContainer);
+  // const currentContainer = useTypedSelector((state) => state.layout.currentContainer);
 
   // const handleSettings = () => {
   //   dispatch(initPanel({ type: 'section', sectionID: layout.i, moduleID: '0' }));

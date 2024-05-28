@@ -6,16 +6,16 @@ import { AddSharp, Close, EditSharp, RemoveSharp } from '@mui/icons-material/';
 
 import { setLayoutDate } from '@/store/landingBuilder/sectionsManagerSlice';
 
-import MemoizedSectionsConstructor from '@/components/molecules/SectionsConstructor';
-import { useAppSellector } from '@/hooks/cvTemplateHooks';
-import PreviewButtonsContainer from '@/components/molecules/PreviewButtonsContainer';
-import Item from '@/components/atoms/StyledPaperItem';
-import SectionsToolsPanel from '@/components/molecules/SectionsToolsPanel/SectionsToolsPanel';
-import ErrorPopup from '@/components/atoms/ErrorPopup';
+import MemoizedSectionsConstructor from '@molecules/SectionsConstructor';
+import { useTypedSelector } from '@/hooks/cvTemplateHooks';
+import PreviewButtonsContainer from '@molecules/PreviewButtonsContainer';
+import Item from '@atoms/StyledPaperItem';
+import SectionsToolsPanel from '@molecules/SectionsToolsPanel/SectionsToolsPanel';
+import ErrorPopup from '@atoms/ErrorPopup';
 
 const SectionsManager: FC = () => {
   const dispatch = useDispatch();
-  const layoutDate = useAppSellector((state) => state.sectionsManager.layoutDate);
+  const layoutDate = useTypedSelector((state) => state.sectionsManager.layoutDate);
   const rows = Object.keys(layoutDate).length;
   const [error, setError] = useState('');
   const [severity, setSeverity] = useState('warning');

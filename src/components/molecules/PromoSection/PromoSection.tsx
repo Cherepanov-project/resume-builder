@@ -1,6 +1,6 @@
-import DefaultButton from "../../atoms/DefaultButton";
+import DefaultButton from "@atoms/DefaultButton";
 
-import resumePreview from "../../../assets/images/resume-preview.png";
+import resumePreview from "@assets/images/resume-preview.png";
 
 import classes from "./PromoSection.module.scss";
 

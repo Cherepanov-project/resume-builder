@@ -3,9 +3,9 @@ import { Swiper, SwiperSlide } from 'swiper/react';
 import 'swiper/swiper-bundle.css';
 import classes from './Reviews.module.scss';
 import FormatQuoteIcon from '@mui/icons-material/FormatQuote';
-import r1 from '../../../../assets/images/templatesPageImage/1.jpg';
-import r2 from '../../../../assets/images/templatesPageImage/2.jpg';
-import r3 from '../../../../assets/images/templatesPageImage/3.jpg';
+import r1 from '@assets/images/templatesPageImage/1.jpg';
+import r2 from '@assets/images/templatesPageImage/2.jpg';
+import r3 from '@assets/images/templatesPageImage/3.jpg';
 import { Autoplay } from 'swiper/modules';
 
 const Reviews = () => {

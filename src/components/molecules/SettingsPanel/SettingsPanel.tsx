@@ -1,25 +1,25 @@
 import './SettingsPanel.scss';
 import CloseIcon from '@mui/icons-material/Close';
-import { useAppDispatch, useAppSellector } from '@/hooks/cvTemplateHooks';
+import { useAppDispatch, useTypedSelector } from '@/hooks/cvTemplateHooks';
 import { closePanel } from '@/store/landingBuilder/settingsPanelSlice';
 import React, { useEffect, useLayoutEffect, useRef, useState } from 'react';
-import ContainerDIVSettings from '@/components/atoms/ContainerDIVSettings';
+import ContainerDIVSettings from '@atoms/ContainerDIVSettings';
 import InputUpdate from '../InputUpdate';
-import ButtonsSettingsPanel from '@/components/atoms/ButtonsSettingsPanel';
+import ButtonsSettingsPanel from '@atoms/ButtonsSettingsPanel';
 import { IElementProps, ISettingsInputItem, T_BlockElement } from '@/types/landingBuilder';
 import SliderSettings from '../SliderSettings';
 import { Alert, Box, Typography } from '@mui/material';
-import BasicRatingSettings from '@/components/atoms/BasicRatingSettings';
-import BasicToolTipSettings from '@/components/atoms/BasicToolTipSettings';
-import LayoutBlockButtonSettings from '@/components/atoms/LayoutBlockButtonSettings';
-import LayoutBlockModalSettings from '@/components/atoms/LayoutBlockModalSettings';
+import BasicRatingSettings from '@atoms/BasicRatingSettings';
+import BasicToolTipSettings from '@atoms/BasicToolTipSettings';
+import LayoutBlockButtonSettings from '@atoms/LayoutBlockButtonSettings';
+import LayoutBlockModalSettings from '@atoms/LayoutBlockModalSettings';
 
 const SettingsPanel: React.FC = () => {
   const dispatch = useAppDispatch();
 
-  const isShown = useAppSellector((state) => state.settingsPanel.shown);
-  const { type } = useAppSellector((state) => state.settingsPanel);
-  const id = useAppSellector((state) => state.settingsPanel.sectionID);
+  const isShown = useTypedSelector((state) => state.settingsPanel.shown);
+  const { type } = useTypedSelector((state) => state.settingsPanel);
+  const id = useTypedSelector((state) => state.settingsPanel.sectionID);
 
   const panelRef = useRef<HTMLDivElement>(null);
 
@@ -42,7 +42,7 @@ const SettingsPanel: React.FC = () => {
     dispatch(closePanel());
   };
 
-  const { gridContainers } = useAppSellector((state) => state.layout);
+  const { gridContainers } = useTypedSelector((state) => state.layout);
   const activeElements: T_BlockElement[] = [];
   for (let i = 0; i < gridContainers?.length; i++) {
     gridContainers[i].elements.activeElements.forEach((elem) => activeElements.push(elem));

@@ -1,4 +1,4 @@
-import DefaultButton from "../../atoms/DefaultButton";
+import DefaultButton from "@atoms/DefaultButton";
 
 import classes from "./LoginButtonsContainer.module.scss"
 

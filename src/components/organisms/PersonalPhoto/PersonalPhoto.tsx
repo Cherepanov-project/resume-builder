@@ -1,11 +1,11 @@
 import React, { useState } from 'react';
 
 import placeholderImage from './placeholder.jpg';
-import { buttonStyle } from '../../../assets/style/buttonStyle';
+import { buttonStyle } from '@assets/style/buttonStyle';
 import classes from './PersonalPhoto.module.scss';
-import { BasicImageUpload } from '../../atoms/BasicImageUpload';
+import { BasicImageUpload } from '@atoms/BasicImageUpload';
 import { Box } from '@mui/material';
-import { addPersonalPhoto } from '../../../store/cvTemplate/allPersonaInfoSlice';
+import { addPersonalPhoto } from '@store/cvTemplate/allPersonaInfoSlice';
 import { useDispatch, useSelector } from 'react-redux';
 
 type TAvatarState = {

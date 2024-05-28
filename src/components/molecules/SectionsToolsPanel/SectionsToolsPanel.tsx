@@ -6,13 +6,13 @@ import { useState } from 'react';
 import { T_BlockElement, T_SectionElements } from '@/types/landingBuilder';
 import { handleSettingsMenu, setLayoutDate } from '@/store/landingBuilder/sectionsManagerSlice';
 import { useDispatch } from 'react-redux';
-import { useAppSellector } from '@/hooks/cvTemplateHooks';
+import { useTypedSelector } from '@/hooks/cvTemplateHooks';
 
 const SectionsToolsPanel = ({ setError, setSeverity }) => {
   const [name, setName] = useState('');
   const [type, setType] = useState('Headers');
   const dispatch = useDispatch();
-  const layoutDate = useAppSellector((state) => state.sectionsManager.layoutDate);
+  const layoutDate = useTypedSelector((state) => state.sectionsManager.layoutDate);
   const rows = Object.keys(layoutDate).length;
   // Сохранение необходимых параметров для отображения секции в конструкторе
   const submitSection = () => {
