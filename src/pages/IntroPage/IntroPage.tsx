@@ -1,4 +1,4 @@
-import IntroPageSection from '@/components/molecules/IntroPageSection';
+import IntroPageSection from '@molecules/IntroPageSection';
 import { Container, Box, Typography } from '@mui/material';
 
 const IntroPage = () => {

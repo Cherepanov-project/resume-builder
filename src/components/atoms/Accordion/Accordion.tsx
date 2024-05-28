@@ -3,7 +3,7 @@ import { useEffect, useState } from 'react';
 
 import style from './Accordion.module.scss';
 import { nanoid } from 'nanoid';
-import { useAppSellector } from '@/hooks/cvTemplateHooks';
+import { useTypedSelector } from '@/hooks/cvTemplateHooks';
 // import { useAppDispatch } from '@/hooks/cvTemplateHooks';
 // import { editRowDate } from '../../../store/landingBuilder/sectionsManagerSlice';
 type StyleType = {
@@ -16,8 +16,8 @@ const Accordion: React.FC<ILayoutBlock> = ({ props }) => {
   const [accordion, setAccordion] = useState<AccordionData>(props.accordion || []);
   const [activeIndexes, setActiveIndexes] = useState<number[]>([]); // Массив активных индексов
   // const dispatch = useAppDispatch();
-  const layoutDate = useAppSellector((state) => state.sectionsManager.layoutDate);
-  const id: string = useAppSellector((state) => state.sectionsManager.curId);
+  const layoutDate = useTypedSelector((state) => state.sectionsManager.layoutDate);
+  const id: string = useTypedSelector((state) => state.sectionsManager.curId);
 
   let [r, w] = String(id).split('');
   let row: number = Number(r);

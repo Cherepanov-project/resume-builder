@@ -6,12 +6,12 @@ import {
   FormatAlignCenter,
 } from '@mui/icons-material';
 import { useState, useEffect, ChangeEvent, SetStateAction } from 'react';
-import { useAppDispatch } from '../../../hooks/cvTemplateHooks';
-import { addCard } from '../../../store/cardSlice';
-import { BasicSelectWeight } from '../../atoms/BasicSelectWeight';
-import { BasicImageUpload } from '../../atoms/BasicImageUpload';
-import { BasicCardMenuField } from '../../atoms/BasicCardMenuField';
-import { BasicSwitch } from '../../atoms/BasicSwitch';
+import { useAppDispatch } from '@hooks/cvTemplateHooks';
+import { addCard } from '@store/cardSlice';
+import { BasicSelectWeight } from '@atoms/BasicSelectWeight';
+import { BasicImageUpload } from '@atoms/BasicImageUpload';
+import { BasicCardMenuField } from '@atoms/BasicCardMenuField';
+import { BasicSwitch } from '@atoms/BasicSwitch';
 
 import classes from './BasicCardMenu.module.scss';
 

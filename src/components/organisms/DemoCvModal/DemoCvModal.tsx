@@ -1,8 +1,8 @@
 import React, { useCallback, useRef } from 'react';
 import ReactToPrint from 'react-to-print';
 
-import { Modal } from '../../atoms/Modal';
-import { ComponentToPrint } from '../../atoms/ComponentToPrint';
+import { Modal } from '@atoms/Modal';
+import { ComponentToPrint } from '@atoms/ComponentToPrint';
 
 interface DemoCvModalProps {
   content?: React.ReactElement;

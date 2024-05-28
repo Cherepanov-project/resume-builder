@@ -1,4 +1,4 @@
-import SwiperPreview from '@/components/atoms/SwiperPreview';
+import SwiperPreview from '@atoms/SwiperPreview';
 import { swiperPresets } from '@/utils';
 
 const SwiperPresetList = () => {

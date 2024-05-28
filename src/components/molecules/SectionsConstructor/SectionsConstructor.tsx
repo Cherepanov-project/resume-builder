@@ -1,5 +1,5 @@
 import MemoizedConstructorRowEl from '../SectionsConstructorRowEl';
-import { useAppSellector } from '@/hooks/cvTemplateHooks';
+import { useTypedSelector } from '@/hooks/cvTemplateHooks';
 import { memo } from 'react';
 import { Box } from '@mui/material';
 
@@ -9,7 +9,7 @@ type SectionsConstructorType = {
 };
 
 const SectionsConstructor: React.FC<SectionsConstructorType> = ({ setError, setSeverity }) => {
-  const rowsArr = Object.keys(useAppSellector((state) => state.sectionsManager.layoutDate));
+  const rowsArr = Object.keys(useTypedSelector((state) => state.sectionsManager.layoutDate));
   // отображение рядов секции
   const rowEls = () => {
     // console.log('arr', rowsArr);

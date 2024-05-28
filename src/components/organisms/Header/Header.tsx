@@ -1,5 +1,5 @@
-import HeaderNav from '../../molecules/HeaderNav';
-import LoginButtonsContainer from '../../molecules/LoginButtonsContainer';
+import HeaderNav from '@molecules/HeaderNav';
+import LoginButtonsContainer from '@molecules/LoginButtonsContainer';
 import PreviewButtonsContainer from '@molecules/PreviewButtonsContainer';
 
 import classes from './Header.module.scss';

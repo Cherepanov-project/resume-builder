@@ -1,7 +1,7 @@
 import { Box, Stack } from '@mui/material';
-import BasicInput from '../../atoms/BasicInput';
-import BasicDatePicker from '../../atoms/BasicDatePicker';
-import BasicTextarea from '../../atoms/BasicTextarea';
+import BasicInput from '@atoms/BasicInput';
+import BasicDatePicker from '@atoms/BasicDatePicker';
+import BasicTextarea from '@atoms/BasicTextarea';
 import classes from './ExperienceForm.module.scss';
 
 interface EducationFormProps {

@@ -1,7 +1,7 @@
 import classes from './Experience.module.scss';
 import { Button, Box } from '@mui/material';
-import ExperienceForm from '../../molecules/ExperienceForm';
-import { buttonStyle } from '../../../assets/style/buttonStyle';
+import ExperienceForm from '@molecules/ExperienceForm';
+import { buttonStyle } from '@assets/style/buttonStyle';
 
 import AccordionSummary from '@mui/material/AccordionSummary';
 import AccordionDetails from '@mui/material/AccordionDetails';

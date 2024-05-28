@@ -1,8 +1,8 @@
 import { useNavigate } from 'react-router-dom';
-import logo from '../../assets/images/quickly_Logo.png';
+import logo from '@assets/images/quickly_Logo.png';
 import { Box, Button, Container, Typography, Icon } from '@mui/material';
 
-import decoration from '../../assets/images/starterPage/button_decoration.svg';
+import decoration from '@assets/images/starterPage/button_decoration.svg';
 
 const StarterPage = () => {
   const navigate = useNavigate();

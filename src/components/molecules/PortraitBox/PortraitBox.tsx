@@ -1,6 +1,6 @@
 import Stack from '@mui/material/Stack';
 import Button from '@mui/material/Button';
-import avatar from '../../../assets/images/avatar.png';
+import avatar from '@assets/images/avatar.png';
 import classes from './PortraitBox.module.scss';
 import { Typography } from '@mui/material';
 import { useFormContext } from 'react-hook-form';

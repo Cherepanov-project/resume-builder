@@ -1,4 +1,4 @@
-import resumePreview from "../../../assets/images/resume-preview.png";
+import resumePreview from "@assets/images/resume-preview.png";
 
 import classes from "./Slide.module.scss";
 

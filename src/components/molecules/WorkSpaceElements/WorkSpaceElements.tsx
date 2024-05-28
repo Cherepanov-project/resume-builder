@@ -1,6 +1,6 @@
 import { FC } from 'react';
 import { Button } from '@mui/material';
-import { IElement } from '../../../types/landingBuilder';
+import { IElement } from '@/types/landingBuilder';
 
 interface IWorkSpaceElementsProps {
   elements: IElement[];

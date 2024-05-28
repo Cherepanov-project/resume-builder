@@ -2,7 +2,7 @@ import { lazy, Suspense, useRef, useEffect, useState, ComponentType } from 'reac
 import ResponsiveGridLayout, { Layout } from 'react-grid-layout';
 
 import { addElement } from '@/store/landingBuilder/layoutSlice';
-import { useAppDispatch, useAppSellector } from '@hooks/cvTemplateHooks';
+import { useAppDispatch, useTypedSelector } from '@hooks/cvTemplateHooks';
 import ComponentPreloader from '@components/atoms/ComponentPreloader';
 import {
   ContainerDIVProps,
@@ -59,7 +59,7 @@ const ContainerDIV: React.FC<ContainerDIVProps> = ({ children, layout, columns, 
   const dispatch = useAppDispatch();
   const containerRef = useRef(null);
   const [width, setWidth] = useState(0);
-  const draggableItem = useAppSellector((state) => state.layout.currentDraggableItem);
+  const draggableItem = useTypedSelector((state) => state.layout.currentDraggableItem);
 
 
   useEffect(() => {
