@@ -19,8 +19,8 @@ import {
   // TextField,
 } from '@mui/material';
 import { ExpandMore } from '@mui/icons-material';
-import Item from '@/components/atoms/StyledPaperItem';
-import ElementSpecificSettingsForm from '@components/molecules/ElementSpecificSettingsForm'
+import Item from '@atoms/StyledPaperItem';
+import ElementSpecificSettingsForm from '@molecules/ElementSpecificSettingsForm'
 import { getLabel } from '@/utils/labelUtils';
 
 const ElementSpecificSettings = () => {

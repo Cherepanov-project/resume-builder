@@ -8,7 +8,7 @@ import {
   TextField,
   SelectChangeEvent,
 } from '@mui/material'
-import Item from '@/components/atoms/StyledPaperItem';
+import Item from '@atoms/StyledPaperItem';
 
 type AccordionData = Array<[string, string]>
 
