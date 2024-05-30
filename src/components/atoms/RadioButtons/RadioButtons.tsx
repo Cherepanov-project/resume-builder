@@ -19,7 +19,7 @@ const RadioButtons = ({ props, layout }: IElementsProps) => {
   });
 
   return (
-    <MuiRadioGroup aria-labelledby="radio-buttons-group" name="radio-buttons-group">
+    <MuiRadioGroup style={props.style} className={classes.wrapper} aria-labelledby="radio-buttons-group" name="radio-buttons-group">
       {currentList.map((item: ISettingsInputItem) => (
         <FormControlLabel
           key={item.id}

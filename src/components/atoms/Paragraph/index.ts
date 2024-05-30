@@ -10,9 +10,9 @@ export const props: T_BlockElement = {
   props: {
     key: 'paragraph',
     text: 'You can create awesome and powerful landing pages with megapack and pixfort builder.',
-    wrapperStyle: { textAlign: 'center' },
-    textStyle: { fontSize: '16px', margin: '0px' },
-    inputStyle: { width: '100%', border: 'none' },
+    wrapperStyle: { height: 'calc(100% - 37px)'},
+    textStyle: { color: 'black', letterSpacing: '1px', textAlign: 'center', fontSize: '20px'},
+    inputStyle: { width: '100%', border: 'none', margin: '0' },
     style: { backgroundColor: '', color: '', border: '', text: '' },
   },
   layout: { i: '', x: 0, y: 0, w: 2, h: 4 },

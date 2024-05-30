@@ -311,7 +311,7 @@ const layoutSlice = createSlice({
           }
           // Находим индекс элемента внутри children, если elementId определен
           let elIndx: number | undefined;
-          // console.log('action.payload.elementId ', action.payload.elementId);
+
           if (action.payload.elementId) {
             const element = container.elements.activeElements[indx];
             if (element && element.children) {
@@ -324,7 +324,6 @@ const layoutSlice = createSlice({
           // Если нашли индекс элемента внутри children, уменьшаем его ширину
           if (elIndx !== undefined) {
             const element = container.elements.activeElements[indx];
-            console.log('element.children![elIndx].layout.w ', element.children![elIndx].layout.w);
             element.children![elIndx].layout.w += 1;
           } else {
             // Иначе уменьшаем ширину самого элемента
@@ -351,7 +350,7 @@ const layoutSlice = createSlice({
           }
           // Находим индекс элемента внутри children, если elementId определен
           let elIndx: number | undefined;
-          // console.log('action.payload.elementId ', action.payload.elementId);
+
           if (action.payload.elementId) {
             const element = container.elements.activeElements[indx];
             if (element && element.children) {
@@ -387,13 +386,13 @@ const layoutSlice = createSlice({
               state.gridContainers[i].elements.activeElements[index] = {
                 ...el,
                 props: {
+                  ...el.props,
                   style: {
-                    ...action.payload.style,
+                    ...el.props.style,
                   },
-                  key: '',
-                  text: '',
-                  wrapperStyle: { '': '' },
-                  textStyle: { '': '' },
+                  text: el.props.text,
+                  wrapperStyle: { ...el.props.wrapperStyle, ...action.payload.wrapperStyle},
+                  textStyle: { ...action.payload.textStyle },
                 },
               };
             }
@@ -403,7 +402,7 @@ const layoutSlice = createSlice({
     },
     setProps(state, action) {
       const containerID = state.currentContainer;
-      // console.log('h', action.payload)
+
       state.gridContainers.forEach((container, i) => {
         if (container.id === containerID) {
           container.elements.activeElements.forEach((el, index) => {
@@ -411,16 +410,23 @@ const layoutSlice = createSlice({
               state.gridContainers[i].elements.activeElements[index] = {
                 ...el,
                 props: {
+                  ...el.props,
                   [el.name]: [...action.payload.values],
-                  text: '',
                   size: action.payload.size === 0 ? 1 : action.payload.size,
-                  style: action.payload.style,
+                  style:{
+                    ...el.props.style,
+                    ...action.payload.style
+                  },
+                  textStyle: {
+                    ...el.props.textStyle,
+                    ...action.payload.textStyle
+                  },
                 },
               };
             } else if (el.children && el.children.length > 0) {
               el.children.forEach((child, indx) =>  {
                 if (child.layout.i === action.payload.id) {
-                  // console.log('he')
+
                   state.gridContainers[i].elements.activeElements[index].children![indx] = {
                     ...child,
                     props: {

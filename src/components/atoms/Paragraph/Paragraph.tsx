@@ -22,12 +22,12 @@ const Paragraph: React.FC<ILayoutBlock> = ({ props }) => {
   };
 
   return (
-    <div style={props.wrapperStyle}>
-      <p style={props.textStyle} onDoubleClick={handleDoubleClick}>
+    <div style={{ ...props.wrapperStyle, ...props.style }}>
+      <p style={{...props.textStyle, ...props.inputStyle}} onDoubleClick={handleDoubleClick}>
         {isEdit ? (
           <input
             type="text"
-            style={{ ...props.textStyle, ...props.inputStyle }}
+            style={{ ...props.textStyle}}
             value={text}
             onChange={handleChange}
             onKeyDown={handleSubmit}

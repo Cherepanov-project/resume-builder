@@ -34,8 +34,8 @@ const CardItem: React.FC<ILayoutBlock> = ({ props }) => {
     ...props?.wrapperStyle,
     display: 'flex',
     alignItems: 'center',
-    justifyContent: 'center',
-    height: '100%',
+    justifyContent: 'start',
+    height: 'calc(100% - 37px)',
     flexDirection: 'column',
     backgroundSize: 'contain',
     width: 'auto',
@@ -52,7 +52,7 @@ const CardItem: React.FC<ILayoutBlock> = ({ props }) => {
 
   const content = () => {
     return (
-      <div className={styles[`cardItem`]}>
+      <div style={props.style} className={styles[`cardItem`]}>
         {stringFields.imgUrl ? <img className={styles[`cardItem__img`]} src={stringFields.imgUrl} alt={stringFields.title} /> : null}
         <p className={styles[`cardItem__title`]}>{stringFields.title}</p>
         <p className={styles[`cardItem__description`]}>{stringFields.description}</p>

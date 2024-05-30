@@ -12,4 +12,9 @@ div .settings-panel__bgcolor .rating {
 
 .text-form>input {
     padding-left: 10px;
+    border-radius: 5px;
+    border: 1px solid rgba(72, 169, 72, 0.6);
+    &:hover{
+        border: 2px solid rgba(17, 69, 17, 0.6);
+    }
 }

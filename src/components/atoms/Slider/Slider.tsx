@@ -36,7 +36,7 @@ const Slider: FC<ILayoutBlock> = ({ props }) => {
   }, [presetName]);
 
   return (
-    <div className={classes['slider-global']}>{swiperInitialization(currentPreset.params)}</div>
+    <div style={props.style} className={classes['slider-global']}>{swiperInitialization(currentPreset.params)}</div>
   );
 };
 
