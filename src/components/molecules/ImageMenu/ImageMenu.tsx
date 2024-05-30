@@ -1,6 +1,6 @@
 import { useState, useEffect, useRef } from 'react';
 import './ImageMenu.scss';
-import { useAppDispatch, useAppSellector } from '@/hooks/cvTemplateHooks';
+import { useAppDispatch, useTypedSelector } from '@/hooks/cvTemplateHooks';
 import { closeImageMenu } from '@/store/landingBuilder/settingsPanelSlice';
 
 type listItemType = { [key: string]: string };
@@ -8,7 +8,7 @@ type listItemType = { [key: string]: string };
 const ImageMenu = () => {
   const dispatch = useAppDispatch();
 
-  const isShown = useAppSellector((state) => state.settingsPanel.imageMenu);
+  const isShown = useTypedSelector((state) => state.settingsPanel.imageMenu);
 
   const [list, setList] = useState<listItemType[]>([]);
   const [curItem, setCurItem] = useState({ url: '', alt: 'Image Alternative' });

@@ -1,7 +1,7 @@
-import {temporaryCvDataSlice} from '../../assets/const';
+import {temporaryCvDataSlice} from '@assets/const';
 import {renderTemplatePDF} from './lib';
 
-import {useAppSellector} from '../../hooks/cvTemplateHooks';
+import {useTypedSelector} from '@hooks/cvTemplateHooks';
 import {Paper} from '@mui/material';
 import React from 'react';
 import {StylesNameKeys} from './const';
@@ -11,7 +11,7 @@ const selectAllPersonaInfo = (state: { personalInfo: any }) => state.personalInf
 
 export const CvTemplatePDF = React.forwardRef<HTMLDivElement, { styleName: StylesNameKeys }>(
     ({styleName}, ref = null) => {
-        const userTemporaryCvDataSlice = useAppSellector(selectAllPersonaInfo);
+        const userTemporaryCvDataSlice = useTypedSelector(selectAllPersonaInfo);
         let newData = userTemporaryCvDataSlice;
         if (userTemporaryCvDataSlice.personalData.fullName === '') {
             newData = temporaryCvDataSlice;

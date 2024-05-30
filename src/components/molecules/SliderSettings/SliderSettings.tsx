@@ -4,7 +4,7 @@ import classes from './SliderSettings.module.scss';
 import { nanoid } from 'nanoid';
 import { ISettingsInputUpdateProps } from '@/types/landingBuilder';
 import SwiperPresetList from '../SwiperPresetList/SwiperPresetList';
-import AddImageLinkInput from '@/components/atoms/AddImageLinkInput';
+import AddImageLinkInput from '@atoms/AddImageLinkInput';
 
 const SliderSettings = ({ itemsList, setItemsList }: ISettingsInputUpdateProps) => {
   const formItemLayout = {

@@ -1,5 +1,5 @@
 import { Box } from '@mui/material';
-import BasicInput from '../../atoms/BasicInput';
+import BasicInput from '@atoms/BasicInput';
 
 type SocialFormProps = {
   fieldName?: string;

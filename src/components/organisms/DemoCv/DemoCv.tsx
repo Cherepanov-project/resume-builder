@@ -2,7 +2,7 @@ import { useCallback, useState } from 'react';
 import Button from '@mui/material/Button';
 
 import { DemoCvModal } from '../DemoCvModal';
-import { buttonStyle } from '../../../assets/style/buttonStyle';
+import { buttonStyle } from '@assets/style/buttonStyle';
 
 import classes from './DemoCv.module.scss';
 

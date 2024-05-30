@@ -1,5 +1,5 @@
 //import { useAppDispatch } from '@/hooks/cvTemplateHooks';
-import { useAppDispatch, useAppSellector } from '@/hooks/cvTemplateHooks';
+import { useAppDispatch, useTypedSelector } from '@/hooks/cvTemplateHooks';
 import { setSectionStyle } from '@/store/landingBuilder/layoutSlice';
 import { useEffect, useLayoutEffect, useRef, useState } from 'react';
 import { HexColorPicker } from 'react-colorful';
@@ -18,7 +18,7 @@ const BasicRatingSettings: React.FC<IProps> = ({ setColorCSS }) => {
 
   const colorRef = useRef<HTMLDivElement>(null);
 
-  const { gridContainers } = useAppSellector((state) => state.layout);
+  const { gridContainers } = useTypedSelector((state) => state.layout);
   const elements = gridContainers.find((el) =>
     el.elements.activeElements.filter((el) => el.name === 'RatingSystem'),
   );

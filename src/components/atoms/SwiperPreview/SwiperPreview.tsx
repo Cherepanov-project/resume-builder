@@ -2,11 +2,11 @@ import { Swiper, SwiperSlide } from 'swiper/react';
 import { Autoplay } from 'swiper/modules';
 import { changeStyle } from '@/store/landingBuilder/swiperSlice';
 import classes from './SwiperPreview.module.scss';
-import { useAppDispatch, useAppSellector } from '@/hooks/cvTemplateHooks';
+import { useAppDispatch, useTypedSelector } from '@/hooks/cvTemplateHooks';
 import { Checkbox } from 'antd';
 
 const SwiperPreview = ({ params, name }: { params: object; name: string }) => {
-  const storedName = useAppSellector((state) => state.swiper.presetName);
+  const storedName = useTypedSelector((state) => state.swiper.presetName);
   const dispatch = useAppDispatch();
   const check = name === storedName;
   const checkHandler = () => {

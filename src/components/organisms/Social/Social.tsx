@@ -1,6 +1,6 @@
 import { Box, Button } from '@mui/material';
-import SocialForm from '../../molecules/SocialForm';
-import { buttonStyle } from '../../../assets/style/buttonStyle';
+import SocialForm from '@molecules/SocialForm';
+import { buttonStyle } from '@assets/style/buttonStyle';
 
 import Accordion from '@mui/material/Accordion';
 import AccordionSummary from '@mui/material/AccordionSummary';
