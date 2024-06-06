@@ -132,11 +132,11 @@ export type ITextSettingProps = {
     setTextStyle: React.Dispatch<React.SetStateAction<object>>,
 }
 export interface ISettingsInputItem {
-  id: string;
-  value?: string | number;
-  img?: string | number;
+  id?: string;
+  value?: string | undefined;
+  img?: string | undefined;
   title?: string | number;
-  style: React.CSSProperties | undefined,
+  style?: React.CSSProperties | undefined,
 }
 
 export type T_Id = string;
@@ -229,7 +229,7 @@ export type T_SectionElementProps = {
     border?: string;
   };
   props?: {
-    [key: string]: string | object;
+    [key: string]: string & object;
   };
   imgUrl?: string;
   buttonText?: string;
