@@ -132,7 +132,7 @@ export type ITextSettingProps = {
     setTextStyle: React.Dispatch<React.SetStateAction<object>>,
 }
 export interface ISettingsInputItem {
-  id?: string;
+  id?: string | undefined;
   value?: string | undefined;
   img?: string | undefined;
   title?: string | number;
