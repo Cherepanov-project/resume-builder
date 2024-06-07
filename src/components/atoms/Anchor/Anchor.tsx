@@ -24,13 +24,7 @@ const Anchor: React.FC<ILayoutBlock> = ({ props }) => {
     display: 'flex',
     alignItems: 'center',
     justifyContent: 'center',
-    height: '100%',
     flexDirection: 'column',
-  };
-
-  const textStyle = {
-    ...props.textStyle,
-    fontSize: fs,
   };
 
   const handleText: (e: React.ChangeEvent<HTMLInputElement>) => void = (e) => {
@@ -92,14 +86,14 @@ const Anchor: React.FC<ILayoutBlock> = ({ props }) => {
 
   const content = () => {
     return (
-      <a href={url} style={textStyle} onContextMenu={(e) => handleDoubleClick(e)}>
+      <a href={url} style={props.textStyle} onContextMenu={(e) => handleDoubleClick(e)}>
         {text}
       </a>
     );
   };
 
   return (
-    <div style={wrapperStyle}>
+    <div style={{...props.style, ...wrapperStyle}}>
       {isEditing && inputPannel()}
       {!isEditing && content()}
     </div>

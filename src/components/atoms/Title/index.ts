@@ -10,9 +10,9 @@ export const props: T_BlockElement = {
   props: {
     key: 'title',
     text: 'Default Title',
-    wrapperStyle: {},
-    textStyle: { textAlign: 'center', fontSize: '30px' },
-    inputStyle: { width: '100%', border: 'none', fontWeight: 'bold' },
+    wrapperStyle: { height: 'calc(100% - 37px)'},
+    textStyle: { color: 'black', letterSpacing: '1px', textAlign: 'center', fontSize: '20px'  },
+    inputStyle: { width: '100%', border: 'none', fontWeight: 'bold', margin: '0', },
     style: { backgroundColor: '', color: '', border: '', text: '' },
   },
   children: [],

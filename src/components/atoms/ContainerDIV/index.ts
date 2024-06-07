@@ -10,6 +10,7 @@ export const props = {
       backgroundColor: 'white',
       display: 'flex', 
       flexDirection: 'row',
+      height: 'calc(100% - 37px)'
     },
   },
   children: [],

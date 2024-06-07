@@ -16,7 +16,7 @@ import classes from './SideBar.module.scss';
 
 const SideBar: React.FC = () => {
   const [currentTab, setCurrentTab] = useState(0);
-  const [isActiveTab, setSctiveTab] = useState(false);
+  const [isActiveTab, setSctiveTab] = useState(true);
   const [sidebarMenuList, setSidebarMenuList] = useState({});
   const sideMenuTabs = ['Sections', 'Elements', 'Templates', 'Manage'];
   const tabsIcons = [<DashboardIcon />, <ExtensionIcon />, <ViewCarouselIcon />, <Settings />];

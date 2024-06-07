@@ -4,14 +4,15 @@ import { useEffect, useLayoutEffect, useRef, useState } from 'react';
 import { HexColorPicker } from 'react-colorful';
 
 interface IProps {
-  setStyle: React.Dispatch<React.SetStateAction<React.CSSProperties>>;
+  setStyle: React.Dispatch<React.SetStateAction<React.CSSProperties>>,
+  backgroundColor: string | undefined,   
 }
 
-const ContainerDIVSettings: React.FC<IProps> = ({ setStyle }) => {
+const ContainerDIVSettings: React.FC<IProps> = ({backgroundColor, setStyle }) => {
   const dispatch = useAppDispatch();
 
   const [image, setImage] = useState('Input URL');
-  const [color, setColor] = useState('#fff');
+  const [color, setColor] = useState(backgroundColor ? backgroundColor : '#ffffff');
   const [colorOpen, setColorOpen] = useState(false);
 
   const colorRef = useRef<HTMLDivElement>(null);

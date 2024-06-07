@@ -22,7 +22,7 @@ const Title: React.FC<ILayoutBlock> = ({ props }) => {
   };
 
   return (
-    <div style={props.wrapperStyle}>
+    <div style={{...props.style, ...props.wrapperStyle}}>
       {isEdit ? (
         <input
           type="text"
@@ -34,7 +34,7 @@ const Title: React.FC<ILayoutBlock> = ({ props }) => {
           onFocus={(e) => e.target.select()}
         />
       ) : (
-        <h1 style={props.textStyle} onDoubleClick={handleDoubleClick}>
+        <h1 style={{...props.textStyle, ...props.inputStyle}} onDoubleClick={handleDoubleClick}>
           {text}
         </h1>
       )}

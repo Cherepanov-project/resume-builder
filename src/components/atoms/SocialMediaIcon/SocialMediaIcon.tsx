@@ -22,7 +22,7 @@ const SocialMediaIcon: React.FC<ILayoutBlock> = ({ props }) => {
     display: 'flex',
     alignItems: 'center',
     justifyContent: 'center',
-    height: '100%',
+    height: 'calc(100% - 37px)',
     flexDirection: 'column',
     backgroundSize: 'contain',
     width: 'auto',
@@ -95,7 +95,7 @@ const SocialMediaIcon: React.FC<ILayoutBlock> = ({ props }) => {
   };
 
   return (
-    <div style={wrapperStyle}>
+    <div style={{ ...props.style, ...wrapperStyle}}>
       {isEditing && inputPannel()}
       {!isEditing && content()}
     </div>

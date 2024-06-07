@@ -117,21 +117,33 @@ export type DynamicBlockProps = {
 export type TitleH1Props = {
   props: {
     text: string;
+    textStyle: {
+      textSize: string,
+      color: string,
+    }
   };
 };
-
+export type TextSettingsProps = {
+  index: string | undefined,
+  textStyle: React.CSSProperties | undefined,
+}
+export type ITextSettingProps = {
+    textStyle: object,
+    setTextStyle: React.Dispatch<React.SetStateAction<object>>,
+}
 export interface ISettingsInputItem {
-  id: string;
-  value?: string | number;
-  img?: string | number;
+  id?: string | undefined;
+  value?: string | undefined;
+  img?: string | undefined;
   title?: string | number;
+  style?: React.CSSProperties | undefined,
 }
 
 export type T_Id = string;
 export type T_Value = string | number;
 
 export interface IElementsProps {
-  props: { [key: string]: ISettingsInputItem[] };
+  props: ISettingsInputItem & { [key: string]: ISettingsInputItem[] };
   layout: Layout;
 }
 
@@ -200,7 +212,9 @@ export type T_SectionElements = {
 };
 
 export type T_SectionElementProps = {
+  name?: string;
   key?: string;
+  index?: string;
   title?: string;
   description?: string;
   text: string;
@@ -209,13 +223,13 @@ export type T_SectionElementProps = {
   inputStyle?: { [key: string]: string };
   url?: string;
   style: {
-    backgroundColor: string;
-    text: string;
-    color: string;
-    border: string;
+    backgroundColor?: string;
+    text?: string;
+    color?: string;
+    border?: string;
   };
   props?: {
-    [key: string]: string;
+    [key: string]: string & object;
   };
   imgUrl?: string;
   buttonText?: string;

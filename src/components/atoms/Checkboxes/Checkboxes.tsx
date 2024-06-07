@@ -17,14 +17,16 @@ const Checkboxes = ({ props, layout }: IElementsProps) => {
       dispatch(setProps(firstItem));
     }
   });
-  console.log('pr', props);
+
   return currentList.map((item: ISettingsInputItem) => (
-    <FormControlLabel
-      key={item.id}
-      className={classes.container}
-      control={<Checkbox size="small" className={classes.checkbox} />}
-      label={<Typography className={classes.label}>{item.value ? item.value : 'Text'}</Typography>}
-    />
+    <div style={props.style} className={classes.wrapper}>
+      <FormControlLabel
+        key={item.id}
+        className={classes.container}
+        control={<Checkbox size="small" className={classes.checkbox} />}
+        label={<Typography className={classes.label}>{item.value ? item.value : 'Text'}</Typography>}
+      />
+    </div>
   ));
 };
 

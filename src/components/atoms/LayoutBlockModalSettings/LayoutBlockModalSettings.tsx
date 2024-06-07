@@ -25,10 +25,11 @@ const LayoutBlockModalSettings = () => {
   const colorRef = useRef<HTMLDivElement>(null);
 
   const { gridContainers } = useTypedSelector((state) => state.layout);
-  console.log(gridContainers);
+
   const elements = gridContainers.find((el) =>
     el.elements.activeElements.find((el) => el.name === 'ModalWindow'),
   );
+
   const layout = elements?.layout.i;
 
   useLayoutEffect(() => {

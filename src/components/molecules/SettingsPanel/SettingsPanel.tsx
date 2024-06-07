@@ -9,10 +9,11 @@ import ButtonsSettingsPanel from '@atoms/ButtonsSettingsPanel';
 import { IElementProps, ISettingsInputItem, T_BlockElement } from '@/types/landingBuilder';
 import SliderSettings from '../SliderSettings';
 import { Alert, Box, Typography } from '@mui/material';
-import BasicRatingSettings from '@atoms/BasicRatingSettings';
-import BasicToolTipSettings from '@atoms/BasicToolTipSettings';
-import LayoutBlockButtonSettings from '@atoms/LayoutBlockButtonSettings';
-import LayoutBlockModalSettings from '@atoms/LayoutBlockModalSettings';
+import BasicRatingSettings from '@/components/atoms/BasicRatingSettings';
+import BasicToolTipSettings from '@/components/atoms/BasicToolTipSettings';
+import LayoutBlockButtonSettings from '@/components/atoms/LayoutBlockButtonSettings';
+import LayoutBlockModalSettings from '@/components/atoms/LayoutBlockModalSettings';
+import LayoutBlockTextSettings from '@/components/atoms/LayoutBlockTextSettings';
 
 const SettingsPanel: React.FC = () => {
   const dispatch = useAppDispatch();
@@ -51,6 +52,9 @@ const SettingsPanel: React.FC = () => {
   const props: IElementProps | undefined = currentElement?.props;
   const name = currentElement?.name;
   const size = currentElement?.props?.size;
+  const index = currentElement?.layout.i;
+  const textStyle = currentElement?.props?.textStyle;
+  const backgroundColor = currentElement?.props?.style?.backgroundColor;
 
   function findPropsName(props: IElementProps | undefined): ISettingsInputItem[] | undefined {
     if (name === 'RadioButtons') {
@@ -97,9 +101,11 @@ const SettingsPanel: React.FC = () => {
   }
 
   const accessNames = ['RadioButtons', 'Checkboxes', 'DropdownList', 'PhotoGallery', 'Avatars'];
+  const accesTextBlock = ['Title', 'HeaderTitle', 'Paragraph', 'Anchor'];
 
+  const showTextPanelVisible = accesTextBlock.includes(name || '');
   const isButtonsPanelVisible = accessNames.includes(name || '');
-
+  
   const showSliderSettings = name === 'Slider';
   const showRatingSettings = name == 'RatingSystem';
   const showBasicToolTipSettings = name === 'Tooltip';
@@ -148,7 +154,7 @@ const SettingsPanel: React.FC = () => {
         setStyle={setStyle}
         />
       )}
-
+      {showTextPanelVisible && <LayoutBlockTextSettings index={index} textStyle={textStyle}/>}
       {showLayoutBlockModalSettings && <LayoutBlockModalSettings />}
 
       <Box className="settings-panel">
@@ -156,7 +162,7 @@ const SettingsPanel: React.FC = () => {
           !showBasicToolTipSettings &&
           !showRatingSettings &&
           !showLayoutBlockButtonSettings &&
-          !showLayoutBlockModalSettings && <ContainerDIVSettings setStyle={setStyle} />}
+          !showLayoutBlockModalSettings && <ContainerDIVSettings backgroundColor={backgroundColor}  setStyle={setStyle} />}
       </Box>
 
       <ButtonsSettingsPanel

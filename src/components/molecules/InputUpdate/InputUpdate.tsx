@@ -65,7 +65,7 @@ const InputUpdate = ({
                   placeholder={!checkIsMasonry ? 'Text' : 'Url'}
                   variant="outlined"
                   value={!checkIsMasonry ? item.value : item.img}
-                  onChange={(e) => handleInputChange(item.id, e.target.value)}
+                  onChange={(e) => handleInputChange(item.id ? item.id : '', e.target.value)}
                   className={classes.input}
                   autoComplete="off"
                 />
@@ -77,7 +77,7 @@ const InputUpdate = ({
                     placeholder="Title"
                     variant="outlined"
                     value={!checkIsMasonry ? item.value : item.title}
-                    onChange={(e) => handleInputChange(item.id, e.target.value, true)}
+                    onChange={(e) => handleInputChange(item.id ? item.id : '', e.target.value, true)}
                     className={classes.input}
                     autoComplete="off"
                   />
@@ -88,7 +88,7 @@ const InputUpdate = ({
                 aria-label="Remove"
                 className={classes.btn}
                 onClick={() => {
-                  handleRemoveInput(item.id);
+                  handleRemoveInput(item.id ? item.id : '');
                 }}
               >
                 <RemoveCircleOutline />
