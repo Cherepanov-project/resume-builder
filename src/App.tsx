@@ -19,6 +19,7 @@ import NotFoundPage from './pages/NotFoundPage';
 import WorkSpace from '@organisms/WorkSpace';
 import LandingPreview from '@pages/LandingPreview';
 import { LandingBuilderStartPage } from './pages/LandingBuilderStartPage copy';
+import { ProtectedRoute } from './components/atoms/ProtectedRoute/ProtectedRoute.tsx'
 
 function App() {
   
@@ -26,25 +27,25 @@ function App() {
     <>
       <Routes>
         <Route path="/" element={<StarterPage />} />
-        <Route path="/sign-in" element={<AuthPage />} />
-        <Route path="/sign-up" element={<AuthPage />} />
-        <Route path="/intro" element={<IntroPage />} />
-        <Route path="/landing-builder-start-page" element={<LandingBuilderStartPage />} />
-        <Route
-          path="/landing-builder"
-          element={
-            <>
-              <Header />
-              <LandingBuilder />
-            </>
-          }
-        >
-          <Route index element={<WorkSpace />} />
-          <Route path="/landing-builder/sections-creator" element={<SectionsManager />} />
-          <Route path="/landing-builder/template-creator" element={<TemplateManager />} />
-        </Route>
-        <Route path="/landing-preview" element={<LandingPreview />} />
-        <Route path="/resume-builder" element={<CvTemplate />} />
+          <Route path="/sign-in" element={<AuthPage />} />
+          <Route path="/sign-up" element={<AuthPage />} />
+          <Route path="/intro" element={<ProtectedRoute component={IntroPage} />} />
+          <Route path="/landing-builder-start-page" element={<ProtectedRoute component={LandingBuilderStartPage} />} />
+          <Route
+            path="/landing-builder"
+            element={
+              <>
+                <Header />
+                <LandingBuilder />
+              </>
+            }
+          >
+            <Route index element={<ProtectedRoute component={WorkSpace} />} />
+            <Route path="/landing-builder/sections-creator" element={<ProtectedRoute component={SectionsManager} />} />
+            <Route path="/landing-builder/template-creator" element={<ProtectedRoute component={TemplateManager} />} />
+          </Route>
+        <Route path="/landing-preview" element={<ProtectedRoute component={LandingPreview} />} />
+        <Route path="/resume-builder" element={<ProtectedRoute component={CvTemplate} />} />
         <Route path="*" element={<NotFoundPage />} />
       </Routes>
     </>
