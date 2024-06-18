@@ -9,6 +9,10 @@ interface IUserInfo {
   sub: string,
   updated_at: string,
 }
+interface Iuser {
+  user: IUserInfo;
+}
+
 const startValue: IUserInfo = {
   email: '',
   'email_verified': false,
@@ -19,7 +23,8 @@ const startValue: IUserInfo = {
   updated_at: '',
 
 };
-const initialState = {
+
+const initialState: Iuser = {
   user: startValue,
 };
 

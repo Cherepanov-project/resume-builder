@@ -4,9 +4,10 @@ import classes from "./LoginButtonsContainer.module.scss";
 import { useSelector, useDispatch } from "react-redux";
 import { useAuth0 } from "@auth0/auth0-react";
 import { resetUser } from "@/store/userSlice";
+import type { RootState } from '../../../store/store'
 
 const LoginButtonsContainer = () => {
-  const user = useSelector((state)=> state.user.user);
+  const user = useSelector((state: RootState)=> state.user.user);
   const dispatch = useDispatch();
   const { loginWithRedirect, logout, } = useAuth0();
 
