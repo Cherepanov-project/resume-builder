@@ -3,7 +3,7 @@ import ResponsiveGridLayout, { Layout } from 'react-grid-layout';
 import ContainerToolsPanel from '../ContainerToolsPanel';
 import { useAppDispatch, useTypedSelector } from '@/hooks/cvTemplateHooks';
 import { DynamicComponentRendererProps, T_BlockElement } from '@/types/landingBuilder';
-import { addElement, addGridContainer, changeElement } from '@store/landingBuilder/layoutSlice';
+import { addElement, addGridContainer, changeElement, setWindowWidth } from '@store/landingBuilder/layoutSlice';
 import React, { Suspense, lazy, memo, useEffect, useState } from 'react';
 import ComponentPreloader from '@/components/atoms/ComponentPreloader';
 import ElementToolsPanel from '../ElementToolsPanel';
@@ -38,7 +38,7 @@ const DynamicComponentRenderer: React.FC<DynamicComponentRendererProps> = memo(
 export const GridContainer = (container: IGridContainers) => {
   const dispatch = useAppDispatch();
   const currentDraggableItem = useTypedSelector((state) => state.layout.currentDraggableItem);
-  const [width, setWidth] = useState(window.innerWidth);
+  const width = useTypedSelector((state) => state.layout.windowWidth);
   const [isHover, setIsHover] = useState(false);
   const [isButtonHover, setIsButtonHover] = useState(false);
   const [isDraggingInnerItem, setIsDraggingInnerItem] = useState(false);
@@ -49,11 +49,10 @@ export const GridContainer = (container: IGridContainers) => {
 
   useEffect(() => {
     const handleResize = () => {
-      setWidth(window.innerWidth);
+      dispatch(setWindowWidth(window.innerWidth));
     };
 
     window.addEventListener('resize', handleResize);
-
     return () => {
       window.removeEventListener('resize', handleResize);
     };

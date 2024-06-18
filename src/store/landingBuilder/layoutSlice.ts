@@ -27,6 +27,7 @@ type stateProps = {
   gridContainers: IGridContainers[];
   currentDraggableItem: Layout | null;
   currentContainer: string;
+  windowWidth: number;
 };
 
 const nanoid = customAlphabet('ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz', 15);
@@ -50,12 +51,16 @@ const initialState: stateProps = {
   ],
   currentDraggableItem: null,
   currentContainer: '',
+  windowWidth: window.innerWidth,
 };
 
 const layoutSlice = createSlice({
   name: 'layout',
   initialState,
   reducers: {
+    setWindowWidth(state, action) {
+      state.windowWidth = action.payload;
+    },
     // Добавляем блок в рабочую область
     addElement(state, action) {
       const { draggableItem, layoutItem, parentElement, id } = action.payload;
@@ -141,7 +146,7 @@ const layoutSlice = createSlice({
             const elIndx = element.children!.findIndex(
               (child) => child.layout.i === action.payload.elementId
             );
-    
+
             // Если нашли индекс элемента внутри children, дублируем его внутри секции
             if (elIndx !== undefined && elIndx !== -1) {
               const newElement = {
@@ -204,7 +209,7 @@ const layoutSlice = createSlice({
               (element) => element.layout.i === action.payload.layout.i,
             );
           }
-    
+
           // Если elementId передан в payload, удаляем элемент внутри секции
           if (action.payload.elementId) {
             // Находим индекс элемента внутри children
@@ -212,7 +217,7 @@ const layoutSlice = createSlice({
             const elIndx = element.children!.findIndex(
               (child) => child.layout.i === action.payload.elementId
             );
-    
+
             // Если нашли индекс элемента внутри children, удаляем его
             if (elIndx !== undefined && elIndx !== -1) {
               state.gridContainers.forEach((container) => {
@@ -228,7 +233,7 @@ const layoutSlice = createSlice({
           }
         }
       });
-    },    
+    },
     addGridContainer(state, action) {
       const indx = state.gridContainers.findIndex((container) => container.id === action.payload);
       const newContainer = {
@@ -320,7 +325,7 @@ const layoutSlice = createSlice({
               );
             }
           }
-    
+
           // Если нашли индекс элемента внутри children, уменьшаем его ширину
           if (elIndx !== undefined) {
             const element = container.elements.activeElements[indx];
@@ -332,9 +337,9 @@ const layoutSlice = createSlice({
           }
         }
       });
-      
-    },  
-    // Уменьшаем количество колонок в блоке  
+
+    },
+    // Уменьшаем количество колонок в блоке
     decreaseElementColumns(state, action) {
       let indx: number;
       state.gridContainers.forEach((container) => {
@@ -358,7 +363,7 @@ const layoutSlice = createSlice({
                 (child) => child.layout.i === action.payload.elementId
               );
             }
-          }    
+          }
           // Если нашли индекс элемента внутри children, уменьшаем его ширину
           if (elIndx !== undefined) {
             const element = container.elements.activeElements[indx];
@@ -370,9 +375,9 @@ const layoutSlice = createSlice({
           }
         }
       });
-      
-    },   
-  
+
+    },
+
     // Помещаем информацию о текущем перемещаемом блоке в стор
     setDraggableItem(state, action) {
       state.currentDraggableItem = action.payload.item;
@@ -453,6 +458,7 @@ const layoutSlice = createSlice({
 
 export default layoutSlice.reducer;
 export const {
+  setWindowWidth,
   addElement,
   addGridContainer,
   deleteGridContainer,

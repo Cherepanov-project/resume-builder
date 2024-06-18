@@ -1,12 +1,12 @@
-import { lazy, memo, Suspense, useMemo } from 'react';
+import { lazy, memo, Suspense, useEffect, useMemo } from 'react'
 import ResponsiveGridLayout, { Layout } from 'react-grid-layout';
-import { useTypedSelector } from '@hooks/cvTemplateHooks.ts';
+import { useAppDispatch, useTypedSelector } from '@hooks/cvTemplateHooks.ts'
 
 import { DynamicComponentRendererProps, T_BlockElement } from '@/types/landingBuilder';
 import ComponentPreloader from '@atoms/ComponentPreloader';
 import Box from '@mui/material/Box';
 import Typography from '@mui/material/Typography';
-import { IGridContainers } from '@/store/landingBuilder/layoutSlice';
+import { IGridContainers, setWindowWidth } from '@/store/landingBuilder/layoutSlice'
 
 // ========================================================================== \\
 // Отрисовываем динамический компонент
@@ -39,9 +39,22 @@ const MemoDynamicComponentRenderer = memo(DynamicComponentRenderer);
 // ========================================================================== \\
 
 const PreviewSpace = () => {
+  const dispatch = useAppDispatch();
   const gridContainers = useTypedSelector((state) => state.layout.gridContainers);
   const previewSetting = useTypedSelector((state) => state.utility.previewOpened);
   const layoutDate = useTypedSelector((state) => state.sectionsManager.layoutDate);
+  const width = useTypedSelector((state) => state.layout.windowWidth);
+
+  useEffect(() => {
+    const handleResize = () => {
+      dispatch(setWindowWidth(window.innerWidth));
+    };
+
+    window.addEventListener('resize', handleResize);
+    return () => {
+      window.removeEventListener('resize', handleResize);
+    };
+  }, []);
   // расчет координаты x элемента ( зависит от суммы w предыдущих в ряду )
   const calcX = (row: number, col: number) => {
     if (col !== 1) {
@@ -148,7 +161,7 @@ const PreviewSpace = () => {
             gridAutoRows: '30px',
             gridAutoFlow: 'row',
             gridTemplateColumns: ' repeat(6, 1fr)',
-            width: '100%',
+            width: `${width - 107.2 - (width - 120) * 0.3}px`,
             p: '0 1em',
             gap: '8px',
             alignItems: 'stretch',
