@@ -22,6 +22,11 @@ import { LandingBuilderStartPage } from './pages/LandingBuilderStartPage copy';
 import { ProtectedRoute } from './components/atoms/ProtectedRoute/ProtectedRoute.tsx'
 
 function App() {
+  const builderAndHeader = 
+  <>
+    <Header />
+    <LandingBuilder />
+  </>
   
   return (
     <>
@@ -31,15 +36,7 @@ function App() {
           <Route path="/sign-up" element={<AuthPage />} />
           <Route path="/intro" element={<ProtectedRoute component={IntroPage} />} />
           <Route path="/landing-builder-start-page" element={<ProtectedRoute component={LandingBuilderStartPage} />} />
-          <Route
-            path="/landing-builder"
-            element={
-              <>
-                <Header />
-                <LandingBuilder />
-              </>
-            }
-          >
+          <Route path="/landing-builder" element={<ProtectedRoute component={ builderAndHeader } />} >
             <Route index element={<ProtectedRoute component={WorkSpace} />} />
             <Route path="/landing-builder/sections-creator" element={<ProtectedRoute component={SectionsManager} />} />
             <Route path="/landing-builder/template-creator" element={<ProtectedRoute component={TemplateManager} />} />

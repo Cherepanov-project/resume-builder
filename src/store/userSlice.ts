@@ -2,7 +2,7 @@ import { createSlice } from '@reduxjs/toolkit';
 
 interface IUserInfo {
   email: string,
-  'email_verified': boolean,
+  verified: boolean,
   name: string,
   nickname: string,
   picture: string,
@@ -15,7 +15,7 @@ interface Iuser {
 
 const startValue: IUserInfo = {
   email: '',
-  'email_verified': false,
+  verified: false,
   name: '',
   nickname: '',
   picture: '',
@@ -33,7 +33,10 @@ const userSlice = createSlice({
   initialState,
   reducers: {
     setUser(state, action){
-      state.user = action.payload;
+      state.user = {
+        ...action.payload,
+        verified:action.payload['email_verified'],
+      };
     },
     resetUser(state){
       state.user = startValue;

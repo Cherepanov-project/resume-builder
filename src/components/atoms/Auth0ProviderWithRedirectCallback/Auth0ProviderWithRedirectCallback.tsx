@@ -1,6 +1,9 @@
 import { useNavigate } from 'react-router-dom';
 import { Auth0Provider } from '@auth0/auth0-react';
 
+const domain = process.env.REACT_APP_AUTH0_DOMAIN as string
+const clientId = process.env.REACT_APP_AUTH0_CLIENT_ID as string
+
 const Auth0ProviderWithRedirectCallback = ({ children, ...props }) => {
     const navigate = useNavigate();
 
@@ -10,8 +13,8 @@ const Auth0ProviderWithRedirectCallback = ({ children, ...props }) => {
     
     return (
       <Auth0Provider
-        domain='dev-xpamu0sjzvg4op05.us.auth0.com'
-        clientId='mL5a2XeX6vnThXTKJKrHHbz1ePaLKwO7'
+        domain={domain}
+        clientId={clientId}
         onRedirectCallback={onRedirectCallback} {...props}>
         {children}
       </Auth0Provider>
