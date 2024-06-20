@@ -7,7 +7,7 @@ const clientId = import.meta.env["VITE_REACT_APP_AUTH0_CLIENT_ID"];
 const Auth0ProviderWithRedirectCallback = ({ children, ...props }) => {
     const navigate = useNavigate();
     const onRedirectCallback = (appState) => {
-      navigate(('http://localhost:5173/' && appState.returnTo) || window.location.pathname);
+      navigate((appState && appState.returnTo) || window.location.pathname);
     };
     
     return (
