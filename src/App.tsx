@@ -8,7 +8,7 @@ import StarterPage from './pages/StarterPage';
 import { Route, Routes } from 'react-router-dom';
 // import SliderSV from './components/molecules/SliderSV';
 // import CvTemplate from './pages/CvTemplate';
-import Header from './components/organisms/Header';
+//import Header from './components/organisms/Header';
 import LandingBuilder from './pages/LandingBuilder';
 import AuthPage from './pages/AuthPage';
 // import StarterPage from './pages/StarterPage';
@@ -22,7 +22,7 @@ import { LandingBuilderStartPage } from './pages/LandingBuilderStartPage copy';
 import { ProtectedRoute } from './components/atoms/ProtectedRoute/ProtectedRoute.tsx'
 
 function App() {
-  
+
   return (
     <>
       <Routes>
@@ -31,14 +31,8 @@ function App() {
           <Route path="/sign-up" element={<AuthPage />} />
           <Route path="/intro" element={<ProtectedRoute component={IntroPage} />} />
           <Route path="/landing-builder-start-page" element={<ProtectedRoute component={LandingBuilderStartPage} />} />
-          <Route
-            path="/landing-builder"
-            element={
-              <>
-                <Header />
-                <LandingBuilder />
-              </>
-            }
+          <Route path="/landing-builder"
+            element={<ProtectedRoute component={LandingBuilder} />}
           >
             <Route index element={<ProtectedRoute component={WorkSpace} />} />
             <Route path="/landing-builder/sections-creator" element={<ProtectedRoute component={SectionsManager} />} />

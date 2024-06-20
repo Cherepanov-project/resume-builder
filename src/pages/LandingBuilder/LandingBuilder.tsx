@@ -8,6 +8,7 @@ import ImageMenu from '@/components/molecules/ImageMenu';
 import { useAuth0 } from "@auth0/auth0-react";
 import { useDispatch } from 'react-redux';
 import { setUser } from '@/store/userSlice';
+import Header from '@/components/organisms/Header';
 
 
 const LandingBuilder = () => {
@@ -20,6 +21,7 @@ const LandingBuilder = () => {
   
   return (
     <main className={classes.landing}>
+      <Header />
       <SideBar />
       <Outlet />
       <SettingsPanel />

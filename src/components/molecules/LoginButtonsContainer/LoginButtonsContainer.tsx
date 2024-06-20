@@ -1,12 +1,13 @@
 import DefaultButton from "@atoms/DefaultButton";
 
 import classes from "./LoginButtonsContainer.module.scss";
-import { useSelector, useDispatch } from "react-redux";
+import { useDispatch } from "react-redux";
 import { useAuth0 } from "@auth0/auth0-react";
 import { resetUser } from "@/store/userSlice";
+import { useTypedSelector } from "@/hooks/cvTemplateHooks";
 
 const LoginButtonsContainer = () => {
-  const user = useSelector((state)=> state.user.user);
+  const user = useTypedSelector((state)=> state.user.user);
   const dispatch = useDispatch();
   const { loginWithRedirect, logout, } = useAuth0();
 
