@@ -16,7 +16,7 @@ const LoginButtonsContainer = () => {
     logout({ logoutParams: { returnTo: window.location.origin } });
   }
 
-  const loginBut = <DefaultButton label="Sign In" onClick={loginWithRedirect} />;
+  const loginBut = <DefaultButton label="Sign In" onClick={() => {loginWithRedirect()}} />;
   const logoutBut = <DefaultButton label="Log Out"  onClick={customLogOut}/>;
 
   const inOutButton = user.name ? logoutBut : loginBut;
