@@ -15,7 +15,7 @@ const Auth0ProviderWithRedirectCallback = ({ children, ...props }) => {
         domain={domain}
         clientId={clientId}
         authorizationParams={{
-          redirect_uri: 'http://localhost:5173/intro'
+          redirect_uri: `${window.location.origin}/auth/`
         }}
         onRedirectCallback={onRedirectCallback} {...props}>
         {children}
