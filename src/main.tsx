@@ -11,11 +11,7 @@ import Auth0ProviderWithRedirectCallback from './components/atoms/Auth0ProviderW
 ReactDOM.createRoot(document.getElementById('root')!).render(
   <React.StrictMode>
     <BrowserRouter>
-      <Auth0ProviderWithRedirectCallback
-        authorizationParams={{
-          redirect_uri: 'http://localhost:5173/intro'
-        }}
-      >
+      <Auth0ProviderWithRedirectCallback>
         <Provider store={store}>
           <PersistGate persistor={persistor} loading={null}>
             <App />
