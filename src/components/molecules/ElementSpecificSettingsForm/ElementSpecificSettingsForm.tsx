@@ -14,12 +14,12 @@ type AccordionData = Array<[string, string]>
 
 const ElementSpecificSettingsForm = ({ type, text, title, description, url, imgUrl, buttonText, accordion, settingsOptionsValues, setAccordion, handleUpdate, col }) => {
   return (
-    <form>
-      <Stack>
+    <form >
+      <Stack >
         <Item>
           <FormControl>
-            <InputLabel id="type-label">Choose element type</InputLabel>
-            <Select
+            <InputLabel id="type-label" >Choose element type</InputLabel>
+            <Select 
               labelId="type-label"
               sx={{ width: '220px' }}
               value={type}
@@ -40,7 +40,7 @@ const ElementSpecificSettingsForm = ({ type, text, title, description, url, imgU
         {type !== 'LayoutBlockImage' && type !== 'LayoutBlockVideoPlayer' && type !== 'LayoutBlockSlider' && type !== 'Accordion' &&
           <Item>
             <FormControl>
-              <TextField
+              <TextField 
                 label="Enter target text:"
                 value={text}
                 onChange={(e: React.ChangeEvent<HTMLTextAreaElement>) => {

@@ -53,7 +53,7 @@ const SideBar: React.FC = () => {
       >
         {sideMenuTabs.map((item, indx) => {
           return (
-            <Tab
+            <Tab 
               key={item}
               className={classes['tab']}
               icon={tabsIcons[indx]}
