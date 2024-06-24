@@ -1,11 +1,11 @@
-import {Box, Button, Paper, Typography} from '@mui/material';
-import { FC, useRef } from 'react';
-import { CvTemplatePDF } from '../CvTemplatePDF';
-import { buttonStyle } from '@/assets/style/buttonStyle';
+import { Box, Button, Paper, Typography } from '@mui/material';
+import { FC, MouseEventHandler, useRef } from 'react';
+import { CvTemplatePDF } from '../../CvTemplatePDF';
+import { buttonStyle } from '@assets/style/buttonStyle.ts';
 import { useReactToPrint } from 'react-to-print';
 interface IProps {
-  handleButtonClick: React.MouseEventHandler<HTMLButtonElement>;
-  handleReset: React.MouseEventHandler<HTMLButtonElement>;
+  handleButtonClick: MouseEventHandler<HTMLButtonElement>;
+  handleReset: MouseEventHandler<HTMLButtonElement>;
 }
 
 const FinishResume: FC<IProps> = ({ handleButtonClick, handleReset }) => {

@@ -1,14 +1,14 @@
 import { Box, Button, Typography } from '@mui/material';
-import { FC, useState } from 'react';
-import { buttonStyle } from '@/assets/style/buttonStyle';
-import EditColor from './EditColor';
-import { templatePDFStyles } from '../CvTemplatePDF/const';
-import oslo from './oslo-resume-templates.avif';
-import toronto from './toronto-resume-templates.avif';
-import sydney from './sydney-resume-templates.avif';
+import { FC, MouseEventHandler, useState } from 'react';
+import { buttonStyle } from '@assets/style/buttonStyle.ts';
+import EditColor from './EditColor.tsx';
+import { templatePDFStyles } from '../../CvTemplatePDF/const';
+import oslo from '../resumeTemplates/oslo-resume-templates.avif';
+import toronto from '../resumeTemplates/toronto-resume-templates.avif';
+import sydney from '../resumeTemplates/sydney-resume-templates.avif';
 
 interface IProps {
-  handleButtonClick: React.MouseEventHandler<HTMLButtonElement>;
+  handleButtonClick: MouseEventHandler<HTMLButtonElement>;
 }
 
 const EditResumeTemplate: FC<IProps> = ({ handleButtonClick }) => {
