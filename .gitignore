@@ -24,4 +24,3 @@ user-build
 *.njsproj
 *.sln
 *.sw?
-.env
