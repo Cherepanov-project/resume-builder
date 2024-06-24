@@ -1,11 +1,16 @@
-import { useNavigate } from 'react-router-dom';
+/*import { useNavigate } from 'react-router-dom';*/
 import logo from '@assets/images/quickly_Logo.png';
 import { Box, Button, Container, Typography, Icon } from '@mui/material';
+
+import { useAuth0 } from '@auth0/auth0-react';
 
 import decoration from '@assets/images/starterPage/button_decoration.svg';
 
 const StarterPage = () => {
-  const navigate = useNavigate();
+  /*const navigate = useNavigate();*/
+  const { loginWithRedirect } = useAuth0();
+
+
   return (
     <Box
       sx={{
@@ -62,7 +67,8 @@ const StarterPage = () => {
             <Button
               size="large"
               variant="contained"
-              onClick={() => navigate('/sign-in')}
+              /*onClick={() => navigate('/sign-in')}*/
+              onClick={() => loginWithRedirect()}
               sx={{ height: '60px', width: '200px', background: '#20484f' }}
             >
               Sign In
@@ -70,7 +76,8 @@ const StarterPage = () => {
             <Button
               size="large"
               variant="outlined"
-              onClick={() => navigate('/sign-up')}
+              /*onClick={() => navigate('/sign-up')}*/
+              onClick={() => loginWithRedirect()}
               sx={{ height: '60px', width: '200px', borderColor: '#20484f', color: '#20484f' }}
             >
               Sign Up

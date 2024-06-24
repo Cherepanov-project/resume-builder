@@ -1,7 +1,18 @@
 import IntroPageSection from '@molecules/IntroPageSection';
 import { Container, Box, Typography } from '@mui/material';
+import { useAuth0 } from "@auth0/auth0-react";
+import { useDispatch } from 'react-redux';
+import { setUser } from '@/store/userSlice';
+
 
 const IntroPage = () => {
+  const dispatch  = useDispatch();
+  const { user } = useAuth0();
+  
+  if(user){
+    dispatch(setUser(user));
+  }
+
   return (
     <Container
       sx={{
