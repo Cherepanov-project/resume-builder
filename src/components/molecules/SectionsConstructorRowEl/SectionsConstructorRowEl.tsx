@@ -87,7 +87,6 @@ const SectionsConstructorRowEl: React.FC<SectionsConstructorRowElType> = ({
 
   const renderColumns = () => {
     const r: string = String(row);
-    // console.log(layoutRow);
     return layoutRow.map((el, idx) => {
       const i = idx + 1;
 
@@ -106,7 +105,7 @@ const SectionsConstructorRowEl: React.FC<SectionsConstructorRowElType> = ({
           opacity: '0.8',
         },
       };
-      // console.log('el', el);
+      
       return (
         <Box
           key={i}
@@ -304,7 +303,7 @@ const SectionsConstructorRowEl: React.FC<SectionsConstructorRowElType> = ({
         width: ' 100%',
         minHeight: '55px',
         alignItems: 'center',
-        borderBottom: '1px dotted dimgrey',
+        borderBottom: '1px dotted dimgrey', 
       }}
     >
       <Box sx={gridLayoutStyle}>{renderColumns()}</Box>

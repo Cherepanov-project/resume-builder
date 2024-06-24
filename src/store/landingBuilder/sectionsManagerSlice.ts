@@ -45,6 +45,9 @@ const sectionsManagerSlice = createSlice({
     // изменение ряда
     editRowDate(state, action) {
       const { row, date } = action.payload;
+
+      console.log(row, date); //проверка Радмир
+      
       const [, curCol] = state.curId.split('');
       // state.layoutDate = { ...state.layoutDate, [row]: date };
       const newDate = date.map((col, index) => {

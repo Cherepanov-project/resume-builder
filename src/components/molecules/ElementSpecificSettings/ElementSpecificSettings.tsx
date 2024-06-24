@@ -77,6 +77,9 @@ const ElementSpecificSettings = () => {
   const handleUpdate = (type: string, value: string | AccordionData, i: number): void => {
     const newValue = JSON.parse(JSON.stringify(layoutRow));
     const names = ['url', 'title', 'text', 'description', 'imgUrl', 'buttonText']
+    
+    console.log('ТИП', type, value);
+    console.log(newValue);
     switch (type) {
       case 'type': {
         const label = typeof value === 'string' ? getLabel(value, url, title, description, text, imgUrl, buttonText, accordion) : getLabel(value[0][0], url, title, description, text, imgUrl, buttonText, accordion);

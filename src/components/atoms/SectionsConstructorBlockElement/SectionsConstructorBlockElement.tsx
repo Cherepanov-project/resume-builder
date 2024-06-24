@@ -35,7 +35,7 @@ const SectionsConstructorBlockElement: React.FC<SectionsConstructorBlockElementT
   const isImg = props.key === 'image';
   const isBtn = props.key === 'button';
   const isTitle = props.key === 'title';
-  const isH1Title = props.key === 'h1title';
+  const isH1Title = props.key === 'TitleH1';
   const isParagraph = props.key === 'paragraph';
   const isAnchor = props.key === 'anchor';
   const isRating = props.key === 'rating';

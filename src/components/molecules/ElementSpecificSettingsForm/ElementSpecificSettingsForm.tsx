@@ -25,6 +25,7 @@ const ElementSpecificSettingsForm = ({ type, text, title, description, url, imgU
               value={type}
               onChange={(e: SelectChangeEvent<string>) => {
                 type = e.target.value;
+                console.log(e.target.value); // Проверка
                 handleUpdate('type', e.target.value, col - 1);
               }}
               input={<OutlinedInput label="Choose element type" />}
@@ -45,6 +46,7 @@ const ElementSpecificSettingsForm = ({ type, text, title, description, url, imgU
                 value={text}
                 onChange={(e: React.ChangeEvent<HTMLTextAreaElement>) => {
                   text = e.target.value;
+                  console.log(text); // Проверка
                   handleUpdate('text', e.target.value, col - 1);
                 }}
               />
