@@ -38,7 +38,7 @@ const ElementSpecificSettingsForm = ({ type, text, title, description, url, imgU
           </FormControl>
         </Item>
         {type !== 'LayoutBlockImage' && type !== 'LayoutBlockVideoPlayer' && type !== 'LayoutBlockSlider' && type !== 'Accordion' &&
-          <Item>
+          <Item >
             <FormControl>
               <TextField 
                 label="Enter target text:"

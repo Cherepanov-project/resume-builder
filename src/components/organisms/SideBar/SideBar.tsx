@@ -25,9 +25,8 @@ const SideBar: React.FC = () => {
     importFiles().then((data) => {
       setSidebarMenuList({ ...sidebarMenuList, ...data });
     });
-
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, []);
+  }, [sidebarMenuList]);
 
   const handleChangeTab = (_event: React.SyntheticEvent, indxBtn: number) => {
     setCurrentTab(indxBtn);
