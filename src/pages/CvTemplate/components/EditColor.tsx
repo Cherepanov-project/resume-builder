@@ -1,5 +1,5 @@
 import { FC } from 'react';
-import EditWithHeader from './EditWithHeader';
+import EditWithHeader from './EditWithHeader.tsx';
 
 interface IProps {
   setChooseTemplate: React.Dispatch<React.SetStateAction<number>>;
