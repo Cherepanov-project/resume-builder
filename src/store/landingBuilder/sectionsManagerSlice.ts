@@ -42,7 +42,7 @@ const sectionsManagerSlice = createSlice({
       state.layoutDate = action.payload;
     },
     // изменение ряда
-    editRowDate(state, action: PayloadAction<{ row: number; date: T_BlockElement[] }>) {
+    editRowDate(state, action) {
       const { row, date } = action.payload;
       const [, curCol] = state.curId.split('');
       // state.layoutDate = { ...state.layoutDate, [row]: date };
