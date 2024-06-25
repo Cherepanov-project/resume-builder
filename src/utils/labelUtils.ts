@@ -14,7 +14,7 @@ export const getLabel = (blockValue: string, url: string, title: string, descrip
           textStyle: { display: 'block' },
         },
       };
-    case 'Avatarss':
+    case 'Avatars':
       return {
         label: 'Images',
         value: 'Avatars',
@@ -76,6 +76,19 @@ export const getLabel = (blockValue: string, url: string, title: string, descrip
           wrapperStyle: { lineHeight: '20' },
           textStyle: { textAlign: 'center', fontSize: '18px' },
           // inputStyle: { width: '100%', border: 'none', fontWeight: 'bold' },
+        },
+      };
+      case 'TitleH1':
+      return {
+        label: 'TitleH1',
+        value: 'TitleH1',
+        key: 'TitleH1',
+        layout: { i: '', x: 0, y: 0, w: 2, h: 1 },
+        title: {
+          key: 'TitleH1',
+          text: text,
+          wrapperStyle: { lineHeight: '32' },
+          textStyle: { textAlign: 'center', fontSize: '32px', fontWeight: 'bold' },
         },
       };
     case 'Paragraph':
@@ -214,6 +227,22 @@ export const getLabel = (blockValue: string, url: string, title: string, descrip
         value: 'Checkboxes',
         key: 'checkbox',
         layout: { i: '', x: 0, y: 0, w: 1, h: 3 },
+        children: [],
+        title: {
+          key: 'checkbox',
+          value: '0',
+          text: false,
+        },
+        props: {
+          Checkboxes: [],
+        },
+      };
+      case 'CheckboxGroup':
+      return {
+        label: 'CheckboxGroup',
+        value: 'CheckboxGroup',
+        key: 'checkbox',
+        layout: { i: '', x: 0, y: 0, w: 1, h: 6 },
         children: [],
         title: {
           key: 'checkbox',

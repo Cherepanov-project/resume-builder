@@ -78,11 +78,10 @@ const ElementSpecificSettings = () => {
     const newValue = JSON.parse(JSON.stringify(layoutRow));
     const names = ['url', 'title', 'text', 'description', 'imgUrl', 'buttonText']
     
-    console.log('ТИП', type, value);
-    console.log(newValue);
     switch (type) {
       case 'type': {
         const label = typeof value === 'string' ? getLabel(value, url, title, description, text, imgUrl, buttonText, accordion) : getLabel(value[0][0], url, title, description, text, imgUrl, buttonText, accordion);
+        console.log('Получаем лэйбэл', label)
         newValue[i].name = value;
         newValue[i].type = label.label;
         newValue[i].props.key = label.key;
