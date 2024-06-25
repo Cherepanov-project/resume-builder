@@ -1,14 +1,25 @@
-
-import { IElementsProps } from '@/types/landingBuilder';
-import Avatar from '@mui/material/Avatar';
-import Stack from '@mui/material/Stack';
-import classes from './Avatars.module.scss';
 import { useEffect } from 'react';
 import { useDispatch } from 'react-redux';
 import { nanoid } from 'nanoid';
+import Avatar from '@mui/material/Avatar';
+import Stack from '@mui/material/Stack';
+import classes from './Avatars.module.scss';
+import { IElementsProps } from '@/types/landingBuilder';
 import { setProps } from '@/store/landingBuilder/layoutSlice';
 
-const Avatars = ({ props, layout }: IElementsProps) => {
+interface AvatarItem {
+  id: string;
+  img: string;
+  title: string;
+}
+
+interface AvatarsProps extends IElementsProps {
+  props: {
+    Avatars: AvatarItem[];
+  };
+}
+
+const Avatars = ({ props, layout }: AvatarsProps) => {
   const dispatch = useDispatch();
   const { Avatars } = props;
   const currentList = Avatars || [];
@@ -30,8 +41,8 @@ const Avatars = ({ props, layout }: IElementsProps) => {
       dispatch(setProps(secondItem));
     }
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, []);
-  
+  }, [currentList.length, layout.i, dispatch]);
+
   return (
     <Stack key={nanoid()} direction="row" spacing={2}  className={classes.wrapper} sx={{ flexDirection: 'column' }}>
       {currentList ? (
@@ -39,9 +50,9 @@ const Avatars = ({ props, layout }: IElementsProps) => {
           <div key={item.id}  className={classes.wrap}>
             <Avatar
               className={classes.avatar}
-              src={`${item.img}?w=162&auto=format`}
+              src={item.img}
               alt={String(item.title)}
-              sx={{ width: '60%', height: '60%' }}
+              sx={{ width: '60%', height: '60%', objectFit: 'cover' }}
             />
             <div className={classes.nick}>
               {item.title || 'Enter name'}
@@ -54,7 +65,7 @@ const Avatars = ({ props, layout }: IElementsProps) => {
             className={classes.avatar}
             alt="avatar"
             src={'url'}
-            sx={{ width: '60%', height: '60%' }}
+            sx={{ width: '60%', height: '60%', objectFit: 'cover' }}
           />
           <div key={nanoid()} className={classes.nick}>Enter name</div>
         </>

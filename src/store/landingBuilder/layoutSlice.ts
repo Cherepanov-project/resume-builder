@@ -6,11 +6,13 @@ import { addBaseScript } from '@/utils/scriptAssigner';
 import { Layout } from 'react-grid-layout';
 import { T_BlockElement } from '@/types/landingBuilder';
 
-type ElementsType = {
-  activeElements: T_BlockElement[];
-};
+const nanoid = customAlphabet('ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz', 15);
 
-export type IGridContainers = {
+interface ElementsType {
+  activeElements: T_BlockElement[];
+}
+
+export interface IGridContainers {
   id: string;
   height: number;
   elements: ElementsType;
@@ -21,18 +23,16 @@ export type IGridContainers = {
     x: number;
     y: number;
   };
-};
+}
 
-type stateProps = {
+interface LayoutState {
   gridContainers: IGridContainers[];
   currentDraggableItem: Layout | null;
   currentContainer: string;
   windowWidth: number;
-};
+}
 
-const nanoid = customAlphabet('ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz', 15);
-
-const initialState: stateProps = {
+const initialState: LayoutState = {
   gridContainers: [
     {
       id: nanoid(),
@@ -456,7 +456,6 @@ const layoutSlice = createSlice({
   },
 });
 
-export default layoutSlice.reducer;
 export const {
   setWindowWidth,
   addElement,
@@ -476,3 +475,5 @@ export const {
   setProps,
   clearStore,
 } = layoutSlice.actions;
+
+export default layoutSlice.reducer;

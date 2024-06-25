@@ -1,17 +1,23 @@
-import { createSlice } from '@reduxjs/toolkit';
+import { createSlice, PayloadAction } from '@reduxjs/toolkit';
+
+interface SwiperState {
+  presetName: string;
+}
+
+const initialState: SwiperState = {
+  presetName: 'default',
+};
 
 const swiperSlice = createSlice({
-  name: 'swiperSlice',
-  initialState: {
-    presetName: 'default',
-  },
+  name: 'swiper',
+  initialState,
   reducers: {
-    changeStyle: (state, action) => {
+    changeStyle(state, action: PayloadAction<{ presetName: string }>) {
       state.presetName = action.payload.presetName;
     },
   },
 });
 
-export default swiperSlice.reducer;
-
 export const { changeStyle } = swiperSlice.actions;
+
+export default swiperSlice.reducer;
