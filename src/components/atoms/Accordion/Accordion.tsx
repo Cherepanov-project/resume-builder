@@ -131,7 +131,7 @@ const Accordion: React.FC<ILayoutBlock> = ({ props }) => {
 
   const content = () => {
     return (
-      <div style={{ width: '100%', marginTop: '15px'}}>
+      <div style={{ width: '100%', marginTop: '15px', paddingBottom: '20px'}}>
         {accordion.map((item, index) => (
           <div className={style['accordion-item']} key={nanoid()}>
             <div className={style['accordion-title']} onClick={() => {

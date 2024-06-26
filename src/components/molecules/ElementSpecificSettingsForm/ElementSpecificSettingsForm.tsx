@@ -57,7 +57,8 @@ const ElementSpecificSettingsForm = ({ type, text, title, description, url, imgU
             <FormControl>
               {accordion.map((item: string[], index: number) => (
                 <div key={index}>
-                  <TextField
+                  <TextField 
+                    style={{marginBottom:'15px'}}
                     label={`Enter target accordion ${index + 1} title:`}
                     value={item[0]}
                     onChange={(e: React.ChangeEvent<HTMLInputElement>) => {
@@ -68,6 +69,7 @@ const ElementSpecificSettingsForm = ({ type, text, title, description, url, imgU
                     }}
                   />
                   <TextField
+                    style={{marginBottom:'15px'}}
                     label={`Enter target accordion ${index + 1} description:`}
                     value={item[1]}
                     onChange={(e: React.ChangeEvent<HTMLInputElement>) => {
