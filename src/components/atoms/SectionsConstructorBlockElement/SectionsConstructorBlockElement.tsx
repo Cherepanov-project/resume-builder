@@ -35,7 +35,7 @@ const SectionsConstructorBlockElement: React.FC<SectionsConstructorBlockElementT
   const isImg = props.key === 'image';
   const isBtn = props.key === 'button';
   const isTitle = props.key === 'title';
-  const isH1Title = props.key === 'TitleH1';
+  const isHeaderTitle = props.key === 'HeaderTitle';
   const isParagraph = props.key === 'paragraph';
   const isAnchor = props.key === 'anchor';
   const isRating = props.key === 'rating';
@@ -84,7 +84,7 @@ const SectionsConstructorBlockElement: React.FC<SectionsConstructorBlockElementT
         />
       )}
       {isToggleButtons && <MultiToggle />}
-      {isH1Title && <HeaderTitle props={props} />}
+      {isHeaderTitle && <HeaderTitle props={props} />}
       {isGallery && <Gallery layout={params.layout} props={{Gallery: [{id: nanoid(), img: props.url, title: props.text}]}}/>}
       {isVideo && <VideoPlayer props={props}/>}
       {isSelectList && <DropdownList layout={params.layout} props={{DropdownList: [{id: nanoid(), value: props.text || 'Text'}]}}/>}

@@ -78,19 +78,6 @@ export const getLabel = (blockValue: string, url: string, title: string, descrip
           // inputStyle: { width: '100%', border: 'none', fontWeight: 'bold' },
         },
       };
-      case 'TitleH1':
-      return {
-        label: 'TitleH1',
-        value: 'TitleH1',
-        key: 'TitleH1',
-        layout: { i: '', x: 0, y: 0, w: 2, h: 1 },
-        title: {
-          key: 'TitleH1',
-          text: text,
-          wrapperStyle: { lineHeight: '32' },
-          textStyle: { textAlign: 'center', fontSize: '32px', fontWeight: 'bold' },
-        },
-      };
     case 'Paragraph':
       return {
         label: 'Block Paragraph',
@@ -286,11 +273,11 @@ export const getLabel = (blockValue: string, url: string, title: string, descrip
       return {
         label: 'Text Blocks',
         value: 'HeaderTitle',
-        key: 'h1title',
+        key: 'HeaderTitle',
         layout: { i: '', x: 0, y: 0, w: 1, h: 1 },
         children: [],
         title: {
-          key: 'h1title',
+          key: 'HeaderTitle',
           value: '0',
           text: false,
         },

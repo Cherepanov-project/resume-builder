@@ -53,7 +53,6 @@ const ElementSpecificSettings = () => {
     'Logo',
     'SelectList',
     'SocialMediaIcon',
-    'TitleH1',
     'Gallery',
     'RatingSystem',
     'Tooltip',
