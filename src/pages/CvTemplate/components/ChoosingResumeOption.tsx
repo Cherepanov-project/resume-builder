@@ -27,7 +27,7 @@ const ChoosingResumeOption: FC<IProps> = ({ handleButtonClick }) => {
         </Typography>
         <Box display="flex" sx={{ ml: 10, mb: 10 }}>
           {arrResume.map((r) => (
-            <TemplateSingleResume handleButtonClick={handleButtonClick} nameResume={r} />
+            <TemplateSingleResume key={r} handleButtonClick={handleButtonClick} nameResume={r} />
           ))}
         </Box>
       </Box>
