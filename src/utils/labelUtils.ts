@@ -153,7 +153,7 @@ export const getLabel = (blockValue: string, url: string, title: string, descrip
         label: 'Logo',
         value: 'Logo',
         key: 'logo',
-        layout: { i: '', x: 0, y: 0, w: 1, h: 1 },
+        layout: { i: '', x: 0, y: 0, w: 1, h: 5 },
         title: {
           key: 'logo',
           text: text,
