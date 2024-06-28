@@ -4,7 +4,7 @@ import { buttonStyle } from '@assets/style/buttonStyle.ts';
 import classes from '@pages/CvTemplate/CvTemplate.module.scss';
 import { steps } from '@pages/CvTemplate/utils';
 
-const CardForm = ({ handleChangeStep, onSubmit, activeStep }) => {
+const CardForm = ({ handleChangeStep, onSubmit, activeStep, setShowElement }) => {
   const currentCard = steps[activeStep];
 
   return (
@@ -16,8 +16,14 @@ const CardForm = ({ handleChangeStep, onSubmit, activeStep }) => {
 
       <Box className={classes.cvTemlpate__stepContentButton}>
         <Button
-          disabled={currentCard.id === 1}
-          onClick={() => handleChangeStep('minus')}
+          onClick={() => {
+            if (currentCard.id !== 1) {
+              handleChangeStep('minus');
+            }
+            if (currentCard.id === 1) {
+              setShowElement(true);
+            }
+          }}
           sx={{ mt: 1, mr: 1 }}
         />
 
