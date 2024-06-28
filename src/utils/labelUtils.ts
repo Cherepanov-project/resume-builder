@@ -227,12 +227,12 @@ export const getLabel = (blockValue: string, url: string, title: string, descrip
       case 'CheckboxGroup':
       return {
         label: 'CheckboxGroup',
-        value: 'CheckboxGroup',
-        key: 'checkbox',
+        value: 'Checkboxes',
+        key: 'Checkboxes',
         layout: { i: '', x: 0, y: 0, w: 1, h: 6 },
         children: [],
         title: {
-          key: 'checkbox',
+          key: 'Checkboxes',
           value: '0',
           text: false,
         },

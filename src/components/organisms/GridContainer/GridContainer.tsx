@@ -51,7 +51,7 @@ export const GridContainer = (container: IGridContainers) => {
     const handleResize = () => {
       setWidth(window.innerWidth);
     };
-
+    
     window.addEventListener('resize', handleResize);
 
     return () => {

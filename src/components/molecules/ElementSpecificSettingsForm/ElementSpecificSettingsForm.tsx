@@ -9,16 +9,18 @@ import {
   SelectChangeEvent,
 } from '@mui/material'
 import Item from '@atoms/StyledPaperItem';
+import { nanoid } from 'nanoid';
 
-type AccordionData = Array<[string, string]>
+type AccordionData = Array<[string, string]>;
+type CheckboxGroupData = Array<[string, string]>;
 
-const ElementSpecificSettingsForm = ({ type, text, title, description, url, imgUrl, buttonText, accordion, settingsOptionsValues, setAccordion, handleUpdate, col }) => {
+const ElementSpecificSettingsForm = ({ type, text, title, description, url, imgUrl, buttonText, accordion, settingsOptionsValues, setAccordion, handleUpdate, col, checkboxGroup, setCheckboxGroup}) => {
   return (
     <form >
       <Stack >
         <Item>
           <FormControl>
-            <InputLabel id="type-label" >Choose element type</InputLabel>
+            <InputLabel id="type-label">Choose element type</InputLabel>
             <Select 
               labelId="type-label"
               sx={{ width: '220px' }}
@@ -38,7 +40,7 @@ const ElementSpecificSettingsForm = ({ type, text, title, description, url, imgU
             </Select>
           </FormControl>
         </Item>
-        {type !== 'LayoutBlockImage' && type !== 'LayoutBlockVideoPlayer' && type !== 'LayoutBlockSlider' && type !== 'Accordion' &&
+        {type !== 'LayoutBlockImage' && type !== 'LayoutBlockVideoPlayer' && type !== 'LayoutBlockSlider' && type !== 'Accordion' && type !== 'CheckboxGroup' &&
           <Item >
             <FormControl>
               <TextField 
@@ -46,10 +48,39 @@ const ElementSpecificSettingsForm = ({ type, text, title, description, url, imgU
                 value={text}
                 onChange={(e: React.ChangeEvent<HTMLTextAreaElement>) => {
                   text = e.target.value;
-                  console.log(text); // Проверка
                   handleUpdate('text', e.target.value, col - 1);
                 }}
               />
+            </FormControl>
+          </Item>}
+          {type === 'CheckboxGroup' && 
+          <Item >
+            <FormControl>
+              {checkboxGroup.map((checkbox: string, index: number) => (
+                <div key={index}>
+                  <TextField 
+                    style={{marginBottom:'15px'}}
+                    label={`Enter checkbox ${index+1} text`}
+                    value={checkbox[0]}
+                    onChange={(e: React.ChangeEvent<HTMLInputElement>) => {
+                      const updatedGroup = [...checkboxGroup];
+                      updatedGroup[index] = {id: nanoid(), value: e.target.value};
+                      setCheckboxGroup(updatedGroup);
+                      handleUpdate('CheckboxGroup', updatedGroup, col - 1);                    
+                    }}
+                  />
+                </div>
+              ))}
+              <button
+                onClick={(e: { preventDefault: () => void; }) => {
+                  e.preventDefault();
+                  const updatedGroup: CheckboxGroupData = [...checkboxGroup, {}];
+                  setCheckboxGroup(updatedGroup);
+                  handleUpdate('CheckboxGroup', updatedGroup, col - 1);
+                }}
+              >
+                Add Item
+              </button>
             </FormControl>
           </Item>}
         {type === 'Accordion' ? (

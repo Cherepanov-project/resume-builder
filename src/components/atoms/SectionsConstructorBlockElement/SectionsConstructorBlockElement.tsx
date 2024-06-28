@@ -31,6 +31,7 @@ const SectionsConstructorBlockElement: React.FC<SectionsConstructorBlockElementT
 }) => {
   
   const props = params.props;
+  console.log(params)
 
   const isImg = props.key === 'image';
   const isBtn = props.key === 'button';
@@ -53,6 +54,7 @@ const SectionsConstructorBlockElement: React.FC<SectionsConstructorBlockElementT
   const isSMIcon = props.key === 'smIcon'
   const isCardItem = props.key === 'cardItem'
   const isAccordion = props.key === 'accordion'
+  const isCheckboxGroup = props.key === 'CheckboxGroup'
   
   
   return (
@@ -74,6 +76,12 @@ const SectionsConstructorBlockElement: React.FC<SectionsConstructorBlockElementT
       {isCheckBox && (
         <Checkboxes
           props={{ Checkboxes: [{ id: nanoid(), value: props.text }] }}
+          layout={params.layout}
+        />
+      )}
+      {isCheckboxGroup && (
+        <Checkboxes 
+          props={props}
           layout={params.layout}
         />
       )}

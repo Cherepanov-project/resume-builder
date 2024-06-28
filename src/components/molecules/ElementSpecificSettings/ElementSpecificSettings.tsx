@@ -14,6 +14,7 @@ import { ExpandMore } from '@mui/icons-material';
 import Item from '@atoms/StyledPaperItem';
 import ElementSpecificSettingsForm from '@molecules/ElementSpecificSettingsForm'
 import { getLabel } from '@/utils/labelUtils';
+import { nanoid } from 'nanoid';
 
 const ElementSpecificSettings = () => {
   const layoutDate = useTypedSelector((state) => state.sectionsManager.layoutDate);
@@ -33,7 +34,13 @@ const ElementSpecificSettings = () => {
     w = '1';
     col = 1;
   }
+
   type AccordionData = Array<[string, string]>;
+  /*type CheckboxGroupData = Array<[{
+    id?: string,
+    value: string
+  }]>;*/
+  
   const type: string = layoutElement.name || '';
   const title: string = layoutElement.props.title || '';
   const description: string = layoutElement.props.description || '';
@@ -72,6 +79,7 @@ const ElementSpecificSettings = () => {
   ];
 
   const [accordion, setAccordion] = useState<AccordionData>(layoutElement.props.accordion || []);
+  const [checkboxGroup, setCheckboxGroup] = useState(layoutElement.props.CheckboxGroup ||[{id: nanoid(),value: ''}]);
 
   const handleUpdate = (type: string, value: string | AccordionData, i: number): void => {
     const newValue = JSON.parse(JSON.stringify(layoutRow));
@@ -103,6 +111,13 @@ const ElementSpecificSettings = () => {
         dispatch(editRowDate({ row, date: newValue }));
         break;
       }
+      case 'CheckboxGroup': {
+        newValue[i].props.CheckboxGroup = value;
+        newValue[i].props.key = 'CheckboxGroup';
+        newValue[i].layout = {...newValue[i].layout, h: checkboxGroup.length === 0 ? 2 : 1.85*(checkboxGroup.length + 1)}
+        dispatch(editRowDate({ row, date: newValue }));
+        break;
+      }
       default: {
         console.log('No case found');
       }
@@ -129,6 +144,8 @@ const ElementSpecificSettings = () => {
             settingsOptionsValues={settingsOptionsValues}
             handleUpdate={handleUpdate}
             setAccordion={setAccordion}
+            checkboxGroup={checkboxGroup}
+            setCheckboxGroup={setCheckboxGroup}
             col={col}
           />
         </AccordionDetails>
