@@ -31,7 +31,6 @@ const SectionsConstructorBlockElement: React.FC<SectionsConstructorBlockElementT
 }) => {
   
   const props = params.props;
-  console.log('Параметры', params);
 
   const isImg = props.key === 'image';
   const isBtn = props.key === 'button';
@@ -49,14 +48,12 @@ const SectionsConstructorBlockElement: React.FC<SectionsConstructorBlockElementT
   const isVideo = props.key === 'video';
   const isDropdownList = props.key === 'DropdownList';
   const isModal = props.key === 'modal';
-  const isSlider = props.key === 'slider';
+  const isSlider = props.key === 'Slider';
   const isLogo = props.key === 'logo';
   const isSMIcon = props.key === 'smIcon'
   const isCardItem = props.key === 'cardItem'
   const isAccordion = props.key === 'accordion'
   const isCheckboxGroup = props.key === 'CheckboxGroup'
-
-  console.log('это isSMIcon ', isSMIcon )
 
   return (
     <>
@@ -75,10 +72,7 @@ const SectionsConstructorBlockElement: React.FC<SectionsConstructorBlockElementT
       )}
       {isTooltip && <Tooltip props={props.size || 0} />}
       {isCheckBox && (
-        <Checkboxes
-          props={{ Checkboxes: [{ id: nanoid(), value: props.text }] }}
-          layout={params.layout}
-        />
+        <Checkboxes layout={params.layout} props={{ Checkboxes: [{ id: nanoid(), value: props.text }] }}/>
       )}
       {isCheckboxGroup && (
         <Checkboxes 

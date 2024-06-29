@@ -15,6 +15,7 @@ import Item from '@atoms/StyledPaperItem';
 import ElementSpecificSettingsForm from '@molecules/ElementSpecificSettingsForm'
 import { getLabel } from '@/utils/labelUtils';
 import { nanoid } from 'nanoid';
+import { ISettingsInputItem } from '@/types/landingBuilder';
 
 const ElementSpecificSettings = () => {
   const layoutDate = useTypedSelector((state) => state.sectionsManager.layoutDate);
@@ -36,7 +37,6 @@ const ElementSpecificSettings = () => {
   }
 
   type AccordionData = Array<[string, string]>;
-  type selectList = string[];
   
   const type: string = layoutElement.name || '';
   const title: string = layoutElement.props.title || '';
@@ -75,17 +75,17 @@ const ElementSpecificSettings = () => {
   ];
 
   const [accordion, setAccordion] = useState<AccordionData>(layoutElement.props.accordion || []);
-  const [checkboxGroup, setCheckboxGroup] = useState(layoutElement.props.CheckboxGroup ||[{id: nanoid(),value: ''}]);
-  const [selectList, setSelectList] = useState(layoutElement.props.SelectList ||[{id: nanoid(), value: ''}]);
+  const [selectList, setSelectList] = useState<ISettingsInputItem[]>([{id: nanoid(), value: ''}]);
 
-  const handleUpdate = (type: string, value: string | AccordionData | selectList, i: number): void => {
+  const handleUpdate = (type: string, value: string | AccordionData, i: number): void => {
     const newValue = JSON.parse(JSON.stringify(layoutRow));
     const names = ['url', 'title', 'text', 'description', 'imgUrl', 'buttonText']
-    console.log(type);
+
     switch (type) {
       case 'type': {
         const label = typeof value === 'string' ? getLabel(value, url, title, description, text, imgUrl, buttonText, accordion) : getLabel(value[0][0], url, title, description, text, imgUrl, buttonText, accordion);
         
+        newValue[i].children = value;
         newValue[i].name = value;
         newValue[i].type = label.label;
         newValue[i].props.key = label.key;
@@ -113,14 +113,21 @@ const ElementSpecificSettings = () => {
       case 'CheckboxGroup': {
         newValue[i].props.CheckboxGroup = value;
         newValue[i].props.key = 'CheckboxGroup';
-        newValue[i].layout = {...newValue[i].layout, h: checkboxGroup.length === 0 ? 2 : 1.85*(checkboxGroup.length + 1)}
+        newValue[i].layout = {...newValue[i].layout, h: selectList.length === 0 ? 2 : 1.85*(selectList.length + 1)}
         dispatch(editRowDate({ row, date: newValue }));
         break;
       }
       case 'DropdownList': {
         newValue[i].props.SelectList = value;
         newValue[i].props.key = 'DropdownList';
-        newValue[i].layout = {...newValue[i].layout, h: selectList.length === 0 ? 2 : 1.85*(selectList.length)}
+        newValue[i].layout = {...newValue[i].layout }
+        dispatch(editRowDate({ row, date: newValue }));
+        break;
+      }
+      case 'Slider': {
+        newValue[i].props.Slider = value;
+        newValue[i].props.key = 'Slider';
+        newValue[i].layout = {...newValue[i].layout}
         dispatch(editRowDate({ row, date: newValue }));
         break;
       }
@@ -151,8 +158,6 @@ const ElementSpecificSettings = () => {
             settingsOptionsValues={settingsOptionsValues}
             handleUpdate={handleUpdate}
             setAccordion={setAccordion}
-            checkboxGroup={checkboxGroup}
-            setCheckboxGroup={setCheckboxGroup}
             SelectList={selectList}
             setSelectList={setSelectList}
             col={col}

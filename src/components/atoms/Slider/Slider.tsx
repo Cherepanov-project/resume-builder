@@ -12,6 +12,7 @@ const Slider: FC<ILayoutBlock> = ({ props }) => {
   const presetName = useTypedSelector((state) => state.swiper.presetName);
   const { Slider } = props;
   const slidesList = Slider;
+
   const [currentPreset, setCurrentPreset] = useState<T_SwiperPreset>(swiperPresets[presetName]);
   const slides = () => {
     return (
@@ -19,7 +20,7 @@ const Slider: FC<ILayoutBlock> = ({ props }) => {
         {slidesList?.map((el) => {
           return (
             <SwiperSlide key={el.id || '123'}>
-              <img src={`${el.value}`} className={classes['slider-pics']} />
+              <img src={`${el.value}`} className={classes['slider-pics']} style={{width:'100%'}}/>
             </SwiperSlide>
           );
         })}

@@ -12,7 +12,7 @@ import Item from '@atoms/StyledPaperItem';
 import { nanoid } from 'nanoid';
 
 type AccordionData = Array<[string, string]>;
-type CheckboxGroupData = Array<[string, string]>;
+
 
 const ElementSpecificSettingsForm = ({
   type, 
@@ -27,8 +27,6 @@ const ElementSpecificSettingsForm = ({
   setAccordion, 
   handleUpdate, 
   col, 
-  checkboxGroup, 
-  setCheckboxGroup,
   SelectList,
   setSelectList,
 }) => {
@@ -57,7 +55,7 @@ const ElementSpecificSettingsForm = ({
             </Select>
           </FormControl>
         </Item>
-        {type !== 'LayoutBlockImage' && type !== 'LayoutBlockVideoPlayer' && type !== 'LayoutBlockSlider' && type !== 'Accordion' && type !== 'CheckboxGroup' && type !== 'DropdownList' &&
+        {type !== 'LayoutBlockImage' && type !== 'LayoutBlockVideoPlayer' && type !== 'LayoutBlockSlider' && type !== 'Accordion' && type !== 'CheckboxGroup' && type !== 'DropdownList' && type !==  'Slider' &&
           <Item >
             <FormControl>
               <TextField 
@@ -68,36 +66,6 @@ const ElementSpecificSettingsForm = ({
                   handleUpdate('text', e.target.value, col - 1);
                 }}
               />
-            </FormControl>
-          </Item>}
-          {type === 'CheckboxGroup' && 
-          <Item >
-            <FormControl>
-              {checkboxGroup.map((checkbox: string, index: number) => (
-                <div key={index}>
-                  <TextField 
-                    style={{marginBottom:'15px'}}
-                    label={`Enter checkbox ${index+1} text`}
-                    value={checkbox[0]}
-                    onChange={(e: React.ChangeEvent<HTMLInputElement>) => {
-                      const updatedGroup = [...checkboxGroup];
-                      updatedGroup[index] = {id: nanoid(), value: e.target.value};
-                      setCheckboxGroup(updatedGroup);
-                      handleUpdate('CheckboxGroup', updatedGroup, col - 1);                    
-                    }}
-                  />
-                </div>
-              ))}
-              <button
-                onClick={(e: { preventDefault: () => void; }) => {
-                  e.preventDefault();
-                  const updatedGroup: CheckboxGroupData = [...checkboxGroup, {}];
-                  setCheckboxGroup(updatedGroup);
-                  handleUpdate('CheckboxGroup', updatedGroup, col - 1);
-                }}
-              >
-                Add Item
-              </button>
             </FormControl>
           </Item>}
         {type === 'Accordion' ? (
@@ -143,34 +111,49 @@ const ElementSpecificSettingsForm = ({
             </FormControl>
           </Item>
         ) : null}
-        {type === 'DropdownList' ? (
+        {type === 'DropdownList' || type ===  'Slider'|| type === 'CheckboxGroup' ? (
           <Item>
             <FormControl>
               {SelectList.map((item: string[], index: number) => (
                 <div key={index}>
                   <TextField 
                     style={{marginBottom:'15px'}}
-                    label={`Enter select item ${index + 1} text:`}
+                    label={`Enter ${type.toLowerCase()} ${type==='Slider' ? 'image url':'item'} ${index + 1}:`}
                     value={item[0]}
                     onChange={(e: React.ChangeEvent<HTMLInputElement>) => {
-                      const updatedSelectList = [...SelectList];
-                      updatedSelectList[index] = {id: nanoid(), value: e.target.value}
-                      setSelectList(updatedSelectList);
-                      handleUpdate('DropdownList', updatedSelectList, col - 1);
+                      const updatedList = [...SelectList];
+                      updatedList[index] = {id: nanoid(), value: e.target.value}
+                      setSelectList(updatedList);
+                      handleUpdate(type, updatedList, col - 1);
                     }}
                   />
                 </div>
               ))}
+              <div>
               <button
                 onClick={(e: { preventDefault: () => void; }) => {
                   e.preventDefault();
-                  const updatedSelectList = [...SelectList, {id: nanoid(), value:'Text'}];
-                  setSelectList(updatedSelectList);
-                  handleUpdate('DropdownList', updatedSelectList, col - 1);
+                  const updatedList = [...SelectList, {id: nanoid(), value:'Text'}];
+                  setSelectList(updatedList);
+                  handleUpdate(type, updatedList, col - 1);
                 }}
               >
                 Add Item
               </button>
+              <button
+                onClick={(e: { preventDefault: () => void; }) => {
+                  e.preventDefault();
+                  const updatedList = [...SelectList];
+                  if(updatedList.length > 1){
+                    updatedList.pop()
+                  }
+                  setSelectList(updatedList);
+                  handleUpdate(type, updatedList, col - 1);
+                }}
+              >
+                Delete Item
+              </button>
+              </div>
             </FormControl>
           </Item>
         ) : null}
@@ -207,7 +190,6 @@ const ElementSpecificSettingsForm = ({
         type === 'Image' ||
         type === 'Gallery' ||
         type === 'VideoPlayer' ||
-        type === 'Slider' ||
         type === 'SocialMediaIcon' ||
         type === 'CardItem' ||
         type === 'Logo' ? (
