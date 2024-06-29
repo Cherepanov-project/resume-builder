@@ -36,10 +36,7 @@ const ElementSpecificSettings = () => {
   }
 
   type AccordionData = Array<[string, string]>;
-  /*type CheckboxGroupData = Array<[{
-    id?: string,
-    value: string
-  }]>;*/
+  type selectList = string[];
   
   const type: string = layoutElement.name || '';
   const title: string = layoutElement.props.title || '';
@@ -58,7 +55,6 @@ const ElementSpecificSettings = () => {
     'CheckboxGroup',
     'LayoutBlockModal',
     'Logo',
-    'SelectList',
     'SocialMediaIcon',
     'Gallery',
     'RatingSystem',
@@ -80,22 +76,25 @@ const ElementSpecificSettings = () => {
 
   const [accordion, setAccordion] = useState<AccordionData>(layoutElement.props.accordion || []);
   const [checkboxGroup, setCheckboxGroup] = useState(layoutElement.props.CheckboxGroup ||[{id: nanoid(),value: ''}]);
+  const [selectList, setSelectList] = useState(layoutElement.props.SelectList ||[{id: nanoid(), value: ''}]);
 
-  const handleUpdate = (type: string, value: string | AccordionData, i: number): void => {
+  const handleUpdate = (type: string, value: string | AccordionData | selectList, i: number): void => {
     const newValue = JSON.parse(JSON.stringify(layoutRow));
     const names = ['url', 'title', 'text', 'description', 'imgUrl', 'buttonText']
-    
+
     switch (type) {
       case 'type': {
         const label = typeof value === 'string' ? getLabel(value, url, title, description, text, imgUrl, buttonText, accordion) : getLabel(value[0][0], url, title, description, text, imgUrl, buttonText, accordion);
-        console.log('Получаем лэйбэл', label)
+        
         newValue[i].name = value;
         newValue[i].type = label.label;
         newValue[i].props.key = label.key;
         newValue[i].layout = label.layout;
+
         if (label.value) {
           newValue[i].props.value = label.title.value;
         }
+
         if (label.url) newValue[i].url = label.url;
         dispatch(editRowDate({ row, date: newValue }));
         break;
@@ -118,6 +117,14 @@ const ElementSpecificSettings = () => {
         dispatch(editRowDate({ row, date: newValue }));
         break;
       }
+      case 'DropdownList': {
+        newValue[i].props.SelectList = value;
+        newValue[i].props.key = 'DropdownList';
+        newValue[i].layout = {...newValue[i].layout, h: selectList.length === 0 ? 2 : 1.85*(selectList.length)}
+        dispatch(editRowDate({ row, date: newValue }));
+        break;
+      }
+      
       default: {
         console.log('No case found');
       }
@@ -146,6 +153,8 @@ const ElementSpecificSettings = () => {
             setAccordion={setAccordion}
             checkboxGroup={checkboxGroup}
             setCheckboxGroup={setCheckboxGroup}
+            SelectList={selectList}
+            setSelectList={setSelectList}
             col={col}
           />
         </AccordionDetails>

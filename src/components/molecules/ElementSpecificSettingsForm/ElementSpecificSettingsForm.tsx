@@ -14,7 +14,24 @@ import { nanoid } from 'nanoid';
 type AccordionData = Array<[string, string]>;
 type CheckboxGroupData = Array<[string, string]>;
 
-const ElementSpecificSettingsForm = ({ type, text, title, description, url, imgUrl, buttonText, accordion, settingsOptionsValues, setAccordion, handleUpdate, col, checkboxGroup, setCheckboxGroup}) => {
+const ElementSpecificSettingsForm = ({
+  type, 
+  text, 
+  title, 
+  description, 
+  url, 
+  imgUrl, 
+  buttonText, 
+  accordion, 
+  settingsOptionsValues, 
+  setAccordion, 
+  handleUpdate, 
+  col, 
+  checkboxGroup, 
+  setCheckboxGroup,
+  SelectList,
+  setSelectList,
+}) => {
   return (
     <form >
       <Stack >
@@ -40,7 +57,7 @@ const ElementSpecificSettingsForm = ({ type, text, title, description, url, imgU
             </Select>
           </FormControl>
         </Item>
-        {type !== 'LayoutBlockImage' && type !== 'LayoutBlockVideoPlayer' && type !== 'LayoutBlockSlider' && type !== 'Accordion' && type !== 'CheckboxGroup' &&
+        {type !== 'LayoutBlockImage' && type !== 'LayoutBlockVideoPlayer' && type !== 'LayoutBlockSlider' && type !== 'Accordion' && type !== 'CheckboxGroup' && type !== 'DropdownList' &&
           <Item >
             <FormControl>
               <TextField 
@@ -119,6 +136,37 @@ const ElementSpecificSettingsForm = ({ type, text, title, description, url, imgU
                   const updatedAccordion: AccordionData = [...accordion, ['', '']];
                   setAccordion(updatedAccordion);
                   handleUpdate('accordion', updatedAccordion, col - 1);
+                }}
+              >
+                Add Item
+              </button>
+            </FormControl>
+          </Item>
+        ) : null}
+        {type === 'DropdownList' ? (
+          <Item>
+            <FormControl>
+              {SelectList.map((item: string[], index: number) => (
+                <div key={index}>
+                  <TextField 
+                    style={{marginBottom:'15px'}}
+                    label={`Enter select item ${index + 1} text:`}
+                    value={item[0]}
+                    onChange={(e: React.ChangeEvent<HTMLInputElement>) => {
+                      const updatedSelectList = [...SelectList];
+                      updatedSelectList[index] = {id: nanoid(), value: e.target.value}
+                      setSelectList(updatedSelectList);
+                      handleUpdate('DropdownList', updatedSelectList, col - 1);
+                    }}
+                  />
+                </div>
+              ))}
+              <button
+                onClick={(e: { preventDefault: () => void; }) => {
+                  e.preventDefault();
+                  const updatedSelectList = [...SelectList, {id: nanoid(), value:'Text'}];
+                  setSelectList(updatedSelectList);
+                  handleUpdate('DropdownList', updatedSelectList, col - 1);
                 }}
               >
                 Add Item

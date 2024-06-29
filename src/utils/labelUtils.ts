@@ -240,6 +240,22 @@ export const getLabel = (blockValue: string, url: string, title: string, descrip
           Checkboxes: [],
         },
       };
+      case 'SelectList':
+      return {
+        label: 'SelectList',
+        value: 'SelectList',
+        key: 'SelectList',
+        layout: { i: '', x: 0, y: 0, w: 2, h: 1 },
+        children: [],
+        title: {
+          key: 'SelectList',
+          value: '0',
+          text: false,
+        },
+        props: {
+          list: [],
+        },
+      };
     case 'RadioButtons':
       return {
         label: 'CheckBoxes',

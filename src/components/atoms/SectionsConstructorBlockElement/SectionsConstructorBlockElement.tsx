@@ -31,6 +31,7 @@ const SectionsConstructorBlockElement: React.FC<SectionsConstructorBlockElementT
 }) => {
   
   const props = params.props;
+  console.log('Параметры', params);
 
   const isImg = props.key === 'image';
   const isBtn = props.key === 'button';
@@ -46,7 +47,7 @@ const SectionsConstructorBlockElement: React.FC<SectionsConstructorBlockElementT
   const isToggleButtons = props.key === 'toggleButtons';
   const isGallery = props.key === 'gallery';
   const isVideo = props.key === 'video';
-  const isSelectList = props.key === 'selectlist';
+  const isDropdownList = props.key === 'DropdownList';
   const isModal = props.key === 'modal';
   const isSlider = props.key === 'slider';
   const isLogo = props.key === 'logo';
@@ -54,8 +55,7 @@ const SectionsConstructorBlockElement: React.FC<SectionsConstructorBlockElementT
   const isCardItem = props.key === 'cardItem'
   const isAccordion = props.key === 'accordion'
   const isCheckboxGroup = props.key === 'CheckboxGroup'
-  
-  
+
   return (
     <>
       {isImg && <Image props={props} />}
@@ -94,7 +94,7 @@ const SectionsConstructorBlockElement: React.FC<SectionsConstructorBlockElementT
       {isHeaderTitle && <HeaderTitle props={props} />}
       {isGallery && <Gallery layout={params.layout} props={{Gallery: [{id: nanoid(), img: props.url, title: props.text}]}}/>}
       {isVideo && <VideoPlayer props={props}/>}
-      {isSelectList && <DropdownList layout={params.layout} props={{DropdownList: [{id: nanoid(), value: props.text || 'Text'}]}}/>}
+      {isDropdownList && <DropdownList layout={params.layout} props={{DropdownList: props.SelectList!}}/>}
       {isModal && <ModalWindow props={props}/>}
       {isSlider && <Slider props={props} />}
       {isSMIcon && <SocialMediaIcon props={props} />}
