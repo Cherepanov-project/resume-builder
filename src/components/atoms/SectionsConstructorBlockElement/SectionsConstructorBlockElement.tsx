@@ -56,6 +56,8 @@ const SectionsConstructorBlockElement: React.FC<SectionsConstructorBlockElementT
   const isAccordion = props.key === 'accordion'
   const isCheckboxGroup = props.key === 'CheckboxGroup'
 
+  console.log('это isSMIcon ', isSMIcon )
+
   return (
     <>
       {isImg && <Image props={props} />}

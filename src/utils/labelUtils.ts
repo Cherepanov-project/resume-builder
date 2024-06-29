@@ -169,7 +169,7 @@ export const getLabel = (blockValue: string, url: string, title: string, descrip
         label: 'SocialMediaIcon',
         value: 'SocialMediaIcon',
         key: 'smIcon',
-        layout: { i: '', x: 0, y: 0, w: 1, h: 1 },
+        layout: { i: '', x: 0, y: 0, w: 1, h: 3 },
         title: {
           key: 'smIcon',
           title: title,
