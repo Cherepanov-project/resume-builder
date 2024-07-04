@@ -45,7 +45,6 @@ const sectionsManagerSlice = createSlice({
     editRowDate(state, action) {
       const { row, date } = action.payload;
       const [, curCol] = state.curId.split('');
-      // state.layoutDate = { ...state.layoutDate, [row]: date };
       const newDate = date.map((col, index) => {
         if (+curCol - 1 === index) {
           return {

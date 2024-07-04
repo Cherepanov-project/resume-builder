@@ -50,9 +50,9 @@ const Avatars = ({ props, layout }: AvatarsProps) => {
           <div key={item.id}  className={classes.wrap}>
             <Avatar
               className={classes.avatar}
-              // src={item.img}
+              src={item.img}
               // src="src/assets/images/lukeSky.jpg"
-              src="src/assets/images/card3.png"
+              // src="src/assets/images/card3.png"
               alt={String(item.title)}
               sx={{ objectFit: 'cover' }}
             />

@@ -94,23 +94,6 @@ const layoutSlice = createSlice({
               newElement.layout.x < el.layout.x + el.layout.w
             ) {
               newElement.layout.y += el.layout.h;
-              // const newContainer = {
-              //   id: nanoid(),
-              //   height: 30,
-              //   elements: {
-              //     activeElements: [],
-              //   },
-              //   layout: {
-              //     i: null,
-              //     w: 6,
-              //     h: 2,
-              //     x: 0,
-              //     y: 0,
-              //   },
-              // };
-              // state.gridContainers.splice(index + 1, 0, newContainer);
-              // containerId = newContainer.id;
-              // return activeElements = newContainer.elements.activeElements as T_BlockElement[];
             }
           }
           return (activeElements = container.elements.activeElements as T_BlockElement[]);
@@ -153,7 +136,6 @@ const layoutSlice = createSlice({
                 ...element.children![elIndx],
                 layout: {
                   ...element.children![elIndx].layout,
-                  // y: element.children![elIndx].layout.y + element.children![elIndx].layout.h, // если хотим чтобы скопированный элемент появлялся под элементом
                   x: element.children![elIndx].layout.x + element.children![elIndx].layout.w, //// если хотим чтобы скопированный элемент появлялся cправа от элемента
                   i: nanoid(),
                 },
