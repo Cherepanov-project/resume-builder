@@ -13,6 +13,7 @@ import {
 import { ExpandMore } from '@mui/icons-material';
 import Item from '@atoms/StyledPaperItem';
 import ElementSpecificSettingsForm from '@molecules/ElementSpecificSettingsForm'
+import ElementSpecificStylesForm from '../ElementSpecificStylesForm';
 import { getLabel } from '@/utils/labelUtils';
 
 const ElementSpecificSettings = () => {
@@ -76,6 +77,8 @@ const ElementSpecificSettings = () => {
 
   const handleUpdate = (type: string, value: string | AccordionData, i: number): void => {
     const newValue = JSON.parse(JSON.stringify(layoutRow));
+    console.log('handleUpdate', newValue);
+
     const names = ['url', 'title', 'text', 'description', 'imgUrl', 'buttonText']
     switch (type) {
       case 'type': {
@@ -99,6 +102,12 @@ const ElementSpecificSettings = () => {
       case 'accordion': {
         newValue[i].props.accordion = value;
         newValue[i].layout = {...newValue[i].layout, h: accordion.length === 0 ? 2 : 1.85*(accordion.length)}
+        dispatch(editRowDate({ row, date: newValue }));
+        break;
+      }
+      case 'style':{
+        newValue[i].props.style = Object.assign(newValue[i].props.style, value);
+        console.log('Обновили стили',newValue);
         dispatch(editRowDate({ row, date: newValue }));
         break;
       }
@@ -134,7 +143,11 @@ const ElementSpecificSettings = () => {
       </Accordion>
       <Accordion>
         <AccordionSummary expandIcon={<ExpandMore />}>Style Settings</AccordionSummary>
-        <AccordionDetails></AccordionDetails>
+        <AccordionDetails>
+        <ElementSpecificStylesForm
+            handleUpdate={handleUpdate}
+            col={col}></ElementSpecificStylesForm>
+        </AccordionDetails>
       </Accordion>
     </Box>
   );
