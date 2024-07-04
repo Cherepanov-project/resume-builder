@@ -89,7 +89,7 @@ const SectionsConstructorRowEl: React.FC<SectionsConstructorRowElType> = ({
     const r: string = String(row);
     return layoutRow.map((el, idx) => {
       const i = idx + 1;
-
+      
       // задание размеров для секции в зависимости от fr
       const style = {
         backgroundColor: '#fff',
