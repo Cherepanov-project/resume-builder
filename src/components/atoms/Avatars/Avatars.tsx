@@ -44,15 +44,17 @@ const Avatars = ({ props, layout }: AvatarsProps) => {
   }, [currentList.length, layout.i, dispatch]);
 
   return (
-    <Stack key={nanoid()} direction="row" spacing={2}  className={classes.wrapper} sx={{ flexDirection: 'column' }}>
+    <Stack key={nanoid()} direction="row" spacing={2} className={classes.wrapper} sx={{ flexDirection: 'column' }}>
       {currentList ? (
         currentList.map((item) => (
           <div key={item.id}  className={classes.wrap}>
             <Avatar
               className={classes.avatar}
-              src={item.img}
+              // src={item.img}
+              // src="src/assets/images/lukeSky.jpg"
+              src="src/assets/images/card3.png"
               alt={String(item.title)}
-              sx={{ width: '60%', height: '60%', objectFit: 'cover' }}
+              sx={{ objectFit: 'cover' }}
             />
             <div className={classes.nick}>
               {item.title || 'Enter name'}
@@ -65,7 +67,7 @@ const Avatars = ({ props, layout }: AvatarsProps) => {
             className={classes.avatar}
             alt="avatar"
             src={'url'}
-            sx={{ width: '60%', height: '60%', objectFit: 'cover' }}
+            sx={{ objectFit: 'cover' }}
           />
           <div key={nanoid()} className={classes.nick}>Enter name</div>
         </>

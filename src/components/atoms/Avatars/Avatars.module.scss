@@ -1,28 +1,34 @@
-.wrapper, .wrap {
+.wrapper {
     display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    width: 100%;
+    height: calc(100% - 40px);
+    //height: 100%;
+}
+
+.wrap {
     width: 100%;
     height: 100%;
-    justify-content: center;
-    align-items: center;
+    display: flex;
     flex-direction: column;
-    justify-content: flex-start;
-    // padding-top: 10px;
+    align-items: center;
+    justify-content: start;
+    //border: 1px solid red;
 
-    .wrap {
-        margin-top: 10px;
-        height: 100%;
-    }
 }
 
-
-.Avatars {
-    width: 60%;
-    height: 60%;
+.avatar {
+    width: auto !important;
+    height: auto !important;
+    min-width: 40px;
+    min-height: 40px;
+    max-width: 60% !important;
+    max-height: 60% !important;
+    object-fit: cover !important;
     cursor: pointer;
-}
-
-.avatarImg {
-    background: none;
+    //border: 1px solid red;
 }
 
 .nick {
@@ -30,7 +36,6 @@
     display: block;
     width: 80%;
     height: 20px;
-    //border: 1px solid gray;
     border-radius: 6px;
     margin-top: 10px !important;
     margin-left: 0 !important;

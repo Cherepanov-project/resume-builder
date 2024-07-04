@@ -1,0 +1,28 @@
+//.anchor {
+//  label {
+//    textarea {
+//      width: 200px;
+//      height: 200px;
+//    }
+//  }
+//}
+
+.wrapper {
+  position: relative;
+  overflow: hidden;
+  width: 100%;
+  height: 100%; // calc -40px
+  display: flex;
+  justify-content: start;
+}
+
+.image {
+  position: absolute;
+  top: 0;
+  left: 0;
+  //width: 100%;
+  //height: 100%;
+  object-fit: contain;
+  object-position: left;
+  //object-position: top;
+}
