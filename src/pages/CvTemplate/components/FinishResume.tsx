@@ -3,12 +3,14 @@ import { FC, MouseEventHandler, useRef } from 'react';
 import { CvTemplatePDF } from '../../CvTemplatePDF';
 import { buttonStyle } from '@assets/style/buttonStyle.ts';
 import { useReactToPrint } from 'react-to-print';
+import { StylesNameKeys } from '@pages/CvTemplatePDF/const';
+
 interface IProps {
-  handleButtonClick: MouseEventHandler<HTMLButtonElement>;
   handleReset: MouseEventHandler<HTMLButtonElement>;
+  nameTemplate: StylesNameKeys;
 }
 
-const FinishResume: FC<IProps> = ({ handleButtonClick, handleReset }) => {
+const FinishResume: FC<IProps> = ({ handleReset, nameTemplate }) => {
   const componentRef = useRef(null);
   const handlePrint = useReactToPrint({
     content: () => componentRef.current,
@@ -16,10 +18,7 @@ const FinishResume: FC<IProps> = ({ handleButtonClick, handleReset }) => {
   return (
     <Box>
       <Box display="flex" justifyContent="space-between" alignItems="flex-end" sx={{ mb: 3 }}>
-        <Typography sx={{ marginTop: 4, ml: 7, fontSize: 34 }}>Preview</Typography>
-        <Button sx={{ mr: 10 }} onClick={handleButtonClick}>
-          Edit
-        </Button>
+        <Typography sx={{ marginTop: 4, ml: 10, fontSize: 34 }}>Preview</Typography>
       </Box>
       <Box display="flex" justify-content="center" flexDirection="row" sx={{ mr: '80px' }}>
         <Box>
@@ -37,7 +36,7 @@ const FinishResume: FC<IProps> = ({ handleButtonClick, handleReset }) => {
         </Box>
 
         <Paper elevation={12}>
-          <CvTemplatePDF styleName={'toronto'} ref={componentRef} />
+          <CvTemplatePDF styleName={nameTemplate} ref={componentRef} />
         </Paper>
       </Box>
 
