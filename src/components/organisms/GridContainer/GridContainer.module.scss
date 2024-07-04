@@ -28,24 +28,37 @@
   }
 
   .item {
-    background-color: white;
+    //background-color: black;
     border-radius: 2px;
 
+    &:hover {
+      transition: background-color 0.3s ease-in-out;
+      background-color: white;
+    }
     & > span {
       bottom: -3px !important;
+      background-image: none !important;
 
       &:after {
         right: 0;
         bottom: 0;
-        border-color: #1976d2 !important;
+        border-color: transparent !important;
+        transition: border-color 0.3s ease-in-out;
       }
+    }
+    &:hover > span:after {
+      border-color: #1976d2 !important;
     }
 
     & > span:first-of-type {
+      position: absolute;
+      z-index: 3;
       left: -3px !important;
     }
 
     & > span:last-of-type {
+      position: absolute;
+      z-index: 3;
       right: -3px !important;
     }
   }
