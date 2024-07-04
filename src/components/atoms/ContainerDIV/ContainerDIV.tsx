@@ -15,9 +15,7 @@ import 'react-resizable/css/styles.css';
 import classes from './ContainerDIV.module.scss';
 import { nanoid } from 'nanoid';
 import ElementToolsPanel from '@/components/organisms/ElementToolsPanel/ElementToolsPanel';
-// import ElementToolsPanel from '@/components/organisms/ElementToolsPanel';
 
-// ========================================================================== \\
 // Отрисовываем динамический компонент
 // По сути это зависимый компонент, который отвечает за рендеринг условного блока
 const DynamicComponentRenderer: React.FC<DynamicComponentRendererProps> = ({
@@ -53,7 +51,6 @@ const DynamicComponentRenderer: React.FC<DynamicComponentRendererProps> = ({
     </Suspense>
   );
 };
-// ========================================================================== \\
 
 const ContainerDIV: React.FC<ContainerDIVProps> = ({ children, layout, columns, props, containerId }) => {
   const dispatch = useAppDispatch();
@@ -84,10 +81,6 @@ const ContainerDIV: React.FC<ContainerDIVProps> = ({ children, layout, columns, 
     const targetElement = event.target as HTMLElement;
     const parentElement = targetElement.closest('.wrapper') as HTMLElement;
     const element = parentElement?.dataset.id;
-    
-
-    // const id = currentContainer;
-
     dispatch(addElement({ draggableItem, layoutItem, element, el: children.find(el => el.layout.i === element) }));
   };
 

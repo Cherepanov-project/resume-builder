@@ -1,4 +1,3 @@
-// import { useTypedSelector } from '@/hooks/cvTemplateHooks';
 import DeleteIcon from '@mui/icons-material/Delete';
 import IconButton from '@mui/material/IconButton';
 import { default as Tool } from '@mui/material/Tooltip';

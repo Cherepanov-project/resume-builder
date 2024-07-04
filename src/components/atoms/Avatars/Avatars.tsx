@@ -51,8 +51,6 @@ const Avatars = ({ props, layout }: AvatarsProps) => {
             <Avatar
               className={classes.avatar}
               src={item.img}
-              // src="src/assets/images/lukeSky.jpg"
-              // src="src/assets/images/card3.png"
               alt={String(item.title)}
               sx={{ objectFit: 'cover' }}
             />
