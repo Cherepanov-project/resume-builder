@@ -7,6 +7,7 @@ import {
 } from '@/types/landingBuilder.ts';
 
 import { Navigation, Pagination } from 'swiper/modules';
+import { current } from '@reduxjs/toolkit';
 
 export const insertChild = (
   obj: unknown,
@@ -14,6 +15,8 @@ export const insertChild = (
   element: T_BlockElement,
 ): T_BlockElement | T_BlockElement[] => {
   // Когда блок помещается в рабочую область.
+  console.log(target)
+  console.log(current(obj))
   if (!target) {
     return [...(obj as T_BlockElement[]), element];
   }
@@ -23,9 +26,18 @@ export const insertChild = (
 
     // Когда блок помещается в другой блок.
   } else if (typeof obj === 'object' && obj !== null) {
+    console.log(current(obj))
+    console.log(target)
+    console.log(element)
     const objAsBlock = obj as T_BlockElement;
     const newObj = { ...objAsBlock };
+    console.log(current(objAsBlock.layout))
+    console.log(objAsBlock.layout.i)
+    console.log(target)
+    console.log(objAsBlock.layout.i === target)
+    console.log(objAsBlock.layout && objAsBlock.layout.i === target)
     if (objAsBlock.layout && objAsBlock.layout.i === target) {
+      console.log(newObj)
       newObj.children = newObj.children ? [...newObj.children, element] : [element];
       return newObj;
     }
@@ -41,6 +53,7 @@ export const insertChild = (
     //   }
     // }
     // return newObj;
+    console.log(newObj)
   }
 
   return obj as T_BlockElement[];

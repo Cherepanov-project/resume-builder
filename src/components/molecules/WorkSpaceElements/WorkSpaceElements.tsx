@@ -10,6 +10,8 @@ const WorkSpaceElements: FC<IWorkSpaceElementsProps> = ({ elements }) => {
   const renderedArr =
     elements && elements.length
       ? elements.map((el, i) => {
+          console.log(el)
+          console.log(i)
           if (el.element === 'button') {
             return (
               <Button key={i} style={el.style} variant="contained">

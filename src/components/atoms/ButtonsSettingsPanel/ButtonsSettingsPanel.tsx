@@ -26,7 +26,10 @@ const ButtonsSettingsPanel = ({
     style: style ? style : {},
   };
 
-  console.log(objForStore);
+  // console.log("ButtonsSettingsPanel");
+  // console.log(itemsList);
+  // console.log(objForStore);
+
   const handleApply = () => {
     const check = СheckingLabel(itemsList);
 

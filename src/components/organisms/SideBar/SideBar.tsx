@@ -24,6 +24,7 @@ const SideBar: React.FC = () => {
   useEffect(() => {
     importFiles().then((data) => {
       setSidebarMenuList({ ...sidebarMenuList, ...data });
+      // console.log(data)
     });
 
     // eslint-disable-next-line react-hooks/exhaustive-deps

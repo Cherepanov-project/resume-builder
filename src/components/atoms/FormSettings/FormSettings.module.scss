@@ -1,0 +1,28 @@
+.form {
+    // width: 384px;
+    display: flex;
+    align-items: center;
+    gap: 21px;
+  
+    min-height: 200px;
+    min-width: 200px;
+
+    flex-direction: column;
+  
+    background-color: white;
+  
+    border-radius: 6px;
+    border: 1px solid rgba(217, 217, 217, 1);
+  
+    // margin: auto;
+    // margin-top: 59px;
+
+    // height: calc(100% - 46px);
+    box-sizing: border-box;
+  
+    // padding: 22px 32px 22px 32px;
+  }
+
+  .button {
+    border: 1px solid black;
+  }

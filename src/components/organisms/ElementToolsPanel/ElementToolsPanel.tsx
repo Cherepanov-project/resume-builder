@@ -30,6 +30,7 @@ const ElementToolsPanel: React.FC<ElementToolsPanelProps> = ({ layout, id }) => 
   // const currentContainer = useAppSellector((state) => state.layout.currentContainer);
 
   const handleSettings = () => {
+    console.log(layout)
     dispatch(initPanel({ type: 'section', sectionID: layout.i, moduleID: '0' }));
   };
 

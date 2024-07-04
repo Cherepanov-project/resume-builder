@@ -37,6 +37,7 @@ const NestedList: React.FC<NestedListProps> = ({ name, items }) => {
         <Collapse in={isOpen} timeout="auto" unmountOnExit>
           <List className={classes['list']} component="div" disablePadding>
             {items?.map((item) => {
+              console.log(item)
               return (
                 <ListItemButton
                   key={item.title ? item.title : item.name}

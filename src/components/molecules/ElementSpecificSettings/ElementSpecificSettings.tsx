@@ -50,6 +50,7 @@ const ElementSpecificSettings = () => {
 
   const settingsOptionsValues = [
     'Avatars',
+    'Form',
     'MasonryGallery',
     'BasicRating',
     'BasicTooltip',
@@ -67,6 +68,8 @@ const ElementSpecificSettings = () => {
     'SelectList',
     'TitleH1',
   ];
+
+  // console.log("isForm2")
 
   const handleUpdate = (type: string, value: string, i: number): void => {
     console.log('f', type, value);
@@ -132,6 +135,28 @@ const ElementSpecificSettings = () => {
             text: '',
             wrapperStyle: { textAlign: 'center' },
             textStyle: { border: 'none', height: '100%', width: '100%' },
+          },
+        };
+        case 'Form': 
+        console.log("form1")
+        return {
+          label: 'Form',
+          value: 'Form',
+          key: 'form',
+          layout: { i: "", x: 0, y: 0, w: 3, h: 6 },
+          url: url,
+          props: {
+            Form: [],
+          },
+          children: [],
+          title: {
+            // key: 'form',
+            // value: 'test1',
+            // Form: [],
+            // fields: [],
+            // text: text,
+            // wrapperStyle: { textAlign: 'center' },
+            // textStyle: { border: 'none', height: '100%', width: '100%' },
           },
         };
       case 'LayoutBlockTitle':
@@ -359,7 +384,7 @@ const ElementSpecificSettings = () => {
           value: 'LayoutBlockModal',
           key: 'modal',
           layout: { i: '', x: 0, y: 0, w: 1.5, h: 3 },
-          children: [],
+          children: [], 
           title: {
             key: 'modal',
             value: '0',
@@ -426,7 +451,13 @@ const ElementSpecificSettings = () => {
                   </Select>
                 </FormControl>
               </Item>
-              {type === 'LayoutBlockAnchor' || type === 'Avatars' || type === 'LayoutBlockImage' || type === 'MasonryGallery'  || type === 'LayoutBlockVideoPlayer' || type === 'LayoutBlockSlider' ? (
+              {type === 'LayoutBlockAnchor'||
+              type === 'Avatars' ||
+              type === 'LayoutBlockImage' ||
+              type === 'MasonryGallery'  ||
+              type === 'LayoutBlockVideoPlayer' ||
+              type === 'Form' ||
+              type === 'LayoutBlockSlider' ? (
                 <Item>
                   <FormControl>
                     <TextField

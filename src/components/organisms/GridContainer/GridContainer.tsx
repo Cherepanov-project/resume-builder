@@ -17,6 +17,7 @@ import classes from './GridContainer.module.scss';
 const DynamicComponentRenderer: React.FC<DynamicComponentRendererProps> = memo(
   ({ Component, props, columns, source, children, layout }) => {
     const DynamicComponent = lazy(() => import(`../../${source}/${Component}/index.ts`));
+    console.log(Component)
     return (
       <Suspense fallback={<ComponentPreloader />}>
         <DynamicComponent
@@ -34,6 +35,7 @@ const DynamicComponentRenderer: React.FC<DynamicComponentRendererProps> = memo(
 // ========================================================================== \\
 
 export const GridContainer = (container: IGridContainers) => {
+  // console.log(container)
   const dispatch = useAppDispatch();
   const currentDraggableItem = useAppSellector((state) => state.layout.currentDraggableItem);
   const [width, setWidth] = useState(window.innerWidth);
@@ -124,6 +126,7 @@ export const GridContainer = (container: IGridContainers) => {
           </div>
         ))}
       </ResponsiveGridLayout>
+      {/* {console.log(isHover)} */}
       {isHover && (
         <button
           className={classes['add-button']}

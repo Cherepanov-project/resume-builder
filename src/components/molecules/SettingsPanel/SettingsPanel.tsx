@@ -13,6 +13,7 @@ import BasicRatingSettings from '@/components/atoms/BasicRatingSettings';
 import BasicToolTipSettings from '@/components/atoms/BasicToolTipSettings';
 import LayoutBlockButtonSettings from '@/components/atoms/LayoutBlockButtonSettings';
 import LayoutBlockModalSettings from '@/components/atoms/LayoutBlockModalSettings';
+import FormSettings from '@/components/atoms/FormSettings';
 
 const SettingsPanel: React.FC = () => {
   const dispatch = useAppDispatch();
@@ -47,11 +48,30 @@ const SettingsPanel: React.FC = () => {
   for (let i = 0; i < gridContainers?.length; i++) {
     gridContainers[i].elements.activeElements.forEach((elem) => activeElements.push(elem));
   }
-  const currentElement = activeElements.find((item) => item.layout.i === id);
+  // const currentElement = activeElements.find((item) => item.layout.i === id);
+  let currentElement = activeElements.find((item) => item.layout.i === id);
+  // const currentElementForm = if() {}
+  
+  if (!currentElement) {
+    const formEls = activeElements.filter((item) => item.name === "Form")
+    formEls.forEach((el) => {
+      el.children?.forEach((elChild) => {
+        if (elChild.layout.i === id) currentElement = elChild
+      })
+      // currentElement = el.children?.find((elChild) => elChild.layout.i === id)
+      // console.log(currentElement)
+    })
+  }
+
   const props: IElementProps | undefined = currentElement?.props;
   const name = currentElement?.name;
   const size = currentElement?.props?.size;
 
+  // console.log(currentElement)
+  // console.log(activeElements)
+  // console.log(name)
+  // console.log(id)
+  // console.log(type)
   function findPropsName(props: IElementProps | undefined): ISettingsInputItem[] | undefined {
     if (name === 'RadioGroup') {
       return props?.RadioGroup;
@@ -64,7 +84,18 @@ const SettingsPanel: React.FC = () => {
     } else if (name === 'MasonryGallery') {
       return props?.MasonryGallery;
     } else if (name === 'Avatars') {
+      // console.log(123123)
+      // console.log(currentElement)
+      console.log(props)
       return props?.Avatars;
+    } else if (name === "Form") {
+      // console.log(props)
+      // console.log(123123)
+      // console.log(currentElement)
+      // console.log(props)
+      // console.log(name)
+      // console.log(props?.Form)
+      return props?.Form;
     }
   }
 
@@ -80,6 +111,22 @@ const SettingsPanel: React.FC = () => {
   const [colorCSS, setColorCSS] = useState({});
   const [elSize, setElSize] = useState({});
 
+  // console.log("props && name")
+  // console.log(props)
+  // console.log(name)
+
+  // console.log("currentElement")
+  // console.log(currentElement)
+  // console.log("propsName")
+  // console.log(propsName)
+
+  // console.log("currentList")
+  // console.log(currentList)
+
+  // console.log("itemsList")
+  // console.log(itemsList)
+  // console.log(props && name ? propsName : [])
+
   useEffect(() => {
     setPrevList(currentList || []);
     setItemsList(currentList || []);
@@ -89,22 +136,32 @@ const SettingsPanel: React.FC = () => {
   }, [currentElement, size]);
 
   function СheckingLabel(list: ISettingsInputItem[]) {
-    if (name && name !== 'MasonryGallery') {
+    if (name && name !== 'MasonryGallery' && name !== 'Avatars') {
       const labelsList = list.map((item) => item.value);
       return new Set(labelsList).size !== labelsList.length;
     }
     return false;
   }
 
+  // {console.log("currentList 0")}
+  // {console.log(currentList)}
+
+  // {console.log("itemsList 0")}
+  // {console.log(itemsList[0])}
+
   const accessNames = ['RadioGroup', 'CheckboxGroup', 'SelectList', 'MasonryGallery', 'Avatars'];
 
   const isButtonsPanelVisible = accessNames.includes(name || '');
+
+  // console.log("isButtonsPanelVisible")
+  // console.log(isButtonsPanelVisible)
 
   const showSliderSettings = name === 'LayoutBlockSlider';
   const showRatingSettings = name == 'BasicRating';
   const showBasicToolTipSettings = name === 'BasicTooltip';
   const showLayoutBlockButtonSettings = name === 'LayoutBlockButton';
   const showLayoutBlockModalSettings = name === 'LayoutBlockModal';
+  const showFormSettings = name === 'Form';
 
   return isShown ? (
     <Box ref={panelRef} className="list__wrap">
@@ -151,11 +208,21 @@ const SettingsPanel: React.FC = () => {
 
       {showLayoutBlockModalSettings && <LayoutBlockModalSettings />}
 
+      {showFormSettings && itemsList.length > 0 && (props !== undefined && props.Form !== undefined) && (
+        itemsList[0]["i"] === props.Form[0]["i"] && (
+        <FormSettings
+          itemsList={itemsList}
+          setItemsList={setItemsList}
+          props={props}
+        />
+      ))}
+
       <Box className="settings-panel">
         {type === 'section' &&
           !showBasicToolTipSettings &&
           !showRatingSettings &&
-          !showLayoutBlockButtonSettings &&
+          !showLayoutBlockButtonSettings &&  
+          // !showFormSettings &&
           !showLayoutBlockModalSettings && <ContainerDIVSettings setStyle={setStyle} />}
       </Box>
 

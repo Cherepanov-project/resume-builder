@@ -5,6 +5,7 @@ import { insertChild } from '@/utils';
 import { addBaseScript } from '@/utils/scriptAssigner';
 import { Layout } from 'react-grid-layout';
 import { T_BlockElement } from '@/types/landingBuilder';
+import { current } from '@reduxjs/toolkit';
 
 type ElementsType = {
   activeElements: T_BlockElement[];
@@ -58,11 +59,13 @@ const layoutSlice = createSlice({
   reducers: {
     // Добавляем блок в рабочую область
     addElement(state, action) {
+      console.log(action)
       const { draggableItem, layoutItem, parentElement, id } = action.payload;
       const containerId = id;
       // Задаем уникальный ID блоку и параметры
       //при дропе добавляем скрипт с эвент листенером в виде строки
       const elemId = nanoid();
+      console.log(elemId)
       const newElement = {
         ...draggableItem,
         elementScript: addBaseScript(elemId, draggableItem),
@@ -80,10 +83,16 @@ const layoutSlice = createSlice({
           maxH: draggableItem.layout.maxH ?? 1000000,
         },
       };
+      console.log(newElement)
       let activeElements: T_BlockElement[] = [];
+      console.log(current(state.gridContainers))
       state.gridContainers.forEach((container /*, index*/) => {
+        console.log(current(container))
+        console.log(containerId)
+        console.log(container.id)
         if (container.id === containerId) {
           for (const el of container.elements.activeElements) {
+            console.log(current(el))
             if (
               newElement.layout.x >= el.layout.x &&
               newElement.layout.x < el.layout.x + el.layout.w
@@ -111,9 +120,15 @@ const layoutSlice = createSlice({
           return (activeElements = container.elements.activeElements as T_BlockElement[]);
         }
       });
+      console.log(current(activeElements))
+      console.log(parentElement)
+      console.log(newElement)
       const renewElements = insertChild(activeElements, parentElement, newElement);
+      // console.log(current(renewElements))
+      // console.log(current(renewElements[0]))
       state.gridContainers = state.gridContainers.map((container) => {
         if (container.id === containerId) {
+          console.log(current(container))
           container.elements.activeElements = [...(renewElements as T_BlockElement[])];
         }
         return container;
@@ -162,17 +177,33 @@ const layoutSlice = createSlice({
     },
     // Удаляем блок из рабочей области
     deleteElement(state, action) {
+      // console.log(current(action))
       let indx: number;
       state.gridContainers.forEach((container) => {
         if (container.id === action.payload.id) {
           indx = container.elements.activeElements.findIndex(
             (element) => element.layout.i === action.payload.layout.i,
           );
-          container.elements.activeElements.splice(indx, 1);
+          if (indx === -1) {
+            console.log(indx)
+            // console.log(current(container.elements.activeElements))
+            console.log(current(container).elements)
+            const formEls = container.elements.activeElements.filter((item) => item.name === "Form")
+            console.log(current(formEls[0]))
+            formEls.forEach((el) => {
+              console.log(current(el))
+              el.children?.forEach((elChild, index) => {
+                console.log(elChild)
+                if (elChild.layout.i === action.payload.layout.i) el.children!.splice(index, 1)
+              })
+            })
+          }
+          else container.elements.activeElements.splice(indx, 1);
         }
       });
     },
     addGridContainer(state, action) {
+      console.log(action.payload)
       const indx = state.gridContainers.findIndex((container) => container.id === action.payload);
       const newContainer = {
         id: nanoid(),
@@ -240,9 +271,15 @@ const layoutSlice = createSlice({
     },
     // Увеличиваем количество колонок в блоке
     increaseElementColumns(state, action) {
+      console.log("increaseElementColumns")
+      console.log(state.gridContainers)
+      console.log(action.payload)
       let indx: number;
       state.gridContainers.forEach((container) => {
+        console.log(container.id)
+        console.log(action.payload.id)
         if (container.id === action.payload.id) {
+          console.log("container.id === action.payload.id")
           indx = container.elements.activeElements.findIndex(
             (element) => element.layout.i === action.payload.layout.i,
           );
@@ -292,12 +329,25 @@ const layoutSlice = createSlice({
       });
     },
     setProps(state, action) {
+      // console.log("setProps")
+      // console.log(action.payload)
       const containerID = state.currentContainer;
+      // console.log(containerID)
       // console.log('h', action.payload)
       state.gridContainers.forEach((container, i) => {
+        // console.log(container.id)
         if (container.id === containerID) {
+          // console.log("container.id === containerID")
+          // console.log(current(container.elements.activeElements))
           container.elements.activeElements.forEach((el, index) => {
+            // console.log("forEach")
+            // console.log(el.layout.i)
+            // console.log(action.payload)
+            // console.log(action.payload.id)
+            // console.log(el.layout.i)
             if (el.layout.i === action.payload.id) {
+              // console.log(action.payload)
+              // console.log("el.layout.i === action.payload.id")
               state.gridContainers[i].elements.activeElements[index] = {
                 ...el,
                 props: {
@@ -308,6 +358,7 @@ const layoutSlice = createSlice({
                 },
               };
             } else if (el.children && el.children.length > 0) {
+              console.log("else if")
               el.children.forEach((child, indx) =>  {
                 if (child.layout.i === action.payload.id) {
                   // console.log('he')

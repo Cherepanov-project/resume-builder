@@ -13,6 +13,7 @@ const settingsPanelSlice = createSlice({
   initialState,
   reducers: {
     initPanel(state, action) {
+      console.log(action)
       const { type = '', sectionID = '0', moduleID = '0' } = action.payload;
       state.shown = true;
       state.type = type;

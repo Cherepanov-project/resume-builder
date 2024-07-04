@@ -17,6 +17,7 @@ import LayoutBlockVideoPlayer from '../LayoutBlockVideoPlayer';
 import SelectList from '../SelectList';
 import LayoutBlockModal from '../LayoutBlockModal';
 import LayoutBlockSlider from '../LayoutBlockSlider';
+import Form from "../Form";
 
 interface SectionsConstructorBlockElementType {
   params: T_BlockElement;
@@ -44,7 +45,9 @@ const SectionsConstructorBlockElement: React.FC<SectionsConstructorBlockElementT
   const isSelectList = props.key === 'selectlist';
   const isModal = props.key === 'modal';
   const isSlider = props.key === 'slider';
+  const isForm =  props.key === 'form'
   // console.log('pa', params);
+  // console.log("isForm1")
   return (
     <>
       {isImg && <LayoutBlockImage props={props} />}
@@ -79,6 +82,16 @@ const SectionsConstructorBlockElement: React.FC<SectionsConstructorBlockElementT
       {isSelectList && <SelectList layout={params.layout} props={{SelectList: [{id: nanoid(), value: props.text || 'Text'}]}}/>}
       {isModal && <LayoutBlockModal props={props}/>}
       {isSlider && <LayoutBlockSlider props={props} />}
+      {/* {isForm && <Form props={props} layout={params.layout}/>} */}
+      {console.log("form")}
+      {console.log(props)}
+      {isForm && (
+        <Form
+          // props={{ Form: [{id: nanoid(), title: props.text, grid: {rows: 4, columns: 3}, fields: []}]}}
+          props={props}
+          layout={params.layout}
+        />
+      )}
     </>
   );
 };

@@ -17,7 +17,7 @@ const CheckboxGroup = ({ props, layout }: IElementsProps) => {
       dispatch(setProps(firstItem));
     }
   });
-  console.log('pr', props);
+  // console.log('pr', props);
   return currentList.map((item: ISettingsInputItem) => (
     <FormControlLabel
       key={item.id}

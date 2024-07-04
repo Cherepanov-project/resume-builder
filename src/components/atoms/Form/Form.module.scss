@@ -1,0 +1,104 @@
+.form {
+    // width: 384px;
+
+    // display: flex;
+    display: grid;
+
+    // align-items: center;
+    // gap: 21px;
+  
+    min-height: 200px;
+    min-width: 200px;
+
+
+    column-gap: 10px;
+    row-gap: 10px;
+
+    place-items: center;
+  
+    // flex-direction: column;
+  
+    background-color: white;
+  
+    border-radius: 6px;
+    border: 1px solid rgba(217, 217, 217, 1);
+    // border: 1px dashed;
+    background-color: skyblue;
+    // margin: auto;
+    // margin-top: 59px;
+
+    // height: calc(100% - 46px);
+    box-sizing: border-box;
+  
+    padding: 22px 32px 22px 32px;
+    box-shadow:
+      inset 0px 0.6087964177131653px 2.9332919120788574px 0px
+        rgba(0, 0, 0, 0.0197),
+      0px 1.4630224704742432px 7.049108028411865px 0px rgba(0, 0, 0, 0.0283),
+      0px 2.7547414302825928px 13.272845268249512px 0px rgba(0, 0, 0, 0.035),
+      0px 4.91398811340332px 23.67648696899414px 0px rgba(0, 0, 0, 0.0417),
+      0px 9.19107437133789px 44.28426742553711px 0px rgba(0, 0, 0, 0.0503),
+      0px 22px 106px 0px rgba(0, 0, 0, 0.07);
+  }
+
+  .form * {
+    // border: 1px dashed;
+  }
+  
+  .title {
+    color: rgba(38, 38, 38, 1);
+  
+    font-size: 20px;
+    font-weight: 500;
+    // line-height: 28px;
+    letter-spacing: 0em;
+    text-align: center;
+    margin: 0;
+  }
+
+
+//   .input {
+//     display: flex;
+//     flex-direction: column;
+//     gap: 10px;
+//   }
+
+  .input {
+    // width: 320px;
+    height: 25px;
+  
+    box-sizing: border-box;
+    color: rgba(0, 0, 0, 0.75);
+    border: 1px solid rgba(89, 89, 89, 1);
+  
+    // font-size: 16px;
+    font-weight: 400;
+    line-height: 24px;
+    letter-spacing: 0em;
+    text-align: left;
+  }
+
+  .button {
+    // width: 319px;
+    // height: 40px;
+    // min-height: ;
+    gap: 10px;
+
+    margin-top: auto;
+    // margin-bottom: 10px;
+
+    color: white;
+    // background-color: rgba(24, 144, 255, 1);
+    background-color:rgba(89, 89, 89, 1);
+    height: 40px;
+    padding: 8px, 16px, 8px, 16px;
+    border-radius: 4px;
+    gap: 4px;
+    border: 0px;
+  }
+
+  .buttonContainer {
+    display: flex;
+    flex-direction: row;
+    gap: 12px;
+  }
