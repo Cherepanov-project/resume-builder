@@ -38,7 +38,7 @@ const sectionsManagerSlice = createSlice({
   initialState,
   reducers: {
     // изменение всей секции
-    setLayoutDate(state, action: PayloadAction<LayoutDateType>) {
+    setLayoutDate(state, action) {
       state.layoutDate = action.payload;
     },
     // изменение ряда
