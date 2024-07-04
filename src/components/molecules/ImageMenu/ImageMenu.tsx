@@ -118,7 +118,6 @@ const ImageMenu = () => {
               <button
                 className="apply-btn"
                 type="button"
-                // onClick={() => handleApply(curItem)}
               >
                 APPLY
               </button>

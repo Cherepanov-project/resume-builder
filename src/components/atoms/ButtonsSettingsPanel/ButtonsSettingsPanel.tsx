@@ -1,5 +1,4 @@
 import { setProps } from '@/store/landingBuilder/layoutSlice';
-// import { setSectionStyle } from '@/store/landingBuilder/layoutSlice';
 import { useAppDispatch } from '@/hooks/cvTemplateHooks';
 import { IButtonsSettingsPanelProps } from '@/types/landingBuilder';
 import { closePanel } from '@/store/landingBuilder/settingsPanelSlice';
@@ -13,7 +12,7 @@ const ButtonsSettingsPanel = ({
   onClose,
   elementsSize,
   style,
-  setElementsSize, // id, style
+  setElementsSize,
 }: IButtonsSettingsPanelProps) => {
   const dispatch = useAppDispatch();
 
@@ -40,7 +39,6 @@ const ButtonsSettingsPanel = ({
     } else {
       setError(true);
     }
-    // dispatch(setSectionStyle({ i: id, style }));
   };
 
   return (

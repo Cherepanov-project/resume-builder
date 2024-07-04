@@ -1,4 +1,3 @@
-// import { ITextSettingProps } from '@/types/landingBuilder';
 import { TextSettingsProps } from '@/types/landingBuilder';
 import { useAppDispatch} from '@/hooks/cvTemplateHooks';
 import { setSectionStyle } from '@/store/landingBuilder/layoutSlice';

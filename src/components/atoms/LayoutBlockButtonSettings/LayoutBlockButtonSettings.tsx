@@ -1,4 +1,3 @@
-//import { useAppDispatch } from '@/hooks/cvTemplateHooks';
 import { useAppDispatch, useTypedSelector } from '@/hooks/cvTemplateHooks';
 import { setSectionStyle } from '@/store/landingBuilder/layoutSlice';
 import React, { useEffect, useLayoutEffect, useRef, useState } from 'react';
@@ -34,7 +33,6 @@ const LayoutBlockButtonSettings = ({ setStyle }) => {
   const elements = gridContainers.find((el) =>
     el.elements.activeElements.filter((el) => el.name === 'RatingSystem'),
   );
-  //const props = elements.elements.activeElements.filter(el => el.name === 'RatingSystem').find(el => el.props)
   const layout = elements?.layout.i;
 
   useLayoutEffect(() => {

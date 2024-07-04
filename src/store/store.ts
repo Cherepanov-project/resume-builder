@@ -1,4 +1,3 @@
-import allPersonaInfoSlice from './cvTemplate/allPersonaInfoSlice';
 import { combineReducers, configureStore } from '@reduxjs/toolkit';
 import {
   persistStore,
@@ -12,6 +11,7 @@ import {
 } from 'redux-persist';
 import storage from 'redux-persist/lib/storage'; // defaults to localStorage for web
 
+import allPersonaInfoReducer from './cvTemplate/allPersonaInfoSlice';
 import educationReducer from './cvTemplate/educationSlice';
 import experienceReducer from './cvTemplate/experienceSlice';
 import socialReducer from './cvTemplate/socialSlice';
@@ -19,10 +19,10 @@ import hobbiesReducer from './cvTemplate/hobbiesSlice';
 import layoutReducer from './landingBuilder/layoutSlice';
 import utilityReducer from './landingBuilder/utilitySlice';
 import cardReducer from './cardSlice';
-import sectionsManagerSlice from './landingBuilder/sectionsManagerSlice';
-import settingsPanelSlice from './landingBuilder/settingsPanelSlice';
-import swiperSlice from './landingBuilder/swiperSlice';
-import userSlice from './userSlice';
+import sectionsManagerReducer from './landingBuilder/sectionsManagerSlice';
+import settingsPanelReducer from './landingBuilder/settingsPanelSlice';
+import swiperReducer from './landingBuilder/swiperSlice';
+import userReducer from './userSlice';
 
 //конфиг для persist
 const persistConfig = {
@@ -32,7 +32,7 @@ const persistConfig = {
 
 //НОВЫЕ РЕДЬЮСЕРЫ ДОБАВЛЯЕМ СЮДА!
 const rootReducer = combineReducers({
-  personalInfo: allPersonaInfoSlice,
+  personalInfo: allPersonaInfoReducer,
   education: educationReducer,
   experience: experienceReducer,
   social: socialReducer,
@@ -40,10 +40,10 @@ const rootReducer = combineReducers({
   layout: layoutReducer,
   utility: utilityReducer,
   card: cardReducer,
-  sectionsManager: sectionsManagerSlice,
-  settingsPanel: settingsPanelSlice,
-  swiper: swiperSlice,
-  user: userSlice,
+  sectionsManager: sectionsManagerReducer,
+  settingsPanel: settingsPanelReducer,
+  swiper: swiperReducer,
+  user: userReducer,
 });
 
 //преобразование редьюсера для persist
