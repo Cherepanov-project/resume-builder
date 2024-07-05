@@ -97,6 +97,7 @@ const ElementSpecificStylesForm = ({handleUpdate, col }) => {
                   className={styles.colorInput}
                   type='color'
                   onChange={(e: React.ChangeEvent<HTMLInputElement>) => {
+                    console.log('test');
                     handleUpdate('style', {borderColor: e.target.value}, col - 1);
                   }}
               ></input>
