@@ -18,6 +18,7 @@ const SectionsToolsPanel = ({ setError, setSeverity }) => {
   const submitSection = () => {
     const arr: T_BlockElement[] = [];
     const data = Object.values(layoutDate);
+
     for (let i = 0; i < data.length; i++) {
       arr.push(...data[i]);
     }
@@ -48,6 +49,7 @@ const SectionsToolsPanel = ({ setError, setSeverity }) => {
       children: elements, // массив из объектов с параметрами basic LayoutBlock elements
       layout: { i: '', x: 0, y: 0, w: 6, h: calcSectionH() + 1 }, // разметка родительского ConteinerDIV элемента
     };
+
     if (name.trim()) {
       if (postNewSection(section)) {
         setSeverity('success');

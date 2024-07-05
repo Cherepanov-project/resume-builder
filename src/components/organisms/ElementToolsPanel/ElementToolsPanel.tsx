@@ -45,79 +45,80 @@ const ElementToolsPanel: React.FC<ElementToolsPanelProps> = ({ layout, id, eleme
   };
 
   return (
-    <div className={classes['tools-panel']}>
-      <IconButton aria-label="Move Item" color="primary" className={elClass}
-      onMouseDown={handleInnerItemDragStart}
-      onMouseUp={handleInnerItemDragEnd}>
-        <OpenWith />
-      </IconButton>
-      <IconButton
-        aria-label="Decrease Item Width"
-        title="Убрать колонку"
-        color="primary"
-        onClick={() => {
-          if (elementId) {
-            dispatch(decreaseElementColumns({ layout, id, elementId, parentLayout }))
-          } else {
-            dispatch(decreaseElementColumns({ layout, id }))
-          }
-        }}
-      >
-        <RemoveCircleOutline />
-      </IconButton>
-      <IconButton
-        aria-label="Increase Item Width"
-        title="Добавить колонку"
-        color="primary"
-        onClick={() => {
-          if (elementId) {
-            dispatch(increaseElementColumns({ layout, id, elementId, parentLayout }))
-          } else {
-            dispatch(increaseElementColumns({ layout, id }))
-          }
-        }}
-      >
-        <AddCircleOutline />
-      </IconButton>
-      <IconButton
-        aria-label="Configure Item"
-        title="Дополнительные настройки"
-        color="primary"
-        onClick={handleSettings}
-      >
-        <Settings />
-      </IconButton>
-      <IconButton
-        aria-label="Copy Item"
-        title="Скопировать блок"
-        color="primary"
-        onClick={() => {
-          if (elementId) {
-            dispatch(copyElement({ layout, id, elementId, parentLayout }))
-          } else {
-            dispatch(copyElement({ layout, id }))
-          }
-        }}
-      >
-        <ContentCopy />
-      </IconButton>
-      <IconButton
-        aria-label="Remove Item"
-        title="Удалить блок"
-        color="primary"
-        onClick={() => {
-          if (elementId) {
-            dispatch(deleteElement({ layout, id, elementId, parentLayout }))
-          } else {
-            dispatch(deleteElement({ layout, id }))
-          }
-        }}
-      >
-        <Delete />
-      </IconButton>
+    <div className={classes['element-container']}>
+      <div className={classes['tools-panel']}>
+        <IconButton aria-label="Move Item" color="primary" className={elClass}
+                    onMouseDown={handleInnerItemDragStart}
+                    onMouseUp={handleInnerItemDragEnd}>
+          <OpenWith />
+        </IconButton>
+        <IconButton
+          aria-label="Decrease Item Width"
+          title="Убрать колонку"
+          color="primary"
+          onClick={() => {
+            if (elementId) {
+              dispatch(decreaseElementColumns({ layout, id, elementId, parentLayout }))
+            } else {
+              dispatch(decreaseElementColumns({ layout, id }))
+            }
+          }}
+        >
+          <RemoveCircleOutline />
+        </IconButton>
+        <IconButton
+          aria-label="Increase Item Width"
+          title="Добавить колонку"
+          color="primary"
+          onClick={() => {
+            if (elementId) {
+              dispatch(increaseElementColumns({ layout, id, elementId, parentLayout }))
+            } else {
+              dispatch(increaseElementColumns({ layout, id }))
+            }
+          }}
+        >
+          <AddCircleOutline />
+        </IconButton>
+        <IconButton
+          aria-label="Configure Item"
+          title="Дополнительные настройки"
+          color="primary"
+          onClick={handleSettings}
+        >
+          <Settings />
+        </IconButton>
+        <IconButton
+          aria-label="Copy Item"
+          title="Скопировать блок"
+          color="primary"
+          onClick={() => {
+            if (elementId) {
+              dispatch(copyElement({ layout, id, elementId, parentLayout }))
+            } else {
+              dispatch(copyElement({ layout, id }))
+            }
+          }}
+        >
+          <ContentCopy />
+        </IconButton>
+        <IconButton
+          aria-label="Remove Item"
+          title="Удалить блок"
+          color="primary"
+          onClick={() => {
+            if (elementId) {
+              dispatch(deleteElement({ layout, id, elementId, parentLayout }))
+            } else {
+              dispatch(deleteElement({ layout, id }))
+            }
+          }}
+        >
+          <Delete />
+        </IconButton>
+      </div>
     </div>
   );
 };
 
 export default ElementToolsPanel;
-

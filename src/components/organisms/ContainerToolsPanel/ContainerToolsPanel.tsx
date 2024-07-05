@@ -1,6 +1,5 @@
 import { IconButton } from '@mui/material';
 import {
-  // Settings,
   ContentCopy,
   Delete,
   ArrowUpward,
@@ -14,10 +13,8 @@ import {
   moveUpGridContainer,
 } from '@store/landingBuilder/layoutSlice';
 import { useAppDispatch } from '@hooks/cvTemplateHooks';
-// import { Layout } from 'react-grid-layout';
 
 import classes from './ContainerToolsPanel.module.scss';
-// import { initPanel } from '@/store/landingBuilder/settingsPanelSlice';
 
 type ContainerToolsPanelProps = {
   id: string;
@@ -25,11 +22,6 @@ type ContainerToolsPanelProps = {
 
 const ContainerToolsPanel: React.FC<ContainerToolsPanelProps> = (id: ContainerToolsPanelProps) => {
   const dispatch = useAppDispatch();
-  // const currentContainer = useTypedSelector((state) => state.layout.currentContainer);
-
-  // const handleSettings = () => {
-  //   dispatch(initPanel({ type: 'section', sectionID: layout.i, moduleID: '0' }));
-  // };
 
   return (
     <div className={classes['tools-panel']}>
@@ -49,14 +41,6 @@ const ContainerToolsPanel: React.FC<ContainerToolsPanelProps> = (id: ContainerTo
       >
         <ArrowDownward />
       </IconButton>
-      {/* <IconButton
-        aria-label="Configure Item"
-        title="Дополнительные настройки"
-        color="primary"
-        onClick={handleSettings}
-      >
-        <Settings />
-      </IconButton> */}
       <IconButton
         aria-label="Copy Container"
         title="Скопировать блок"

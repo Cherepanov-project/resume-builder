@@ -14,7 +14,7 @@ export const getLabel = (blockValue: string, url: string, title: string, descrip
           textStyle: { display: 'block' },
         },
       };
-    case 'Avatarss':
+    case 'Avatars':
       return {
         label: 'Images',
         value: 'Avatars',
@@ -153,7 +153,7 @@ export const getLabel = (blockValue: string, url: string, title: string, descrip
         label: 'Logo',
         value: 'Logo',
         key: 'logo',
-        layout: { i: '', x: 0, y: 0, w: 1, h: 1 },
+        layout: { i: '', x: 0, y: 0, w: 1, h: 5 },
         title: {
           key: 'logo',
           text: text,
@@ -169,7 +169,7 @@ export const getLabel = (blockValue: string, url: string, title: string, descrip
         label: 'SocialMediaIcon',
         value: 'SocialMediaIcon',
         key: 'smIcon',
-        layout: { i: '', x: 0, y: 0, w: 1, h: 1 },
+        layout: { i: '', x: 0, y: 0, w: 1, h: 3 },
         title: {
           key: 'smIcon',
           title: title,
@@ -224,6 +224,38 @@ export const getLabel = (blockValue: string, url: string, title: string, descrip
           Checkboxes: [],
         },
       };
+      case 'CheckboxGroup':
+      return {
+        label: 'CheckboxGroup',
+        value: 'Checkboxes',
+        key: 'Checkboxes',
+        layout: { i: '', x: 0, y: 0, w: 1, h: 6 },
+        children: [],
+        title: {
+          key: 'Checkboxes',
+          value: '0',
+          text: false,
+        },
+        props: {
+          Checkboxes: [],
+        },
+      };
+      case 'SelectList':
+      return {
+        label: 'SelectList',
+        value: 'SelectList',
+        key: 'SelectList',
+        layout: { i: '', x: 0, y: 0, w: 2, h: 1 },
+        children: [],
+        title: {
+          key: 'SelectList',
+          value: '0',
+          text: false,
+        },
+        props: {
+          list: [],
+        },
+      };
     case 'RadioButtons':
       return {
         label: 'CheckBoxes',
@@ -257,11 +289,11 @@ export const getLabel = (blockValue: string, url: string, title: string, descrip
       return {
         label: 'Text Blocks',
         value: 'HeaderTitle',
-        key: 'h1title',
+        key: 'HeaderTitle',
         layout: { i: '', x: 0, y: 0, w: 1, h: 1 },
         children: [],
         title: {
-          key: 'h1title',
+          key: 'HeaderTitle',
           value: '0',
           text: false,
         },

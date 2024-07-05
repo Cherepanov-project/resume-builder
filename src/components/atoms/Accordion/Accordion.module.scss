@@ -1,11 +1,11 @@
 .accordion-item {
 	margin: 0;
 	margin-bottom: 15px;
+	padding-left: 15px;
 	text-align: left; /* Прижимаем текст к левому краю */
   	word-wrap: break-word; /* Переносим текст на новую строку, если не вмещается */
 	border-bottom: 1px solid grey;
 	cursor: pointer;
-	// height: 30px;
 }
 
 .accordion-item:hover {
@@ -45,11 +45,3 @@
 .accordion-content p {
 	margin: 0;
 }
-  
-// .open {
-// 	max-height: 100px; /* Установите здесь максимальную высоту для открытого текста спойлера */
-// }
-  
-// .close {
-// 	max-height: 0;
-// }

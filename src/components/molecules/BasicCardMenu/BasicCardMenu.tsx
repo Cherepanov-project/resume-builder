@@ -47,8 +47,8 @@ export const BasicCardMenu = () => {
       backgroundColor: backgroundColor,
       heightImg: heightImg,
       alignment: alignment,
-      imageUrl: imageUrl,
-      avatarUrl: avatarUrl,
+      imageUrl: typeof imageUrl === 'string' ? imageUrl : null,
+      avatarUrl: typeof avatarUrl === 'string' ? avatarUrl : null,
       avatar: avatar,
       btnReadMore: btnReadMore,
     };

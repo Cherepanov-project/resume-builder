@@ -45,8 +45,8 @@
 }
 
 .btn {
-  outline: 'none';
-  background-color: 'transparent';
+  outline: none;
+  background-color: transparent;
   width: 24px;
   height: 24px;
 }
@@ -54,11 +54,11 @@
 .btnPlus {
   display: flex;
   align-items: center;
-  outline: 'none';
+  outline: none;
 
   & :focus {
     border: none;
-    outline: 'none';
+    outline: none;
   }
 }
 

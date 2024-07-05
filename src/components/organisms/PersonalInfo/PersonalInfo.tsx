@@ -1,13 +1,11 @@
 import { Box, Stack } from '@mui/material';
 import BasicInput from '@atoms/BasicInput';
 import BasicTextarea from '@atoms/BasicTextarea';
-// import PortraitBox from '../../molecules/PortraitBox';
 import classes from './PersonalInfo.module.scss';
 
 const PersonalInfo = () => {
   return (
     <Box className={classes.personalInfo}>
-      {/* <PortraitBox />  */}
 
       <Stack className={classes.personalInfo__inputGroup} spacing={2} direction="row">
         <BasicInput id="fullName" label="Full Name" />

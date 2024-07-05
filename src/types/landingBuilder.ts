@@ -1,5 +1,22 @@
 import { Layout } from 'react-grid-layout';
 
+interface ElementsType {
+  activeElements: T_BlockElement[];
+}
+
+export interface IGridContainers {
+  id: string;
+  height: number;
+  elements: ElementsType;
+  layout: {
+    i: null | string;
+    w: number;
+    h: number;
+    x: number;
+    y: number;
+  };
+}
+
 // Непонятные интерфейсы
 export interface IElement {
   element: string;
@@ -131,12 +148,15 @@ export type ITextSettingProps = {
     textStyle: object,
     setTextStyle: React.Dispatch<React.SetStateAction<object>>,
 }
+export type T_data = Pick<ISettingsInputItem, 'id'| 'value'>
+
 export interface ISettingsInputItem {
   id?: string | undefined;
   value?: string | undefined;
   img?: string | undefined;
   title?: string | number;
-  style?: React.CSSProperties | undefined,
+  style?: React.CSSProperties | undefined;
+  data?: T_data[];
 }
 
 export type T_Id = string;
