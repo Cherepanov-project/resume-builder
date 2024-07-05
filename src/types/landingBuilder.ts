@@ -1,5 +1,22 @@
 import { Layout } from 'react-grid-layout';
 
+interface ElementsType {
+  activeElements: T_BlockElement[];
+}
+
+export interface IGridContainers {
+  id: string;
+  height: number;
+  elements: ElementsType;
+  layout: {
+    i: null | string;
+    w: number;
+    h: number;
+    x: number;
+    y: number;
+  };
+}
+
 // Непонятные интерфейсы
 export interface IElement {
   element: string;

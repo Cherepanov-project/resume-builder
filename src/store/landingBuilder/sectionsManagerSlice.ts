@@ -1,16 +1,16 @@
 import { T_BlockElement } from '@/types/landingBuilder';
-import { createSlice } from '@reduxjs/toolkit';
+import { createSlice, PayloadAction } from '@reduxjs/toolkit';
 
-type layoutDateType = { [key: number]: T_BlockElement[] };
+type LayoutDateType = { [key: number]: T_BlockElement[] };
 
-interface IinitialState {
-  layoutDate: layoutDateType;
+interface InitialState {
+  layoutDate: LayoutDateType;
   curId: string;
   text: string;
   url: string;
 }
 
-const initialState: IinitialState = {
+const initialState: InitialState = {
   layoutDate: {
     1: [
       {
@@ -40,29 +40,27 @@ const sectionsManagerSlice = createSlice({
     // изменение всей секции
     setLayoutDate(state, action) {
       state.layoutDate = action.payload;
-      // console.log('action', action.payload);
     },
     // изменение ряда
     editRowDate(state, action) {
       const { row, date } = action.payload;
       const [, curCol] = state.curId.split('');
-      // state.layoutDate = { ...state.layoutDate, [row]: date };
       const newDate = date.map((col, index) => {
         if (+curCol - 1 === index) {
-         return {
-          ...col,
-          layout: {
-            ...col.layout,
-            i: state.curId
+          return {
+            ...col,
+            layout: {
+              ...col.layout,
+              i: state.curId
+            }
           }
-         } 
         }
         return col;
       })
       state.layoutDate = { ...state.layoutDate, [row]: newDate};
     },
     // состояние меню параметров
-    handleSettingsMenu(state, action) {
+    handleSettingsMenu(state, action: PayloadAction<{ type: string; value: string }>) {
       switch (action.payload.type) {
         case 'UPDATE_ID': {
           if (action.payload.value !== state.curId) {
@@ -89,5 +87,6 @@ const sectionsManagerSlice = createSlice({
   },
 });
 
-export default sectionsManagerSlice.reducer;
 export const { setLayoutDate, handleSettingsMenu, editRowDate } = sectionsManagerSlice.actions;
+
+export default sectionsManagerSlice.reducer;

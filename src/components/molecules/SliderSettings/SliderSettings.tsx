@@ -34,9 +34,6 @@ const SliderSettings = ({ itemsList, setItemsList }: ISettingsInputUpdateProps) 
       className={classes.form}
     >
       <SwiperPresetList />
-      {/* {itemsList?.map((image) => {
-        return <img src={`${image.value}`} key={nanoid()} className={classes.pic}></img>;
-      })} */}
 
       <Form.Item>
         <Form.Item name="dragger" valuePropName="fileList" getValueFromEvent={normFile} noStyle>

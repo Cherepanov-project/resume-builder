@@ -1,4 +1,4 @@
-import { createSlice } from '@reduxjs/toolkit';
+import { createSlice, PayloadAction } from '@reduxjs/toolkit';
 
 interface ICard {
   alignment: string | undefined;
@@ -18,11 +18,11 @@ interface ICard {
   btnReadMore: boolean;
 }
 
-interface IStyle {
+interface CardState {
   style: ICard;
 }
 
-const initialState: IStyle = {
+const initialState: CardState = {
   style: {
     alignment: 'left',
     avatarUrl: null,
@@ -46,11 +46,13 @@ const cardSlice = createSlice({
   name: 'card',
   initialState,
   reducers: {
-    addCard: (state, action) => {
+    addCard: (state, action: PayloadAction<ICard>) => {
       state.style = action.payload;
     },
   },
 });
 
-export default cardSlice.reducer;
 export const { addCard } = cardSlice.actions;
+
+export default cardSlice.reducer;
+

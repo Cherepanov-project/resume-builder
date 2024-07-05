@@ -9,6 +9,12 @@
   box-shadow:
     0 1px 3px 3px rgba(0, 0, 0, 0.08),
     0 5px 15px 0 rgba(0, 0, 0, 0.08);
+  position: absolute;
+  z-index: 3;
+  top: 0;
+  left: -2px;
+  opacity: 0;
+  transition: opacity 0.3s ease;
 
   & > button {
     padding: 5px;
@@ -21,5 +27,18 @@
     & > svg {
       font-size: 1.25rem;
     }
+  }
+}
+
+
+.element-container {
+  position: absolute;
+  z-index: 1;
+  height: 100%;
+  width: 100%;
+
+  &:hover .tools-panel {
+    opacity: 1;
+    pointer-events: auto;
   }
 }

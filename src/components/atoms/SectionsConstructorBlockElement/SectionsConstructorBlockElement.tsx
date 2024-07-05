@@ -66,7 +66,7 @@ const SectionsConstructorBlockElement: React.FC<SectionsConstructorBlockElementT
       {isRating && <RatingSystem props={params.columns || 5}/>}
       {isAvatar && (
         <Avatars
-          props={{ Avatars: [{ id: nanoid(), img: props.url, title: props.text }] }}
+          props={{ Avatars: [{ id: nanoid(), img: props.url || '', title: props.text }] }}
           layout={params.layout}
         />
       )}

@@ -1,4 +1,3 @@
-//import { useAppDispatch } from '@/hooks/cvTemplateHooks';
 import React from 'react';
 import { useAppDispatch, useTypedSelector } from '@/hooks/cvTemplateHooks';
 import { setSectionStyle } from '@/store/landingBuilder/layoutSlice';
