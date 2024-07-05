@@ -148,12 +148,15 @@ export type ITextSettingProps = {
     textStyle: object,
     setTextStyle: React.Dispatch<React.SetStateAction<object>>,
 }
+export type T_data = Pick<ISettingsInputItem, 'id'| 'value'>
+
 export interface ISettingsInputItem {
   id?: string | undefined;
   value?: string | undefined;
   img?: string | undefined;
   title?: string | number;
-  style?: React.CSSProperties | undefined,
+  style?: React.CSSProperties | undefined;
+  data?: T_data[];
 }
 
 export type T_Id = string;

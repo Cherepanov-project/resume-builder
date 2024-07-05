@@ -25,9 +25,8 @@ const SideBar: React.FC = () => {
     importFiles().then((data) => {
       setSidebarMenuList({ ...sidebarMenuList, ...data });
     });
-
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, []);
+  }, [sidebarMenuList]);
 
   const handleChangeTab = (_event: React.SyntheticEvent, indxBtn: number) => {
     setCurrentTab(indxBtn);
@@ -53,7 +52,7 @@ const SideBar: React.FC = () => {
       >
         {sideMenuTabs.map((item, indx) => {
           return (
-            <Tab
+            <Tab 
               key={item}
               className={classes['tab']}
               icon={tabsIcons[indx]}

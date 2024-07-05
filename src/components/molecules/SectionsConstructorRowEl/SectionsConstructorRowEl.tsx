@@ -302,7 +302,7 @@ const SectionsConstructorRowEl: React.FC<SectionsConstructorRowElType> = ({
         width: ' 100%',
         minHeight: '55px',
         alignItems: 'center',
-        borderBottom: '1px dotted dimgrey',
+        borderBottom: '1px dotted dimgrey', 
       }}
     >
       <Box sx={gridLayoutStyle}>{renderColumns()}</Box>

@@ -35,7 +35,7 @@ const SectionsConstructorBlockElement: React.FC<SectionsConstructorBlockElementT
   const isImg = props.key === 'image';
   const isBtn = props.key === 'button';
   const isTitle = props.key === 'title';
-  const isH1Title = props.key === 'h1title';
+  const isHeaderTitle = props.key === 'HeaderTitle';
   const isParagraph = props.key === 'paragraph';
   const isAnchor = props.key === 'anchor';
   const isRating = props.key === 'rating';
@@ -46,15 +46,15 @@ const SectionsConstructorBlockElement: React.FC<SectionsConstructorBlockElementT
   const isToggleButtons = props.key === 'toggleButtons';
   const isGallery = props.key === 'gallery';
   const isVideo = props.key === 'video';
-  const isSelectList = props.key === 'selectlist';
+  const isDropdownList = props.key === 'DropdownList';
   const isModal = props.key === 'modal';
-  const isSlider = props.key === 'slider';
+  const isSlider = props.key === 'Slider';
   const isLogo = props.key === 'logo';
   const isSMIcon = props.key === 'smIcon'
   const isCardItem = props.key === 'cardItem'
   const isAccordion = props.key === 'accordion'
-  
-  
+  const isCheckboxGroup = props.key === 'CheckboxGroup'
+
   return (
     <>
       {isImg && <Image props={props} />}
@@ -72,8 +72,11 @@ const SectionsConstructorBlockElement: React.FC<SectionsConstructorBlockElementT
       )}
       {isTooltip && <Tooltip props={props.size || 0} />}
       {isCheckBox && (
-        <Checkboxes
-          props={{ Checkboxes: [{ id: nanoid(), value: props.text }] }}
+        <Checkboxes layout={params.layout} props={{ Checkboxes: [{ id: nanoid(), value: props.text }] }}/>
+      )}
+      {isCheckboxGroup && (
+        <Checkboxes 
+          props={props}
           layout={params.layout}
         />
       )}
@@ -84,10 +87,10 @@ const SectionsConstructorBlockElement: React.FC<SectionsConstructorBlockElementT
         />
       )}
       {isToggleButtons && <MultiToggle />}
-      {isH1Title && <HeaderTitle props={props} />}
+      {isHeaderTitle && <HeaderTitle props={props} />}
       {isGallery && <Gallery layout={params.layout} props={{Gallery: [{id: nanoid(), img: props.url, title: props.text}]}}/>}
       {isVideo && <VideoPlayer props={props}/>}
-      {isSelectList && <DropdownList layout={params.layout} props={{DropdownList: [{id: nanoid(), value: props.text || 'Text'}]}}/>}
+      {isDropdownList && <DropdownList layout={params.layout} props={{DropdownList: props.SelectList!}}/>}
       {isModal && <ModalWindow props={props}/>}
       {isSlider && <Slider props={props} />}
       {isSMIcon && <SocialMediaIcon props={props} />}

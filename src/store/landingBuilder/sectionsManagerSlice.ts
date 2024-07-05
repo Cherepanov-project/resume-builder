@@ -58,7 +58,6 @@ const sectionsManagerSlice = createSlice({
         return col;
       })
       state.layoutDate = { ...state.layoutDate, [row]: newDate};
-      console.log('data', row, date, date[+curCol - 1]);
     },
     // состояние меню параметров
     handleSettingsMenu(state, action: PayloadAction<{ type: string; value: string }>) {

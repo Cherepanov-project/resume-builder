@@ -7,7 +7,7 @@
     width: 250px;
     height: 100vh;
     background-color: $bg-sidebar;
-    z-index: 1;
+    z-index: 2;
   }
 
   &__title {
@@ -15,7 +15,7 @@
     justify-content: space-between;
     align-items: center;
     margin: 0;
-    padding: 0 8px;
+    padding: 0 6px;
     height: 48px;
     width: 95%;
     background: $bg-sidebar-title;

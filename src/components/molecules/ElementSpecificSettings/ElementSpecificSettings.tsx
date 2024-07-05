@@ -14,6 +14,8 @@ import { ExpandMore } from '@mui/icons-material';
 import Item from '@atoms/StyledPaperItem';
 import ElementSpecificSettingsForm from '@molecules/ElementSpecificSettingsForm'
 import { getLabel } from '@/utils/labelUtils';
+import { nanoid } from 'nanoid';
+import { ISettingsInputItem } from '@/types/landingBuilder';
 
 const ElementSpecificSettings = () => {
   const layoutDate = useTypedSelector((state) => state.sectionsManager.layoutDate);
@@ -33,7 +35,9 @@ const ElementSpecificSettings = () => {
     w = '1';
     col = 1;
   }
+
   type AccordionData = Array<[string, string]>;
+  
   const type: string = layoutElement.name || '';
   const title: string = layoutElement.props.title || '';
   const description: string = layoutElement.props.description || '';
@@ -51,9 +55,7 @@ const ElementSpecificSettings = () => {
     'CheckboxGroup',
     'LayoutBlockModal',
     'Logo',
-    'SelectList',
     'SocialMediaIcon',
-    'TitleH1',
     'Gallery',
     'RatingSystem',
     'Tooltip',
@@ -73,20 +75,26 @@ const ElementSpecificSettings = () => {
   ];
 
   const [accordion, setAccordion] = useState<AccordionData>(layoutElement.props.accordion || []);
+  const [selectList, setSelectList] = useState<ISettingsInputItem[]>([{id: nanoid(), value: ''}]);
 
   const handleUpdate = (type: string, value: string | AccordionData, i: number): void => {
     const newValue = JSON.parse(JSON.stringify(layoutRow));
     const names = ['url', 'title', 'text', 'description', 'imgUrl', 'buttonText']
+
     switch (type) {
       case 'type': {
         const label = typeof value === 'string' ? getLabel(value, url, title, description, text, imgUrl, buttonText, accordion) : getLabel(value[0][0], url, title, description, text, imgUrl, buttonText, accordion);
+        
+        newValue[i].children = value;
         newValue[i].name = value;
         newValue[i].type = label.label;
         newValue[i].props.key = label.key;
         newValue[i].layout = label.layout;
+
         if (label.value) {
           newValue[i].props.value = label.title.value;
         }
+
         if (label.url) newValue[i].url = label.url;
         dispatch(editRowDate({ row, date: newValue }));
         break;
@@ -102,6 +110,28 @@ const ElementSpecificSettings = () => {
         dispatch(editRowDate({ row, date: newValue }));
         break;
       }
+      case 'CheckboxGroup': {
+        newValue[i].props.CheckboxGroup = value;
+        newValue[i].props.key = 'CheckboxGroup';
+        newValue[i].layout = {...newValue[i].layout, h: selectList.length === 0 ? 2 : 1.85*(selectList.length + 1)}
+        dispatch(editRowDate({ row, date: newValue }));
+        break;
+      }
+      case 'DropdownList': {
+        newValue[i].props.SelectList = value;
+        newValue[i].props.key = 'DropdownList';
+        newValue[i].layout = {...newValue[i].layout }
+        dispatch(editRowDate({ row, date: newValue }));
+        break;
+      }
+      case 'Slider': {
+        newValue[i].props.Slider = value;
+        newValue[i].props.key = 'Slider';
+        newValue[i].layout = {...newValue[i].layout}
+        dispatch(editRowDate({ row, date: newValue }));
+        break;
+      }
+      
       default: {
         console.log('No case found');
       }
@@ -128,6 +158,8 @@ const ElementSpecificSettings = () => {
             settingsOptionsValues={settingsOptionsValues}
             handleUpdate={handleUpdate}
             setAccordion={setAccordion}
+            SelectList={selectList}
+            setSelectList={setSelectList}
             col={col}
           />
         </AccordionDetails>
