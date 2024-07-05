@@ -2,7 +2,7 @@ import { useState } from 'react';
 import {
   Stack,
   FormControl
-} from '@mui/material'
+} from '@mui/material';
 import styles from './ElementSpecificStylesForm.module.scss'
 import Item from '@atoms/StyledPaperItem';
 
@@ -18,7 +18,7 @@ const ElementSpecificStylesForm = ({handleUpdate, col }) => {
               <input
                 className={styles.textInput}
                 type='number'
-                min={10}
+                min={8}
                 max={50}
                 onChange={(e: React.ChangeEvent<HTMLInputElement>) => {
                   handleUpdate('style', {fontSize: `${e.target.value}px`}, col - 1);
@@ -58,9 +58,23 @@ const ElementSpecificStylesForm = ({handleUpdate, col }) => {
         <Item>
           <FormControl>
             <label>
+              <span className={styles.inputLabel}>Background image url:</span>
+              <input
+                className={styles.textInput}
+                type='text'
+                onChange={(e: React.ChangeEvent<HTMLInputElement>) => {
+                  handleUpdate('style', {backgroundImage: `url(${e.target.value})`}, col - 1);
+                }}
+              ></input>
+            </label>
+          </FormControl>
+        </Item>
+        <Item>
+          <FormControl>
+            <label>
               <span className={styles.inputLabel}>Border:</span>
               <input
-                className={styles.colorInput}
+                className={styles.rangeInput}
                 type='range'
                 value={borderOn}
                 min={0}
@@ -94,7 +108,7 @@ const ElementSpecificStylesForm = ({handleUpdate, col }) => {
               <label>
                 <span className={styles.inputLabel}>Border radius:</span>
                 <input
-                  className={styles.colorInput}
+                  className={styles.textInput}
                   type='number'
                   min={0}
                   max={30}

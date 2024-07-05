@@ -145,8 +145,8 @@ const ElementSpecificSettings = () => {
         <AccordionSummary expandIcon={<ExpandMore />}>Style Settings</AccordionSummary>
         <AccordionDetails>
         <ElementSpecificStylesForm
-            handleUpdate={handleUpdate}
-            col={col}></ElementSpecificStylesForm>
+          handleUpdate={handleUpdate}
+          col={col}></ElementSpecificStylesForm>
         </AccordionDetails>
       </Accordion>
     </Box>
