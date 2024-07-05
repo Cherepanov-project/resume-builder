@@ -18,6 +18,7 @@ const ElementSpecificStylesForm = ({handleUpdate, col }) => {
               <input
                 className={styles.textInput}
                 type='number'
+                placeholder='0'
                 min={8}
                 max={50}
                 onChange={(e: React.ChangeEvent<HTMLInputElement>) => {
@@ -61,6 +62,7 @@ const ElementSpecificStylesForm = ({handleUpdate, col }) => {
               <span className={styles.inputLabel}>Background image url:</span>
               <input
                 className={styles.textInput}
+                placeholder='url'
                 type='text'
                 onChange={(e: React.ChangeEvent<HTMLInputElement>) => {
                   handleUpdate('style', {backgroundImage: `url(${e.target.value})`}, col - 1);
@@ -110,9 +112,10 @@ const ElementSpecificStylesForm = ({handleUpdate, col }) => {
                 <span className={styles.inputLabel}>Border radius:</span>
                 <input
                   className={styles.textInput}
+                  placeholder='0'
                   type='number'
                   min={0}
-                  max={30}
+                  max={50}
                   onChange={(e: React.ChangeEvent<HTMLInputElement>) => {
                     handleUpdate('style', {borderRadius: `${e.target.value}px`}, col - 1);
                   }}
