@@ -60,7 +60,7 @@ const StarterPage = () => {
                 lineHeight: '120%',
               }}
             >
-              Landing Page and Resume Builder
+              TEST BRANCH
             </Typography>
           </Box>
           <Box sx={{ display: 'flex', gap: '15px' }}>
@@ -71,7 +71,7 @@ const StarterPage = () => {
               onClick={() => loginWithRedirect()}
               sx={{ height: '60px', width: '200px', background: '#20484f' }}
             >
-              Sign In
+              Log In with Auth0
             </Button>
             <Button
               size="large"
