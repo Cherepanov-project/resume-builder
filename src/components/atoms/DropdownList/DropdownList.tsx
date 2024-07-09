@@ -8,8 +8,7 @@ import { nanoid } from 'nanoid';
 const DropdownList = ({ props, layout }: IElementsProps) => {
   const dispatch = useAppDispatch();
   const { DropdownList } = props;
-  const currentList = DropdownList || [];
-
+  const currentList = DropdownList || props.SelectList || [];
   const firstItem = { id: layout.i, values: [{ id: nanoid(), value: 'Text' }] };
 
   const [selectList, setSelectList] = useState<StateSelectList>({

@@ -22,7 +22,7 @@ const SocialMediaIcon: React.FC<ILayoutBlock> = ({ props }) => {
     display: 'flex',
     alignItems: 'center',
     justifyContent: 'center',
-    height: 'calc(100% - 37px)',
+    height: '100%',
     flexDirection: 'column',
     backgroundSize: 'contain',
     width: 'auto',
@@ -89,7 +89,7 @@ const SocialMediaIcon: React.FC<ILayoutBlock> = ({ props }) => {
   const content = () => {
     return (
       <a href={url} style={{ height: '100%' }} onContextMenu={(e) => handleDoubleClick(e)}>
-        <img src={imgUrl} alt={text}></img>
+        <img src={imgUrl} alt={text} style={{height:'90%', width:'100%'}} ></img>
       </a>
     );
   };

@@ -1,12 +1,7 @@
-//import { useAppDispatch } from '@/hooks/cvTemplateHooks';
 import { useAppDispatch, useTypedSelector } from '@/hooks/cvTemplateHooks';
 import { setSectionStyle } from '@/store/landingBuilder/layoutSlice';
 import React, { useEffect, useLayoutEffect, useRef, useState } from 'react';
 import { HexColorPicker } from 'react-colorful';
-
-// export interface IProps {
-//     setColors: React.Dispatch<React.SetStateAction<React.CSSProperties>>;
-//   }
 
 const LayoutBlockModalSettings = () => {
   const dispatch = useAppDispatch();
