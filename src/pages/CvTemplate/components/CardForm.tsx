@@ -16,17 +16,17 @@ const CardForm = ({ handleChangeStep, onSubmit, activeStep, setShowElement }) =>
         {currentCard.form}
 
         <Box className={classes.cvTemlpate__stepContentButton}>
-          <Button
-            onClick={() => {
-              if (currentCard.id !== 1) {
-                handleChangeStep('minus');
-              }
-              if (currentCard.id === 1) {
-                setShowElement(true);
-              }
-            }}
-            sx={{ mt: 1, mr: 1 }}
-          />
+        <Button
+          onClick={() => {
+            if (currentCard.id !== 1) {
+              handleChangeStep('minus');
+            }
+            if (currentCard.id === 1) {
+              setShowElement(true);
+            }
+          }}
+          sx={{ mt: 1, mr: 1 }}
+        />
 
           <Button
             onClick={currentCard.id === 6 ? onSubmit : () => handleChangeStep('plus')}
