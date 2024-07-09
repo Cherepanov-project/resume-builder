@@ -77,8 +77,6 @@ const ElementSpecificSettings = () => {
 
   const handleUpdate = (type: string, value: string | AccordionData, i: number): void => {
     const newValue = JSON.parse(JSON.stringify(layoutRow));
-    console.log('handleUpdate', newValue);
-
     const names = ['url', 'title', 'text', 'description', 'imgUrl', 'buttonText']
     switch (type) {
       case 'type': {
@@ -107,7 +105,6 @@ const ElementSpecificSettings = () => {
       }
       case 'style':{
         newValue[i].props.style = Object.assign(newValue[i].props.style, value);
-        console.log('Обновили стили',newValue);
         dispatch(editRowDate({ row, date: newValue }));
         break;
       }

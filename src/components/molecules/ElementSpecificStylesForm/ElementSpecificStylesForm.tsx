@@ -8,87 +8,71 @@ import Item from '@atoms/StyledPaperItem';
 
 const ElementSpecificStylesForm = ({handleUpdate, col }) => {
   const [borderOn, setBorderOn] = useState<number>(0);
+  const styleInputs = [
+    {
+      label: 'Text size:',
+      styleSetting: 'fontSize',
+      type:'number',
+    },
+    {
+      label: 'Text color:',
+      styleSetting: 'color',
+      type:'color',
+    },
+    {
+      label: 'Background color:',
+      styleSetting: 'backgroundColor',
+      type:'color',
+    },
+    {
+      label: 'Background image url:',
+      styleSetting: 'backgroundImage',
+      type: 'text',
+    },
+    {
+      label: 'Border:',
+      styleSetting: 'border',
+      type:'range',
+    },
+  ]
+
+  
   return (
     <form>
       <Stack>
-        <Item>
-          <FormControl>
-            <label>
-              <span className={styles.inputLabel}>Text size:</span>
-              <input
-                className={styles.textInput}
-                type='number'
-                placeholder='0'
-                min={8}
-                max={50}
-                onChange={(e: React.ChangeEvent<HTMLInputElement>) => {
-                  handleUpdate('style', {fontSize: `${e.target.value}px`}, col - 1);
-                }}
-              ></input>
-            </label>
-          </FormControl>
-        </Item>
-        <Item>
-          <FormControl>
-            <label>
-              <span className={styles.inputLabel}>Text color:</span>
-              <input
-                className={styles.colorInput}
-                type='color'
-                onChange={(e: React.ChangeEvent<HTMLInputElement>) => {
-                  handleUpdate('style', {color: e.target.value}, col - 1);
-                }}
-              ></input>
-              </label>
-            </FormControl>
-        </Item>
-        <Item>
-          <FormControl>
-            <label>
-              <span className={styles.inputLabel}>Background color:</span>
-              <input
-                className={styles.colorInput}
-                type='color'
-                onChange={(e: React.ChangeEvent<HTMLInputElement>) => {
-                  handleUpdate('style', {backgroundColor: e.target.value}, col - 1);
-                }}
-              ></input>
-            </label>
-          </FormControl>
-        </Item>
-        <Item>
-          <FormControl>
-            <label>
-              <span className={styles.inputLabel}>Background image url:</span>
-              <input
-                className={styles.textInput}
-                placeholder='url'
-                type='text'
-                onChange={(e: React.ChangeEvent<HTMLInputElement>) => {
-                  handleUpdate('style', {backgroundImage: `url(${e.target.value})`}, col - 1);
-                }}
-              ></input>
-            </label>
-          </FormControl>
-        </Item>
-        <Item>
-          <FormControl>
-            <label>
-              <span className={styles.inputLabel}>Border:</span>
-              <input
-                className={styles.rangeInput}
-                type='range'
-                value={borderOn}
-                min={0}
-                max={10}
-                onChange={(e: React.ChangeEvent<HTMLInputElement>) => {
-                  setBorderOn(+e.target.value);
-                  handleUpdate('style', {border: `${e.target.value}px solid`}, col - 1);
-                }}
-              ></input>
-            </label>
-          </FormControl>
-        </Item>
+        {styleInputs.map((elem)=>{
+          let valueStart = '';
+          let valueEnd = elem.styleSetting === 'fontSize' ? 'px': elem.styleSetting === 'border' ? 'px solid' : '';
+          const minNum = elem.styleSetting === 'fontSize' ? 8 : 0;
+
+          if (elem.styleSetting === 'backgroundImage') {
+            valueEnd = ')';
+            valueStart = 'url('
+          }
+
+          const onChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+            if(elem.styleSetting === 'border') setBorderOn(+e.target.value);
+            handleUpdate('style', {[elem.styleSetting]: `${valueStart}${e.target.value}${valueEnd}`}, col - 1);
+          }
+          
+          return (
+            <Item>
+              <FormControl>
+                <label>
+                  <span className={styles.inputLabel}>{elem.label}</span>
+                  <input
+                    className={styles.textInput}
+                    type={elem.type}
+                    placeholder={elem.label}
+                    min={minNum}
+                    max={50}
+                    onChange={onChange}
+                  ></input>
+                </label>
+              </FormControl>
+            </Item>
+          )
+        })}
         {borderOn > 0 &&
         <>
           <Item>
@@ -99,7 +83,6 @@ const ElementSpecificStylesForm = ({handleUpdate, col }) => {
                   className={styles.colorInput}
                   type='color'
                   onChange={(e: React.ChangeEvent<HTMLInputElement>) => {
-                    console.log('test');
                     handleUpdate('style', {borderColor: e.target.value}, col - 1);
                   }}
               ></input>
