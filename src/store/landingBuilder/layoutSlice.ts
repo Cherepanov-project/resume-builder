@@ -6,11 +6,13 @@ import { addBaseScript } from '@/utils/scriptAssigner';
 import { Layout } from 'react-grid-layout';
 import { T_BlockElement } from '@/types/landingBuilder';
 
-type ElementsType = {
-  activeElements: T_BlockElement[];
-};
+const nanoid = customAlphabet('ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz', 15);
 
-export type IGridContainers = {
+interface ElementsType {
+  activeElements: T_BlockElement[];
+}
+
+export interface IGridContainers {
   id: string;
   height: number;
   elements: ElementsType;
@@ -21,18 +23,16 @@ export type IGridContainers = {
     x: number;
     y: number;
   };
-};
+}
 
-type stateProps = {
+interface LayoutState {
   gridContainers: IGridContainers[];
   currentDraggableItem: Layout | null;
   currentContainer: string;
   windowWidth: number;
-};
+}
 
-const nanoid = customAlphabet('ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz', 15);
-
-const initialState: stateProps = {
+const initialState: LayoutState = {
   gridContainers: [
     {
       id: nanoid(),
@@ -94,23 +94,6 @@ const layoutSlice = createSlice({
               newElement.layout.x < el.layout.x + el.layout.w
             ) {
               newElement.layout.y += el.layout.h;
-              // const newContainer = {
-              //   id: nanoid(),
-              //   height: 30,
-              //   elements: {
-              //     activeElements: [],
-              //   },
-              //   layout: {
-              //     i: null,
-              //     w: 6,
-              //     h: 2,
-              //     x: 0,
-              //     y: 0,
-              //   },
-              // };
-              // state.gridContainers.splice(index + 1, 0, newContainer);
-              // containerId = newContainer.id;
-              // return activeElements = newContainer.elements.activeElements as T_BlockElement[];
             }
           }
           return (activeElements = container.elements.activeElements as T_BlockElement[]);
@@ -153,7 +136,6 @@ const layoutSlice = createSlice({
                 ...element.children![elIndx],
                 layout: {
                   ...element.children![elIndx].layout,
-                  // y: element.children![elIndx].layout.y + element.children![elIndx].layout.h, // если хотим чтобы скопированный элемент появлялся под элементом
                   x: element.children![elIndx].layout.x + element.children![elIndx].layout.w, //// если хотим чтобы скопированный элемент появлялся cправа от элемента
                   i: nanoid(),
                 },
@@ -456,7 +438,6 @@ const layoutSlice = createSlice({
   },
 });
 
-export default layoutSlice.reducer;
 export const {
   setWindowWidth,
   addElement,
@@ -476,3 +457,5 @@ export const {
   setProps,
   clearStore,
 } = layoutSlice.actions;
+
+export default layoutSlice.reducer;

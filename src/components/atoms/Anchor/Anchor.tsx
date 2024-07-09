@@ -1,6 +1,6 @@
 import { useEffect, useState } from 'react';
 
-import './Anchor.scss';
+import './Anchor.module.scss';
 import { ILayoutBlock } from '@/types/landingBuilder';
 
 type StyleType = {

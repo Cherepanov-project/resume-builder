@@ -48,7 +48,7 @@ export const insertChild = (
 
 const processFiles = async (moduleFiles: TProcessFiles) => {
   const elements: T_SidebarMenuItem[] = [];
-  console.log('+')
+  
   for await (const file of Object.values(moduleFiles)) {
     const module = await file();
     const { props } = module as T_ComponentProps;
@@ -81,8 +81,30 @@ export const importFiles = async () => {
   const sections = await processFiles(import.meta.glob('@molecules/**/index.ts'));
   const templates = await processFiles(import.meta.glob('@organisms/**/index.ts'));
 
+  // Объединение базовый и пользовательских секций
+  const allSections: T_SidebarMenuItem[] = []; 
+
+  lsSections.forEach((elem)=>{
+    let added = false;
+    for(let i = 0; i < sections.length; i++){
+      if(elem.name === sections[i]['name']){
+        allSections.push({
+          name: elem.name,
+          list: [...sections[i]['list'], ...elem.list]
+        });
+        added = true;
+        sections.splice(i,1);
+      }
+    }
+    if(!added){
+      allSections.push(elem);
+    }
+  })
+
+  allSections.push(...sections);
+  
   return {
-    Sections: [...sections, ...lsSections],
+    Sections: allSections,
     Elements: elements,
     Templates: templates,
     Manage: [],

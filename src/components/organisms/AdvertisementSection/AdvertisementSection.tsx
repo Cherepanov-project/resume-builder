@@ -2,17 +2,9 @@ import classes from './AdvertisementSection.module.scss';
 
 import DecorativeCircle from '@atoms/DecorativeCircle';
 import SupportContainer from '@molecules/SupportContainer';
-// import BarChartTwoToneIcon from '@mui/icons-material/BarChartTwoTone';
-// import ArrowBackIosNewTwoToneIcon from '@mui/icons-material/ArrowBackIosNewTwoTone';
-// import ArrowForwardIosNewTwoToneIcon from '@mui/icons-material/ArrowForwardIosTwoTone';
-// import FiberManualRecordTwoToneIcon from '@mui/icons-material/FiberManualRecordTwoTone';
 import { Box } from '@mui/material';
 
 const AdvertisementSection = () => {
-  // const nothing = (event: React.MouseEvent<HTMLButtonElement>) => {
-  //   event.preventDefault();
-  //   return;
-  // };
 
   return (
     <Box className={classes.right_side}>

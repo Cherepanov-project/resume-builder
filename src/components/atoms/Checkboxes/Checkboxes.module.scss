@@ -1,5 +1,9 @@
 .container {
   display: flex;
+  align-items: flex-start;
+  padding-left: 15px;
+  padding-top: 5px;
+  width: 100%;
 }
 
 .checkbox {
@@ -10,7 +14,8 @@
 .label {
   font-family: 'Inter', sans-serif;
   font-size: 16px;
+  
 }
 .wrapper{
-  height: calc(100% - 37px);
+  margin-top: 10px;
 }

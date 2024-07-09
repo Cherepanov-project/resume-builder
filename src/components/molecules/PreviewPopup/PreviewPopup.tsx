@@ -15,7 +15,6 @@ const PreviewPopup = ({ isModalOpen, onToggleModal }: Props) => {
     link.target = '_blank';
     link.click();
     link = null;
-    // window.open('', '_blank');
   };
 
   return (

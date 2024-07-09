@@ -1,6 +1,14 @@
-import { createSlice } from '@reduxjs/toolkit';
+import { createSlice, PayloadAction } from '@reduxjs/toolkit';
 
-const initialState = {
+interface SettingsPanelState {
+  shown: boolean;
+  imageMenu: boolean;
+  type: string;
+  sectionID: string;
+  moduleID: string;
+}
+
+const initialState: SettingsPanelState = {
   shown: false,
   imageMenu: false,
   type: '',
@@ -9,10 +17,10 @@ const initialState = {
 };
 
 const settingsPanelSlice = createSlice({
-  name: 'settingsPanelSlice',
+  name: 'settingsPanel',
   initialState,
   reducers: {
-    initPanel(state, action) {
+    initPanel(state, action:  PayloadAction<{ type?: string; sectionID?: string; moduleID?: string }>) {
       const { type = '', sectionID = '0', moduleID = '0' } = action.payload;
       state.shown = true;
       state.type = type;
@@ -32,5 +40,6 @@ const settingsPanelSlice = createSlice({
   },
 });
 
-export default settingsPanelSlice.reducer;
 export const { initPanel, closePanel, initImageMenu, closeImageMenu } = settingsPanelSlice.actions;
+
+export default settingsPanelSlice.reducer;

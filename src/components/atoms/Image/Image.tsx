@@ -1,68 +1,56 @@
 import { ILayoutBlock } from '@/types/landingBuilder';
-import { useState, FC, useEffect } from 'react';
+import { useState, FC, useEffect, useRef } from 'react';
+import classes from './Image.module.scss';
 
 const Image: FC<ILayoutBlock> = ({ props }) => {
-  const [url, setUrl] = useState<string>(props.url!);
-
-  const [isEditing, setIsEditing] = useState<boolean>(false);
+  const [url, setUrl] = useState<string>(props.url || '');
+  const imageRef = useRef<HTMLImageElement>(null);
+  const wrapperRef = useRef<HTMLDivElement>(null);
 
   useEffect(() => {
     if (props.url) setUrl(props.url);
-    // console.log('hi', props)
-  }, [props]);
+  }, [props.url]);
 
-  const wrapperStyle = {
-    ...props.textStyle,
-    // backgroundImage: `url(${url})`,
-    backgroundSize: 'contain',
-    height: '100%',
-    width: 'auto',
-    backgroundRepeat: 'no-repeat',
-  };
+  useEffect(() => {
+    if (imageRef.current && wrapperRef.current) {
+      resizeImage();
+      window.addEventListener('resize', resizeImage);
+    }
+    return () => {
+      window.removeEventListener('resize', resizeImage);
+    };
+  }, [url]);
 
-  const handleDoubleClick: (e: React.MouseEvent) => void = (e) => {
+  const handleDoubleClick = (e: React.MouseEvent) => {
     e.preventDefault();
-    setIsEditing(true);
   };
 
-  const handleUrl: (e: React.ChangeEvent<HTMLTextAreaElement>) => void = (e) => {
-    const url = e.target.value;
-    setUrl(url);
-  };
+  const resizeImage = () => {
+    const image = imageRef.current;
+    const wrapper = wrapperRef.current;
+    if (image && wrapper) {
+      const wrapperHeight = wrapper.clientHeight;
+      const imageAspectRatio = image.naturalWidth / image.naturalHeight;
+      const wrapperAspectRatio = wrapper.clientWidth / wrapperHeight;
 
-  const handleKeyDown: (e: React.KeyboardEvent) => void = (e) => {
-    if (e.key === 'Enter') {
-      setIsEditing(false);
+      if (imageAspectRatio > wrapperAspectRatio) {
+        image.style.width = '100%';
+        image.style.height = 'auto';
+      } else {
+        image.style.width = 'auto';
+        image.style.height = '100%';
+      }
     }
   };
 
-  const inputPannel: () => JSX.Element = () => {
-    return (
-      <div className="anchor__input-pannel">
-        <label>
-          url:
-          <textarea
-            value={url}
-            onChange={(e) => handleUrl(e)}
-            onKeyDown={(e) => handleKeyDown(e)}
-            style={{
-              width: '200px',
-              height: '200px',
-            }}
-          ></textarea>
-        </label>
-      </div>
-    );
-  };
   return (
-    <>
-      <div
-        style={{ ...wrapperStyle, backgroundImage: `url(${url || props.text})` }}
-        onContextMenu={(e) => handleDoubleClick(e)}
-      >
-        {isEditing && inputPannel()}
-      </div>
-    </>
+    <div
+      className={classes.wrapper}
+      onContextMenu={handleDoubleClick}
+      ref={wrapperRef}
+    >
+      {<img className={classes.image} ref={imageRef} src={url || props.text} alt="Dynamic content" onLoad={resizeImage} />}
+    </div>
   );
 };
 
