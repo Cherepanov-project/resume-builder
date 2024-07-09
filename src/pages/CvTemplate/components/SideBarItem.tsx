@@ -13,7 +13,7 @@ const SideBarItem = ({ activeStep, setActiveStep }) => {
       {steps.map((step: Step, index: number) => (
         <Fragment key={step.id}>
           <Button
-            disabled={false}
+            disabled={true}
             variant="contained"
             style={getButtonStyles(index, activeStep)}
             sx={{
