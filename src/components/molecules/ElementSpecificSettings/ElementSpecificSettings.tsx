@@ -13,6 +13,7 @@ import {
 import { ExpandMore } from '@mui/icons-material';
 import Item from '@atoms/StyledPaperItem';
 import ElementSpecificSettingsForm from '@molecules/ElementSpecificSettingsForm'
+import ElementSpecificStylesForm from '../ElementSpecificStylesForm';
 import { getLabel } from '@/utils/labelUtils';
 import { nanoid } from 'nanoid';
 import { ISettingsInputItem } from '@/types/landingBuilder';
@@ -110,6 +111,11 @@ const ElementSpecificSettings = () => {
         dispatch(editRowDate({ row, date: newValue }));
         break;
       }
+      case 'style':{
+        newValue[i].props.style = Object.assign(newValue[i].props.style, value);
+        dispatch(editRowDate({ row, date: newValue }));
+        break;
+      }
       case 'CheckboxGroup': {
         newValue[i].props.CheckboxGroup = value;
         newValue[i].props.key = 'CheckboxGroup';
@@ -131,7 +137,6 @@ const ElementSpecificSettings = () => {
         dispatch(editRowDate({ row, date: newValue }));
         break;
       }
-      
       default: {
         console.log('No case found');
       }
@@ -166,7 +171,11 @@ const ElementSpecificSettings = () => {
       </Accordion>
       <Accordion>
         <AccordionSummary expandIcon={<ExpandMore />}>Style Settings</AccordionSummary>
-        <AccordionDetails></AccordionDetails>
+        <AccordionDetails>
+        <ElementSpecificStylesForm
+          handleUpdate={handleUpdate}
+          col={col}></ElementSpecificStylesForm>
+        </AccordionDetails>
       </Accordion>
     </Box>
   );
