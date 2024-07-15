@@ -49,7 +49,7 @@ const ChoosingResumeOption: FC<IProps> = ({ handleButtonClick }) => {
             modules={[Navigation]}
           >
             {arrResume.map((r) => (
-              <SwiperSlide style={{ width: '500px' }}>
+              <SwiperSlide key={r} style={{ width: '500px' }}>
                 <TemplateSingleResume
                   key={r}
                   handleButtonClick={handleButtonClick}

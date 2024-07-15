@@ -10,7 +10,7 @@ import {StylesNameKeys} from './const';
 const selectAllPersonaInfo = (state: { personalInfo: any }) => state.personalInfo;
 
 export const CvTemplatePDF = React.forwardRef<HTMLDivElement, { styleName: StylesNameKeys }>(
-    ({styleName}, ref = null) => {
+    ({styleName}, ref) => {
         const userTemporaryCvDataSlice = useTypedSelector(selectAllPersonaInfo);
         let newData = userTemporaryCvDataSlice;
         if (userTemporaryCvDataSlice.personalData.fullName === '') {

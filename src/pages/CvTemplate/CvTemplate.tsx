@@ -56,6 +56,7 @@ const CvTemplate = () => {
                   setShowElement={setShowElement}
                   handleChangeStep={handleChangeStep}
                   onSubmit={handleSubmit(onSubmit)}
+                  nameTemplate={nameTemplate}
                 />
               </Box>
               <DevTool control={control} placement="top-left" />
