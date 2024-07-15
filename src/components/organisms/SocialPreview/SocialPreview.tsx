@@ -1,17 +1,15 @@
 import { SocialPDF } from "@/pages/CvTemplatePDF/components/molecules"
 import { SocialDataType } from "@/assets/const";
-import { useFormContext } from "react-hook-form";
+import { useWatch } from "react-hook-form";
 import { templatePDFStyles } from '@/pages/CvTemplatePDF/const';
 import { StyleOptionType } from '@/pages/CvTemplatePDF/const';
 
-const SocialPreview = () => {
+const SocialPreview = ({styleName}) => {
 
-  const styleName = 'toronto';
   const style: StyleOptionType = templatePDFStyles[styleName].style;
   const { Subtitle, SubtitleSpecial, Socials, Social, SocialTitle, Text} = style
 
-  const { watch } = useFormContext();
-  const socialFormData = watch('socialData')
+  const socialFormData = useWatch({name: 'socialData'})
   const socialData: SocialDataType[] = []
   socialFormData.forEach((social) => {
     const newSocial: SocialDataType = {

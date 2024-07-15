@@ -1,11 +1,18 @@
 import { Box, Typography, Button } from '@mui/material';
+import { cloneElement } from 'react';
 
 import { buttonStyle } from '@assets/style/buttonStyle.ts';
 import classes from '@pages/CvTemplate/CvTemplate.module.scss';
 import { steps } from '@pages/CvTemplate/utils';
+import { templatePDFStyles } from '@/pages/CvTemplatePDF/const';
+import { StyleOptionType } from '@/pages/CvTemplatePDF/const';
 
-const CardForm = ({ handleChangeStep, onSubmit, activeStep, setShowElement }) => {
+const CardForm = ({ handleChangeStep, onSubmit, activeStep, setShowElement, nameTemplate }) => {
   const currentCard = steps[activeStep];
+  const preview = cloneElement(currentCard.preview, {styleName: nameTemplate})
+  const style: StyleOptionType = templatePDFStyles[nameTemplate].style;
+  const structure = templatePDFStyles[nameTemplate].structure;
+  const isWithSidebar = structure.sidebar.isPresented;
 
   return (
     <Box sx={{display: 'flex', flexDirection: 'column'}}>
@@ -41,7 +48,15 @@ const CardForm = ({ handleChangeStep, onSubmit, activeStep, setShowElement }) =>
         <Typography variant="caption" className={classes.cvTemlpate__stepContentLabel}>
           <Typography variant="h5">Preview</Typography>
         </Typography>
-        {currentCard.preview}
+        {isWithSidebar && activeStep === 0 ? (
+          <Box style={style.SidebarPage}>
+            {preview}
+          </Box>
+        ) : (
+          <>
+            {preview}
+          </>
+        )}
       </Box> : null}
     </Box>
   );

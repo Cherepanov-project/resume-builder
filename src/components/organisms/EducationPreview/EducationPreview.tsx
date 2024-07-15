@@ -1,17 +1,15 @@
 import { EducationPDF } from "@/pages/CvTemplatePDF/components/molecules/EducationPDF"
 import { EducationDataType } from "@/assets/const";
-import { useFormContext } from "react-hook-form";
+import { useWatch } from "react-hook-form";
 import { templatePDFStyles } from '@/pages/CvTemplatePDF/const';
 import { StyleOptionType } from '@/pages/CvTemplatePDF/const';
 
-const EducationPreview = () => {
+const EducationPreview = ({styleName}) => {
 
-  const styleName = 'toronto';
   const style: StyleOptionType = templatePDFStyles[styleName].style;
   const { Subtitle, SubtitleSpecial, Education, Educations, EducationTitle, EducationTime, EducationPosition, Text} = style
 
-  const { watch } = useFormContext();
-  const educationFormData = watch('educationData')
+  const educationFormData = useWatch({name: 'educationData'})
   const educationData: EducationDataType[] = []
   educationFormData.forEach((education) => {
     const newEducation: EducationDataType = {

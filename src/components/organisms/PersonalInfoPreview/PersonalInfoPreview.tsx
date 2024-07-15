@@ -1,47 +1,93 @@
+import { useWatch } from 'react-hook-form';
 import { Box } from '@mui/material';
-import { TitlePDF, SubtitlePDF, ContactPDF } from '@/pages/CvTemplatePDF/components/atoms';
+
+import { HeaderPDF, HeaderShortPDF, SidebarPDF } from '@/pages/CvTemplatePDF/components/organisms';
+import { TitlePDF, TextPDF } from '@/pages/CvTemplatePDF/components/atoms';
 import { AboutPDF } from '@/pages/CvTemplatePDF/components/molecules';
 import { templatePDFStyles } from '@/pages/CvTemplatePDF/const';
 import { uniqueKey } from '@/assets/lib';
 import { StyleOptionType } from '@/pages/CvTemplatePDF/const';
-import { useFormContext } from 'react-hook-form';
+import { AvatarDataType, PersonalDataType, SocialDataType, HobbyDataType } from '@/assets/const';
 
-const PersonalInfoPreview = () => {
+const PersonalInfoPreview = ({styleName}) => {
 
-  const { watch } = useFormContext();
-
-  const styleName = 'toronto';
   const style: StyleOptionType = templatePDFStyles[styleName].style;
-  const { Title, Text, SubtitleWrapper = {background: "#eeeeee", borderRadius: "20px", padding: "2%"}, Subtitle, ContactWrapper, Contact, ContactLink, ContactIcon } = style
+  const structure = templatePDFStyles[styleName].structure
+  const isWithHeader = structure.header.isPresented;
+  const isWithSidebar = structure.sidebar.isPresented;
+  const isShort = structure.isShort;
+  const { Text, SubtitleWrapper = {background: "#eeeeee", borderRadius: "20px", padding: "2%"}, Subtitle, Title } = style
 
-  const fullNameTitiles = watch('fullName').split(' ');
-  const propsSubtitle = {
-    str: watch('position'),
-    style: { ...Text },
-  };
+  const fullNameTitiles = useWatch({name: 'fullName'}).split(' ');
   const propsAbout = {
-    bio: watch('bio'),
+    bio: useWatch({name: 'bio'}),
     style: { Text, Subtitle: Subtitle, SubtitleWrapper },
   };
-  const propsContact = { Contact, ContactLink, ContactIcon, Text };
-  const { phone, email, website, address } = watch();
+
+  const { phone, email, website, address, position, bio, fullName } = useWatch();
+
+  const personalData: PersonalDataType  = { address, phone, email, website, position, bio, fullName }
+  const photoData: AvatarDataType = { avatar: ''}
+  const propsHeader = {
+    data: { personalData, photoData},
+    style: style
+  }
+  const propsShortHeader = { ...personalData, style: style}
+
+  const socialFormData = useWatch({name: 'socialData'})
+  const socialData: SocialDataType[] = []
+  socialFormData.forEach((social) => {
+    const newSocial: SocialDataType = {
+      name: social['social-name'],
+      link: social['social-link']
+    }
+    socialData.push(newSocial)
+  })
+  const hobbyFormData = useWatch({name: 'hobbyData'})
+  const hobbyData: HobbyDataType[] = []
+  hobbyFormData.forEach((hobbyForm) => {
+    const newHobby: HobbyDataType = {
+      hobby: hobbyForm.label
+    }
+    hobbyData.push(newHobby)
+  })
+  const propsSidebar = { data: { personalData, photoData, socialData, hobbyData }, style: style };
+
+  const propsSubtitle = {
+    str: useWatch({name: position}),
+    style: { ...Text },
+  };
+  console.log(styleName, isWithHeader, isShort)
 
   return (
     <>
-      <TitlePDF
-        key={uniqueKey()}
-        {...{ fullName: fullNameTitiles[0] + ' ' + fullNameTitiles[1], style: Title }}
-      />
-      <Box display="flex">
-        <Box display="flex" flexDirection="column" alignItems="flex-start" style={ContactWrapper} marginRight='30px'>
-          <SubtitlePDF {...propsSubtitle} />
-          <ContactPDF contactName="phone" contactData={phone} style={propsContact} />
-          <ContactPDF contactName="email" contactData={email} style={propsContact} />
-          <ContactPDF contactName="website" contactData={website} style={propsContact} />
-          <ContactPDF contactName="address" contactData={address} style={propsContact} />
-        </Box>
-        <AboutPDF {...propsAbout} />
-      </Box>
+      {isWithHeader && !isShort ? <HeaderPDF {...propsHeader} />
+      : isShort && isWithHeader ? <HeaderShortPDF {...propsShortHeader}/>
+      : isWithSidebar ? (
+      <>
+        {styleName === 'sydney' && (<TitlePDF
+          key={uniqueKey()}
+          {...{ fullName: fullNameTitiles[0] + ' ' + fullNameTitiles[1], style: Title }}
+        />)}
+        <SidebarPDF {...propsSidebar}/>
+        {styleName === 'sydney' && <AboutPDF {...propsAbout} />}
+      </>)
+      : (
+        <>
+          <Box sx={{ display: 'flex', mb: '10px' }}>
+          <Box>
+            <TitlePDF
+              key={uniqueKey()}
+              {...{ fullName: fullNameTitiles[0] + ' ' + fullNameTitiles[1], style: Title }}
+            />
+            <TextPDF {...propsSubtitle} />
+          </Box>
+          </Box>
+          <AboutPDF {...propsAbout} />
+        </>
+      )
+    }
+    {styleName !== 'toronto' && styleName !== 'sydney' && <AboutPDF {...propsAbout} />}
     </>
   )
 }

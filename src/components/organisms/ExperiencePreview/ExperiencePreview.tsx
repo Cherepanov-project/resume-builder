@@ -1,17 +1,15 @@
 import { ExperiencePDF } from "@/pages/CvTemplatePDF/components/molecules";
 import { ExperienceDataType } from "@/assets/const";
-import { useFormContext } from "react-hook-form";
+import { useWatch } from "react-hook-form";
 import { templatePDFStyles } from '@/pages/CvTemplatePDF/const';
 import { StyleOptionType } from '@/pages/CvTemplatePDF/const';
 
-const ExperiencePreview = () => {
+const ExperiencePreview = ({styleName}) => {
 
-  const styleName = 'toronto';
   const style: StyleOptionType = templatePDFStyles[styleName].style;
   const { Subtitle, SubtitleSpecial, Experiences, Experience, ExperienceTitle, ExperienceTime, ExperiencePosition, Text} = style
 
-  const { watch } = useFormContext();
-  const experienceFormData = watch('experienceData')
+  const experienceFormData = useWatch({name: 'experienceData'})
   const experienceData: ExperienceDataType[] = []
   experienceFormData.forEach((experience) => {
     const newExperience: ExperienceDataType = {

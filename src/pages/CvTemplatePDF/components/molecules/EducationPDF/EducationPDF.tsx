@@ -55,7 +55,7 @@ export const EducationPDF = (props: IExperienceProps) => {
   const currStyle = { Education, EducationTitle, EducationTime, EducationPosition, Text };
 
   return (
-    <Box style={Educations}>
+    <Box key={uniqueKey()} style={Educations}>
       <SubtitlePDF {...propsSubtitle} />
       {experienceContent(data, currStyle)}
     </Box>
