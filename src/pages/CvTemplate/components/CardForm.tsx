@@ -78,7 +78,7 @@ const CardForm = ({ handleChangeStep, onSubmit, activeStep, setShowElement, name
           </Button>
         </Box>
       </Box>
-      {currentCard.id !== 6 ? <Box sx={{mt: '50px'}} className={isBlurred ? classes.blur + ' ' + classes.cvTemlpate__stepContent : classes.cvTemlpate__stepContent}>
+      {currentCard.id !== 6 ? <Box sx={{mt: '50px'}} className={`${classes.cvTemlpate__stepContent} ${isBlurred && classes.blur}`}>
         <Typography variant="caption" className={classes.cvTemlpate__stepContentLabel}>
           <Typography variant="h5">Preview</Typography>
         </Typography>
