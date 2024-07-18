@@ -57,8 +57,7 @@ const PersonalInfoPreview = ({styleName}) => {
     str: useWatch({name: position}),
     style: { ...Text },
   };
-  console.log(styleName, isWithHeader, isShort)
-
+  
   return (
     <>
       {isWithHeader && !isShort ? <HeaderPDF {...propsHeader} />

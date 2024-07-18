@@ -1,5 +1,5 @@
 import { Box, Typography, Button } from '@mui/material';
-import { cloneElement } from 'react';
+import { cloneElement, useEffect, useState } from 'react';
 
 import { buttonStyle } from '@assets/style/buttonStyle.ts';
 import classes from '@pages/CvTemplate/CvTemplate.module.scss';
@@ -13,6 +13,40 @@ const CardForm = ({ handleChangeStep, onSubmit, activeStep, setShowElement, name
   const style: StyleOptionType = templatePDFStyles[nameTemplate].style;
   const structure = templatePDFStyles[nameTemplate].structure;
   const isWithSidebar = structure.sidebar.isPresented;
+
+  const [isBlurred, setIsBlurred] = useState(false)
+
+  useEffect(() => {
+    const handlePrintScreenDown = (e) => {
+      if (e.key === 'PrintScreen' || e.key === 'Meta') {
+        setIsBlurred(true)
+      }
+
+      if (e.key !== 'PrintScreen' && e.key !== 'Meta' && e.key !== 'Shift') {
+        setIsBlurred(false)
+      }
+    }
+
+    const handlePrintScreenUp = (e) => {
+      if (e.key === 'PrintScreen') {
+        setIsBlurred(false)
+      }
+    }
+
+    const handleBlurOff = () => {
+      setIsBlurred(false)
+    }
+
+    window.addEventListener('keydown', handlePrintScreenDown)
+    window.addEventListener('keyup', handlePrintScreenUp)
+    window.addEventListener('click', handleBlurOff)
+
+    return () => {
+      window.removeEventListener('keydown', handlePrintScreenDown)
+      window.removeEventListener('keyup', handlePrintScreenUp)
+      window.removeEventListener('click', handleBlurOff)
+    }
+  }, [])
 
   return (
     <Box sx={{display: 'flex', flexDirection: 'column'}}>
@@ -44,7 +78,7 @@ const CardForm = ({ handleChangeStep, onSubmit, activeStep, setShowElement, name
           </Button>
         </Box>
       </Box>
-      {currentCard.id !== 6 ? <Box sx={{mt: '50px'}} className={classes.cvTemlpate__stepContent}>
+      {currentCard.id !== 6 ? <Box sx={{mt: '50px'}} className={`${classes.cvTemlpate__stepContent} ${isBlurred && classes.blur}`}>
         <Typography variant="caption" className={classes.cvTemlpate__stepContentLabel}>
           <Typography variant="h5">Preview</Typography>
         </Typography>
