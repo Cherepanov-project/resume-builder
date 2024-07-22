@@ -7,7 +7,7 @@ import { StyleOptionType } from '@/pages/CvTemplatePDF/const';
 const ExperiencePreview = ({styleName}) => {
 
   const style: StyleOptionType = templatePDFStyles[styleName].style;
-  const { Subtitle, SubtitleSpecial, Experiences, Experience, ExperienceTitle, ExperienceTime, ExperiencePosition, Text} = style
+  const { Subtitle, SubtitleSpecial, Experiences, Experience, ExperienceTitle, ExperienceTime, ExperiencePosition, ExperienceDescription, Text} = style
 
   const experienceFormData = useWatch({name: 'experienceData'})
   const experienceData: ExperienceDataType[] = []
@@ -32,6 +32,7 @@ const ExperiencePreview = ({styleName}) => {
       ExperienceTitle,
       ExperienceTime,
       ExperiencePosition,
+      ExperienceDescription,
       Text,
     },
   };

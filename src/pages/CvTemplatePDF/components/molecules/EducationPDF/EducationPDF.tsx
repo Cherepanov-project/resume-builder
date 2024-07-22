@@ -21,14 +21,14 @@ const experienceContent = (data: ExperienceDataType[] | undefined, style: StyleO
 
     const propsText = { str: description, style: Text };
     const listTitleProps = {
-      data: otherData,
-      style: { EducationTitle, EducationTime, EducationPosition },
+      data: Education.name === 'chrono' ? experience : otherData,
+      style: { EducationTitle, EducationTime, EducationPosition, Education },
     };
 
     return (
       <Box key={uniqueKey()} style={Education}>
         <ListTitlePDF {...listTitleProps} />
-        <TextPDF key={uniqueKey()} {...propsText} />
+        {Education.name !== 'chrono' && <TextPDF key={uniqueKey()} {...propsText} />}
       </Box>
     );
   });

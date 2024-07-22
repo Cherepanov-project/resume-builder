@@ -41,6 +41,7 @@ export const MainPDF = (props: IMainPDFProps) => {
     ExperienceTitle,
     ExperienceTime,
     ExperiencePosition,
+    ExperienceDescription,
     Educations,
     Education,
     EducationTitle,
@@ -81,6 +82,7 @@ export const MainPDF = (props: IMainPDFProps) => {
       ExperienceTime,
       ExperiencePosition,
       Text,
+      ExperienceDescription,
     },
   };
 
@@ -145,7 +147,6 @@ export const MainPDF = (props: IMainPDFProps) => {
         </Box>
       ) : (
         <Box style={Main}>
-
           <Box sx={{ height: '100%', width: '65%' }}>
             <EducationPDF {...propsEducation} />
             <ExperiencePDF {...propsExperience} />

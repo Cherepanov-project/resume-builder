@@ -20,6 +20,7 @@ const arrResume: StylesNameKeys[] = [
   'modern',
   'classicCustomized',
   'defaultCustomized',
+  'chrono'
 ];
 
 const ChoosingResumeOption: FC<IProps> = ({ handleButtonClick }) => {

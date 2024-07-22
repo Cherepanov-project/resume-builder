@@ -74,19 +74,19 @@ const PersonalInfoPreview = ({styleName}) => {
       : (
         <>
           <Box sx={{ display: 'flex', mb: '10px' }}>
-          <Box>
-            <TitlePDF
-              key={uniqueKey()}
-              {...{ fullName: fullNameTitiles[0] + ' ' + fullNameTitiles[1], style: Title }}
-            />
-            <TextPDF {...propsSubtitle} />
-          </Box>
+            <Box>
+              <TitlePDF
+                key={uniqueKey()}
+                {...{ fullName: fullNameTitiles[0] + ' ' + fullNameTitiles[1], style: Title }}
+              />
+              <TextPDF {...propsSubtitle} />
+            </Box>
           </Box>
           <AboutPDF {...propsAbout} />
         </>
       )
     }
-    {styleName !== 'toronto' && styleName !== 'sydney' && <AboutPDF {...propsAbout} />}
+    {styleName !== 'toronto' && styleName !== 'sydney'&& styleName !== 'chrono' && <AboutPDF {...propsAbout} />}
     </>
   )
 }

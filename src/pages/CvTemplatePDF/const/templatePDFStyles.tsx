@@ -10,7 +10,8 @@ export type StylesNameKeys =
   | 'custom'
   | 'toronto'
   | 'sydney'
-  | 'oslo';
+  | 'oslo'
+  | 'chrono';
 
 export type StyleOptionType = {
   [key: string]: StyleType;
@@ -1341,4 +1342,135 @@ export const templatePDFStyles: StylesType = {
       },
     },
   },
+  chrono: {
+    structure: {
+      isShort: false,
+      header: { isPresented: true },
+      sidebar: { isPresented: false },
+      main: {},
+    },
+    style: {
+      MainPage: {
+        name: 'chrono',
+        backgroundColor: 'white',
+        fontFamily: 'OpenSans',
+      },
+      Main: {
+        type: 'chrono',
+        display: 'flex',
+        flexWrap: 'wrap',
+        height: '100%',
+        maxHeight: '500px',
+        maxWidth: '800px',
+        backgroundColor: 'white',
+        flexDirection: 'column',
+        padding: '2%',
+      },
+      Header: {
+        name: 'chrono',
+        flexDirection: 'row',
+        backgroundColor: '#f5f5f5',
+        color: 'black',
+        padding: '1%',
+      },
+      HeaderWrapper: {
+        justifyContent: 'center',
+        width: '100%',
+      },
+
+      Experiences: { marginBottom: 20, pageBreakInside: 'avoid' },
+      Experience: { fontSize: 14, name: 'chrono' },
+      ExperienceTime: { fontSize: 14, marginRight: '80px', textWrap: 'nowrap' },
+      ExperienceTitle: { fontSize: 14, color: '#3e94e4' },
+      ExperiencePosition: { fontSize: 14 },
+      ExperienceDescription: {fontSize: 14, width: 500},
+      EducationTime: { fontSize: 14, marginRight: '80px', textWrap: 'nowrap' },
+      EducationPosition: { fontSize: 14 },
+      Educations: { marginBottom: 10, pageBreakInside: 'avoid' },
+      Education: { fontSize: 7, name: 'chrono' },
+      EducationTitle: { fontSize: 14, color: '#3e94e4' },
+
+      Socials: { marginBottom: 10, pageBreakInside: 'avoid' },
+      Social: { marginLeft: '155px' },
+      SocialTitle: {
+        fontFamily: 'OpenSans',
+        fontSize: 18,
+        color: '#3e94e4'
+      },
+
+      Hobbies: { pageBreakInside: 'avoid' },
+      Hobbie: {
+        display: 'flex',
+        flexDirection: 'row',
+        alignItems: 'center',
+        marginLeft: '155px',
+      },
+      HobbieBullets: {
+        fontFamily: 'OpenSans',
+        fontSize: '16px',
+      },
+
+      ContactWrapper: {
+        display: 'flex',
+        flexDirection: 'row',
+        fontSize: 5,
+        marginBottom: 10,
+        pageBreakInside: 'avoid',
+      },
+      Contact: {
+        flexDirection: 'row',
+        justifyContent: 'center',
+        alignItems: 'center',
+        marginRight: 10,
+        color: 'black',
+      },
+      ContactLink: {
+        fontFamily: 'OpenSans',
+        textDecoration: 'none',
+        fontSize: 14,
+      },
+      ContactIcon: {
+        width: 10,
+        height: 10,
+        marginRight: 5,
+      },
+      SubtitleWrapper: {
+        marginBottom: 10,
+        pageBreakInside: 'avoid',
+      },
+      Title: {
+        fontFamily: 'OpenSans',
+        fontSize: 30,
+        fontWeight: 700,
+        color: '#3e94e4',
+      },
+      Subtitle: {
+        name: 'chrono',
+        fontFamily: 'OpenSans',
+        fontSize: 18,
+        fontWeight: 700,
+        color: '#3e94e4',
+      },
+      SubtitleNone: {
+        display: 'none',
+        opacity: 0,
+      },
+      Text: {
+        fontFamily: 'OpenSans',
+        fontSize: 18,
+      },
+      TextSpecial: {
+        fontFamily: 'OpenSans',
+        fontSize: 10,
+        textTransform: 'uppercase',
+        marginBottom: 15,
+      },
+      Img: {
+        marginRight: 10,
+        width: 60,
+        height: 60,
+        borderRadius: '50%',
+      },
+    },
+  }
 };

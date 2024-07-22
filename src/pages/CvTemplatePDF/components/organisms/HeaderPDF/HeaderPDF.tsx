@@ -95,6 +95,20 @@ export const HeaderPDF = (props: IHeaderPDFProps) => {
             </Box>
           </Box>
         </>
+      ) : Header.name === 'chrono' ? (
+        <>
+          <Box style={Header}>
+            <TitlePDF
+              key={uniqueKey()}
+              {...{ fullName: fullNameTitiles[0] + ' ' + fullNameTitiles[1], style: Title }}
+            />
+            <Box sx={{ display: 'flex', alignItems: 'center' }}>
+              <ImagePDF {...propsImage} />
+              <AboutPDF {...propsAbout} />
+            </Box>
+            <ContactsPDF {...propsConcats} />
+          </Box>
+        </>
       ) : (
         <Box style={Header} sx={{ display: 'flex' }}>
           <ImagePDF {...propsImage} />

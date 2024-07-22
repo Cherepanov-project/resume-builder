@@ -22,8 +22,8 @@ const socialContent = (data: SocialDataType[] | undefined, style: StyleOptionTyp
 
     return (
       <Box key={uniqueKey()} style={Social}>
-        <TextPDF key={uniqueKey()} {...propsTitleText} />
-        <TextPDF key={uniqueKey()} {...propsText} />
+        <TextPDF {...propsTitleText} />
+        <TextPDF {...propsText} />
       </Box>
     );
   });

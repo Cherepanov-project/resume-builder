@@ -2,6 +2,7 @@ import classes from './Education.module.scss';
 import { Box, Button } from '@mui/material';
 import EducationForm from '@molecules/EducationForm';
 import { buttonStyle } from '@assets/style/buttonStyle';
+import { uniqueKey } from '@/assets/lib';
 
 import AccordionSummary from '@mui/material/AccordionSummary';
 import AccordionDetails from '@mui/material/AccordionDetails';
@@ -56,7 +57,7 @@ const Education = () => {
     <Box className={classes.education}>
       {getValues('educationData').map((_: EducationType, index: number) => {
         return (
-          <Box>
+          <Box key={uniqueKey()}>
             <AccordionSummary aria-controls="panel1a-content" id="panel1a-header">
               {index > 0 ? (
                 <>

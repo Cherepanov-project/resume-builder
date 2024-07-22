@@ -78,7 +78,19 @@ const CardForm = ({ handleChangeStep, onSubmit, activeStep, setShowElement, name
           </Button>
         </Box>
       </Box>
-      {currentCard.id !== 6 ? <Box sx={{mt: '50px'}} className={`${classes.cvTemlpate__stepContent} ${isBlurred && classes.blur}`}>
+      {currentCard.id !== 6 ? <Box sx={{mt: '50px', position: 'relative', overflow: 'hidden'}} className={`${classes.cvTemlpate__stepContent} ${isBlurred && classes.blur}`}>
+        {style.MainPage.name === 'chrono' && currentCard.id !== 1 && (
+          <Box 
+            sx={{ 
+              position: 'absolute', 
+              backgroundColor: '#e2e2e2', 
+              width: '2px', 
+              top: 0, 
+              bottom: 0, 
+              left: '134px' 
+            }} 
+          />
+        )}
         <Typography variant="caption" className={classes.cvTemlpate__stepContentLabel}>
           <Typography variant="h5">Preview</Typography>
         </Typography>
