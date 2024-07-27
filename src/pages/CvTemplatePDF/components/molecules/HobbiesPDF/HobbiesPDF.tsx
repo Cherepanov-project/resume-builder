@@ -1,8 +1,8 @@
 import { SubtitlePDF } from '../../atoms';
-
 import { HobbyDataType } from '../../../../../assets/const';
 import { uniqueKey } from '../../../../../assets/lib';
 import { StyleOptionType } from '../../../const';
+
 import { Box } from '@mui/material';
 
 interface IHobbiesProps {
@@ -41,7 +41,9 @@ export const HobbiesPDF = (props: IHobbiesProps) => {
   return (
     <Box style={Hobbies}>
       <SubtitlePDF {...propsTitle} />
-      {hobbiesContent(data, currStyle)}
+      {Hobbie.name === 'chrono' ? (<Box sx={{ display: 'flex', flexWrap: 'wrap'}}>
+        {hobbiesContent(data, currStyle)}
+      </Box>) : hobbiesContent(data, currStyle)}
     </Box>
   );
 };

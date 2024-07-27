@@ -1390,20 +1390,22 @@ export const templatePDFStyles: StylesType = {
       Education: { fontSize: 7, name: 'chrono' },
       EducationTitle: { fontSize: 14, color: '#3e94e4' },
 
-      Socials: { marginBottom: 10, pageBreakInside: 'avoid' },
-      Social: { marginLeft: '155px' },
+      Socials: { marginBottom: 10, pageBreakInside: 'avoid', display: 'flex' },
+      Social: { marginLeft: '110px', marginBottom: '10px' },
       SocialTitle: {
         fontFamily: 'OpenSans',
         fontSize: 18,
         color: '#3e94e4'
       },
 
-      Hobbies: { pageBreakInside: 'avoid' },
+      Hobbies: { marginBottom: 10, pageBreakInside: 'avoid', display: 'flex' },
       Hobbie: {
+        name: 'chrono',
         display: 'flex',
         flexDirection: 'row',
         alignItems: 'center',
-        marginLeft: '155px',
+        marginLeft: '80px',
+        width: '190px'
       },
       HobbieBullets: {
         fontFamily: 'OpenSans',

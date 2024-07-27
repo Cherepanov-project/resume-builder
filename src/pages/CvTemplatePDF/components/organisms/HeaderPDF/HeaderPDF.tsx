@@ -103,7 +103,6 @@ export const HeaderPDF = (props: IHeaderPDFProps) => {
               {...{ fullName: fullNameTitiles[0] + ' ' + fullNameTitiles[1], style: Title }}
             />
             <Box sx={{ display: 'flex', alignItems: 'center' }}>
-              <ImagePDF {...propsImage} />
               <AboutPDF {...propsAbout} />
             </Box>
             <ContactsPDF {...propsConcats} />

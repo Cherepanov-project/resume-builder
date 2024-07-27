@@ -70,15 +70,17 @@ const CardForm = ({ handleChangeStep, onSubmit, activeStep, setShowElement, name
           />
 
           <Button
-            onClick={currentCard.id === 6 ? onSubmit : () => handleChangeStep('plus')}
+            onClick={currentCard.id === (style.MainPage.name === 'chrono' ? 5 : 6) ?
+              style.MainPage.name === 'chrono' ? () => {onSubmit(); handleChangeStep('plus')} : onSubmit :
+              () => handleChangeStep('plus')}
             variant="contained"
             sx={buttonStyle}
           >
-            {currentCard.id === 6 ? 'Finish' : 'Next session'}
+            {currentCard.id === (style.MainPage.name === 'chrono' ? 5 : 6) ? 'Finish' : 'Next session'}
           </Button>
         </Box>
       </Box>
-      {currentCard.id !== 6 ? <Box sx={{mt: '50px', position: 'relative', overflow: 'hidden'}} className={`${classes.cvTemlpate__stepContent} ${isBlurred && classes.blur}`}>
+      {currentCard.id !== 6 && <Box sx={{mt: '50px', position: 'relative', overflow: 'hidden'}} className={`${classes.cvTemlpate__stepContent} ${isBlurred && classes.blur}`}>
         {style.MainPage.name === 'chrono' && currentCard.id !== 1 && (
           <Box 
             sx={{ 
@@ -103,7 +105,7 @@ const CardForm = ({ handleChangeStep, onSubmit, activeStep, setShowElement, name
             {preview}
           </>
         )}
-      </Box> : null}
+      </Box>}
     </Box>
   );
 };

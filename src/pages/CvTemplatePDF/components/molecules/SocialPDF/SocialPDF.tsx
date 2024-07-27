@@ -43,7 +43,9 @@ export const SocialPDF = (props: ISocialProps) => {
   return (
     <Box style={Socials}>
       <SubtitlePDF {...propsTitle} />
-      {socialContent(data, currStyle)}
+      <Box sx={{ display: 'flex', flexDirection: 'column'}}>
+        {socialContent(data, currStyle)}
+      </Box>
     </Box>
   );
 };

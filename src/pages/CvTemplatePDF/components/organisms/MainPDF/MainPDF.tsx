@@ -151,7 +151,7 @@ export const MainPDF = (props: IMainPDFProps) => {
             <EducationPDF {...propsEducation} />
             <ExperiencePDF {...propsExperience} />
           </Box>
-          <Box sx={{ height: '100%', width: '35%', wordBreak:'break-word' }}>
+          <Box sx={{display: 'flex', flexDirection: 'column' }}>
             <SocialPDF {...propsSocial} />
             <HobbiesPDF {...propsHobbies} />
           </Box>
