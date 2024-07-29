@@ -5,6 +5,8 @@ import { StyleOptionType } from '../../../const';
 
 import { Box } from '@mui/material';
 
+import classes from './HobbiesPDF.module.scss'
+
 interface IHobbiesProps {
   data: HobbyDataType[];
   style: StyleOptionType;
@@ -20,7 +22,7 @@ const hobbiesContent = (data: HobbyDataType[] | undefined, style: StyleOptionTyp
 
     return (
       <Box key={uniqueKey()} style={Hobbie} display="flex">
-        <li style={HobbieBullets} >{`${hobbyTitle}`}</li>
+        <li className={Hobbie.name === 'metro' ? classes.metro : ''} style={HobbieBullets} >{`${hobbyTitle}`}</li>
       </Box>
     );
   });
@@ -41,7 +43,7 @@ export const HobbiesPDF = (props: IHobbiesProps) => {
   return (
     <Box style={Hobbies}>
       <SubtitlePDF {...propsTitle} />
-      {Hobbie.name === 'chrono' ? (<Box sx={{ display: 'flex', flexWrap: 'wrap'}}>
+      {Hobbie.name === 'chrono' || Hobbie.name === 'metro' ? (<Box sx={{ display: 'flex', flexWrap: 'wrap'}}>
         {hobbiesContent(data, currStyle)}
       </Box>) : hobbiesContent(data, currStyle)}
     </Box>

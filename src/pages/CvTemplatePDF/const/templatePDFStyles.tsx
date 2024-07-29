@@ -1,3 +1,5 @@
+import './fonts.scss'
+
 export type StyleType = { [key: string]: string | number };
 
 export type StylesNameKeys =
@@ -11,7 +13,8 @@ export type StylesNameKeys =
   | 'toronto'
   | 'sydney'
   | 'oslo'
-  | 'chrono';
+  | 'chrono'
+  | 'metro';
 
 export type StyleOptionType = {
   [key: string]: StyleType;
@@ -1474,5 +1477,157 @@ export const templatePDFStyles: StylesType = {
         borderRadius: '50%',
       },
     },
-  }
+  },
+  metro: {
+    structure: {
+      isShort: false,
+      header: { isPresented: true },
+      sidebar: { isPresented: false },
+      main: {},
+    },
+    style: {
+      MainPage: {
+        name: 'metro',
+        backgroundColor: 'white',
+        fontFamily: 'Noto Sans',
+        padding: '10px',
+      },
+      Main: {
+        type: 'metro',
+        display: 'flex',
+        flexWrap: 'wrap',
+        height: '100%',
+        maxHeight: '900px',
+        maxWidth: '800px',
+        backgroundColor: 'white',
+        flexDirection: 'column',
+        padding: '0% 1% 1% 1%',
+      },
+      Header: {
+        name: 'metro',
+        flexDirection: 'row',
+        backgroundColor: '#ffffff',
+        color: 'black',
+        padding: '0% 1% 1% 1%',
+      },
+      HeaderWrapper: {
+        justifyContent: 'center',
+        width: '100%',
+      },
+
+      Experiences: { marginBottom: 20, pageBreakInside: 'avoid' },
+      Experience: { fontSize: 14, name: 'metro' },
+      ExperienceTime: { fontSize: 14, fontFamily: 'Noto Sans', textWrap: 'nowrap' },
+      ExperienceTitle: { fontSize: 14, fontFamily: 'Noto Sans', color: '#888888' },
+      ExperiencePosition: { fontSize: 14, fontFamily: 'Noto Sans', fontWeight: 'bold' },
+      ExperienceDescription: {fontSize: 14, width: 500},
+      EducationTime: { fontSize: 14, fontFamily: 'Noto Sans', textWrap: 'nowrap' },
+      EducationPosition: { fontSize: 14, fontFamily: 'Noto Sans', fontWeight: 'bold' },
+      Educations: { marginBottom: 10, pageBreakInside: 'avoid' },
+      Education: { fontSize: 7, name: 'metro' },
+      EducationTitle: { fontSize: 14, fontFamily: 'Noto Sans', color: '#888888' },
+
+      Socials: { marginBottom: 10, pageBreakInside: 'avoid' },
+      Social: {
+        name: 'metro',
+        marginBottom: '10px'
+      },
+      SocialTitle: {
+        fontFamily: 'Noto Sans',
+        fontSize: 14,
+        color: '#888888'
+      },
+      SocialText: {
+        fontSize: 14,
+        fontFamily: 'Noto Sans',
+        fontWeight: 'bold',
+      },
+
+      Hobbies: { marginBottom: 10, pageBreakInside: 'avoid', display: 'flex' },
+      Hobbie: {
+        name: 'metro',
+        display: 'flex',
+        flexDirection: 'row',
+        alignItems: 'center',
+        marginLeft: '50px',
+        width: '190px',
+        height: '27px',
+      },
+      HobbieBullets: {
+        fontFamily: 'Noto Sans',
+        fontSize: '16px',
+      },
+
+      ContactWrapper: {
+        display: 'flex',
+        flexDirection: 'column',
+        fontSize: 5,
+        marginBottom: 10,
+        marginTop: 15,
+        pageBreakInside: 'avoid',
+      },
+      Contact: {
+        flexDirection: 'row',
+        justifyContent: 'flex-start',
+        alignItems: 'center',
+        fontFamily: 'Noto Sans',
+        fontSize: 10,
+        marginRight: 10,
+        color: 'black',
+      },
+      ContactLink: {
+        fontFamily: 'Noto Sans',
+        textDecoration: 'none',
+        fontSize: 14,
+      },
+      ContactIcon: {
+        width: 10,
+        height: 10,
+        marginRight: 5,
+      },
+      SubtitleWrapper: {
+        marginBottom: 10,
+        pageBreakInside: 'avoid',
+      },
+      Title: {
+        fontFamily: 'Noto Sans',
+        fontSize: 35,
+        fontWeight: 700,
+        textTransform: 'uppercase',
+        color: '#232961',
+      },
+      Subtitle: {
+        name: 'metro',
+        fontFamily: 'Noto Sans',
+        display: 'inline-block',
+        fontSize: 18,
+        fontWeight: 700,
+        textTransform: 'uppercase',
+        color: '#ffffff',
+        backgroundColor: '#232961',
+        padding: '0px 8px',
+        marginBottom: '10px',
+        height: '27px',
+      },
+      SubtitleNone: {
+        display: 'none',
+        opacity: 0,
+      },
+      Text: {
+        fontFamily: 'Noto Sans',
+        fontSize: 14,
+      },
+      TextSpecial: {
+        fontFamily: 'Noto Sans',
+        fontSize: 10,
+        textTransform: 'uppercase',
+        marginBottom: 15,
+      },
+      Img: {
+        marginBottom: 10,
+        width: 60,
+        height: 60,
+      },
+    },
+  },
 };

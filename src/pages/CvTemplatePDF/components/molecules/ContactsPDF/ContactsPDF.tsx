@@ -17,14 +17,21 @@ export const ContactsPDF = (props: IContact) => {
 
   const propsSubtitle = { str: 'Contacts ', style: Subtitle };
   const propsContact = { Contact, ContactLink, ContactIcon, Text };
+  const contacts = <>
+    <ContactPDF contactName="phone" contactData={phone} style={propsContact} />
+    <ContactPDF contactName="email" contactData={email} style={propsContact} />
+    <ContactPDF contactName="website" contactData={website} style={propsContact} />
+    <ContactPDF contactName="address" contactData={address} style={propsContact} />
+  </>
 
   return (
     <Box display="flex" flexDirection="column" alignItems="flex-start" style={ContactWrapper}>
       <SubtitlePDF {...propsSubtitle} />
-      <ContactPDF contactName="phone" contactData={phone} style={propsContact} />
-      <ContactPDF contactName="email" contactData={email} style={propsContact} />
-      <ContactPDF contactName="website" contactData={website} style={propsContact} />
-      <ContactPDF contactName="address" contactData={address} style={propsContact} />
+      {Subtitle.name === 'metro' ?
+      <Box sx ={{ display: 'flex', flexDirection: 'column'}}>
+        {contacts}
+      </Box> :
+      contacts }
     </Box>
   );
 };

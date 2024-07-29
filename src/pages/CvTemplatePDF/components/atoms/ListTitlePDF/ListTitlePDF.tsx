@@ -39,6 +39,23 @@ export const ListTitlePDF = (props: ITitleProps) => {
             <Typography style={{ ...ExperienceDescription, ...EducationPosition }}>{description}</Typography>
           </Box>
         </Box>
+      ) : (Education && Education.name === 'metro') || (Experience && Experience.name === 'metro') ? (
+        <Box sx={{ display: 'flex', justifyContent: 'space-between' }}>
+          <Box>
+            <Typography style={{ ...ExperiencePosition, ...EducationPosition }}>{description}</Typography>
+            {Education ?
+            <Typography style={{ ...ExperienceTitle, ...EducationTitle }}>
+              {`${name}, ${position}`}
+            </Typography> :
+            <>
+              <Typography style={{ ...ExperiencePosition, ...EducationPosition }}>{position}</Typography>
+              <Typography style={{ ...ExperienceTitle, ...EducationTitle }}>{name}</Typography>
+            </>}
+          </Box>
+          <Typography style={{ ...ExperienceTime, ...EducationTime }}>
+            {`${fromYear} - ${toYear}`}
+          </Typography>
+        </Box>
       ) : (
         <Box>
           <Typography style={{ ...ExperienceTitle, ...EducationTitle }}>

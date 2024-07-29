@@ -28,7 +28,7 @@ const experienceContent = (data: ExperienceDataType[] | undefined, style: StyleO
     return (
       <Box key={uniqueKey()} style={Experience}>
         <ListTitlePDF {...listTitleProps} />
-        {Experience.name !== 'chrono' && <TextPDF key={uniqueKey()} {...propsText} />}
+        {Experience.name !== 'chrono' && <TextPDF {...propsText} />}
       </Box>
     );
   });

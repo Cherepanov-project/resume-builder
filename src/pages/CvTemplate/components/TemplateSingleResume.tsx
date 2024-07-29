@@ -10,6 +10,7 @@ import {
   toronto,
   defaultCustomized,
   chrono,
+  metro,
 } from '../resumeTemplates/index';
 import { StylesNameKeys } from '@pages/CvTemplatePDF/const';
 
@@ -20,7 +21,8 @@ const objResume = {
   modern,
   classicCustomized,
   defaultCustomized,
-  chrono
+  chrono,
+  metro
 };
 
 interface IProps {

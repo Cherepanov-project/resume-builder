@@ -86,7 +86,7 @@ const PersonalInfoPreview = ({styleName}) => {
         </>
       )
     }
-    {styleName !== 'toronto' && styleName !== 'sydney'&& styleName !== 'chrono' && <AboutPDF {...propsAbout} />}
+    {styleName !== 'toronto' && styleName !== 'sydney' && styleName !== 'chrono' && styleName !== 'metro' && <AboutPDF {...propsAbout} />}
     </>
   )
 }

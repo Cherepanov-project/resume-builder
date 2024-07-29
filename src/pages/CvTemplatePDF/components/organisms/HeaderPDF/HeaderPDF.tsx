@@ -29,6 +29,7 @@ export const HeaderPDF = (props: IHeaderPDFProps) => {
     Text,
     TextSpecial,
     SubtitleNone,
+    SubtitleWrapper,
     Subtitle,
     Img,
   } = style;
@@ -47,9 +48,9 @@ export const HeaderPDF = (props: IHeaderPDFProps) => {
       website: personalData.website,
       email: personalData.email,
     },
-    style: { Subtitle: SubtitleNone, Contact, ContactLink, ContactIcon, Text, ContactWrapper },
+    style: { Subtitle: Header.name === 'metro' ? Subtitle : SubtitleNone, Contact, ContactLink, ContactIcon, Text, ContactWrapper },
   };
-  const propsAbout = { bio: personalData.bio, style: { Text, Subtitle: Subtitle } };
+  const propsAbout = { bio: personalData.bio, style: { Text, Subtitle: Subtitle, SubtitleWrapper } };
   return (
     <>
       {Header.name === 'toronto' ? (
@@ -99,14 +100,24 @@ export const HeaderPDF = (props: IHeaderPDFProps) => {
         <>
           <Box style={Header}>
             <TitlePDF
-              key={uniqueKey()}
               {...{ fullName: fullNameTitiles[0] + ' ' + fullNameTitiles[1], style: Title }}
             />
-            <Box sx={{ display: 'flex', alignItems: 'center' }}>
-              <AboutPDF {...propsAbout} />
-            </Box>
+            <AboutPDF {...propsAbout} />
             <ContactsPDF {...propsConcats} />
           </Box>
+        </>
+      ) : Header.name === 'metro' ? (
+        <>
+        <Box style={Header}>
+          <Box sx={{ display: 'flex', justifyContent: 'space-between', borderBottom: '5px solid #232961' }}>
+            <TitlePDF
+              {...{ fullName: fullNameTitiles[0] + ' ' + fullNameTitiles[1], style: Title }}
+            />
+            <ImagePDF {...propsImage} />
+          </Box>
+          <ContactsPDF {...propsConcats} />
+          <AboutPDF {...propsAbout} />
+        </Box>
         </>
       ) : (
         <Box style={Header} sx={{ display: 'flex' }}>
