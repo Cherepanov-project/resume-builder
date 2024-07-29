@@ -1,4 +1,5 @@
 import { LetterConstructorPageSection, LetterConstructorPageGroup } from '../../components/molecules/LetterConstructorPageSection/LetterConstructorPageSection'
+import classes from './LetterConstructorPage.module.scss'
 
 import imageConstructor from '../../assets/images/letterConstructorPage/konstruktor-pisem.jpg'
 import tryYourSelf from '../../assets/images/letterConstructorPage/poprobuite-sami.png'
@@ -17,10 +18,13 @@ import preview from '../../assets/images/letterConstructorPage/predvaritelnyy-pr
 import completeIntegrations from '../../assets/images/letterConstructorPage/48-gotovyh-integraciy.svg'
 import security from '../../assets/images/letterConstructorPage/bezopasnost.svg'
 import support from '../../assets/images/letterConstructorPage/tehpodderzhka.svg'
+import tenFeatures from '../../assets/images/letterConstructorPage/group-3073.png'
+import design from '../../assets/images/letterConstructorPage/group-3074.png'
+import howMakeBeutiful from '../../assets/images/letterConstructorPage/group-3075.png'
 
 const LetterConstructorPage = () => {
   return (
-    <>
+    <main className={classes['main']}>
       <LetterConstructorPageSection
         subTitle="Конструктор писем"
         content="Создавайте красивые письма бесплатно без дизайнеров и верстальщиков."
@@ -28,6 +32,7 @@ const LetterConstructorPage = () => {
         href="#"
         image={imageConstructor}
         imageAlt="конструктор писем"
+        isHead
       />
       <LetterConstructorPageGroup
         title="Соберите HTML-макет письма из готовых блоков за 3 шага"
@@ -52,6 +57,7 @@ const LetterConstructorPage = () => {
           }
         ]}
         isBorder={false}
+        isBigPicture={false}
       />
       <LetterConstructorPageSection 
         subTitle="Попробуйте сами"
@@ -124,6 +130,7 @@ const LetterConstructorPage = () => {
           }
         ]}
         isBorder={false}
+        isBigPicture={false}
       />
       <LetterConstructorPageGroup
         title="Запускайте рассылки, мы позаботимся об остальном"
@@ -148,8 +155,37 @@ const LetterConstructorPage = () => {
           }
         ]}
         isBorder={true}
+        isBigPicture={false}
       />
-    </>
+      <LetterConstructorPageGroup
+        title="Хотите научиться создавать красивые письма? — Читайте"
+        arrayCards={[
+          {
+            subTitle: "Конструктор писем Unisender: 10 фишек, которые упростят email-вёрстку",
+            image: tenFeatures,
+            imageAlt: "10 фишек, которые упростят email-вёрстку", 
+            buttonText: "Узнать подробности",
+            href: "#"
+          },
+          {
+            subTitle: "Дизайн и верстка. Подборка статей",
+            image: design,
+            imageAlt: "дизайн и верстка",
+            buttonText: "Узнать подробности",
+            href: "#" 
+          },
+          {
+            subTitle: "Как создать красивое письмо",
+            image: howMakeBeutiful,
+            imageAlt: "как создать красивое письмо",
+            buttonText: "Узнать подробности",
+            href: "#" 
+          }
+        ]}
+        isBorder={false}
+        isBigPicture={true}
+      />
+    </main>
   )
 }
 
