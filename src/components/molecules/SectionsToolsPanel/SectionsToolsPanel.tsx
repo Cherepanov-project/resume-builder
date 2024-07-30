@@ -1,6 +1,5 @@
 import { Box, ToggleButtonGroup, ToggleButton, Divider, Button } from '@mui/material';
 import MemoizedElementSettings from '../ElementSpecificSettings';
-import RowSpecificSettings from '../RowSpecificSettings';
 import SectionSpecificSettings from '../SectionSpecificSettings';
 import { useState } from 'react';
 import { T_BlockElement, T_SectionElements } from '@/types/landingBuilder';
@@ -25,20 +24,21 @@ const SectionsToolsPanel = ({ setError, setSeverity }) => {
 
     // сохранение только координат блоков, у которых выбраны элементы из Select options
     const filteredArr = arr.filter((el) => el.name);
-    const elements = filteredArr.map((el) => { 
-      console.log(el, el.layout.i, el.layout.i.slice(0,1))
+    const elements = filteredArr.map((el) => {
+      console.log(el, el.layout.i, el.layout.i.slice(0, 1));
       return {
-      name: el.name,
-      source: 'atoms',
-      layout: {
-        i: String(el.layout.i),
-        x: calcX(Number(String(el.layout.i).slice(0, 1)), Number(String(el.layout.i).slice(1))),
-        y: calcY(Number(String(el.layout.i).slice(0, 1))), // el.y,
-        w: el.layout.w,
-        h: el.layout.h,
-      },
-      props: el.props,
-    }});
+        name: el.name,
+        source: 'atoms',
+        layout: {
+          i: String(el.layout.i),
+          x: calcX(Number(String(el.layout.i).slice(0, 1)), Number(String(el.layout.i).slice(1))),
+          y: calcY(Number(String(el.layout.i).slice(0, 1))), // el.y,
+          w: el.layout.w,
+          h: el.layout.h,
+        },
+        props: el.props,
+      };
+    });
 
     const section: T_SectionElements = {
       name: 'ContainerDIV', // указание имени элмента-обертки (molecules)
@@ -131,7 +131,7 @@ const SectionsToolsPanel = ({ setError, setSeverity }) => {
   const calcY = (row: number) => {
     if (row > 1) {
       let x = 1;
-      console.log(layoutDate, row)
+      console.log(layoutDate, row);
       for (let i = 0; i < layoutDate[row - 1].length; i++) {
         if (layoutDate[row - 1][i].layout.h > x) {
           x = layoutDate[row - 1][i].layout.h;
@@ -157,31 +157,24 @@ const SectionsToolsPanel = ({ setError, setSeverity }) => {
     }
     return h;
   };
-  const [toggleMenu, setToggleMenu] = useState<unknown>(null);
+  const [toggleMenu, setToggleMenu] = useState<unknown>('SECTION_SETTINGS');
 
   const handleToggleMenu = (e: React.MouseEvent<HTMLElement>) => {
     const target = e.target as HTMLButtonElement;
     switch (target.innerText) {
-      case 'SEGMENT SETTINGS':
-        return setToggleMenu('SEGMENT_SETTINGS');
-      case 'ROW LIST': {
-        return setToggleMenu('ROW_LIST');
-      }
       case 'ELEMENTS SETTINGS':
         return setToggleMenu('ELEMENTS_SETTINGS');
       default:
-        return setToggleMenu(null);
+        return setToggleMenu('SECTION_SETTINGS');
     }
   };
   return (
     <Box sx={{ width: '300px' }}>
-      <h2>SETTINGS</h2>
+      <h2>Create Section</h2>
+
       <ToggleButtonGroup color="primary" size="small" exclusive aria-label="settings-category">
-        <ToggleButton value="segment" aria-label="settings-segment" onClick={handleToggleMenu}>
-          Segment settings
-        </ToggleButton>
-        <ToggleButton value="elements" aria-label="settings-segment" onClick={handleToggleMenu}>
-          Row list
+        <ToggleButton value="section" aria-label="settings-section" onClick={handleToggleMenu}>
+          Section settings
         </ToggleButton>
         <ToggleButton
           value="element-settings"
@@ -191,11 +184,11 @@ const SectionsToolsPanel = ({ setError, setSeverity }) => {
           Elements settings
         </ToggleButton>
       </ToggleButtonGroup>
-      {toggleMenu === 'SEGMENT_SETTINGS' ? (
+      {toggleMenu === 'SECTION_SETTINGS' ? (
         <SectionSpecificSettings type={type} setType={setType} name={name} setName={setName} />
       ) : null}
-      {toggleMenu === 'ROW_LIST' ? <RowSpecificSettings setToggleMenu={setToggleMenu} /> : null}
       {toggleMenu === 'ELEMENTS_SETTINGS' ? <MemoizedElementSettings /> : null}
+
       <Divider />
       <Button
         type="button"

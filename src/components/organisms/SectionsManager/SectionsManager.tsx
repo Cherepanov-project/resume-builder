@@ -73,8 +73,8 @@ const SectionsManager: FC = () => {
   };
 
   const actions = [
-    { icon: <AddSharp />, name: 'Add', onClick: addRow, visible: visible[0] },
-    { icon: <RemoveSharp />, name: 'Remove', onClick: removeRow, visible: visible[1] },
+    { icon: <AddSharp />, name: 'Add row', onClick: addRow, visible: visible[0] },
+    { icon: <RemoveSharp />, name: 'Remove row', onClick: removeRow, visible: visible[1] },
   ];
 
   return (
@@ -92,10 +92,10 @@ const SectionsManager: FC = () => {
           minHeight: '100%',
         }}
       >
-        <Item sx={{ height: '100%' }}>
+        <Item sx={{ height: '100%', mx: '10px' }}>
           <SectionsToolsPanel setError={setError} setSeverity={setSeverity} />
         </Item>
-        <Item sx={{ height: '100vh', width: '100%', backgroundColor: '#eaf9f4' }}>
+        <Item sx={{ height: '100vh', width: '70%', backgroundColor: '#eaf9f4', px: '35px' }}>
           <div>
             <h2>WORKSPACE</h2>
           </div>

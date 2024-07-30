@@ -6,18 +6,8 @@ import { memo, useEffect, useState } from 'react';
 import SectionsConstructorBlockElement from '@atoms/SectionsConstructorBlockElement';
 import { useTypedSelector } from '@/hooks/cvTemplateHooks';
 import { Box, SpeedDial, SpeedDialAction, SpeedDialIcon } from '@mui/material';
-import {
-  AddSharp,
-  ArrowCircleDownSharp,
-  ArrowCircleLeftSharp,
-  ArrowCircleRightSharp,
-  ArrowCircleUpSharp,
-  DeleteSharp,
-  EditSharp,
-  RemoveSharp,
-  SettingsSharp,
-} from '@mui/icons-material';
-import Close from '@mui/icons-material/Close';
+import { AddCircleSharp, DeleteSharp, SettingsSharp, Close } from '@mui/icons-material';
+import { ShrinkOutlined, ArrowsAltOutlined } from '@ant-design/icons';
 
 type SectionsConstructorRowElType = {
   row: number;
@@ -66,14 +56,6 @@ const SectionsConstructorRowEl: React.FC<SectionsConstructorRowElType> = ({
       dispatch(editRowDate({ row, date: [...layoutRow, newValue] }));
     }
   };
-  // удаление блока в ряду
-  const removeColumn = () => {
-    if (columns > 1) {
-      const newSectionValue = JSON.parse(JSON.stringify(layoutRow));
-      const newValue = newSectionValue.slice(0, columns - 1);
-      dispatch(editRowDate({ row, date: newValue }));
-    }
-  };
 
   // проверка ширины секции при добавлении блока или изменении ширины одного из блоков, что бы было меньше 6
   const calcNewRowW: (col: number, value: number) => number = (col, value) => {
@@ -85,11 +67,13 @@ const SectionsConstructorRowEl: React.FC<SectionsConstructorRowElType> = ({
     return newValue;
   };
 
+  const id = useTypedSelector((state) => state.sectionsManager.curId);
+
   const renderColumns = () => {
     const r: string = String(row);
     return layoutRow.map((el, idx) => {
       const i = idx + 1;
-      
+
       // задание размеров для секции в зависимости от fr
       const style = {
         backgroundColor: '#fff',
@@ -119,111 +103,84 @@ const SectionsConstructorRowEl: React.FC<SectionsConstructorRowElType> = ({
     });
   };
 
-  const [visible, setVisible] = useState(['inline-flex', 'none']);
-  const [rowActive, setRowActive] = useState('none');
-  //Обновление дисплея кнопок ряда
-  useEffect(() => {
-    let colSum = 0;
-    for (let i = 0; i < columns; i++) {
-      if (!layoutRow[i]) {
-        colSum = 0;
-      } else {
-        colSum += layoutRow[i].layout.w;
-      }
-    }
-    if (colSum >= 6) {
-      setVisible(['none', 'inline-flex']);
-    } else if (columns <= 1) {
-      setVisible(['inline-flex', 'none']);
-    } else {
-      setVisible(['inline-flex', 'inline-flex']);
-    }
-  }, [columns, layoutRow]);
-
-  // Обновление дисплея кнопок при переключении ряда
-  const id = useTypedSelector((state) => state.sectionsManager.curId);
-  const r: string = String(row);
-  useEffect(() => {
-    if (r === id.split('')[0]) {
-      setRowActive('initial');
-    } else {
-      setRowActive('none');
-    }
-  }, [id, r]);
-
   const renderControlOfCols = () => {
-    const actions = [
-      { icon: <AddSharp />, name: 'Add', onClick: addColumn, visible: visible[0] },
-      { icon: <RemoveSharp />, name: 'Remove', onClick: removeColumn, visible: visible[1] },
-    ];
     return (
-      <Box sx={{ transform: 'translateZ(0px)', display: rowActive }}>
-        <SpeedDial
-          sx={{
-            opacity: '0.2',
-            '& .MuiFab-primary': { width: 36, height: 36 },
-            '&:hover': {
-              opacity: '1',
-            },
-          }}
-          direction="right"
-          ariaLabel="Setting for columns"
-          icon={<SpeedDialIcon icon={<EditSharp />} openIcon={<Close />} />}
-        >
-          {actions.map((action) => (
-            <SpeedDialAction
-              sx={{ display: action.visible }}
-              key={action.name}
-              icon={action.icon}
-              tooltipTitle={action.name}
-              onClick={action.onClick}
-            />
-          ))}
-        </SpeedDial>
-      </Box>
+      <AddCircleSharp
+        color="primary"
+        sx={{
+          opacity: '0.2',
+          width: 40,
+          height: 40,
+          '&:hover': {
+            opacity: '1',
+          },
+        }}
+        onClick={addColumn}
+      />
     );
   };
 
   const renderControlOfSize = () => {
     const actions = [
       {
-        icon: <ArrowCircleUpSharp />,
-        name: 'Shorten',
-        onClick: handleSize,
-        type: 'layoutY',
-        value: '-1',
-      },
-      {
-        icon: <ArrowCircleDownSharp />,
-        name: 'Lengthen',
-        onClick: handleSize,
-        type: 'layoutY',
-        value: '+1',
-      },
-      {
-        icon: <ArrowCircleLeftSharp />,
-        name: 'Narrow',
-        onClick: handleSize,
-        type: 'layoutX',
-        value: '-1',
-      },
-      {
-        icon: <ArrowCircleRightSharp />,
+        icon: <ArrowsAltOutlined rotate={45} />,
         name: 'Widen',
         onClick: handleSize,
         type: 'layoutX',
         value: '+1',
       },
       {
+        icon: <ArrowsAltOutlined rotate={-45} />,
+        name: 'Lengthen',
+        onClick: handleSize,
+        type: 'layoutY',
+        value: '+1',
+        sx: {
+          position: 'absolute',
+          top: 40,
+          right: 85,
+        },
+      },
+      {
+        icon: <ShrinkOutlined rotate={-45} />,
+        name: 'Shorten',
+        onClick: handleSize,
+        type: 'layoutY',
+        value: '-1',
+        sx: {
+          position: 'absolute',
+          bottom: 40,
+          right: 85,
+        },
+      },
+      {
+        icon: <ShrinkOutlined rotate={45} />,
+        name: 'Narrow',
+        onClick: handleSize,
+        type: 'layoutX',
+        value: '-1',
+        sx: {
+          mr: '20px',
+        },
+      },
+      {
         icon: <DeleteSharp />,
         name: 'Delete',
         onClick: deleteElement,
+        sx: {
+          mr: '10px',
+        },
       },
     ];
+
+    const handleActionSx = (sx) => (sx ? sx : {});
+
     return (
-      <Box 
-        sx={{ 
-          transform: 'translateZ(0px)'}}>
+      <Box
+        sx={{
+          transform: 'translateZ(0px)',
+        }}
+      >
         <SpeedDial
           sx={{
             opacity: '0.2',
@@ -239,14 +196,17 @@ const SectionsConstructorRowEl: React.FC<SectionsConstructorRowElType> = ({
           ariaLabel="Setting for sizing"
           icon={<SpeedDialIcon icon={<SettingsSharp />} openIcon={<Close />} />}
         >
-          {actions.map((action) => (
-            <SpeedDialAction
-              key={action.name}
-              icon={action.icon}
-              tooltipTitle={action.name}
-              onClick={() => action.onClick(action.type!, action.value!)}
-            />
-          ))}
+          {actions.map((action) => {
+            return (
+              <SpeedDialAction
+                key={action.name}
+                icon={action.icon}
+                tooltipTitle={action.name}
+                onClick={() => action.onClick(action.type!, action.value!)}
+                sx={handleActionSx(action.sx)}
+              />
+            );
+          })}
         </SpeedDial>
       </Box>
     );
@@ -302,7 +262,7 @@ const SectionsConstructorRowEl: React.FC<SectionsConstructorRowElType> = ({
         width: ' 100%',
         minHeight: '55px',
         alignItems: 'center',
-        borderBottom: '1px dotted dimgrey', 
+        borderBottom: '1px dotted dimgrey',
       }}
     >
       <Box sx={gridLayoutStyle}>{renderColumns()}</Box>
