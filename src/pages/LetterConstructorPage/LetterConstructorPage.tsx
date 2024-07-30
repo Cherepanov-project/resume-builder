@@ -21,6 +21,7 @@ import support from '../../assets/images/letterConstructorPage/tehpodderzhka.svg
 import tenFeatures from '../../assets/images/letterConstructorPage/group-3073.png'
 import design from '../../assets/images/letterConstructorPage/group-3074.png'
 import howMakeBeutiful from '../../assets/images/letterConstructorPage/group-3075.png'
+import imageFooter from '../../assets/images/letterConstructorPage/delat-krasivye-pisma-s-unisender-prosto-i-bystro-ubedites-sami.png'
 
 const LetterConstructorPage = () => {
   return (
@@ -184,6 +185,15 @@ const LetterConstructorPage = () => {
         ]}
         isBorder={false}
         isBigPicture={true}
+      />
+      <LetterConstructorPageSection
+        subTitle="Делать красивые письма просто и быстро. Убедитесь сами"
+        content="Для доступа к конструктору нужен только email"
+        buttonText="Создать письмо"
+        href="#"
+        image={imageFooter}
+        imageAlt="конструктор писем"
+        isFooter={true}
       />
     </main>
   )
