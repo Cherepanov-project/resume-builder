@@ -1,4 +1,6 @@
 import { LetterConstructorPageSection, LetterConstructorPageGroup } from '../../components/molecules/LetterConstructorPageSection/LetterConstructorPageSection'
+import ScrollToTop from 'react-scroll-up'
+
 import classes from './LetterConstructorPage.module.scss'
 
 import imageConstructor from '../../assets/images/letterConstructorPage/konstruktor-pisem.jpg'
@@ -39,18 +41,21 @@ const LetterConstructorPage = () => {
         title="Соберите HTML-макет письма из готовых блоков за 3 шага"
         arrayCards={[
           {
+            id: 1,
             subTitle: "1 ШАГ",
             content: "Создайте структуру рассылки с помощью готовых модулей (строк). Знания HTML не требуются",
             image: stepOne,
             imageAlt: "первый шаг" 
           },
           {
+            id: 2,
             subTitle: "2 ШАГ",
             content: "Добавьте текст, картинки, кнопки, разделители и другие элементы, перетащив их в нужные места макета.",
             image: stepTwo,
             imageAlt: "второй шаг" 
           },
           {
+            id: 3,
             subTitle: "3 ШАГ",
             content: "Наполните макет вашим контентом. Напишите текст, загрузите изображения, добавьте нужные ссылки.",
             image: stepThree,
@@ -112,18 +117,21 @@ const LetterConstructorPage = () => {
         title="Создавайте красивые email для ПК и мобильных"
         arrayCards={[
           {
+            id: 1,
             subTitle: "500 000 бесплатных картинок",
             content: "Ищите нужные изображения на Unsplash, Pexels, Pixabay. Поиск встроен в конструктор.",
             image: freeImages,
             imageAlt: "500 000 бесплатных картинок" 
           },
           {
+            id: 2,
             subTitle: "Адаптивный дизайн",
             content: "Создавайте адаптивные письма, которые будет удобно читать на мобильных устройствах. Редактор позволяет настраивать отображение блоков для смартфонов.",
             image: adaptiveDesign,
             imageAlt: "адаптивный дизайн" 
           },
           {
+            id: 3,
             subTitle: "Предварительный просмотр",
             content: "Проверяйте, как выглядит созданный HTML-макет перед отправкой. Сервис имитирует экраны разных устройств.",
             image: preview,
@@ -137,18 +145,21 @@ const LetterConstructorPage = () => {
         title="Запускайте рассылки, мы позаботимся об остальном"
         arrayCards={[
           {
+            id: 1,
             subTitle: "48 готовых интеграций",
             content: "Собираем информацию о клиентах из CRM и CMS, чтобы вы могли реагировать на каждое их действие.",
             image: completeIntegrations,
             imageAlt: "48 готовых интеграций" 
           },
           {
+            id: 2,
             subTitle: "Безопасность",
             content: "Размещаем ваши базы в сертифицированных дата-центрах, чтобы только вы имели к ним доступ.",
             image: security,
             imageAlt: "безопасность" 
           },
           {
+            id: 3,
             subTitle: "Техподдержка",
             content: "Бесплатно помогаем с рассылками в любое время дня и ночи. Пишите, звоните, отправляйте письма.",
             image: support,
@@ -162,6 +173,7 @@ const LetterConstructorPage = () => {
         title="Хотите научиться создавать красивые письма? — Читайте"
         arrayCards={[
           {
+            id: 1,
             subTitle: "Конструктор писем Unisender: 10 фишек, которые упростят email-вёрстку",
             image: tenFeatures,
             imageAlt: "10 фишек, которые упростят email-вёрстку", 
@@ -169,6 +181,7 @@ const LetterConstructorPage = () => {
             href: "#"
           },
           {
+            id: 2,
             subTitle: "Дизайн и верстка. Подборка статей",
             image: design,
             imageAlt: "дизайн и верстка",
@@ -176,6 +189,7 @@ const LetterConstructorPage = () => {
             href: "#" 
           },
           {
+            id: 3,
             subTitle: "Как создать красивое письмо",
             image: howMakeBeutiful,
             imageAlt: "как создать красивое письмо",
@@ -195,6 +209,13 @@ const LetterConstructorPage = () => {
         imageAlt="конструктор писем"
         isFooter={true}
       />
+      <ScrollToTop showUnder={160}>
+        <div className={classes['scroll-to-top']}>
+          <svg width="20" height="12" viewBox="0 0 20 12" fill="none" xmlns="http://www.w3.org/2000/svg">
+            <path d="M1.92005 11.17C1.82617 11.2647 1.69837 11.3179 1.56505 11.3179C1.43174 11.3179 1.30394 11.2647 1.21005 11.17L0.150054 10.11C0.0533766 10.0193 -0.00146484 9.89259 -0.00146484 9.76C-0.00146484 9.62741 0.0533766 9.50073 0.150054 9.41L9.34005 0.22C9.48057 0.0793075 9.67121 0.000175052 9.87005 0H10.1301C10.3289 0.000175052 10.5195 0.0793075 10.6601 0.22L19.8501 9.41C19.9467 9.50073 20.0016 9.62741 20.0016 9.76C20.0016 9.89259 19.9467 10.0193 19.8501 10.11L18.7901 11.17C18.6962 11.2647 18.5684 11.3179 18.4351 11.3179C18.3017 11.3179 18.1739 11.2647 18.0801 11.17L10.0001 3.09L1.92005 11.17Z"></path>
+          </svg>
+        </div>
+      </ScrollToTop>
     </main>
   )
 }

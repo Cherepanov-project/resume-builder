@@ -85,6 +85,7 @@ export const LetterConstructorPageSection: React.FC<LetterConstructorPageSection
 }
 
 type card = {
+  id: number,
   subTitle: string;
   content?: string;
   buttonText?: string;
@@ -128,7 +129,7 @@ export const LetterConstructorPageGroup: React.FC<LetterConstructorPageGroupProp
 
 
     return (
-      <div className={groupWrapperStyle}>
+      <div key={card.id} className={groupWrapperStyle}>
         <div className={itemStyle}>
           <div className={groupWrapperImageStyle}>
             {imageElement}
