@@ -7,7 +7,7 @@ import { StyleOptionType } from '@/pages/CvTemplatePDF/const';
 const SocialPreview = ({styleName}) => {
 
   const style: StyleOptionType = templatePDFStyles[styleName].style;
-  const { Subtitle, SubtitleSpecial, Socials, Social, SocialTitle, SocialText, Text} = style
+  const { Subtitle, SubtitleSpecial, Socials, Social, SocialPreview, SocialTitle, SocialText, Text} = style
 
   const socialFormData = useWatch({name: 'socialData'})
   const socialData: SocialDataType[] = []
@@ -23,7 +23,7 @@ const SocialPreview = ({styleName}) => {
     data: socialData,
     style: {
       Socials,
-      Social,
+      Social: SocialPreview ?? Social,
       SocialTitle,
       SocialText,
       Subtitle: { ...Subtitle, ...SubtitleSpecial },

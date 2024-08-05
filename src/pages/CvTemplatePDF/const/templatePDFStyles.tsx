@@ -66,15 +66,15 @@ export const templatePDFStyles: StylesType = {
       },
 
       Experiences: { marginBottom: 20, pageBreakInside: 'avoid' },
-      Experience: { fontSize: 14 },
-      ExperienceTime: { fontSize: 14 },
-      ExperienceTitle: { fontSize: 14 },
+      Experience: { name:'oslo', fontSize: 14 },
+      ExperienceTime: { fontSize: 14, color: '#888888' },
+      ExperienceTitle: { fontSize: 14, fontWeight: 'bold' },
       ExperiencePosition: { fontSize: 14 },
-      EducationTime: { fontSize: 14 },
+      EducationTime: { fontSize: 14, color: '#888888' },
       EducationPosition: { fontSize: 14 },
       Educations: { marginBottom: 10, pageBreakInside: 'avoid' },
-      Education: { fontSize: 7 },
-      EducationTitle: { fontSize: 14 },
+      Education: { name: 'oslo', fontSize: 14 },
+      EducationTitle: { fontSize: 16, fontWeight: 'bold' },
 
       Socials: { marginBottom: 10, pageBreakInside: 'avoid' },
       Social: {},
@@ -105,6 +105,7 @@ export const templatePDFStyles: StylesType = {
         flexDirection: 'row',
         justifyContent: 'flex-end',
         marginRight: 5,
+        alignItems: 'center',
       },
       ContactLink: {
         fontFamily: 'Times-Roman',
@@ -112,8 +113,10 @@ export const templatePDFStyles: StylesType = {
         fontSize: 14,
       },
       ContactIcon: {
-        width: 0,
-        height: 0,
+        width: 15,
+        height: 15,
+        marginRight: 5,
+        marginLeft: 15,
       },
       SubtitleWrapper: {
         marginBottom: 10,
@@ -128,6 +131,7 @@ export const templatePDFStyles: StylesType = {
         fontFamily: 'Times-Bold',
         fontSize: 24,
         fontWeight: 700,
+        marginBottom: '10px',
       },
       SubtitleNone: {
         display: 'none',
@@ -135,7 +139,7 @@ export const templatePDFStyles: StylesType = {
       },
       Text: {
         fontFamily: 'Times-Bold',
-        fontSize: 18,
+        fontSize: 16,
       },
       TextSpecial: {
         fontFamily: 'Times-Bold',
@@ -164,7 +168,6 @@ export const templatePDFStyles: StylesType = {
         flex: 2,
         minWidth: '30%',
         minHeight: '100%',
-        maxWidth: '40%',
         wordBreak: 'break-word',
       },
       MainPage: {
@@ -197,30 +200,30 @@ export const templatePDFStyles: StylesType = {
       },
 
       Experiences: { pageBreakInside: 'avoid' },
-      Experience: { marginBottom: 15 },
-      ExperienceTitle: { color: 'black', fontWeight: 700, fontSize: 20 },
-      ExperienceTime: { fontSize: 20 },
+      Experience: { name: 'sydney', marginBottom: 15 },
+      ExperienceTitle: { color: 'black', fontWeight: 700, fontSize: 16 },
+      ExperienceTime: { fontSize: 14, color: '#888888' },
       ExperiencePosition: { fontSize: 20 },
 
       Educations: { pageBreakInside: 'avoid' },
-      Education: { marginBottom: 10 },
+      Education: { name: 'sydney', marginBottom: 10 },
       EducationTitle: {
         color: 'black',
         fontWeight: 700,
-        fontSize: 20,
+        fontSize: 16,
       },
-      EducationTime: { fontSize: 20 },
+      EducationTime: { fontSize: 14, color: '#888888' },
       EducationPosition: { fontSize: 20 },
 
       Socials: {
         marginBottom: 10,
         pageBreakInside: 'avoid',
       },
-      Social: {},
+      Social: {color: 'white'},
+      SocialPreview: {color: 'black'},
       SocialTitle: {
         fontFamily: 'Times-Bold',
         fontSize: 14,
-        color: 'white',
         textTransform: 'uppercase',
       },
 
@@ -254,6 +257,7 @@ export const templatePDFStyles: StylesType = {
         color: '#000000',
       },
       Subtitle: {
+        name: 'sydney',
         fontFamily: 'Times-Bold',
         fontWeight: 700,
         fontSize: 24,
@@ -268,7 +272,7 @@ export const templatePDFStyles: StylesType = {
       },
       Text: {
         fontFamily: 'Times-Bold',
-        fontSize: 14,
+        fontSize: 16,
       },
       TextSpecial: {
         fontFamily: 'Times-Bold',
@@ -360,7 +364,6 @@ export const templatePDFStyles: StylesType = {
       },
 
       Hobbies: {
-        marginLeft: 'auto',
         background: '#eeeeee',
         borderRadius: '20px',
         padding: '2%',
