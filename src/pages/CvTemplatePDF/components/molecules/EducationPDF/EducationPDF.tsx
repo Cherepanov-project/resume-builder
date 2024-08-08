@@ -21,14 +21,14 @@ const experienceContent = (data: ExperienceDataType[] | undefined, style: StyleO
 
     const propsText = { str: description, style: Text };
     const listTitleProps = {
-      data: otherData,
-      style: { EducationTitle, EducationTime, EducationPosition },
+      data: Education.name === 'chrono' || Education.name === 'metro' || Education.name === 'oslo' || Education.name === 'sydney' ? experience : otherData,
+      style: { EducationTitle, EducationTime, EducationPosition, Education, Text },
     };
 
     return (
       <Box key={uniqueKey()} style={Education}>
         <ListTitlePDF {...listTitleProps} />
-        <TextPDF key={uniqueKey()} {...propsText} />
+        {Education.name !== 'chrono' && Education.name !== 'metro' && Education.name !== 'oslo' && Education.name !== 'sydney' && <TextPDF key={uniqueKey()} {...propsText} />}
       </Box>
     );
   });
@@ -55,7 +55,7 @@ export const EducationPDF = (props: IExperienceProps) => {
   const currStyle = { Education, EducationTitle, EducationTime, EducationPosition, Text };
 
   return (
-    <Box key={uniqueKey()} style={Educations}>
+    <Box style={Educations}>
       <SubtitlePDF {...propsSubtitle} />
       {experienceContent(data, currStyle)}
     </Box>

@@ -41,6 +41,7 @@ export const MainPDF = (props: IMainPDFProps) => {
     ExperienceTitle,
     ExperienceTime,
     ExperiencePosition,
+    ExperienceDescription,
     Educations,
     Education,
     EducationTitle,
@@ -49,6 +50,7 @@ export const MainPDF = (props: IMainPDFProps) => {
     Socials,
     Social,
     SocialTitle,
+    SocialText,
     Hobbies,
     Hobbie,
     HobbieBullets,
@@ -81,6 +83,7 @@ export const MainPDF = (props: IMainPDFProps) => {
       ExperienceTime,
       ExperiencePosition,
       Text,
+      ExperienceDescription,
     },
   };
 
@@ -90,6 +93,7 @@ export const MainPDF = (props: IMainPDFProps) => {
       Socials,
       Social,
       SocialTitle,
+      SocialText,
       Subtitle: { ...Subtitle, ...SubtitleSpecial },
       Text,
     },
@@ -145,12 +149,11 @@ export const MainPDF = (props: IMainPDFProps) => {
         </Box>
       ) : (
         <Box style={Main}>
-
-          <Box sx={{ height: '100%', width: '65%' }}>
+          <Box sx={{ height: '100%' }}>
             <EducationPDF {...propsEducation} />
             <ExperiencePDF {...propsExperience} />
           </Box>
-          <Box sx={{ height: '100%', width: '35%', wordBreak:'break-word' }}>
+          <Box sx={{display: 'flex', flexDirection: 'column' }}>
             <SocialPDF {...propsSocial} />
             <HobbiesPDF {...propsHobbies} />
           </Box>

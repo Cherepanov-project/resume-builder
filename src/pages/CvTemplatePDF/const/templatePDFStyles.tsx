@@ -1,3 +1,5 @@
+import './fonts.scss'
+
 export type StyleType = { [key: string]: string | number };
 
 export type StylesNameKeys =
@@ -10,7 +12,9 @@ export type StylesNameKeys =
   | 'custom'
   | 'toronto'
   | 'sydney'
-  | 'oslo';
+  | 'oslo'
+  | 'chrono'
+  | 'metro';
 
 export type StyleOptionType = {
   [key: string]: StyleType;
@@ -62,15 +66,15 @@ export const templatePDFStyles: StylesType = {
       },
 
       Experiences: { marginBottom: 20, pageBreakInside: 'avoid' },
-      Experience: { fontSize: 14 },
-      ExperienceTime: { fontSize: 14 },
-      ExperienceTitle: { fontSize: 14 },
+      Experience: { name:'oslo', fontSize: 14 },
+      ExperienceTime: { fontSize: 14, color: '#888888' },
+      ExperienceTitle: { fontSize: 14, fontWeight: 'bold' },
       ExperiencePosition: { fontSize: 14 },
-      EducationTime: { fontSize: 14 },
+      EducationTime: { fontSize: 14, color: '#888888' },
       EducationPosition: { fontSize: 14 },
       Educations: { marginBottom: 10, pageBreakInside: 'avoid' },
-      Education: { fontSize: 7 },
-      EducationTitle: { fontSize: 14 },
+      Education: { name: 'oslo', fontSize: 14 },
+      EducationTitle: { fontSize: 16, fontWeight: 'bold' },
 
       Socials: { marginBottom: 10, pageBreakInside: 'avoid' },
       Social: {},
@@ -101,6 +105,7 @@ export const templatePDFStyles: StylesType = {
         flexDirection: 'row',
         justifyContent: 'flex-end',
         marginRight: 5,
+        alignItems: 'center',
       },
       ContactLink: {
         fontFamily: 'Times-Roman',
@@ -108,8 +113,10 @@ export const templatePDFStyles: StylesType = {
         fontSize: 14,
       },
       ContactIcon: {
-        width: 0,
-        height: 0,
+        width: 15,
+        height: 15,
+        marginRight: 5,
+        marginLeft: 15,
       },
       SubtitleWrapper: {
         marginBottom: 10,
@@ -124,6 +131,7 @@ export const templatePDFStyles: StylesType = {
         fontFamily: 'Times-Bold',
         fontSize: 24,
         fontWeight: 700,
+        marginBottom: '10px',
       },
       SubtitleNone: {
         display: 'none',
@@ -131,7 +139,7 @@ export const templatePDFStyles: StylesType = {
       },
       Text: {
         fontFamily: 'Times-Bold',
-        fontSize: 18,
+        fontSize: 16,
       },
       TextSpecial: {
         fontFamily: 'Times-Bold',
@@ -160,7 +168,6 @@ export const templatePDFStyles: StylesType = {
         flex: 2,
         minWidth: '30%',
         minHeight: '100%',
-        maxWidth: '40%',
         wordBreak: 'break-word',
       },
       MainPage: {
@@ -193,30 +200,30 @@ export const templatePDFStyles: StylesType = {
       },
 
       Experiences: { pageBreakInside: 'avoid' },
-      Experience: { marginBottom: 15 },
-      ExperienceTitle: { color: 'black', fontWeight: 700, fontSize: 20 },
-      ExperienceTime: { fontSize: 20 },
+      Experience: { name: 'sydney', marginBottom: 15 },
+      ExperienceTitle: { color: 'black', fontWeight: 700, fontSize: 16 },
+      ExperienceTime: { fontSize: 14, color: '#888888' },
       ExperiencePosition: { fontSize: 20 },
 
       Educations: { pageBreakInside: 'avoid' },
-      Education: { marginBottom: 10 },
+      Education: { name: 'sydney', marginBottom: 10 },
       EducationTitle: {
         color: 'black',
         fontWeight: 700,
-        fontSize: 20,
+        fontSize: 16,
       },
-      EducationTime: { fontSize: 20 },
+      EducationTime: { fontSize: 14, color: '#888888' },
       EducationPosition: { fontSize: 20 },
 
       Socials: {
         marginBottom: 10,
         pageBreakInside: 'avoid',
       },
-      Social: {},
+      Social: {color: 'white'},
+      SocialPreview: {color: 'black'},
       SocialTitle: {
         fontFamily: 'Times-Bold',
         fontSize: 14,
-        color: 'white',
         textTransform: 'uppercase',
       },
 
@@ -250,6 +257,7 @@ export const templatePDFStyles: StylesType = {
         color: '#000000',
       },
       Subtitle: {
+        name: 'sydney',
         fontFamily: 'Times-Bold',
         fontWeight: 700,
         fontSize: 24,
@@ -264,7 +272,7 @@ export const templatePDFStyles: StylesType = {
       },
       Text: {
         fontFamily: 'Times-Bold',
-        fontSize: 14,
+        fontSize: 16,
       },
       TextSpecial: {
         fontFamily: 'Times-Bold',
@@ -356,7 +364,6 @@ export const templatePDFStyles: StylesType = {
       },
 
       Hobbies: {
-        marginLeft: 'auto',
         background: '#eeeeee',
         borderRadius: '20px',
         padding: '2%',
@@ -1338,6 +1345,291 @@ export const templatePDFStyles: StylesType = {
         borderRadius: '50%',
         objectFit: 'cover',
         objectPosition: 'center top',
+      },
+    },
+  },
+  chrono: {
+    structure: {
+      isShort: false,
+      header: { isPresented: true },
+      sidebar: { isPresented: false },
+      main: {},
+    },
+    style: {
+      MainPage: {
+        name: 'chrono',
+        backgroundColor: 'white',
+        fontFamily: 'OpenSans',
+      },
+      Main: {
+        type: 'chrono',
+        display: 'flex',
+        flexWrap: 'wrap',
+        height: '100%',
+        maxHeight: '500px',
+        maxWidth: '800px',
+        backgroundColor: 'white',
+        flexDirection: 'column',
+        padding: '2%',
+      },
+      Header: {
+        name: 'chrono',
+        flexDirection: 'row',
+        backgroundColor: '#f5f5f5',
+        color: 'black',
+        padding: '1%',
+      },
+      HeaderWrapper: {
+        justifyContent: 'center',
+        width: '100%',
+      },
+
+      Experiences: { marginBottom: 20, pageBreakInside: 'avoid' },
+      Experience: { fontSize: 14, name: 'chrono' },
+      ExperienceTime: { fontSize: 14, marginRight: '80px', textWrap: 'nowrap' },
+      ExperienceTitle: { fontSize: 14, color: '#3e94e4' },
+      ExperiencePosition: { fontSize: 14 },
+      ExperienceDescription: {fontSize: 14, width: 500},
+      EducationTime: { fontSize: 14, marginRight: '80px', textWrap: 'nowrap' },
+      EducationPosition: { fontSize: 14 },
+      Educations: { marginBottom: 10, pageBreakInside: 'avoid' },
+      Education: { fontSize: 7, name: 'chrono' },
+      EducationTitle: { fontSize: 14, color: '#3e94e4' },
+
+      Socials: { marginBottom: 10, pageBreakInside: 'avoid', display: 'flex' },
+      Social: { marginLeft: '110px', marginBottom: '10px' },
+      SocialTitle: {
+        fontFamily: 'OpenSans',
+        fontSize: 18,
+        color: '#3e94e4'
+      },
+
+      Hobbies: { marginBottom: 10, pageBreakInside: 'avoid', display: 'flex' },
+      Hobbie: {
+        name: 'chrono',
+        display: 'flex',
+        flexDirection: 'row',
+        alignItems: 'center',
+        marginLeft: '80px',
+        width: '190px'
+      },
+      HobbieBullets: {
+        fontFamily: 'OpenSans',
+        fontSize: '16px',
+      },
+
+      ContactWrapper: {
+        display: 'flex',
+        flexDirection: 'row',
+        fontSize: 5,
+        marginBottom: 10,
+        pageBreakInside: 'avoid',
+      },
+      Contact: {
+        flexDirection: 'row',
+        justifyContent: 'center',
+        alignItems: 'center',
+        marginRight: 10,
+        color: 'black',
+      },
+      ContactLink: {
+        fontFamily: 'OpenSans',
+        textDecoration: 'none',
+        fontSize: 14,
+      },
+      ContactIcon: {
+        width: 10,
+        height: 10,
+        marginRight: 5,
+      },
+      SubtitleWrapper: {
+        marginBottom: 10,
+        pageBreakInside: 'avoid',
+      },
+      Title: {
+        fontFamily: 'OpenSans',
+        fontSize: 30,
+        fontWeight: 700,
+        color: '#3e94e4',
+      },
+      Subtitle: {
+        name: 'chrono',
+        fontFamily: 'OpenSans',
+        fontSize: 18,
+        fontWeight: 700,
+        color: '#3e94e4',
+      },
+      SubtitleNone: {
+        display: 'none',
+        opacity: 0,
+      },
+      Text: {
+        fontFamily: 'OpenSans',
+        fontSize: 18,
+      },
+      TextSpecial: {
+        fontFamily: 'OpenSans',
+        fontSize: 10,
+        textTransform: 'uppercase',
+        marginBottom: 15,
+      },
+      Img: {
+        marginRight: 10,
+        width: 60,
+        height: 60,
+        borderRadius: '50%',
+      },
+    },
+  },
+  metro: {
+    structure: {
+      isShort: false,
+      header: { isPresented: true },
+      sidebar: { isPresented: false },
+      main: {},
+    },
+    style: {
+      MainPage: {
+        name: 'metro',
+        backgroundColor: 'white',
+        fontFamily: 'Noto Sans',
+        padding: '10px',
+      },
+      Main: {
+        type: 'metro',
+        display: 'flex',
+        flexWrap: 'wrap',
+        height: '100%',
+        maxHeight: '900px',
+        maxWidth: '800px',
+        backgroundColor: 'white',
+        flexDirection: 'column',
+        padding: '0% 1% 1% 1%',
+      },
+      Header: {
+        name: 'metro',
+        flexDirection: 'row',
+        backgroundColor: '#ffffff',
+        color: 'black',
+        padding: '0% 1% 1% 1%',
+      },
+      HeaderWrapper: {
+        justifyContent: 'center',
+        width: '100%',
+      },
+
+      Experiences: { marginBottom: 20, pageBreakInside: 'avoid' },
+      Experience: { fontSize: 14, name: 'metro' },
+      ExperienceTime: { fontSize: 14, fontFamily: 'Noto Sans', textWrap: 'nowrap' },
+      ExperienceTitle: { fontSize: 14, fontFamily: 'Noto Sans', color: '#888888' },
+      ExperiencePosition: { fontSize: 14, fontFamily: 'Noto Sans', fontWeight: 'bold' },
+      ExperienceDescription: {fontSize: 14, width: 500},
+      EducationTime: { fontSize: 14, fontFamily: 'Noto Sans', textWrap: 'nowrap' },
+      EducationPosition: { fontSize: 14, fontFamily: 'Noto Sans', fontWeight: 'bold' },
+      Educations: { marginBottom: 10, pageBreakInside: 'avoid' },
+      Education: { fontSize: 7, name: 'metro' },
+      EducationTitle: { fontSize: 14, fontFamily: 'Noto Sans', color: '#888888' },
+
+      Socials: { marginBottom: 10, pageBreakInside: 'avoid' },
+      Social: {
+        name: 'metro',
+        marginBottom: '10px'
+      },
+      SocialTitle: {
+        fontFamily: 'Noto Sans',
+        fontSize: 14,
+        color: '#888888'
+      },
+      SocialText: {
+        fontSize: 14,
+        fontFamily: 'Noto Sans',
+        fontWeight: 'bold',
+      },
+
+      Hobbies: { marginBottom: 10, pageBreakInside: 'avoid', display: 'flex' },
+      Hobbie: {
+        name: 'metro',
+        display: 'flex',
+        flexDirection: 'row',
+        alignItems: 'center',
+        marginLeft: '50px',
+        width: '190px',
+        height: '27px',
+      },
+      HobbieBullets: {
+        fontFamily: 'Noto Sans',
+        fontSize: '16px',
+      },
+
+      ContactWrapper: {
+        display: 'flex',
+        flexDirection: 'column',
+        fontSize: 5,
+        marginBottom: 10,
+        marginTop: 15,
+        pageBreakInside: 'avoid',
+      },
+      Contact: {
+        flexDirection: 'row',
+        justifyContent: 'flex-start',
+        alignItems: 'center',
+        fontFamily: 'Noto Sans',
+        fontSize: 10,
+        marginRight: 10,
+        color: 'black',
+      },
+      ContactLink: {
+        fontFamily: 'Noto Sans',
+        textDecoration: 'none',
+        fontSize: 14,
+      },
+      ContactIcon: {
+        width: 10,
+        height: 10,
+        marginRight: 5,
+      },
+      SubtitleWrapper: {
+        marginBottom: 10,
+        pageBreakInside: 'avoid',
+      },
+      Title: {
+        fontFamily: 'Noto Sans',
+        fontSize: 35,
+        fontWeight: 700,
+        textTransform: 'uppercase',
+        color: '#232961',
+      },
+      Subtitle: {
+        name: 'metro',
+        fontFamily: 'Noto Sans',
+        display: 'inline-block',
+        fontSize: 18,
+        fontWeight: 700,
+        textTransform: 'uppercase',
+        color: '#ffffff',
+        backgroundColor: '#232961',
+        padding: '0px 8px',
+        marginBottom: '10px',
+        height: '27px',
+      },
+      SubtitleNone: {
+        display: 'none',
+        opacity: 0,
+      },
+      Text: {
+        fontFamily: 'Noto Sans',
+        fontSize: 14,
+      },
+      TextSpecial: {
+        fontFamily: 'Noto Sans',
+        fontSize: 10,
+        textTransform: 'uppercase',
+        marginBottom: 15,
+      },
+      Img: {
+        marginBottom: 10,
+        width: 60,
+        height: 60,
       },
     },
   },

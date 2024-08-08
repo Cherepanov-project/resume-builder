@@ -16,14 +16,21 @@ const socialContent = (data: SocialDataType[] | undefined, style: StyleOptionTyp
   }
   const children = data.map((social) => {
     const { link, name } = social;
-    const { Social, SocialTitle, Text } = style;
+    const { Social, SocialTitle, Text, SocialText } = style;
     const propsTitleText = { str: link, style: SocialTitle };
-    const propsText = { str: name, style: Text };
+    const propsText = { str: name, style: SocialText ?? Text };
 
     return (
       <Box key={uniqueKey()} style={Social}>
-        <TextPDF key={uniqueKey()} {...propsTitleText} />
-        <TextPDF key={uniqueKey()} {...propsText} />
+        {Social.name === 'metro' ?
+        <>
+          <TextPDF {...propsText} />
+          <TextPDF {...propsTitleText} />
+        </> :
+        <>
+          <TextPDF {...propsTitleText} />
+          <TextPDF {...propsText} />
+        </>}
       </Box>
     );
   });
@@ -36,14 +43,16 @@ export const SocialPDF = (props: ISocialProps) => {
   if (!data) {
     return null;
   }
-  const { Socials, Social, SocialTitle, Subtitle, Text } = style;
-  const currStyle = { Social, SocialTitle, Subtitle, Text };
+  const { Socials, Social, SocialTitle, SocialText, Subtitle, Text } = style;
+  const currStyle = { Social, SocialTitle, SocialText, Subtitle, Text };
   const propsTitle = { str: 'Social', style: Subtitle };
 
   return (
     <Box style={Socials}>
       <SubtitlePDF {...propsTitle} />
-      {socialContent(data, currStyle)}
+      <Box sx={{ display: 'flex', flexDirection: 'column'}}>
+        {socialContent(data, currStyle)}
+      </Box>
     </Box>
   );
 };

@@ -1,9 +1,11 @@
-import { SubtitlePDF, TextPDF } from '../../atoms';
-
+import { SubtitlePDF } from '../../atoms';
 import { HobbyDataType } from '../../../../../assets/const';
 import { uniqueKey } from '../../../../../assets/lib';
 import { StyleOptionType } from '../../../const';
+
 import { Box } from '@mui/material';
+
+import classes from './HobbiesPDF.module.scss'
 
 interface IHobbiesProps {
   data: HobbyDataType[];
@@ -15,16 +17,12 @@ const hobbiesContent = (data: HobbyDataType[] | undefined, style: StyleOptionTyp
     return null;
   }
   const children = data.map((hobby) => {
-    const { Hobbie, HobbieBullets, Text } = style;
+    const { Hobbie, HobbieBullets } = style;
     const hobbyTitle = hobby.hobby;
-
-    const propsBullets = { str: '•', style: Text };
-    const propsText = { str: hobbyTitle, style: HobbieBullets };
 
     return (
       <Box key={uniqueKey()} style={Hobbie} display="flex">
-        <TextPDF key={uniqueKey()} {...propsBullets} />
-        <TextPDF key={uniqueKey()} {...propsText} />
+        <li className={Hobbie.name === 'metro' ? classes.metro : ''} style={HobbieBullets} >{`${hobbyTitle}`}</li>
       </Box>
     );
   });
@@ -45,7 +43,9 @@ export const HobbiesPDF = (props: IHobbiesProps) => {
   return (
     <Box style={Hobbies}>
       <SubtitlePDF {...propsTitle} />
-      {hobbiesContent(data, currStyle)}
+      {Hobbie.name === 'chrono' || Hobbie.name === 'metro' ? (<Box sx={{ display: 'flex', flexWrap: 'wrap'}}>
+        {hobbiesContent(data, currStyle)}
+      </Box>) : hobbiesContent(data, currStyle)}
     </Box>
   );
 };

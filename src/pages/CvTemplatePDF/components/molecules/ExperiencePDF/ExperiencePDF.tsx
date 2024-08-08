@@ -16,19 +16,19 @@ const experienceContent = (data: ExperienceDataType[] | undefined, style: StyleO
     return null;
   }
   const children = data.map((experience) => {
-    const { Experience, ExperienceTitle, Text, ExperienceTime, ExperiencePosition } = style;
+    const { Experience, ExperienceTitle, Text, ExperienceTime, ExperiencePosition, ExperienceDescription } = style;
     const { description, ...otherData } = experience;
 
     const propsText = { str: description, style: Text };
     const listTitleProps = {
-      data: otherData,
-      style: { ExperienceTitle, ExperienceTime, ExperiencePosition },
+      data: Experience.name === 'chrono' ? experience : otherData,
+      style: { ExperienceTitle, ExperienceTime, ExperiencePosition, Experience, ExperienceDescription },
     };
 
     return (
       <Box key={uniqueKey()} style={Experience}>
         <ListTitlePDF {...listTitleProps} />
-        <TextPDF key={uniqueKey()} {...propsText} />
+        {Experience.name !== 'chrono' && <TextPDF {...propsText} />}
       </Box>
     );
   });
@@ -49,10 +49,11 @@ export const ExperiencePDF = (props: IExperienceProps) => {
     Text,
     ExperienceTime,
     ExperiencePosition,
+    ExperienceDescription,
   } = style;
 
   const propsSubtitle = { str: experienceName, style: Subtitle };
-  const currStyle = { Experience, ExperienceTitle, Text, ExperienceTime, ExperiencePosition };
+  const currStyle = { Experience, ExperienceTitle, Text, ExperienceTime, ExperiencePosition, ExperienceDescription };
 
   return (
     <Box style={Experiences}>

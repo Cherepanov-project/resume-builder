@@ -35,7 +35,7 @@ const FinishResume: FC<IProps> = ({ handleReset, nameTemplate }) => {
           </Box>
         </Box>
 
-        <Paper elevation={12}>
+        <Paper elevation={12} sx={{ marginLeft: '25px'}}>
           <CvTemplatePDF styleName={nameTemplate} ref={componentRef} />
         </Paper>
       </Box>

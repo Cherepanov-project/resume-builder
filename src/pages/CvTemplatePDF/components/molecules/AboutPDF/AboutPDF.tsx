@@ -16,7 +16,7 @@ export const AboutPDF = (props: IAboutTypeProps) => {
 
   return (
     <Box style={SubtitleWrapper}>
-      <SubtitlePDF {...propsSubtitle} />
+      {Subtitle.name !== 'chrono' && <SubtitlePDF {...propsSubtitle} />}
       <TextPDF {...propsText} />
     </Box>
   );

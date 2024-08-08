@@ -15,7 +15,12 @@ export const PageWithHeaderPDF = (props: IPageDefaultPDF) => {
   const propsMain = { data: { personalData, photoData, ...otherDate }, style: otherStyle };
   return (
     <Box style={MainPage} sx={{ display: 'flex', flexDirection: 'column', minHeight: '1123px' }}>
-      <div style={{pageBreakInside:'avoid'}}>
+      {MainPage.name === 'chrono' && (
+        <Box sx={{ position: 'absolute', height: '100%' }}>
+          <Box sx={{ position: 'relative', backgroundColor: '#e2e2e2', width: '2px', minHeight: '1123px', height: '100%', left: '130px' }} />
+        </Box>
+      )}
+      <div style={{pageBreakInside:'avoid', zIndex: '1'}}>
           <HeaderPDF {...propsHeader} />
       </div>
       <div>

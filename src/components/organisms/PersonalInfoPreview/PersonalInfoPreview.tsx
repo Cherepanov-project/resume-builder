@@ -51,7 +51,7 @@ const PersonalInfoPreview = ({styleName}) => {
     }
     hobbyData.push(newHobby)
   })
-  const propsSidebar = { data: { personalData, photoData, socialData, hobbyData }, style: style };
+  const propsSidebar = { data: { personalData, photoData, socialData, hobbyData }, style: {...style, Sidebar: {...style.Sidebar, padding: '0, 25, 25, 25'}} };
 
   const propsSubtitle = {
     str: useWatch({name: position}),
@@ -63,30 +63,32 @@ const PersonalInfoPreview = ({styleName}) => {
       {isWithHeader && !isShort ? <HeaderPDF {...propsHeader} />
       : isShort && isWithHeader ? <HeaderShortPDF {...propsShortHeader}/>
       : isWithSidebar ? (
-      <>
+      <Box sx={{ display: 'flex' }}>
+        <Box sx={{ width: '40%' }}>
         {styleName === 'sydney' && (<TitlePDF
           key={uniqueKey()}
           {...{ fullName: fullNameTitiles[0] + ' ' + fullNameTitiles[1], style: Title }}
         />)}
-        <SidebarPDF {...propsSidebar}/>
         {styleName === 'sydney' && <AboutPDF {...propsAbout} />}
-      </>)
+        </Box>
+        <SidebarPDF {...propsSidebar}/>
+      </Box>)
       : (
         <>
           <Box sx={{ display: 'flex', mb: '10px' }}>
-          <Box>
-            <TitlePDF
-              key={uniqueKey()}
-              {...{ fullName: fullNameTitiles[0] + ' ' + fullNameTitiles[1], style: Title }}
-            />
-            <TextPDF {...propsSubtitle} />
-          </Box>
+            <Box>
+              <TitlePDF
+                key={uniqueKey()}
+                {...{ fullName: fullNameTitiles[0] + ' ' + fullNameTitiles[1], style: Title }}
+              />
+              <TextPDF {...propsSubtitle} />
+            </Box>
           </Box>
           <AboutPDF {...propsAbout} />
         </>
       )
     }
-    {styleName !== 'toronto' && styleName !== 'sydney' && <AboutPDF {...propsAbout} />}
+    {styleName !== 'toronto' && styleName !== 'sydney' && styleName !== 'chrono' && styleName !== 'metro' && <AboutPDF {...propsAbout} />}
     </>
   )
 }
