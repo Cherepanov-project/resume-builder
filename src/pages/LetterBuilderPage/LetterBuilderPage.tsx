@@ -8,6 +8,7 @@ import KeyboardArrowUpIcon from '@mui/icons-material/KeyboardArrowUp';
 import Divider from '@mui/material/Divider';
 import VisibilityIcon from '@mui/icons-material/Visibility';
 import VisibilityOffIcon from '@mui/icons-material/VisibilityOff';
+import LetterConstructorWorkspace from '../../components/organisms/LetterConstructorWorkspace/LetterConstructorWorkspace';
 
 import classes from './LetterBuilderPage.module.scss';
 
@@ -129,6 +130,7 @@ const LetterBuilderPage = () => {
     }
 
     return (
+      <>
         <div className={classes['header']}>
             <div className={classes['header__sub-menu']}>
                 <CustomizedMenus />
@@ -209,6 +211,8 @@ const LetterBuilderPage = () => {
                 </Button>
             </div>
         </div>
+        <LetterConstructorWorkspace />
+      </>
     )
 }
 
