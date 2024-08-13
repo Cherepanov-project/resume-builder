@@ -1,14 +1,14 @@
 @import '../../../assets/style/variables.scss';
 
 .workspace {
-  padding: 30px;
   min-height: calc(100dvh - 72px);
   display: flex;
   justify-content: center;
+  width: 100%;
 }
 
 .wrapper {
-  width: calc(100% - 30%);
+  width: 100%;
   min-height: calc(100dvh - 72px);
   padding-bottom: 28px;
   margin-bottom: 28px;
