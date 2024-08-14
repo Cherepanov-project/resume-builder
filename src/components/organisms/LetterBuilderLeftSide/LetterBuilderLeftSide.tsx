@@ -6,6 +6,7 @@ import Tabs from '@mui/material/Tabs';
 import Tab from '@mui/material/Tab';
 import Typography from '@mui/material/Typography';
 import Box from '@mui/material/Box';
+import LetterCard from '@/components/atoms/LetterCard';
 
 interface TabPanelProps {
   children?: React.ReactNode;
@@ -26,7 +27,7 @@ function TabPanel(props: TabPanelProps) {
       {...other}
     >
       {value === index && (
-        <Box sx={{ p: 3, background: '#f9f9f9', minHeight: '100%' }}>
+        <Box sx={{ padding: '15px', background: '#f9f9f9', minHeight: '100%' }}>
           <Typography>{children}</Typography>
         </Box>
       )}
@@ -41,7 +42,11 @@ function a11yProps(index: number) {
   };
 }
 
-function FullWidthTabs() {
+interface FullWidthTabsProps {
+  ViewChild: JSX.Element
+}
+
+function FullWidthTabs({ ViewChild }: FullWidthTabsProps) {
   const theme = useTheme();
   const [value, setValue] = React.useState(0);
 
@@ -158,7 +163,7 @@ function FullWidthTabs() {
         onChangeIndex={handleChangeIndex}
       >
         <TabPanel value={value} index={0} dir={theme.direction}>
-            Содержимое
+            {ViewChild}
         </TabPanel>
         <TabPanel value={value} index={1} dir={theme.direction}>
             Строки
@@ -173,7 +178,14 @@ function FullWidthTabs() {
 const LetterBuilderLeftSide = () => {
   return (
     <Box sx={{ width: '500px', height: '100%' }}>
-      <FullWidthTabs />
+      <FullWidthTabs 
+        ViewChild={
+          <LetterCard 
+            text="ЗАГОЛОВОК" 
+            icon={<svg xmlns="http://www.w3.org/2000/svg" width="36" height="36" viewBox="0 0 30 26"><path d="m10.849 4.217-.051-.223a3.547 3.547 0 0 0-.288-.746c-.15-.307-.3-.58-.466-.851a5.165 5.165 0 0 0-.563-.707c-.197-.185-.35-.266-.477-.29a23.179 23.179 0 0 0-.703-.051 12.724 12.724 0 0 0-.793-.017H7.26v10.445c0 .184.03.313.09.405l.01.015.008.016c.047.096.14.182.321.275.019.01.075.03.194.058.112.027.257.057.438.092.375.073.618.118.773.118h.286V14H2.603v-1.216l.257-.027.287-.025c.146-.012.32-.027.507-.045.347-.034.558-.082.663-.121.165-.072.25-.145.315-.243.058-.089.091-.214.091-.458V1.315h-.249c-.19 0-.422 0-.688.016-.275.018-.55.035-.806.053-.102.01-.245.086-.46.289a5.287 5.287 0 0 0-1.024 1.563c-.138.316-.233.56-.278.745l-.053.219H0V0h12v4.217h-1.152ZM16 0h14v2H16zM16 6h14v2H16zM16 12h14v2H16zM0 18h30v2H0zM0 24h30v2H0z"></path></svg>}
+          />
+        }
+      />
     </Box>
   )
 }

@@ -1,0 +1,45 @@
+.letter-card__content {
+    box-sizing: border-box;
+    vertical-align: top;
+    align-items: center;
+    display: flex;
+    position: relative;
+    flex-flow: column;
+    justify-content: center;
+}
+
+.letter-card {
+    box-sizing: border-box;
+    width: calc(33.3% - 15px);
+    background: #fff;
+    border-radius: 3px;
+    display: block;
+    min-height: 118px;
+    padding: 18px 15px 15px 15px;
+    border: 1px solid #ccc;
+    box-shadow: 0 1px 1px rgba(0,0,0,0.1);
+    transition-duration: .15s;
+    
+    &:hover {
+        box-shadow: 0 6px 10px rgba(0, 0, 0, .35);
+        border: 1px solid #ffffff;
+    }
+}
+
+.letter-card__text {
+    hyphens: auto;
+    word-break: break-word;
+    word-wrap: break-word;
+    font-size: 12px;
+    height: 26.4px;
+    line-height: 1.1;
+    margin-top: 4px;
+    overflow: hidden;
+    text-align: center;
+    text-transform: uppercase;
+}
+
+.letter-card__icon {
+    margin: 8px auto 15px auto;
+    flex: 1.9 0 66%;
+}
