@@ -27,7 +27,7 @@ const TabPanel = (props: TabPanelProps) => {
       {...other}
     >
       {value === index && (
-        <Box sx={{ padding: '15px', background: '#f9f9f9', minHeight: '100%'}}>
+        <Box sx={{ padding: '15px', background: '#f9f9f9', height: '100%', overflow: 'scroll-y'}}>
           <Typography sx={{ display: 'flex', justifyContent: 'space-evenly', flexWrap: 'wrap', gap: '15px'}}>{children}</Typography>
         </Box>
       )}

@@ -7,8 +7,6 @@ export interface TabIconProps {
   colorPassive?: string
 }
 
-// '#516167' : '#93989a'
-
 export const TabIconContent = ({ width, height, value, id, colorActive, colorPassive }: TabIconProps) => {
   return (
     <svg xmlns="http://www.w3.org/2000/svg" width={width} height={height} fill="none" viewBox={`0 0 ${width} ${height}`}><path fill={value === id ? colorActive : colorPassive} d="M9.566 9.22H.86V.516h8.705V9.22ZM2.803 7.291h4.834V2.457H2.803v4.834Zm8.691 1.929V.516H20.2V9.22h-8.705Zm1.942-1.929h4.834V2.457h-4.834v4.834Zm-3.87 12.562H.86v-8.704h8.705v8.704Zm-6.763-1.929h4.834V13.09H2.803v4.834Zm17.396 1.929h-8.705v-8.704H20.2v8.704Zm-6.763-1.929h4.834V13.09h-4.834v4.834Z"></path></svg>

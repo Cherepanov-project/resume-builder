@@ -16,7 +16,7 @@ const LetterCard = ({ icon, text }: LetterCardProps) => {
           borderRadius: '3px',
           display: 'block',
           minHeight: '118px',
-          padding: '18px 15px 15px 15px',
+          padding: '18px 10px 10px 15px',
           border: '1px solid #ccc',
           boxShadow: '0 1px 1px rgba(0,0,0,0.1)',
           transitionDuration: '.15s',
@@ -42,6 +42,7 @@ const LetterCard = ({ icon, text }: LetterCardProps) => {
           </Box>
           <Box>
             <Typography sx={{
+              paddingTop: "0",
               hyphens: 'auto',
               wordBreak: 'break-word',
               wordWrap: 'break-word',
