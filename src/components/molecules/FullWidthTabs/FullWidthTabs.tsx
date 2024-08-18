@@ -7,6 +7,9 @@ import Tab from '@mui/material/Tab';
 import Typography from '@mui/material/Typography';
 import Box from '@mui/material/Box';
 import { TabIconProps } from '@/components/atoms/Icons/TabIcons';
+import { CustomScroll } from "react-custom-scroll";
+import '@components/molecules/FullWidthTabs/ScrollBar.scss';
+// import ScrollArea from "react-scrollbar";
 
 interface TabPanelProps {
   children?: React.ReactNode;
@@ -27,8 +30,20 @@ const TabPanel = (props: TabPanelProps) => {
       {...other}
     >
       {value === index && (
-        <Box sx={{ padding: '15px', background: '#f9f9f9', height: '100%', overflow: 'scroll-y'}}>
-          <Typography sx={{ display: 'flex', justifyContent: 'space-evenly', flexWrap: 'wrap', gap: '15px'}}>{children}</Typography>
+        <Box sx={{ boxSizing: 'border-box', paddingTop: '10px', paddingBottom: '10px', background: '#f9f9f9', height: 'calc(100vh - 95px)', }}>
+          <CustomScroll heightRelativeToParent="calc(100%)">
+            <Box sx={{ 
+              boxSizing: 'border-box',
+              paddingRight: '20px',
+              paddingLeft: '20px', 
+              background: '#f9f9f9',  
+              maxHeight: '100%'
+            }}>
+              <Typography sx={{ paddingTop: '10px', paddingBottom: '15px', display: 'flex', justifyContent: 'space-evenly', flexWrap: 'wrap', gap: '15px'}}>
+                {children}
+              </Typography>
+            </Box>
+          </CustomScroll>
         </Box>
       )}
     </div>

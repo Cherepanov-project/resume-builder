@@ -23,6 +23,7 @@ const LetterCard = ({ icon, text }: LetterCardProps) => {
           '&:hover': {
             boxShadow: '0 6px 10px rgba(0, 0, 0, .35)',
             border: '1px solid #ffffff',
+            cursor: 'pointer',
           }
         }}>
         <Box sx={{
