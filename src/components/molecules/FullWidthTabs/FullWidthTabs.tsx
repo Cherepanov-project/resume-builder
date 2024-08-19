@@ -9,7 +9,6 @@ import Box from '@mui/material/Box';
 import { TabIconProps } from '@/components/atoms/Icons/TabIcons';
 import { CustomScroll } from "react-custom-scroll";
 import '@components/molecules/FullWidthTabs/ScrollBar.scss';
-// import ScrollArea from "react-scrollbar";
 
 interface TabPanelProps {
   children?: React.ReactNode;
