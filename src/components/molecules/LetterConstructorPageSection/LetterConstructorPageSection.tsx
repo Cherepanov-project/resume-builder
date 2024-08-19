@@ -1,3 +1,4 @@
+import { Box, Typography, Button } from '@mui/material';
 import { Link } from 'react-router-dom' 
 import classes from './LetterConstructorPageSection.module.scss'
 
@@ -24,18 +25,102 @@ export const LetterConstructorPageSection: React.FC<LetterConstructorPageSection
   isHead = false,
   isFooter = false,
 }) => {
-  let buttonStyle = classes['button']
-  buttonStyle = isFooter ? buttonStyle + ' ' + classes['button--footer'] : buttonStyle
+  let buttonStyle = {
+    boxSizing: 'border-box',
+    marginTop: '40px',
+    display: 'inline-block',
+    textDecoration: 'none',
+    paddingTop: '7px',
+    paddingBottom: '7px',
+    paddingRight: '30px',
+    paddingLeft: '30px',
+    fontWeight: '600',
+    fontSize: '22px',
+    backgroundColor: '#852876',
+    border: '1px solid #852876',
+    color: '#fff',
+    borderRadius: '16px',
+    transition: 'background-color .3s',
+    textAlign: 'center',
 
-  const buttonElement: JSX.Element|null = buttonText && href ? <Link className={buttonStyle} to={href}>{buttonText}</Link> : null
-  const titleElement: JSX.Element|null = title && !isHead ? <h2 className={classes['title']}>{title}</h2> : null
+    '&:hover': {
+        backgroundColor: '#5d145f',
+        color: '#fff',
+    }
+
+    // '@media (max-width: 768px)': {
+    //     width: '100%',
+    //     textAlign: 'center',
+    //     padding: '13px 20px',
+    // }
+    
+    // '@media (max-width: 1200px)': {
+    //     padding: '15px 40px',
+    //     fontSize: '16px !important',
+    // }
+
+    // '&--footer': {
+    //     paddingLeft: '80px',
+    //     paddingRight: '80px',
+    //     marginTop: '30px',
+    // }
+}
+  buttonStyle = isFooter ? { ...buttonStyle, marginTop: '30px', paddingRight: '80px', paddingLeft: '80px' } : buttonStyle
+
+  const titleStyle = {
+    marginTop: '0',
+    marginBottom: '90px',
+    fontFamily: 'Inter, sans-serif',
+    fontWeight: '600',
+    fontSize: '40px',
+    lineHeight: '1.3',
+    letterSpacing: '-.8px',
+    color: 'black',
+    maxWidth: '835px',
+    textAlign: 'center',
+    marginLeft: 'auto',
+    marginRight: 'auto',
+  }
+
+  const buttonElement = buttonText && href ? <Button sx={buttonStyle} href={href}>{buttonText}</Button> : null
+  const titleElement = title && !isHead ? 
+    <Typography 
+      variant='h2' 
+      sx={titleStyle}
+    >
+      {title}
+    </Typography> : null
   
-  let subTitleStyle = classes['sub-title']
-  subTitleStyle = isFooter ? subTitleStyle + ' ' + classes['sub-title--footer'] : subTitleStyle
+  let subTitleStyle = {
+    fontFamily: 'Inter, sans-serif',
+    fontWeight: '600',
+    fontSize: '32px',
+    lineHeight: '1.3',
+    letterSpacing: '-.8px',
+    color: 'black',
+    margin: '0',
+    marginBottom: '20px',
+  }
+
+  subTitleStyle = isFooter ? { ...subTitleStyle, fontSize: '40px'} : subTitleStyle
   
   const subTitleElement: JSX.Element|null = !isHead ? 
-    <h3 className={subTitleStyle}>{subTitle}</h3> :
-    <h1 className={classes['title'] + ' ' + classes['title--head']}>{subTitle}</h1> 
+    <Typography variant='h3' sx={subTitleStyle}>{subTitle}</Typography> :
+    <Typography 
+      variant='h1' 
+      sx={{
+        ...titleStyle, 
+        letterSpacing: '-1.4px', 
+        margin: '0', 
+        marginBottom: '20px',
+        fontWeight: '600',
+        fontSize: '64px',
+        lineHeight: '1.3',
+        marginLeft: '0',
+        marginRight: '0',
+      }}>
+      {subTitle}
+    </Typography> 
 
   let containerStyle = classes['container']
   containerStyle = isHead ? containerStyle + ' ' + classes['container--head'] : containerStyle
@@ -65,22 +150,22 @@ export const LetterConstructorPageSection: React.FC<LetterConstructorPageSection
   imageStyle = isFooter ? imageStyle + ' ' + classes['image--invisible'] : imageStyle
 
   return (
-    <section className={containerStyle}>
+    <Box className={containerStyle}>
       {titleElement}
-      <div className={cardStyle}>
-        <div className={sectionWrapperStyle}>
-          <div className={wrapperTextStyle}>
+      <Box className={cardStyle}>
+        <Box className={sectionWrapperStyle}>
+          <Box className={wrapperTextStyle}>
             {subTitleElement}
-            <p className={descriptionStyle}>{content}</p>
+            <Typography className={descriptionStyle}>{content}</Typography>
             {isFooter ? imageElement : null}
             {buttonElement}
-          </div>
-        </div>
-        <div className={wrapperImageStyle}>
+          </Box>
+        </Box>
+        <Box className={wrapperImageStyle}>
           <img className={imageStyle} src={image} alt={imageAlt} />
-        </div>
-      </div>
-    </section>
+        </Box>
+      </Box>
+    </Box>
   )
 }
 
@@ -129,27 +214,27 @@ export const LetterConstructorPageGroup: React.FC<LetterConstructorPageGroupProp
 
 
     return (
-      <div key={card.id} className={groupWrapperStyle}>
-        <div className={itemStyle}>
-          <div className={groupWrapperImageStyle}>
+      <Box key={card.id} className={groupWrapperStyle}>
+        <Box className={itemStyle}>
+          <Box className={groupWrapperImageStyle}>
             {imageElement}
-          </div>
-          <div className={classes['group-wrapper-description']}>
-            <h3 className={classes['group-sub-title']}>{card.subTitle}</h3>
-            <p className={groupDescriptionStyle}>{card.content}</p>
+          </Box>
+          <Box className={classes['group-wrapper-description']}>
+            <Typography variant='h5' className={classes['group-sub-title']}>{card.subTitle}</Typography>
+            <Typography className={groupDescriptionStyle}>{card.content}</Typography>
             {buttonElement}
-          </div>
-        </div>
-      </div>
+          </Box>
+        </Box>
+      </Box>
     )
   })
 
   return (
-    <section className={classes['container']}>
-      <h2 className={classes['title']}>{title}</h2>
-      <div className={classes['card']}>
+    <Box className={classes['container']}>
+      <Typography component="h2" className={classes['title']}>{title}</Typography>
+      <Box className={classes['card']}>
         {arrayCardElements}
-      </div>
-    </section>
+      </Box>
+    </Box>
   )
 }
