@@ -1,4 +1,6 @@
 import { LetterConstructorPageSection, LetterConstructorPageGroup } from '../../components/molecules/LetterConstructorPageSection/LetterConstructorPageSection'
+import LetterConstructorHeadSection from '@/components/molecules/LetterConstructorPageSection/LetterConstructorHeadSection'
+import LetterConstructorFooterSection from '@/components/molecules/LetterConstructorPageSection/LetterConstructorFooterSection'
 import ScrollToTop from 'react-scroll-up'
 
 import classes from './LetterConstructorPage.module.scss'
@@ -28,14 +30,13 @@ import imageFooter from '../../assets/images/letterConstructorPage/delat-krasivy
 const LetterConstructorPage = () => {
   return (
     <main className={classes['main']}>
-      <LetterConstructorPageSection
-        subTitle="Конструктор писем"
+      <LetterConstructorHeadSection
+        title="Конструктор писем"
         content="Создавайте красивые письма бесплатно без дизайнеров и верстальщиков."
         buttonText="Создать письмо"
         href="#"
         image={imageConstructor}
         imageAlt="конструктор писем"
-        isHead
       />
       <LetterConstructorPageGroup
         title="Соберите HTML-макет письма из готовых блоков за 3 шага"
@@ -200,14 +201,13 @@ const LetterConstructorPage = () => {
         isBorder={false}
         isBigPicture={true}
       />
-      <LetterConstructorPageSection
-        subTitle="Делать красивые письма просто и быстро. Убедитесь сами"
+      <LetterConstructorFooterSection
+        title="Делать красивые письма просто и быстро. Убедитесь сами"
         content="Для доступа к конструктору нужен только email"
         buttonText="Создать письмо"
         href="#"
         image={imageFooter}
         imageAlt="конструктор писем"
-        isFooter={true}
       />
       <ScrollToTop showUnder={160}>
         <div className={classes['scroll-to-top']}>

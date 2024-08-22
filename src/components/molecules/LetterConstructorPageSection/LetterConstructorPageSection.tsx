@@ -1,4 +1,4 @@
-import { Box, Typography, Button, Container, useMediaQuery } from '@mui/material';
+import { Box, Typography, Button, useMediaQuery } from '@mui/material';
 import { Link } from 'react-router-dom' 
 import classes from './LetterConstructorPageSection.module.scss'
 
@@ -10,8 +10,6 @@ interface LetterConstructorPageSectionProps {
   href?: string;
   image: string;
   imageAlt: string;
-  isHead?: boolean;
-  isFooter?: boolean;
 }
 
 export const LetterConstructorPageSection: React.FC<LetterConstructorPageSectionProps> = ({
@@ -22,8 +20,6 @@ export const LetterConstructorPageSection: React.FC<LetterConstructorPageSection
   href,
   image,
   imageAlt,
-  isHead = false,
-  isFooter = false,
 }) => {
   const sm = useMediaQuery('(min-width: 576px)')
   const md = useMediaQuery('(min-width: 768px)')
@@ -194,66 +190,6 @@ export const LetterConstructorPageSection: React.FC<LetterConstructorPageSection
         </Box>
       </Box>
     </Box>
-  )
-}
-
-export const LetterConstructorHeadSection: React.FC<LetterConstructorPageSectionProps> = ({
-  title, 
-  subTitleElement, 
-  content, 
-  image, 
-  imageAlt, 
-  buttonElement
-}) => {
-  const containerStyle = {
-    boxSizing: 'border-box',
-    margin: '0',
-    width: '100%',
-    position: 'relative',
-    padding: '50px 0 50px',
-    marginBottom: '50px',
-    '&::before': {
-      content: "",
-      position: 'absolute',
-      top: '-77px',
-      left: '-290px',
-      bottom: '0',
-      right: '-226px',
-      backgroundColor: '#eafcff',
-      borderRadius: '0 0 360px 0',
-    }
-  }
-
-  const titleStyle = {
-    fontFamily: 'Inter, sans-serif',
-    color: 'black',
-    maxWidth: '835px',
-    textAlign: 'center',
-    letterSpacing: '-1.4px', 
-    margin: '0', 
-    marginBottom: '20px',
-    fontWeight: '600',
-    fontSize: '64px',
-    lineHeight: '1.3'
-  }
-
-  return (
-    <Container fixed maxWidth='xs' sx={containerStyle}>
-      <Box className={cardStyle}>
-        <Box className={sectionWrapperStyle}>
-          <Box className={wrapperTextStyle}>
-            <Typography variant='h1' sx={titleStyle}>
-              {title}
-            </Typography>
-            <Typography className={descriptionStyle}>{content}</Typography>
-            {buttonElement}
-          </Box>
-        </Box>
-        <Box className={wrapperImageStyle}>
-          <img className={imageStyle} src={image} alt={imageAlt} />
-        </Box>
-      </Box>
-    </Container>
   )
 }
 
