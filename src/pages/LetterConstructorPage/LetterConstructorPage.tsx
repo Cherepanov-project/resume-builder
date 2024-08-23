@@ -32,7 +32,7 @@ const LetterConstructorPage = () => {
         subTitle="Конструктор писем"
         content="Создавайте красивые письма бесплатно без дизайнеров и верстальщиков."
         buttonText="Создать письмо"
-        href="/letter-builder-page"
+        href="#"
         image={imageConstructor}
         imageAlt="конструктор писем"
         isHead
@@ -76,7 +76,7 @@ const LetterConstructorPage = () => {
         subTitle="Используйте готовые шаблоны писем"
         content="Конструктор писем дополняют 100 адаптивных шаблонов, заточенных под разные сферы бизнеса и инфоповоды. Чтобы отправить рассылку, откройте редактор и добавьте свой контент в понравившийся шаблон."
         buttonText="Посмотреть шаблоны"
-        href="/letter-builder-page"
+        href="#"
         image={useOwnBlocks}
         imageAlt="используйте готовые шаблоны писем"
       />
@@ -109,7 +109,7 @@ const LetterConstructorPage = () => {
         subTitle="Реализуйте смелые задумки"
         content="Добавьте свой HTML-код в любую часть письма прямо в онлайн-конструкторе. Если нужно что-то исправить в коде, используйте html-редактор."
         buttonText="Начать"
-        href="/letter-builder-page"
+        href="#"
         image={realiseIdea}
         imageAlt="реализуйте смелые задумки"
       />
@@ -204,7 +204,7 @@ const LetterConstructorPage = () => {
         subTitle="Делать красивые письма просто и быстро. Убедитесь сами"
         content="Для доступа к конструктору нужен только email"
         buttonText="Создать письмо"
-        href="/letter-builder-page"
+        href="#"
         image={imageFooter}
         imageAlt="конструктор писем"
         isFooter={true}
