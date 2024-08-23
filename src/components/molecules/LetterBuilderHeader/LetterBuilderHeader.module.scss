@@ -1,0 +1,26 @@
+.header {
+    background-color: #505659;
+    display: flex;
+    flex-direction: row;
+    width: 100%;
+    height: 50px;
+    font-size: 12px;
+    justify-content: space-between;
+}
+
+.header__sub-menu {
+    display: flex;
+    height: 100%;
+    align-items: center;
+    //margin-left: 10px;
+    flex-wrap: nowrap;
+
+    &--right {
+        display: flex;
+        height: 100%;
+        align-items: center;
+        flex-wrap: nowrap;
+        margin-right: 20px;
+        gap: 20px;
+    }
+}

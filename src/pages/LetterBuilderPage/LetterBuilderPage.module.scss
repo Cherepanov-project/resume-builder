@@ -1,0 +1,11 @@
+.main {
+    display: flex;
+    flex-direction: row;
+    justify-content: flex-start;
+    flex-wrap: nowrap;
+    height: 100%;
+}
+
+.left-side {
+    width: 410px;
+}
