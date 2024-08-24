@@ -1,6 +1,5 @@
 import { Box, Typography, Button, useMediaQuery } from '@mui/material';
-import { Link } from 'react-router-dom' 
-import classes from './LetterConstructorPageSection.module.scss'
+import Link from '@mui/material/Link';
 
 interface LetterConstructorPageSectionProps {
   title?: string;
@@ -49,9 +48,8 @@ export const LetterConstructorPageSection: React.FC<LetterConstructorPageSection
         backgroundColor: '#5d145f',
         color: '#fff',
     }
-}
-  // buttonStyle = isFooter ? { ...buttonStyle, marginTop: '30px', paddingRight: '80px', paddingLeft: '80px' } : buttonStyle
-
+  }
+  
   const titleStyle = {
     marginTop: '0',
     marginBottom: md ? '90px' : '40px',
@@ -66,15 +64,6 @@ export const LetterConstructorPageSection: React.FC<LetterConstructorPageSection
     marginLeft: 'auto',
     marginRight: 'auto',
   }
-
-  const buttonElement = buttonText && href ? <Button sx={buttonStyle} href={href}>{buttonText}</Button> : null
-  const titleElement = title && (
-    <Typography 
-      variant='h2' 
-      sx={titleStyle}
-    >
-      {title}
-    </Typography>)
   
   const subTitleStyle = {
     fontFamily: 'Inter, sans-serif',
@@ -86,8 +75,6 @@ export const LetterConstructorPageSection: React.FC<LetterConstructorPageSection
     margin: '0',
     marginBottom: lg ? '20px' : '10px',
   }
-
-  // subTitleStyle = isFooter ? { ...subTitleStyle, fontSize: '40px'} : subTitleStyle 
 
   const containerStyle = {
     boxSizing: 'border-box',
@@ -126,8 +113,6 @@ export const LetterConstructorPageSection: React.FC<LetterConstructorPageSection
     maxWidth: lg ? '50%' : '100%',
   }
 
-  // sectionWrapperStyle = isHead ? sectionWrapperStyle + ' ' + classes['section-wrapper--head'] : sectionWrapperStyle
-
   const cardStyle = {
     boxSizing: 'border-box',
     position: 'relative',
@@ -149,7 +134,6 @@ export const LetterConstructorPageSection: React.FC<LetterConstructorPageSection
       sm ? '50px 0' :
       '0',
   }
-  // cardStyle = isHead ? cardStyle + ' ' + classes['card--head'] : cardStyle
 
   const descriptionStyle = {
     marginTop: '0',
@@ -161,18 +145,21 @@ export const LetterConstructorPageSection: React.FC<LetterConstructorPageSection
     letterSpacing: '-0.6px',
     color: 'black',
   }
-
-  // descriptionStyle = isHead ? descriptionStyle + ' ' + classes['description--head'] : descriptionStyle
-  // descriptionStyle = isFooter ? descriptionStyle + ' ' + classes['description--footer'] : descriptionStyle
-
-  // const imageElement: JSX.Element = 
-  //   <img className={classes['image'] + ' ' + classes['image--visible']} src={image} alt={imageAlt} />
   
   const imageStyle = {
     maxWidth: '100%',
     height: 'auto',
   }
-  // imageStyle = isFooter ? imageStyle + ' ' + classes['image--invisible'] : imageStyle
+
+  const buttonElement = buttonText && href ? <Button sx={buttonStyle} href={href}>{buttonText}</Button> : null
+  const titleElement = title && (
+    <Typography 
+      variant='h2' 
+      sx={titleStyle}
+    >
+      {title}
+    </Typography>
+  )
 
   return (
     <Box sx={containerStyle}>
@@ -216,36 +203,148 @@ export const LetterConstructorPageGroup: React.FC<LetterConstructorPageGroupProp
   isBorder,
   isBigPicture
 }) => {
+  const sm = useMediaQuery('(min-width: 576px)')
+  const md = useMediaQuery('(min-width: 768px)')
+  const lg = useMediaQuery('(min-width: 992px)')
+  const xl = useMediaQuery('(min-width: 1200px)')
+  const xxl = useMediaQuery('(min-width: 1400px)')
+  const xxxl = useMediaQuery('(min-width: 1600px)')
+  const xxxxl = useMediaQuery('(min-width: 1800px)')
+
+  const linkStyle = {
+    fontFamily: 'Inter, sans-serif',
+    fontSize: '16px',
+    letterSpacing: '-.2px',
+    color: '#852876',
+    fontWeight: '600',
+    borderBottom: '2px solid #852876',
+    transition: 'all .25s ease',
+    textDecoration: 'solid',
+
+    '&:hover': {
+        color: '#5d145f',
+        borderBottom: '2px solid #5d145f',
+    }
+  }
+
+  const groupImageStyle = {
+    maxWidth: '100%',
+    height: 'auto',
+  }
+
   const arrayCardElements: JSX.Element[] = arrayCards.map((card) => {
-    const buttonElement: JSX.Element|null = card.buttonText && card.href ? <Link className={classes['link']} to={card.href}>{card.buttonText}</Link> : null
-    const imageElement: JSX.Element|null = card.image && card.imageAlt ? <img className={classes['group-image']} src={card.image} alt={card.imageAlt} /> : null
+    const buttonElement: JSX.Element|null = card.buttonText && card.href ? <Link color='inherit' sx={linkStyle} href={card.href}>{card.buttonText}</Link> : null
+    const imageElement: JSX.Element|null = card.image && card.imageAlt ? <img style={groupImageStyle} src={card.image} alt={card.imageAlt} /> : null
 
-    let itemStyle = classes['item']
-    itemStyle = isBorder ? itemStyle + ' ' + classes['item--border'] : itemStyle
+    const itemStyle = {
+      boxSizing: 'border-box',
+      maxWidth: sm ? '333px' : '400px',
+      marginTop: sm ? '' : '20px',
+      dislay: sm ? '' : 'flex',
+      margin: 'auto',
+    }
 
-    itemStyle = isBigPicture ? itemStyle + ' ' + classes['item--big'] : itemStyle
+    const itemStyleBig = {
+      boxSizing: 'border-box',
+      maxWidth: sm ? '386px' : '400px',
+      marginTop: sm ? '' : '20px',
+      dislay: sm ? '' : 'flex',
+      margin: 'auto',
+      flexDirection: sm ? 'row' : 'column',
+      gap: sm ? '' : '10px',
+    }
 
-    let groupWrapperStyle = classes['group-wrapper']
-    groupWrapperStyle = isBorder ? groupWrapperStyle + ' ' + classes['group-wrapper--border'] : groupWrapperStyle
+    const itemStyleBorder = {
+      border: '1.7px solid rgba(213, 212, 214, .5)',
+      borderRadius: '25px',
+      padding: '40px 40px 40px 30px',
+      height: lg ? '100%' : 'auto',
+      maxWidth: lg ? '100%' : '638px',
+      marginLeft: lg ? '' : 'auto',
+      marginRight: lg ? '' : 'auto',
+      marginTop: lg ? '' : '40px',
+      display: sm ? '' : 'block',
+    }
 
-    let groupWrapperImageStyle = classes['group-wrapper-image']
-    groupWrapperImageStyle = isBorder ? groupWrapperImageStyle + ' ' + classes['group-wrapper-image--border'] : groupWrapperImageStyle
+    const groupWrapperStyle = {
+      boxSizing: 'border-box',
+      width: '100%',
+      minHeight: '1px',
+      paddingRight: '15px',
+      paddingLeft: '15px',
+      flex: lg ? '0 0 33.3333%' : sm ? '0 0 50%' : '',
+      maxWidth: lg ? '33.3333%' : sm ? '50%' : '',
+    }
 
-    groupWrapperImageStyle = isBigPicture ? groupWrapperImageStyle + ' ' + classes['group-wrapper-image--big'] : groupWrapperImageStyle
+    const groupWrapperStyleBorder = {
+      boxSizing: 'border-box',
+      width: '100%',
+      minHeight: '1px',
+      paddingRight: '15px',
+      paddingLeft: '15px',
+      flex: lg ? '0 0 33.3333%' : '0 0 100%',
+      maxWidth: lg ? '33.3333%' : '100%',
+    }
     
-    let groupDescriptionStyle = classes['group-description']
-    groupDescriptionStyle = isBorder ? groupDescriptionStyle + ' ' + classes['group-description--border'] : groupDescriptionStyle
+    const groupWrapperImageStyle = {
+      width: sm ? '100%' : '54px',
+      paddingTop: '4px',
+      marginRight: sm ? '0' : '27px',
+      marginBottom: '20px',
+    }
 
+    const groupWrapperImageStyleBig = {
+      margin: '0 0 10px 0',
+      padding: '0',
+      width: '100%',
+      display: 'flex',
+      alignItems: 'center',
+    }
+
+    const groupWrapperImageStyleBorder = {
+      width: sm ? '100%' : '54px',
+      paddingTop: '4px',
+      marginRight: sm ? '0' : '27px',
+      marginBottom: '20px',
+      height: '40px',
+      display: 'flex',
+      alignItems: 'center',
+    }
+    
+    const groupDescriptionStyle = {
+      marginTop: '0',
+      marginBottom: '0',
+      fontFamily: 'Inter, sans-serif',
+      fontWeight: '400',
+      fontSize: '16px',
+      lineHeight: '1.5',
+      letterSpacing: '-0.6px',
+      color: isBorder ? 'grey' : 'black',
+    }
+
+    const groupWrapperDescriptionStyle = {
+      marginBottom: '20px',
+    }
+
+    const groupSubTitle = {
+      fontFamily: 'Inter, sans-serif',
+      fontWeight: '600',
+      fontSize: md ? '22px' : '20px',
+      lineHeight: '1.3',
+      letterSpacing: md ? '-.7px' : '-.8px',
+      color: 'black',
+      margin: '0 0 20px 0',
+    }
 
     return (
-      <Box key={card.id} className={groupWrapperStyle}>
-        <Box className={itemStyle}>
-          <Box className={groupWrapperImageStyle}>
+      <Box key={card.id} sx={isBorder ? groupWrapperStyleBorder : groupWrapperStyle}>
+        <Box sx={isBigPicture ? itemStyleBig : isBorder ? itemStyleBorder : itemStyle}>
+          <Box sx={isBigPicture ? groupWrapperImageStyleBig : isBorder ? groupWrapperImageStyleBorder : groupWrapperImageStyle}>
             {imageElement}
           </Box>
-          <Box className={classes['group-wrapper-description']}>
-            <Typography variant='h5' className={classes['group-sub-title']}>{card.subTitle}</Typography>
-            <Typography className={groupDescriptionStyle}>{card.content}</Typography>
+          <Box sx={groupWrapperDescriptionStyle}>
+            <Typography variant='h5' sx={groupSubTitle}>{card.subTitle}</Typography>
+            <Typography sx={groupDescriptionStyle}>{card.content}</Typography>
             {buttonElement}
           </Box>
         </Box>
@@ -253,10 +352,57 @@ export const LetterConstructorPageGroup: React.FC<LetterConstructorPageGroupProp
     )
   })
 
+  const cardStyle = {
+    boxSizing: 'border-box',
+    position: 'relative',
+    display: 'flex',
+    flexWrap: 'wrap',
+    marginRight: 'auto',
+    marginLeft: 'auto',
+    maxWidth: 
+      xxxxl ? '1600px' : 
+      xxxl ? '1400px' : 
+      xxl ? '1200px' : 
+      xl ? '1140px' : 
+      lg ? '960px' : 
+      md ? '840px' : 
+      sm ? '660px' :
+      'none',
+    padding: 
+      lg ? '100px 0' : 
+      sm ? '50px 0' :
+      '0',
+  }
+
+  const titleStyle = {
+    marginTop: '0',
+    marginBottom: md ? '90px' : '40px',
+    fontFamily: 'Inter, sans-serif',
+    fontWeight: '600',
+    fontSize: md ? '40px' : '24px',
+    lineHeight: '1.3',
+    letterSpacing: '-.8px',
+    color: 'black',
+    maxWidth: '835px',
+    textAlign: 'center',
+    marginLeft: 'auto',
+    marginRight: 'auto',
+  }
+
+  const containerStyle = {
+    boxSizing: 'border-box',
+    margin: '0',
+    width: '100%',
+    padding: '40px 0',
+    paddingLeft: '15px',
+    paddingRight: '15px',
+    marginBottom: '0',
+  }
+
   return (
-    <Box className={classes['container']}>
-      <Typography component="h2" className={classes['title']}>{title}</Typography>
-      <Box className={classes['card']}>
+    <Box sx={containerStyle}>
+      <Typography component="h2" sx={titleStyle}>{title}</Typography>
+      <Box sx={cardStyle}>
         {arrayCardElements}
       </Box>
     </Box>
