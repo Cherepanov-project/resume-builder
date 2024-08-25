@@ -1,5 +1,6 @@
-import { Box, Typography, Button, useMediaQuery } from '@mui/material';
+import { Box, Typography, Button, useMediaQuery, ThemeProvider } from '@mui/material';
 import Link from '@mui/material/Link';
+import { Container, CustomBox, ImageWrapper, TextWrapper, createLetterConstructorSectionTheme } from './LetterConstructorPageElements';
 
 interface LetterConstructorPageSectionProps {
   title?: string;
@@ -28,28 +29,8 @@ export const LetterConstructorPageSection: React.FC<LetterConstructorPageSection
   const xxxl = useMediaQuery('(min-width: 1600px)')
   const xxxxl = useMediaQuery('(min-width: 1800px)')
 
-  const buttonStyle = {
-    boxSizing: 'border-box',
-    marginTop: '40px',
-    textDecoration: 'none',
-    textTransform: 'none',
-    padding: xl ? '7px 30px 7px 30px' : md ? '15px 40px' : '13px 20px',
-    fontWeight: '600',
-    fontSize: xl ? '22px' : '16px',
-    backgroundColor: '#852876',
-    border: '1px solid #852876',
-    color: '#fff',
-    borderRadius: '16px',
-    transition: 'background-color .3s',
-    textAlign: 'center',
-    width: md ? 'auto' : '100%',
+  const theme = createLetterConstructorSectionTheme()
 
-    '&:hover': {
-        backgroundColor: '#5d145f',
-        color: '#fff',
-    }
-  }
-  
   const titleStyle = {
     marginTop: '0',
     marginBottom: md ? '90px' : '40px',
@@ -151,7 +132,7 @@ export const LetterConstructorPageSection: React.FC<LetterConstructorPageSection
     height: 'auto',
   }
 
-  const buttonElement = buttonText && href ? <Button sx={buttonStyle} href={href}>{buttonText}</Button> : null
+  const buttonElement = buttonText && href ? <Button href={href}>{buttonText}</Button> : null
   const titleElement = title && (
     <Typography 
       variant='h2' 
@@ -162,21 +143,23 @@ export const LetterConstructorPageSection: React.FC<LetterConstructorPageSection
   )
 
   return (
-    <Box sx={containerStyle}>
-      {titleElement}
-      <Box sx={cardStyle}>
-        <Box sx={sectionWrapperStyle}>
-          <Box sx={wrapperTextStyle}>
-            <Typography variant='h3' sx={subTitleStyle}>{subTitle}</Typography>
-            <Typography sx={descriptionStyle}>{content}</Typography>
-            {buttonElement}
+    <ThemeProvider theme={theme}>
+      <Box sx={containerStyle}>
+        {titleElement}
+        <Box sx={cardStyle}>
+          <Box sx={sectionWrapperStyle}>
+            <Box sx={wrapperTextStyle}>
+              <Typography variant='h3' sx={subTitleStyle}>{subTitle}</Typography>
+              <Typography sx={descriptionStyle}>{content}</Typography>
+              {buttonElement}
+            </Box>
+          </Box>
+          <Box sx={wrapperImageStyle}>
+            <img style={imageStyle} src={image} alt={imageAlt} />
           </Box>
         </Box>
-        <Box sx={wrapperImageStyle}>
-          <img style={imageStyle} src={image} alt={imageAlt} />
-        </Box>
       </Box>
-    </Box>
+    </ThemeProvider>
   )
 }
 
@@ -232,6 +215,53 @@ export const LetterConstructorPageGroup: React.FC<LetterConstructorPageGroupProp
     height: 'auto',
   }
 
+  const cardStyle = {
+    boxSizing: 'border-box',
+    position: 'relative',
+    display: 'flex',
+    flexWrap: 'wrap',
+    marginRight: 'auto',
+    marginLeft: 'auto',
+    maxWidth: 
+      xxxxl ? '1600px' : 
+      xxxl ? '1400px' : 
+      xxl ? '1200px' : 
+      xl ? '1140px' : 
+      lg ? '960px' : 
+      md ? '840px' : 
+      sm ? '660px' :
+      '400px',
+    padding: 
+      lg ? '100px 0' : 
+      sm ? '50px 0' :
+      '0',
+  }
+
+  const titleStyle = {
+    marginTop: '0',
+    marginBottom: md ? '90px' : '40px',
+    fontFamily: 'Inter, sans-serif',
+    fontWeight: '600',
+    fontSize: md ? '40px' : '24px',
+    lineHeight: '1.3',
+    letterSpacing: '-.8px',
+    color: 'black',
+    maxWidth: '835px',
+    textAlign: 'center',
+    marginLeft: 'auto',
+    marginRight: 'auto',
+  }
+
+  const containerStyle = {
+    boxSizing: 'border-box',
+    margin: '0',
+    width: '100%',
+    padding: '40px 0',
+    paddingLeft: '15px',
+    paddingRight: '15px',
+    marginBottom: '0',
+  }
+
   const arrayCardElements: JSX.Element[] = arrayCards.map((card) => {
     const buttonElement: JSX.Element|null = card.buttonText && card.href ? <Link color='inherit' sx={linkStyle} href={card.href}>{card.buttonText}</Link> : null
     const imageElement: JSX.Element|null = card.image && card.imageAlt ? <img style={groupImageStyle} src={card.image} alt={card.imageAlt} /> : null
@@ -240,7 +270,7 @@ export const LetterConstructorPageGroup: React.FC<LetterConstructorPageGroupProp
       boxSizing: 'border-box',
       maxWidth: sm ? '333px' : '400px',
       marginTop: sm ? '' : '20px',
-      dislay: sm ? '' : 'flex',
+      display: sm ? '' : 'flex',
       margin: 'auto',
     }
 
@@ -248,7 +278,7 @@ export const LetterConstructorPageGroup: React.FC<LetterConstructorPageGroupProp
       boxSizing: 'border-box',
       maxWidth: sm ? '386px' : '400px',
       marginTop: sm ? '' : '20px',
-      dislay: sm ? '' : 'flex',
+      display: sm ? '' : 'flex',
       margin: 'auto',
       flexDirection: sm ? 'row' : 'column',
       gap: sm ? '' : '10px',
@@ -272,8 +302,8 @@ export const LetterConstructorPageGroup: React.FC<LetterConstructorPageGroupProp
       minHeight: '1px',
       paddingRight: '15px',
       paddingLeft: '15px',
-      flex: lg ? '0 0 33.3333%' : sm ? '0 0 50%' : '',
-      maxWidth: lg ? '33.3333%' : sm ? '50%' : '',
+      flex: lg ? '0 0 33.3333%' : sm ? '0 0 50%' : '100%',
+      maxWidth: lg ? '33.3333%' : sm ? '50%' : '100%',
     }
 
     const groupWrapperStyleBorder = {
@@ -351,53 +381,6 @@ export const LetterConstructorPageGroup: React.FC<LetterConstructorPageGroupProp
       </Box>
     )
   })
-
-  const cardStyle = {
-    boxSizing: 'border-box',
-    position: 'relative',
-    display: 'flex',
-    flexWrap: 'wrap',
-    marginRight: 'auto',
-    marginLeft: 'auto',
-    maxWidth: 
-      xxxxl ? '1600px' : 
-      xxxl ? '1400px' : 
-      xxl ? '1200px' : 
-      xl ? '1140px' : 
-      lg ? '960px' : 
-      md ? '840px' : 
-      sm ? '660px' :
-      'none',
-    padding: 
-      lg ? '100px 0' : 
-      sm ? '50px 0' :
-      '0',
-  }
-
-  const titleStyle = {
-    marginTop: '0',
-    marginBottom: md ? '90px' : '40px',
-    fontFamily: 'Inter, sans-serif',
-    fontWeight: '600',
-    fontSize: md ? '40px' : '24px',
-    lineHeight: '1.3',
-    letterSpacing: '-.8px',
-    color: 'black',
-    maxWidth: '835px',
-    textAlign: 'center',
-    marginLeft: 'auto',
-    marginRight: 'auto',
-  }
-
-  const containerStyle = {
-    boxSizing: 'border-box',
-    margin: '0',
-    width: '100%',
-    padding: '40px 0',
-    paddingLeft: '15px',
-    paddingRight: '15px',
-    marginBottom: '0',
-  }
 
   return (
     <Box sx={containerStyle}>
