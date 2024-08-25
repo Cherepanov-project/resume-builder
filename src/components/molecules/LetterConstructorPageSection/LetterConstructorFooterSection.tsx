@@ -1,12 +1,12 @@
 import { Box, Typography, Button, useMediaQuery } from '@mui/material';
 
 interface LetterConstructorFooterSectionProps {
-  title: string;
-  content: string;
-  buttonText: string;
-  href: string;
-  image: string;
-  imageAlt: string;
+  title?: string;
+  content?: string;
+  buttonText?: string;
+  href?: string;
+  image?: string;
+  imageAlt?: string;
 }
 
 const LetterConstructorFooterSection: React.FC<LetterConstructorFooterSectionProps> = ({
