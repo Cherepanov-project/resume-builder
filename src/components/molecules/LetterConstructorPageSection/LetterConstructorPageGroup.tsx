@@ -1,7 +1,10 @@
-import { Box, Typography, useMediaQuery } from '@mui/material';
+import { Typography, Container, ThemeProvider, Grid } from '@mui/material';
 import Link from '@mui/material/Link';
 
-type card = {
+import theme from '@components/molecules/LetterConstructorPageSection/LetterConstructorTheme'
+import React from 'react';
+
+type Card = {
   id: number,
   subTitle: string;
   content?: string;
@@ -13,9 +16,88 @@ type card = {
 
 interface LetterConstructorPageGroupProps {
   title?: string;
-  arrayCards?: Array<card>;
+  arrayCards?: Array<Card>;
   isBorder?: boolean;
   isBigPicture?: boolean;
+}
+
+interface CardItem {
+  imageElement: JSX.Element | null;
+  buttonElement: JSX.Element | null;
+  content?: string;
+  subTitle: string;
+}
+
+const BorderCard: React.FC<CardItem> = ({subTitle, imageElement, buttonElement, content}) => {
+  return (
+    <Grid container item md={3.8} sx={{
+        border: '1.7px solid rgba(213, 212, 214, .5)', 
+        borderRadius: '25px',
+        p: 3,
+        gap: 1,
+      }}
+      direction={'column'}
+      width={{xs: '100%', sm: '45%'}}
+    >
+      <Grid item>
+        {imageElement}
+      </Grid>
+      <Grid item>
+        <Typography variant='h5'>{subTitle}</Typography>
+        <Typography variant='body1' sx={{color: 'grey'}}>{content}</Typography>
+        {buttonElement}
+      </Grid>
+    </Grid>
+  )
+}
+
+const Card: React.FC<CardItem> = ({subTitle, imageElement, buttonElement, content}) => {
+  return (
+    <Grid 
+      container 
+      item 
+      md={3.8} 
+      sx={{
+        p: 3,
+        gap: 1,
+      }}
+      direction={{xs: 'row', md: 'column'}}
+    >
+      <Grid item width={{xs: '54px', md: '100%'}} mr={2}>
+        {imageElement}
+      </Grid>
+      <Grid item width={{xs: 'calc(100% - 100px)', md: '100%'}}>
+        <Typography variant='h5'>{subTitle}</Typography>
+        <Typography variant='body1' sx={{color: 'black'}}>{content}</Typography>
+        {buttonElement}
+      </Grid>
+    </Grid>
+  )
+}
+
+const BigPictureCard: React.FC<CardItem> = ({subTitle, imageElement, buttonElement, content}) => {
+  return (
+    <Grid 
+      container 
+      item  
+      md={3.8} 
+      sx={{
+        p: 2,
+        gap: 1,
+      }}
+      direction={'column'}
+      width={{xs: '100%', sm: '45%'}}
+    >
+      <Grid item>
+        {imageElement}
+      </Grid>
+      <Grid item>
+        <Typography variant='h5'>{subTitle}</Typography>
+        <Typography variant='body1' sx={{color: 'black'}}>{content}</Typography>
+        {buttonElement}
+      </Grid>
+    </Grid>
+  )
 }
 
 const LetterConstructorPageGroup: React.FC<LetterConstructorPageGroupProps> = ({
@@ -24,209 +106,60 @@ const LetterConstructorPageGroup: React.FC<LetterConstructorPageGroupProps> = ({
   isBorder,
   isBigPicture
 }) => {
-  const sm = useMediaQuery('(min-width: 576px)')
-  const md = useMediaQuery('(min-width: 768px)')
-  const lg = useMediaQuery('(min-width: 992px)')
-  const xl = useMediaQuery('(min-width: 1200px)')
-  const xxl = useMediaQuery('(min-width: 1400px)')
-  const xxxl = useMediaQuery('(min-width: 1600px)')
-  const xxxxl = useMediaQuery('(min-width: 1800px)')
+  const arrayCardElements: React.ReactNode[] | null = arrayCards ? arrayCards.map((card) => {
+    const buttonElement: JSX.Element|null = card.buttonText && card.href ? <Link color='inherit' href={card.href}>{card.buttonText}</Link> : null
+    const imageElement: JSX.Element|null = card.image && card.imageAlt ? <img style={{maxWidth: '100%', height: 'auto'}} src={card.image} alt={card.imageAlt} /> : null
 
-  const linkStyle = {
-    fontFamily: 'Inter, sans-serif',
-    fontSize: '16px',
-    letterSpacing: '-.2px',
-    color: '#852876',
-    fontWeight: '600',
-    borderBottom: '2px solid #852876',
-    transition: 'all .25s ease',
-    textDecoration: 'solid',
+    let result: React.ReactNode | null = null
 
-    '&:hover': {
-        color: '#5d145f',
-        borderBottom: '2px solid #5d145f',
-    }
-  }
-
-  const groupImageStyle = {
-    maxWidth: '100%',
-    height: 'auto',
-  }
-
-  const cardStyle = {
-    boxSizing: 'border-box',
-    position: 'relative',
-    display: 'flex',
-    flexWrap: 'wrap',
-    marginRight: 'auto',
-    marginLeft: 'auto',
-    maxWidth: 
-      xxxxl ? '1600px' : 
-      xxxl ? '1400px' : 
-      xxl ? '1200px' : 
-      xl ? '1140px' : 
-      lg ? '960px' : 
-      md ? '840px' : 
-      sm ? '660px' :
-      '400px',
-    padding: 
-      lg ? '100px 0' : 
-      sm ? '50px 0' :
-      '0',
-  }
-
-  const titleStyle = {
-    marginTop: '0',
-    marginBottom: md ? '90px' : '40px',
-    fontFamily: 'Inter, sans-serif',
-    fontWeight: '600',
-    fontSize: md ? '40px' : '24px',
-    lineHeight: '1.3',
-    letterSpacing: '-.8px',
-    color: 'black',
-    maxWidth: '835px',
-    textAlign: 'center',
-    marginLeft: 'auto',
-    marginRight: 'auto',
-  }
-
-  const containerStyle = {
-    boxSizing: 'border-box',
-    margin: '0',
-    width: '100%',
-    padding: '40px 0',
-    paddingLeft: '15px',
-    paddingRight: '15px',
-    marginBottom: '0',
-  }
-
-  const arrayCardElements: JSX.Element[] = arrayCards.map((card) => {
-    const buttonElement: JSX.Element|null = card.buttonText && card.href ? <Link color='inherit' sx={linkStyle} href={card.href}>{card.buttonText}</Link> : null
-    const imageElement: JSX.Element|null = card.image && card.imageAlt ? <img style={groupImageStyle} src={card.image} alt={card.imageAlt} /> : null
-
-    const itemStyle = {
-      boxSizing: 'border-box',
-      maxWidth: sm ? '333px' : '400px',
-      marginTop: sm ? '' : '20px',
-      display: sm ? '' : 'flex',
-      margin: 'auto',
+    if (isBorder) {
+      result = (
+        <BorderCard 
+          buttonElement={buttonElement}
+          imageElement={imageElement}
+          key={card.id}
+          content={card.content}
+          subTitle={card.subTitle}
+        />
+      )
     }
 
-    const itemStyleBig = {
-      boxSizing: 'border-box',
-      maxWidth: sm ? '386px' : '400px',
-      marginTop: sm ? '' : '20px',
-      display: sm ? '' : 'flex',
-      margin: 'auto',
-      flexDirection: sm ? 'row' : 'column',
-      gap: sm ? '' : '10px',
+    if (isBorder === false && isBigPicture === false) {
+      result = (
+        <Card 
+          buttonElement={buttonElement}
+          imageElement={imageElement}
+          key={card.id}
+          content={card.content}
+          subTitle={card.subTitle}
+        />
+      )
     }
 
-    const itemStyleBorder = {
-      border: '1.7px solid rgba(213, 212, 214, .5)',
-      borderRadius: '25px',
-      padding: '40px 40px 40px 30px',
-      height: lg ? '100%' : 'auto',
-      maxWidth: lg ? '100%' : '638px',
-      marginLeft: lg ? '' : 'auto',
-      marginRight: lg ? '' : 'auto',
-      marginTop: lg ? '' : '40px',
-      display: sm ? '' : 'block',
+    if (isBigPicture) {
+      result = (
+        <BigPictureCard 
+          buttonElement={buttonElement}
+          imageElement={imageElement}
+          key={card.id}
+          content={card.content}
+          subTitle={card.subTitle}
+        />
+      )
     }
 
-    const groupWrapperStyle = {
-      boxSizing: 'border-box',
-      width: '100%',
-      minHeight: '1px',
-      paddingRight: '15px',
-      paddingLeft: '15px',
-      flex: lg ? '0 0 33.3333%' : sm ? '0 0 50%' : '100%',
-      maxWidth: lg ? '33.3333%' : sm ? '50%' : '100%',
-    }
-
-    const groupWrapperStyleBorder = {
-      boxSizing: 'border-box',
-      width: '100%',
-      minHeight: '1px',
-      paddingRight: '15px',
-      paddingLeft: '15px',
-      flex: lg ? '0 0 33.3333%' : '0 0 100%',
-      maxWidth: lg ? '33.3333%' : '100%',
-    }
-    
-    const groupWrapperImageStyle = {
-      width: sm ? '100%' : '54px',
-      paddingTop: '4px',
-      marginRight: sm ? '0' : '27px',
-      marginBottom: '20px',
-    }
-
-    const groupWrapperImageStyleBig = {
-      margin: '0 0 10px 0',
-      padding: '0',
-      width: '100%',
-      display: 'flex',
-      alignItems: 'center',
-    }
-
-    const groupWrapperImageStyleBorder = {
-      width: sm ? '100%' : '54px',
-      paddingTop: '4px',
-      marginRight: sm ? '0' : '27px',
-      marginBottom: '20px',
-      height: '40px',
-      display: 'flex',
-      alignItems: 'center',
-    }
-    
-    const groupDescriptionStyle = {
-      marginTop: '0',
-      marginBottom: '0',
-      fontFamily: 'Inter, sans-serif',
-      fontWeight: '400',
-      fontSize: '16px',
-      lineHeight: '1.5',
-      letterSpacing: '-0.6px',
-      color: isBorder ? 'grey' : 'black',
-    }
-
-    const groupWrapperDescriptionStyle = {
-      marginBottom: '20px',
-    }
-
-    const groupSubTitle = {
-      fontFamily: 'Inter, sans-serif',
-      fontWeight: '600',
-      fontSize: md ? '22px' : '20px',
-      lineHeight: '1.3',
-      letterSpacing: md ? '-.7px' : '-.8px',
-      color: 'black',
-      margin: '0 0 20px 0',
-    }
-
-    return (
-      <Box key={card.id} sx={isBorder ? groupWrapperStyleBorder : groupWrapperStyle}>
-        <Box sx={isBigPicture ? itemStyleBig : isBorder ? itemStyleBorder : itemStyle}>
-          <Box sx={isBigPicture ? groupWrapperImageStyleBig : isBorder ? groupWrapperImageStyleBorder : groupWrapperImageStyle}>
-            {imageElement}
-          </Box>
-          <Box sx={groupWrapperDescriptionStyle}>
-            <Typography variant='h5' sx={groupSubTitle}>{card.subTitle}</Typography>
-            <Typography sx={groupDescriptionStyle}>{card.content}</Typography>
-            {buttonElement}
-          </Box>
-        </Box>
-      </Box>
-    )
-  })
+    return result
+  }) : null
 
   return (
-    <Box sx={containerStyle}>
-      <Typography component="h2" sx={titleStyle}>{title}</Typography>
-      <Box sx={cardStyle}>
-        {arrayCardElements}
-      </Box>
-    </Box>
+    <ThemeProvider theme={theme}>
+      <Container sx={{mt: 15, mb: 10}}>
+        <Typography variant="h2" textAlign={'center'} mb={{xs: '40px', md: '90px'}}>{title}</Typography>
+        <Grid p={{xs: 3, md: 0}} container gap={3} justifyContent={'space-around'} direction={{xs: 'column', sm: 'row'}}>
+          {arrayCardElements}
+        </Grid>
+      </Container>
+    </ThemeProvider>
   )
 }
 

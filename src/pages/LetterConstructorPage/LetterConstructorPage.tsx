@@ -20,6 +20,7 @@ const LetterConstructorPage = () => {
           imageAlt={item.imageAlt}
           buttonText={item.buttonText}
           href={item.href}
+          key={item.id}
       />
       )
     }
@@ -33,6 +34,7 @@ const LetterConstructorPage = () => {
           href={item.href}
           image={item.image}
           imageAlt={item.imageAlt}
+          key={item.id}
         />
       )
     }
@@ -44,6 +46,7 @@ const LetterConstructorPage = () => {
           arrayCards={item.arrayCards}
           isBorder={item.isBorder}
           isBigPicture={item.isBigPicture}
+          key={item.id}
       />
       )
     }
@@ -58,6 +61,7 @@ const LetterConstructorPage = () => {
           href={item.href}
           image={item.image}
           imageAlt={item.imageAlt}
+          key={item.id}
       />
       )
     }

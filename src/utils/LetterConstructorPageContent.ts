@@ -22,6 +22,7 @@ import makeEasy from '@assets/images/letterConstructorPage/delat-krasivye-pisma-
 
 const LetterConstructorPageContent = [
   {
+    id: 1,
     title: "Конструктор писем",
     content: "Создавайте красивые письма бесплатно без дизайнеров и верстальщиков.",
     buttonText: "Создать письмо",
@@ -31,6 +32,7 @@ const LetterConstructorPageContent = [
     isGroup: false,
   },
   {
+    id: 2,
     title: "Соберите HTML-макет письма из готовых блоков за 3 шага",
     arrayCards: [
       {
@@ -60,6 +62,7 @@ const LetterConstructorPageContent = [
     isGroup: true,
   },
   { 
+    id: 3,
     subTitle: "Попробуйте сами",
     content: "Проверьте, насколько удобно создавать рассылки в конструкторе Unisender. Добавляйте блоки, создавайте разделы, загружайте контент.",
     image: tryYourSelf,
@@ -67,6 +70,7 @@ const LetterConstructorPageContent = [
     isGroup: false,
   },
   { 
+    id: 4,
     title: "Создайте письмо еще быстрее",
     subTitle: "Используйте готовые шаблоны писем",
     content: "Конструктор писем дополняют 100 адаптивных шаблонов, заточенных под разные сферы бизнеса и инфоповоды. Чтобы отправить рассылку, откройте редактор и добавьте свой контент в понравившийся шаблон.",
@@ -77,6 +81,7 @@ const LetterConstructorPageContent = [
     isGroup: false,
   },
   {
+    id: 5,
     subTitle: "Сохраняйте любые части email как шаблоны",
     content: "и быстро собирайте из них новые письма. Для начала сохраните футер и шапку, которые повторяются в каждой рассылке.",
     image: saveParts,
@@ -84,6 +89,7 @@ const LetterConstructorPageContent = [
     isGroup: false,
   },
   { 
+    id: 6,
     title: "Творите без ограничений",
     subTitle: "Добавьте видео и анимацию",
     content: "Оживите email за пару кликов. Добавьте превью видео из YouTube или Vimeo, а также стикеры и гифки из Giphy в любую часть макета.",
@@ -92,6 +98,7 @@ const LetterConstructorPageContent = [
     isGroup: false,
   },
   {
+    id: 7,
     subTitle: "Сделайте письмо интерактивным",
     content: "Взаимодействуйте с подписчиками через рассылки. В HTML-конструкторе писем есть готовые блоки, которые поддерживают технологию AMP.",
     image: makeInterractive,
@@ -99,6 +106,7 @@ const LetterConstructorPageContent = [
     isGroup: false,
   },
   { 
+    id: 8,
     subTitle: "Настройте виджеты соцсетей",
     content: "Добавьте кнопки всех нужных соцсетей за пару кликов. Придумайте хороший призыв, чтобы подписчики прямо из рассылки шли в Telegram, ВКонтакте, Twitter за новой порцией общения с вашим брендом.",
     image: configVidjets,
@@ -106,6 +114,7 @@ const LetterConstructorPageContent = [
     isGroup: false,
   },
   {
+    id: 9,
     subTitle: "Реализуйте смелые задумки",
     content: "Добавьте свой HTML-код в любую часть письма прямо в онлайн-конструкторе. Если нужно что-то исправить в коде, используйте html-редактор.",
     buttonText: "Начать",
@@ -115,6 +124,7 @@ const LetterConstructorPageContent = [
     isGroup: false,
   },
   {
+    id: 10,
     title: "Создавайте красивые email для ПК и мобильных",
     arrayCards: [
       {
@@ -144,6 +154,7 @@ const LetterConstructorPageContent = [
     isGroup: true,
   },
   {
+    id: 11,
     title: "Запускайте рассылки, мы позаботимся об остальном",
     arrayCards: [
       {
@@ -173,6 +184,7 @@ const LetterConstructorPageContent = [
     isGroup: true,
   },
   {
+    id: 12,
     title: "Хотите научиться создавать красивые письма? — Читайте",
     arrayCards: [
       {
@@ -205,6 +217,7 @@ const LetterConstructorPageContent = [
     isGroup: true,
   },
   {
+    id: 13,
     title: "Делать красивые письма просто и быстро. Убедитесь сами",
     content: "Для доступа к конструктору нужен только email",
     buttonText: "Создать письмо",
