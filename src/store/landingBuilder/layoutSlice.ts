@@ -64,10 +64,15 @@ const layoutSlice = createSlice({
     // Добавляем блок в рабочую область
     addElement(state, action) {
       const { draggableItem, layoutItem, parentElement, id } = action.payload;
+      if (!draggableItem) {
+        console.error('Invalid draggableItem or layoutItem:', draggableItem, layoutItem);
+        return; // Прекращаем выполнение, если данные невалидны
+      }
       const containerId = id;
       // Задаем уникальный ID блоку и параметры
       //при дропе добавляем скрипт с эвент листенером в виде строки
       const elemId = nanoid();
+  
       const newElement = {
         ...draggableItem,
         elementScript: addBaseScript(elemId, draggableItem),
@@ -218,21 +223,25 @@ const layoutSlice = createSlice({
     },
     addGridContainer(state, action) {
       const indx = state.gridContainers.findIndex((container) => container.id === action.payload);
-      const newContainer = {
-        id: nanoid(),
-        height: 30,
-        elements: {
-          activeElements: [],
-        },
-        layout: {
-          i: null,
-          w: 1,
-          h: 1,
-          x: 10,
-          y: 0,
-        },
-      };
-      state.gridContainers.splice(indx + 1, 0, newContainer);
+      if (indx !== -1) {
+        const newContainer = {
+          id: nanoid(),
+          height: 30,
+          elements: {
+            activeElements: [],
+          },
+          layout: {
+            i: null,
+            w: 1,
+            h: 1,
+            x: 10,
+            y: 0,
+          },
+        };
+        state.gridContainers.splice(indx + 1, 0, newContainer);
+      } else {
+        console.error('Container not found for ID:', action.payload);
+      }
     },
     copyGridContainer(state, action) {
       const indx = state.gridContainers.findIndex(

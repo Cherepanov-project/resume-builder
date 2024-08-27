@@ -1,0 +1,3 @@
+import ThreeBlocksTwoMicroOneAverage from './ThreeBlocksTwoMicroOneAverage'
+
+export default ThreeBlocksTwoMicroOneAverage

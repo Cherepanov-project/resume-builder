@@ -16,7 +16,7 @@ import classes from './GridContainer.module.scss';
 // По сути это зависимый компонент, который отвечает за рендеринг условного блока
 const DynamicComponentRenderer: React.FC<DynamicComponentRendererProps> = memo(
   ({ Component, props, columns, source, children, layout, containerId }) => {
-    const DynamicComponent = lazy(() => import(`../../${source}/${Component}/index.ts`));
+    const DynamicComponent = lazy(() => import(`../../${source}/LineBlocks/${Component}/index.ts`));
     return (
       <Suspense fallback={<ComponentPreloader />}>
         <DynamicComponent
@@ -38,6 +38,7 @@ const DynamicComponentRenderer: React.FC<DynamicComponentRendererProps> = memo(
 export const GridContainer = (container: IGridContainers) => {
   const dispatch = useAppDispatch();
   const currentDraggableItem = useTypedSelector((state) => state.layout.currentDraggableItem);
+  
   const width = useTypedSelector((state) => state.layout.windowWidth);
   const [isHover, setIsHover] = useState(false);
   const [isButtonHover, setIsButtonHover] = useState(false);
@@ -145,9 +146,9 @@ export const GridContainer = (container: IGridContainers) => {
           }}
         >
           {!isButtonHover ? (
-            <PlusCircleOutlined style={{ color: '#2dc08d', fontSize: 30 }} onPointerEnterCapture={undefined} onPointerLeaveCapture={undefined}/>
+            <PlusCircleOutlined style={{ color: '#2dc08d', fontSize: 30 }} onPointerEnter={undefined} onPointerLeave={undefined}/>
           ) : (
-            <PlusCircleFilled style={{ color: '#2dc08d', fontSize: 30 }} onPointerEnterCapture={undefined} onPointerLeaveCapture={undefined} />
+            <PlusCircleFilled style={{ color: '#2dc08d', fontSize: 30 }} onPointerEnter={undefined} onPointerLeave={undefined} />
           )}
         </button>
       )}

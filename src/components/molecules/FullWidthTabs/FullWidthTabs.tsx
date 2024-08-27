@@ -38,7 +38,7 @@ const TabPanel = (props: TabPanelProps) => {
               background: '#f9f9f9',  
               maxHeight: '100%'
             }}>
-              <Typography sx={{ paddingTop: '10px', paddingBottom: '15px', display: 'flex', justifyContent: 'space-evenly', flexWrap: 'wrap', gap: '15px'}}>
+              <Typography component="div" sx={{ paddingTop: '10px', paddingBottom: '15px', display: 'flex', justifyContent: 'space-evenly', flexWrap: 'wrap', gap: '15px'}}>
                 {children}
               </Typography>
             </Box>
@@ -61,9 +61,11 @@ type Tab = { id: number, label: string, icon: React.FunctionComponent<TabIconPro
 interface FullWidthTabsProps {
   TabList: Array<Tab>
   ViewChild: Array<JSX.Element>
+  LineCard: Array<JSX.Element>
 }
 
-const FullWidthTabs = ({ TabList, ViewChild }: FullWidthTabsProps) => {
+
+const FullWidthTabs = ({ TabList, ViewChild, LineCard }: FullWidthTabsProps) => {
   const theme = useTheme();
   const [value, setValue] = React.useState(0);
 
@@ -76,8 +78,7 @@ const FullWidthTabs = ({ TabList, ViewChild }: FullWidthTabsProps) => {
   };
 
   const TabElementArray = TabList.map((tab) => {
-    const TabIconElement = tab.icon
-
+    const TabIconElement = tab.icon;
     return (
       <Tab 
         key={tab.id}
@@ -85,7 +86,7 @@ const FullWidthTabs = ({ TabList, ViewChild }: FullWidthTabsProps) => {
         {...a11yProps(0)}
         disableFocusRipple
         disableRipple
-        icon={<TabIconElement width={20} height={20} value={value} id={tab.id} colorActive={'#516167'} colorPassive={'#93989a'}/>}
+        icon={<TabIconElement width={20} height={20} value={value} id={tab.id} colorActive={'#516167'} colorPassive={'#93989a'} />}
         iconPosition="start"
         sx={{
           minWidth: 'max-content',
@@ -109,8 +110,7 @@ const FullWidthTabs = ({ TabList, ViewChild }: FullWidthTabsProps) => {
         }} 
       />
     )
-  }
-)
+  });
 
   return (
     <Box sx={{ bgcolor: 'background.paper', width: '411px', border: '1px solid #c7c7c7' }}>
@@ -144,17 +144,17 @@ const FullWidthTabs = ({ TabList, ViewChild }: FullWidthTabsProps) => {
         onChangeIndex={handleChangeIndex}
       >
         <TabPanel value={value} index={0} dir={theme.direction}>
-            {ViewChild}
+          {ViewChild}
         </TabPanel>
         <TabPanel value={value} index={1} dir={theme.direction}>
-            Строки
+          {LineCard} 
         </TabPanel>
         <TabPanel value={value} index={2} dir={theme.direction}>
-            Настройки
+          Настройки
         </TabPanel>
       </SwipeableViews>
     </Box>
   );
 }
 
-export default FullWidthTabs
+export default FullWidthTabs;

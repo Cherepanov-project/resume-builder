@@ -13,6 +13,11 @@ const getElemBySelector = (elemId: string): string => {
 
 //вешаем обработчик согласно типу интерактивного элемента
 const addElemListener = (elemId: string, draggableItem: T_BlockElement): string => {
+  if (!draggableItem || !draggableItem.name) {
+    console.error(`draggableItem is null or undefined, or draggableItem.name is missing. elemId: ${elemId}`);
+    return '';
+  }
+
   if (elemTypes.button.includes(draggableItem.name)) {
     return `${elemId}.addEventListener('click', () => console.log('Я - ${elemId} ${draggableItem.name} из рода КНОПОК ' +
  'меня нашли по селектору и ДОБАВИЛИ ОБРАБОТЧИК СОБЫТИЯ по КЛИКУ. Осталось передать сюда функцию для описания соответствующего поведения при возникновении события'));`;
