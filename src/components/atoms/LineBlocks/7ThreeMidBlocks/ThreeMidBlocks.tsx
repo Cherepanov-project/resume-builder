@@ -1,4 +1,4 @@
-import Box from '@mui/material/Box';
+import { Table, TableBody, TableRow, TableCell } from '@mui/material';
 
 interface LineCardProps {
   icon: JSX.Element;
@@ -11,7 +11,9 @@ interface LineCardProps {
 
 const ThreeMidBlocks = ({ id, onDragStart, onDrop, onDragOver }: LineCardProps) => {
   return (
-    <Box
+    <Table>
+    <TableBody> 
+    <TableRow
       id={id}
       draggable
       onDragStart={(e) => onDragStart(e, id)}
@@ -32,7 +34,7 @@ const ThreeMidBlocks = ({ id, onDragStart, onDrop, onDragOver }: LineCardProps) 
       }}
     >
       {Array.from({ length: 3}).map((_, index) => (
-        <Box
+        <TableCell
           key={index}
           sx={{
             width: 'calc(33.4% - 8px)', // Six blocks in a row with gap
@@ -49,9 +51,11 @@ const ThreeMidBlocks = ({ id, onDragStart, onDrop, onDragOver }: LineCardProps) 
           }}
         >
           MidBlock {index + 1}
-        </Box>
+        </TableCell>
       ))}
-    </Box>
+    </TableRow>
+    </TableBody>
+    </Table>
   );
 };
 export default ThreeMidBlocks;

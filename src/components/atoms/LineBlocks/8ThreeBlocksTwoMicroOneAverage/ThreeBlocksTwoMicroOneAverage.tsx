@@ -1,4 +1,5 @@
-import Box from '@mui/material/Box';
+import { Table, TableBody, TableRow, TableCell } from '@mui/material';
+
 
 interface LineCardProps {
   icon: JSX.Element;
@@ -11,7 +12,9 @@ interface LineCardProps {
 
 const ThreeBlocksTwoMicroOneAverage = ({ id, onDragStart, onDrop, onDragOver }: LineCardProps) => {
   return (
-    <Box
+    <Table>
+    <TableBody> 
+    <TableRow
       id={id}
       draggable
       onDragStart={(e) => onDragStart(e, id)}
@@ -32,7 +35,7 @@ const ThreeBlocksTwoMicroOneAverage = ({ id, onDragStart, onDrop, onDragOver }: 
       }}
     >
  
-      <Box
+      <TableCell
         sx={{
           width: 'calc(25% - 8px)', // One Micro block
           height: '100px',
@@ -48,8 +51,8 @@ const ThreeBlocksTwoMicroOneAverage = ({ id, onDragStart, onDrop, onDragOver }: 
         }}
       >
         Micro Block 1
-      </Box>
-      <Box
+      </TableCell>
+      <TableCell
         sx={{
           width: 'calc(25% - 8px)', // One Micro block
           height: '100px',
@@ -65,8 +68,8 @@ const ThreeBlocksTwoMicroOneAverage = ({ id, onDragStart, onDrop, onDragOver }: 
         }}
       >
         Micro Block 2
-      </Box>
-      <Box
+      </TableCell>
+      <TableCell
         sx={{
           width: 'calc(50% - 8px)', // One HalfLine block
           height: '100px',
@@ -82,8 +85,10 @@ const ThreeBlocksTwoMicroOneAverage = ({ id, onDragStart, onDrop, onDragOver }: 
         }}
       >
         HalfLine Block
-      </Box>
-    </Box>
+      </TableCell>
+    </TableRow>
+    </TableBody>
+    </Table>
   );
 };
 

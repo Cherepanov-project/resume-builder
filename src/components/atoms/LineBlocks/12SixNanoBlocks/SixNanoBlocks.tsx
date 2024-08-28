@@ -1,4 +1,4 @@
-import Box from '@mui/material/Box';
+import { Table, TableBody, TableRow, TableCell } from '@mui/material';
 
 interface LineCardProps {
   icon: JSX.Element;
@@ -11,7 +11,9 @@ interface LineCardProps {
 
 const SixNanoBlocks = ({ id, onDragStart, onDrop, onDragOver }: LineCardProps) => {
   return (
-    <Box
+    <Table>
+    <TableBody> 
+    <TableRow
       id={id}
       draggable
       onDragStart={(e) => onDragStart(e, id)}
@@ -32,7 +34,7 @@ const SixNanoBlocks = ({ id, onDragStart, onDrop, onDragOver }: LineCardProps) =
       }}
     >
       {Array.from({ length: 6 }).map((_, index) => (
-        <Box
+        <TableCell
           key={index}
           sx={{
             width: 'calc(16.666% - 8px)', // Six blocks in a row with gap
@@ -49,9 +51,11 @@ const SixNanoBlocks = ({ id, onDragStart, onDrop, onDragOver }: LineCardProps) =
           }}
         >
           NanoBlock{index + 1}
-        </Box>
+        </TableCell>
       ))}
-    </Box>
+    </TableRow>
+    </TableBody>
+    </Table>
   );
 };
 

@@ -1,4 +1,4 @@
-import Box from '@mui/material/Box';
+import { Table, TableBody, TableRow, TableCell } from '@mui/material';
 
 interface LineCardProps {
   icon: JSX.Element;
@@ -11,7 +11,9 @@ interface LineCardProps {
 
 const FourMicroBlocks = ({id, onDragStart, onDrop, onDragOver }: LineCardProps) => {
     return (
-      <Box
+      <Table>
+      <TableBody> 
+      <TableRow
         id={id}
         draggable
         onDragStart={(e) => onDragStart(e, id)}
@@ -20,27 +22,27 @@ const FourMicroBlocks = ({id, onDragStart, onDrop, onDragOver }: LineCardProps) 
         sx={{
           backgroundColor: 'transparent',
           color: 'rgb(0, 0, 0)',
-          width: '100%', // Use full width for responsive design
+          width: '100%',
           borderRadius: '4px',
           margin: 'auto',
           display: 'flex',
           flexDirection: 'row',
           flexWrap: 'wrap',
-          gap: '8px', // Space between blocks
-          padding: '8px', // Padding inside the container
+          gap: '8px',
+          padding: '8px',
           boxSizing: 'border-box',
         }}
       >
         {Array.from({ length: 4 }).map((_, index) => (
-          <Box
+          <TableCell
             key={index}
             sx={{
-              width: 'calc(25% - 8px)', // Six blocks in a row with gap
-              height: '100px', // Height of each block
-              borderWidth: '2px', // Border width for the entire container
-              borderColor: 'blue', // Blue color for the border
-              borderStyle: 'dotted', // Use dotted style for the border
-              backgroundColor: '#e8faff', // Background color of blocks
+              width: 'calc(25% - 8px)', 
+              height: '100px', 
+              borderWidth: '2px', 
+              borderColor: 'blue', 
+              borderStyle: 'dotted', 
+              backgroundColor: '#e8faff',
               boxSizing: 'border-box',  
               display: 'flex',
               alignItems: 'center',
@@ -49,9 +51,12 @@ const FourMicroBlocks = ({id, onDragStart, onDrop, onDragOver }: LineCardProps) 
             }}
           >
             MicroBlock {index + 1}
-          </Box>
+          </TableCell>
         ))}
-      </Box>
+        </TableRow>
+        </TableBody> 
+      </Table>
+      
     );
   };
   

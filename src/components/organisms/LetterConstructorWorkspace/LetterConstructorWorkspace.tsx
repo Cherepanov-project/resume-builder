@@ -5,7 +5,7 @@ import 'react-grid-layout/css/styles.css';
 import 'react-resizable/css/styles.css';
 import classes from './LetterConstructorWorkspace.module.scss';
 import { GridContainer } from '@organisms/GridContainer';
-
+import {TableHead, TableRow, TableCell} from '@mui/material';
 // ========================================================================== \\
 
 const LetterConstructorWorkspace: React.FC = () => {

@@ -1,4 +1,5 @@
-import Box from '@mui/material/Box';
+import { Table, TableBody, TableRow, TableCell } from '@mui/material';
+
 interface LineCardProps {
   icon: JSX.Element;
   id: string;
@@ -10,7 +11,9 @@ interface LineCardProps {
 
 const OneBigBlock = ({ id, onDragStart, onDrop, onDragOver }: LineCardProps) => {
   return (
-    <Box
+    <Table>
+    <TableBody> 
+    <TableRow
       id={id}
       draggable
       onDragStart={(e) => onDragStart(e, id)}
@@ -30,7 +33,7 @@ const OneBigBlock = ({ id, onDragStart, onDrop, onDragOver }: LineCardProps) => 
         boxSizing: 'border-box',
       }}
     >
-        <Box
+        <TableCell
         sx={{
           width: 'calc(100% - 8px)', // One Big block
           height: '100px',
@@ -46,8 +49,10 @@ const OneBigBlock = ({ id, onDragStart, onDrop, onDragOver }: LineCardProps) => 
         }}
       >
         Big Block
-      </Box>
-    </Box>
+      </TableCell>
+    </TableRow>
+    </TableBody>
+    </Table>
   );
 };
 

@@ -1,4 +1,4 @@
-import Box from '@mui/material/Box';
+import { Table, TableBody, TableRow, TableCell } from '@mui/material';
 
 interface LineCardProps {
   icon: JSX.Element;
@@ -11,7 +11,9 @@ interface LineCardProps {
 
 const TwoBlocksOneAverageOneSmall = ({ id, onDragStart, onDrop, onDragOver }: LineCardProps) => {
   return (
-    <Box
+    <Table>
+    <TableBody> 
+    <TableRow
       id={id}
       draggable
       onDragStart={(e) => onDragStart(e, id)}
@@ -31,7 +33,7 @@ const TwoBlocksOneAverageOneSmall = ({ id, onDragStart, onDrop, onDragOver }: Li
         boxSizing: 'border-box',
       }}
     >
-      <Box
+      <TableCell
         sx={{
           width: 'calc(67% - 8px)', // One Average block
           height: '100px',
@@ -47,8 +49,8 @@ const TwoBlocksOneAverageOneSmall = ({ id, onDragStart, onDrop, onDragOver }: Li
         }}
       >
         Average Block
-      </Box>
-      <Box
+      </TableCell>
+      <TableCell
         sx={{
 
           width: 'calc(33.4% - 8px)', // One Mid block
@@ -65,8 +67,10 @@ const TwoBlocksOneAverageOneSmall = ({ id, onDragStart, onDrop, onDragOver }: Li
         }}
       >
         Mid Block
-      </Box>
-    </Box>
+      </TableCell>
+    </TableRow>
+    </TableBody>
+    </Table>
   );
 };
 
