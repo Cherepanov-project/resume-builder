@@ -1,11 +1,12 @@
 .container {
     box-sizing: content-box;
+    width: 100%;
     padding-bottom: 28px;
     border-bottom: 1px dashed rgba(90, 90, 90, 0.2);
     border-top: 1px dashed rgba(90, 90, 90, 0.2);
     margin-top: -1px;
     position: relative;
-
+s
     &:hover {
       border-bottom: 1px dashed rgba(90, 90, 90, 1);
       border-top: 1px dashed rgba(90, 90, 90, 1);
@@ -18,13 +19,23 @@
   }
 
   .grid {
-    width: 100%;
-    min-height: 100%;
+    width: 80%; 
+    margin: 0 auto; 
+    border: 2px dashed #ccc; 
+    min-height: 50%;
+    box-sizing: border-box; 
+  
   }
 
   .item {
+    width: 100% !important;
+    position: relative !important;
+    width: auto !important;
+    height: auto !important;
+    transform: none !important;
     border-radius: 2px;
-
+    box-sizing: border-box; 
+    background-color: white;
     &:hover {
       transition: background-color 0.3s ease-in-out;
       background-color: white;
@@ -32,7 +43,7 @@
     & > span {
       bottom: -3px !important;
       background-image: none !important;
-
+  
       &:after {
         right: 0;
         bottom: 0;
@@ -43,13 +54,13 @@
     &:hover > span:after {
       border-color: #1976d2 !important;
     }
-
+  
     & > span:first-of-type {
       position: absolute;
       z-index: 3;
       left: -3px !important;
     }
-
+  
     & > span:last-of-type {
       position: absolute;
       z-index: 3;
