@@ -1,32 +1,76 @@
-import { LetterConstructorPageSection, LetterConstructorPageGroup } from '../../components/molecules/LetterConstructorPageSection/LetterConstructorPageSection'
-import ScrollToTop from 'react-scroll-up'
+import LetterConstructorPageSection from '@/components/molecules/LetterConstructorPageSection/LetterConstructorPageSection'
+import LetterConstructorPageGroup from '@/components/molecules/LetterConstructorPageSection/LetterConstructorPageGroup'
+import LetterConstructorHeadSection from '@/components/molecules/LetterConstructorPageSection/LetterConstructorHeadSection'
+import LetterConstructorFooterSection from '@/components/molecules/LetterConstructorPageSection/LetterConstructorFooterSection'
 
-import classes from './LetterConstructorPage.module.scss'
+import LetterConstructorScrollToTop from '@/components/atoms/LetterConstructorScrollToTop/LetterConstructorScrollToTop'
+import { Box } from '@mui/material'
 
-import imageConstructor from '../../assets/images/letterConstructorPage/konstruktor-pisem.jpg'
-import tryYourSelf from '../../assets/images/letterConstructorPage/poprobuite-sami.png'
-import useOwnBlocks from '../../assets/images/letterConstructorPage/ispolzuyte-svoi-bloki.png'
-import saveSomeParts from '../../assets/images/letterConstructorPage/sohranyayte-lyubye-chasti-email-kak-shablony.png'
-import addVideo from '../../assets/images/letterConstructorPage/dobavte-video-i-animaciyu.png'
-import makeItInteractive from '../../assets/images/letterConstructorPage/sdelayte-pismo-interaktivnym.png'
-import realiseIdea from '../../assets/images/letterConstructorPage/realizuyte-smelye-zadumki.png'
-import configVidget from '../../assets/images/letterConstructorPage/nastroyte-vidzhety-socsetey2.png'
-import stepOne from '../../assets/images/letterConstructorPage/frame.svg'
-import stepTwo from '../../assets/images/letterConstructorPage/2-shag.svg'
-import stepThree from '../../assets/images/letterConstructorPage/3-shag.svg'
-import freeImages from '../../assets/images/letterConstructorPage/500-000-besplatnyh-kartinok.svg'
-import adaptiveDesign from '../../assets/images/letterConstructorPage/adaptivnyy-dizayn.svg'
-import preview from '../../assets/images/letterConstructorPage/predvaritelnyy-prosmotr.svg'
-import completeIntegrations from '../../assets/images/letterConstructorPage/48-gotovyh-integraciy.svg'
-import security from '../../assets/images/letterConstructorPage/bezopasnost.svg'
-import support from '../../assets/images/letterConstructorPage/tehpodderzhka.svg'
-import tenFeatures from '../../assets/images/letterConstructorPage/group-3073.png'
-import design from '../../assets/images/letterConstructorPage/group-3074.png'
-import howMakeBeutiful from '../../assets/images/letterConstructorPage/group-3075.png'
-import imageFooter from '../../assets/images/letterConstructorPage/delat-krasivye-pisma-s-unisender-prosto-i-bystro-ubedites-sami.png'
+import LetterConstructorPageContent from '@/utils/LetterConstructorPageContent'
 
 const LetterConstructorPage = () => {
+  const content = LetterConstructorPageContent.map((item, index) => {
+    let result: JSX.Element | null = null
+    if (index === 0) {
+      result = (
+        <LetterConstructorHeadSection
+          title={item.title}
+          image={item.image} 
+          content={item.content} 
+          imageAlt={item.imageAlt}
+          buttonText={item.buttonText}
+          href={item.href}
+          key={item.id}
+      />
+      )
+    }
+
+    if (index === LetterConstructorPageContent.length - 1) {
+      result = (
+        <LetterConstructorFooterSection
+          title={item.title}
+          content={item.content}
+          buttonText={item.buttonText}
+          href={item.href}
+          image={item.image}
+          imageAlt={item.imageAlt}
+          key={item.id}
+        />
+      )
+    }
+
+    if (item.isGroup === true) {
+      result = (
+        <LetterConstructorPageGroup
+          title={item.title}
+          arrayCards={item.arrayCards}
+          isBorder={item.isBorder}
+          isBigPicture={item.isBigPicture}
+          key={item.id}
+      />
+      )
+    }
+
+    if (item.isGroup === false && index !== 0 && index !== LetterConstructorPageContent.length - 1) {
+      result = (
+        <LetterConstructorPageSection
+          title={item.title}
+          subTitle={item.subTitle}
+          content={item.content}
+          buttonText={item.buttonText}
+          href={item.href}
+          image={item.image}
+          imageAlt={item.imageAlt}
+          key={item.id}
+      />
+      )
+    }
+
+    return result
+  })
+  
   return (
+<<<<<<< HEAD
     <main className={classes['main']}>
       <LetterConstructorPageSection
         subTitle="Конструктор писем"
@@ -217,6 +261,12 @@ const LetterConstructorPage = () => {
         </div>
       </ScrollToTop>
     </main>
+=======
+    <Box sx={{padding: '0', overflow: 'hidden', width: '100%'}}>
+      {content}
+      <LetterConstructorScrollToTop />
+    </Box>
+>>>>>>> letter-constructor
   )
 }
 
