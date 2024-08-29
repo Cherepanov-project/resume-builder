@@ -1,12 +1,11 @@
 import * as React from 'react';
-
+import { Stack, ThemeProvider } from '@mui/material';
 import Divider from '@mui/material/Divider';
 import VisibilityIcon from '@mui/icons-material/Visibility';
 import VisibilityOffIcon from '@mui/icons-material/VisibilityOff';
 import Button from '@mui/material/Button';
-import CustomizedMenus from '../CustomizedMenus/CustomizedMenus';
-
-import classes from './LetterBuilderHeader.module.scss';
+import CustomizedMenus from '@components/molecules/CustomizedMenus';
+import theme from '@components/molecules/LetterBuilderHeader/LetterBuilderTheme';
 
 const LetterBuilderHeader = () => {
   const [visibleStructure, setVisibleStructure] = React.useState<boolean>(true);
@@ -18,123 +17,51 @@ const LetterBuilderHeader = () => {
   }
   
   return (
-    <header className={classes['header']}>
-      <div className={classes['header__sub-menu']}>
-          <CustomizedMenus />
-          <Divider 
+    <ThemeProvider theme={theme}>
+      <Stack height={50} width={'100%'} direction={'row'} justifyContent={'space-between'} sx={{
+        backgroundColor: '#505659',
+        fontSize: '12px',
+      }}>
+        <Stack 
+          direction={'row'} 
+          height={'100%'}
+          divider={
+            <Divider 
               orientation="vertical" 
               sx={{
                   backgroundColor: 'gray',
                   height: '30px',
                   alignSelf: 'center',
               }} 
-          />
+            />
+          }>
+          <CustomizedMenus />
           <Button 
-              startIcon={visibleIcon} 
-              variant="text" 
-              disableRipple
-              disableElevation
-              sx={{ 
-                borderRadius: '0', 
-                color: 'white',
-                fontSize: '12px',
-                backgroundColor: '#505659',
-                height: '100%',
-                textTransform: 'none',
-                outline: 'none',
-                padding: '0 15px',
-                '&:hover': {
-                    color: 'white',
-                    fontSize: '12px',
-                    backgroundColor: '#505659',
-                    outline: 'none',
-                },
-                '&:active': {
-                    outline: 'none',
-                },
-                '&:focus': {
-                  outline: 'none',
-                }, 
-              }}
-              onClick={onClickHandler}
+            startIcon={visibleIcon} 
+            variant="visible" 
+            onClick={onClickHandler}
           >
-              {buttonVisibleText}
+            {buttonVisibleText}
           </Button>
-      </div>
-      <div className={classes['header__sub-menu--right']}>
-          <Button 
-            className={classes['header__button'] + ' ' + classes['header__button--save']}
-            variant="text" 
-            disableRipple
-            disableFocusRipple
-            disableElevation
-            sx={{
-              color: 'white',
-              textTransform: 'none',
-              backgroundColor: '#4cb9ea',
-              fontSize: '12px', 
-              border: 'none',
-              borderRadius: '4px',
-              minWidth: '140px',
-              fontWeight: '500',
-              minHeight: '30px',
-              height: '30px',
-              lineHeight: '29px',
-              padding: '0 8px',
-              whiteSpace: 'nowrap',
-              cursor: 'pointer',
-              userSelect: 'none',
-              transition: 'background .25s ease-in-out',
-
-              '&:focus': {
-                outline: 'none',
-              },
-
-              '&:hover': {
-                scale: '1.05',
-                backgroundColor: '#4cb9ea',
-              },
-            }}
-          >
+        </Stack>
+        <Stack alignItems={'center'} direction={'row'} spacing={3} mr={2}>
+          <Button variant="buttonSave">
             Сохранить
           </Button>
           <Button  
-            className={classes['header__button'] + ' ' + classes['header__button--continue']}
-            variant="text" 
-            disableRipple
-            disableFocusRipple
+            variant="buttonSave" 
             sx={{
-              color: 'white',
-              textTransform: 'none',
               backgroundColor: '#1db7ad',
-              fontSize: '12px', 
-              border: 'none',
-              borderRadius: '4px',
-              minWidth: '140px',
-              fontWeight: '500',
-              minHeight: '30px',
-              height: '30px',
-              lineHeight: '29px',
-              padding: '0 8px',
-              whiteSpace: 'nowrap',
-              cursor: 'pointer',
-              userSelect: 'none',
-              transition: 'background .25s ease-in-out',
-
-              '&:focus': {
-                outline: 'none',
-              },
-
               '&:hover': {
-                scale: '1.05',
                 backgroundColor: '#1db7ad',
               },
             }}
           >
             Продолжить
           </Button>
-      </div>
-    </header>
+        </Stack>
+      </Stack>
+    </ThemeProvider>
   )
 }
 
