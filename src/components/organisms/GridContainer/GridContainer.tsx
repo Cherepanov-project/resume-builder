@@ -1,10 +1,11 @@
+import { useNavigate } from 'react-router-dom';
 import { IGridContainers, setCurrentContainer } from '@/store/landingBuilder/layoutSlice';
 import ResponsiveGridLayout, { Layout } from 'react-grid-layout';
 import ContainerToolsPanel from '../ContainerToolsPanel';
 import { useAppDispatch, useTypedSelector } from '@/hooks/cvTemplateHooks';
 import { DynamicComponentRendererProps, T_BlockElement } from '@/types/landingBuilder';
 import { addElement, addGridContainer, changeElement, setWindowWidth } from '@store/landingBuilder/layoutSlice';
-import React, { Suspense, lazy, memo, useEffect, useState } from 'react';
+import { Suspense, lazy, memo, useEffect, useState } from 'react';
 import ComponentPreloader from '@/components/atoms/ComponentPreloader';
 import ElementToolsPanel from '../ElementToolsPanel';
 import { PlusCircleFilled, PlusCircleOutlined } from '@ant-design/icons';
@@ -38,6 +39,7 @@ const DynamicComponentRenderer: React.FC<DynamicComponentRendererProps> = memo(
 export const GridContainer = (container: IGridContainers) => {
   const dispatch = useAppDispatch();
   const currentDraggableItem = useTypedSelector((state) => state.layout.currentDraggableItem);
+  const navigate = useNavigate();
   
   const width = useTypedSelector((state) => state.layout.windowWidth);
   const [isHover, setIsHover] = useState(false);
@@ -71,6 +73,11 @@ export const GridContainer = (container: IGridContainers) => {
       dispatch(changeElement(item));
     });
   };
+
+  const handleEmailClick = () => {
+    navigate('/email');
+  };
+
   return (
     <div
       className={classes['container']}
@@ -96,49 +103,50 @@ export const GridContainer = (container: IGridContainers) => {
     >
       <ContainerToolsPanel id={container.id} />
       <ResponsiveGridLayout
-  className={classes['grid']}
-  layout={workspaceLayout}
-  cols={1}
-  rowHeight={container.height}
-  width={width - 76 - (width - 120) * 0.3}
-  margin={[8, 8]}
-  resizeHandles={['sw', 'se']}
-  isDraggable={!isDraggingInnerItem}
-  isDroppable
-  onDrop={(layout: Layout[], layoutItem: Layout) => {
-    const draggableItem = currentDraggableItem;
-    const id = container.id;
+        className={classes['grid']}
+        layout={workspaceLayout}
+        cols={1}
+        rowHeight={container.height}
+        width={width - 76 - (width - 120) * 0.3}
+        margin={[8, 8]}
+        resizeHandles={['sw', 'se']}
+        isDraggable={!isDraggingInnerItem}
+        isDroppable
+        onDrop={(layout: Layout[], layoutItem: Layout) => {
+          const draggableItem = currentDraggableItem;
+          const id = container.id;
 
-    const newLayoutItem = {
-      ...layoutItem,
-      w: layoutItem.w || 1,
-      h: layoutItem.h || 1, 
-      x: layoutItem.x || 0, 
-      y: layoutItem.y || 0, 
-    };
+          const newLayoutItem = {
+            ...layoutItem,
+            w: layoutItem.w || 1,
+            h: layoutItem.h || 1, 
+            x: layoutItem.x || 0, 
+            y: layoutItem.y || 0, 
+          };
 
-    dispatch(addElement({ draggableItem, layoutItem: newLayoutItem, layout, id }));
-  }}
-  draggableHandle=".drag-area"
-  onResizeStop={handleChangeLayout} 
-  onDragStop={handleChangeLayout}
-> 
-  {/* Динамически подгружаем компоненты и прокидывааем в них пропсы из одноимменных объектов */}
-  {container.elements.activeElements.map((el) => (
-    <div key={el.layout.i} className={classes['item']} >
-      <ElementToolsPanel layout={el.layout} id={container.id} setDraggingInnerItem={handleSetDraggingInnerItem} elClass='drag-area'/>
-      <DynamicComponentRenderer
-        Component={el.name}
-        source={el.source || 'atoms'}
-        props={el.props}
-        columns={el.columns || 1}
-        layout={el.layout}
-        children={el.children}
-        containerId={container.id}
-      />
-    </div>
-  ))}
-</ResponsiveGridLayout>
+          dispatch(addElement({ draggableItem, layoutItem: newLayoutItem, layout, id }));
+        }}
+        draggableHandle=".drag-area"
+        onResizeStop={handleChangeLayout} 
+        onDragStop={handleChangeLayout}
+      > 
+        {/* Динамически подгружаем компоненты и прокидывааем в них пропсы из одноимменных объектов */}
+        {container.elements.activeElements.map((el) => (
+          <div key={el.layout.i} className={classes['item']} >
+            <ElementToolsPanel layout={el.layout} id={container.id} setDraggingInnerItem={handleSetDraggingInnerItem} elClass='drag-area'/>
+            <DynamicComponentRenderer
+              Component={el.name}
+              source={el.source || 'atoms'}
+              props={el.props}
+              columns={el.columns || 1}
+              layout={el.layout}
+              children={el.children}
+              containerId={container.id}
+            />
+          </div>
+        ))}
+      </ResponsiveGridLayout>
+
       {isHover && (
         <button
           className={classes['add-button']}
@@ -161,6 +169,7 @@ export const GridContainer = (container: IGridContainers) => {
           )}
         </button>
       )}
+      <button onClick={handleEmailClick}>email</button>
     </div>
   );
 };

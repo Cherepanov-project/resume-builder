@@ -13,13 +13,14 @@ import { LandingBuilderStartPage } from './pages/LandingBuilderStartPage copy';
 import LetterConstructorPage from './pages/LetterConstructorPage';
 import LetterBuilderPage from './pages/LetterBuilderPage';
 import { ProtectedRoute } from './components/atoms/ProtectedRoute/ProtectedRoute.tsx'
-
+import EmailPage from './components//organisms/GridContainer/EmailPage.tsx';
 function App() {
 
   return (
     <>
       <Routes>
         <Route path="/" element={<StarterPage />} />
+        <Route path="/email" element={<EmailPage />} />
           <Route path="/sign-in" element={<AuthPage />} />
           <Route path="/sign-up" element={<AuthPage />} />
           <Route path="/intro" element={<ProtectedRoute component={IntroPage} />} />
