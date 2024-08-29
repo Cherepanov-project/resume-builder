@@ -11,6 +11,7 @@ interface CardProps {
 const Card = ({icon, text, isMouseDown, x, y}: CardProps) => {
   return (
     <Box
+      draggable
       sx={{
         boxSizing: 'border-box',
         width: isMouseDown ? 'calc(33.3% - 15px)' : '100%',
