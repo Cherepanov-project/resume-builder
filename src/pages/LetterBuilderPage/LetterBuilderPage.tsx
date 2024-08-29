@@ -1,17 +1,17 @@
 import LetterBuilderLeftSide from '@/components/organisms/LetterBuilderLeftSide';
-import LetterConstructorWorkspace from '../../components/organisms/LetterConstructorWorkspace/LetterConstructorWorkspace';
+import LetterConstructorWorkspace from '@/components/organisms/LetterConstructorWorkspace/LetterConstructorWorkspace';
 import LetterBuilderHeader from '@/components/molecules/LetterBuilderHeader';
 
-import classes from './LetterBuilderPage.module.scss'
+import { Stack } from '@mui/material';
 
 const LetterBuilderPage = () => {
   return (
     <>
       <LetterBuilderHeader />
-      <section className={classes['main']}>
+      <Stack height={'100%'} direction={'row'}>
         <LetterBuilderLeftSide />
         <LetterConstructorWorkspace />
-      </section>
+      </Stack>
     </>
   )
 }
