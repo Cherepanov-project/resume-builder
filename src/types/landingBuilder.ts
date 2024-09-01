@@ -81,6 +81,7 @@ export type T_BlockElement = {
 
 export type LetterT_BlockElement = T_BlockElement & {
   id: string;
+  props: LetterT_SectionElementProps;
 }
 
 export type T_SidebarMenuItem = {
@@ -109,6 +110,7 @@ export type DynamicComponentRendererProps = {
 
 export type LetterDynamicComponentRendererProps = DynamicComponentRendererProps & {
   id: string;
+  blockWidth: string[];
 }
 
 export type ContainerDIVProps = {
@@ -275,6 +277,10 @@ export type T_SectionElementProps = {
   Avatars?: ISettingsInputItem[];
   size?: number;
 };
+
+export type LetterT_SectionElementProps = T_SectionElementProps & {
+    blockWidth: string[];
+}
 
 export interface ILayoutBlock {
   props: T_SectionElementProps;

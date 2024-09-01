@@ -1,3 +1,0 @@
-import ThreeBlocksOneMicroOneAverageOneMicro from './ThreeBlocksOneMicroOneAverageOneMicro'
-
-export default ThreeBlocksOneMicroOneAverageOneMicro

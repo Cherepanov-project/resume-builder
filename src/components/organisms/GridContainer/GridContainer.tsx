@@ -17,8 +17,8 @@ import classes from './GridContainer.module.scss';
 // По сути это зависимый компонент, который отвечает за рендеринг условного блока
   const DynamicComponentRenderer: React.FC<LetterDynamicComponentRendererProps> = memo(
   //const DynamicComponentRenderer: React.FC<DynamicComponentRendererProps> = 
-  ({id, Component, props, columns, source, children, layout, containerId }) => {
-    const DynamicComponent = lazy(() => import(`../../${source}/LineBlocks/${Component}/index.ts`));
+  ({id, blockWidth, Component, props, columns, source, children, layout, containerId }) => {
+    const DynamicComponent = lazy(() => import(`../../${source}/LineBlocks/index.ts`));
 
     return (
       <Suspense fallback={<ComponentPreloader />}>
@@ -31,6 +31,7 @@ import classes from './GridContainer.module.scss';
           children={children}
           layout={layout}
           containerId={containerId}
+          blockWidth={blockWidth}
         />
       </Suspense>
     );
@@ -141,7 +142,9 @@ export const GridContainer = (container: IGridContainers) => {
         onDragStop={handleChangeLayout}
       > 
         {/* Динамически подгружаем компоненты и прокидывааем в них пропсы из одноимменных объектов */}
-        {container.elements.activeElements.map((el) => (
+        {container.elements.activeElements.map((el) => {
+          console.log('el', el.props.blockWidth)
+          return (
           <div key={el.layout.i} className={classes['item']} >
             <ElementToolsPanel layout={el.layout} id={container.id} setDraggingInnerItem={handleSetDraggingInnerItem} elClass='drag-area'/>
             <DynamicComponentRenderer
@@ -149,13 +152,14 @@ export const GridContainer = (container: IGridContainers) => {
               Component={el.name}
               source={el.source || 'atoms'}
               props={el.props}
+              blockWidth={el.props.blockWidth}
               columns={el.columns || 1}
               layout={el.layout}
               children={el.children}
               containerId={container.id}
             />
           </div>
-        ))}
+        )})}
       </ResponsiveGridLayout>
 
       {isHover && (

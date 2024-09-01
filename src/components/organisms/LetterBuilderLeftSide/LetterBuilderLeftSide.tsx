@@ -37,6 +37,7 @@ const LetterBuilderLeftSide = () => {
         },
         props: {
           isChild: false,
+          blockWidth: item.blockWidth,
           text: 'Пример текста',
         },
         children: [],
@@ -65,13 +66,13 @@ const LetterBuilderLeftSide = () => {
     };
     return (
       <Box key={item.id} sx={{ margin: '0', maxWidth: '400px' }}>
-          <LineCard 
-        id={item.id.toString()}
-        icon={item.icon}
-        draggable
-        onDragStart={(e) => handleDragStart(e, item)}
-        onDrop={handleDrop}
-        onDragOver={handleDragOver} 
+        <LineCard 
+          id={item.id.toString()}
+          icon={item.icon}
+          draggable
+          onDragStart={(e) => handleDragStart(e, item)}
+          onDrop={handleDrop}
+          onDragOver={handleDragOver} 
         />
       </Box>
     )

@@ -1,3 +1,0 @@
-import TwoBlocksOneAverageOneSmall from './TwoBlocksOneAverageOneSmall'
-
-export default TwoBlocksOneAverageOneSmall

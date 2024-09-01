@@ -33,7 +33,7 @@ const LetterCard = ({id, icon, text, name}: LetterCardProps) => {
   };
 
   const handleDragOver = (e: React.DragEvent) => {
-    // e.preventDefault();
+    e.preventDefault();
   };
   
   return (

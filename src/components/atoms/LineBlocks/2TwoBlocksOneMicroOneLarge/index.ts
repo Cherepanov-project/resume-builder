@@ -1,3 +1,0 @@
-import TwoBlocksOneMicroOneLarge from './TwoBlocksOneMicroOneLarge'
-
-export default TwoBlocksOneMicroOneLarge

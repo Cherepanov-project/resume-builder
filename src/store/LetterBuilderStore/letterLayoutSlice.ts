@@ -120,13 +120,15 @@ const letterLayoutSlice = createSlice({
       state.currentDraggableItem = null;
     },
     addChildElement(state, action) {
-      const { draggableItem, idParentElement } = action.payload;
+      const { draggableItem, idParentElement, indexChild } = action.payload;
 
       state.gridContainers.map((container) => {
         const index = container.elements.activeElements.findIndex((element) => element.id === idParentElement)
 
         if (index > -1) {
-          container.elements.activeElements[index].children?.push(draggableItem)
+          if (container.elements.activeElements[index].children) {
+            container.elements.activeElements[index].children[indexChild] = draggableItem
+          }
         }
       })
       state.currentDraggableItem = null;
