@@ -76,6 +76,7 @@ const BlockLine = ({ id, onDragStart, blockWidth }: LineCardProps) => {
   const blockElements = blockWidth.map((width, index) => (
     <TableCell
       key={index}
+      variant="letterBlockCell"
       sx={{
         width: width
       }}
@@ -93,6 +94,11 @@ const BlockLine = ({ id, onDragStart, blockWidth }: LineCardProps) => {
             id={id}
             draggable
             onDragStart={(e) => onDragStart(e, id)}
+            sx={{
+              display: 'flex',
+              flexDirection: 'row',
+              flexWrap: 'nowrap',
+            }}
           >
             {blockElements}
           </TableRow>
