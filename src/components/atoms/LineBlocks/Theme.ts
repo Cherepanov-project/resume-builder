@@ -18,7 +18,7 @@ const theme = createTheme({
               props: { variant: 'letterBlockCell' },
               style: {
                 width: 'calc(100% - 8px)', // One Big block
-                minHeight: '100px',
+                minHeight: 'min-content',
                 border: 'none',
                 backgroundColor: 'background.paper',
                 boxSizing: 'border-box',

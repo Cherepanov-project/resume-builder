@@ -78,11 +78,13 @@ const BlockLine = ({ id, onDragStart, blockWidth }: LineCardProps) => {
       key={index}
       variant="letterBlockCell"
       sx={{
-        width: width
+        width: width,
+        color: childrenElements[index] ? 'black' : '#4cb9ea',
+        textAlign: 'center',
       }}
       onDrop={() => handleDrop(index)}
     >
-      {childrenElements[index]}
+      {childrenElements[index] ? childrenElements[index] : 'Перетащить блоки контента сюда'}
     </TableCell>
   ))
 
