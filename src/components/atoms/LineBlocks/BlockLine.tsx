@@ -41,7 +41,7 @@ const BlockLine = ({ id, onDragStart, blockWidth }: LineCardProps) => {
   const dispatch = useAppDispatch();
 
   const handleDrop = (index: number) => {
-    if (currentDraggableItem) {
+    if (currentDraggableItem && currentDraggableItem.props.isChild) {
       dispatch(addChildElement({draggableItem: currentDraggableItem, idParentElement: id, indexChild: index})); 
     }
   };
