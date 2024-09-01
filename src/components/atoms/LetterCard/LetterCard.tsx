@@ -1,17 +1,46 @@
-import { MouseEventHandler, useState } from 'react';
-import Card from '@components/atoms/LetterCard/Card';
 import { Box, Typography } from '@mui/material';
+import { useAppDispatch } from '@/hooks/cvTemplateHooks';
+import { setDraggableItem } from '@/store/LetterBuilderStore/letterLayoutSlice';
 
 interface LetterCardProps {
     icon: JSX.Element
     text: string
+    id: number
+    name: string
 }
 
-const LetterCard = ({ icon, text }: LetterCardProps) => {
+const LetterCard = ({id, icon, text, name}: LetterCardProps) => {
+  const dispatch = useAppDispatch();
+
+  const handleDragStart = (e: React.DragEvent, id: number) => {
+    console.log('STARTED DRAGGING', id);
+    const serializableItem = {
+      id: id,
+      name: name,
+      layout: {
+        w: 5,
+        h: 2,
+      },
+      props: {
+        textAlign: 'center',
+        isChild: true,
+        text: 'Пример текста',
+      },
+    };
+    e.dataTransfer.setData("text/plain", JSON.stringify(serializableItem));
+    dispatch(setDraggableItem({item: serializableItem}));
+    console.log({ item: serializableItem });
+  };
+
+  const handleDragOver = (e: React.DragEvent) => {
+    // e.preventDefault();
+  };
   
   return (
     <Box
       draggable
+      onDragStart={(e) => handleDragStart(e, id)}
+      onDragOver={(e) => handleDragOver(e)}
       sx={{
         boxSizing: 'border-box',
         width: 'calc(33.3% - 15px)',

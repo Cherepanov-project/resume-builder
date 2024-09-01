@@ -79,6 +79,10 @@ export type T_BlockElement = {
   layout: Layout;
 };
 
+export type LetterT_BlockElement = T_BlockElement & {
+  id: string;
+}
+
 export type T_SidebarMenuItem = {
   name: string | undefined;
   list: T_BlockElement[];
@@ -102,6 +106,10 @@ export type DynamicComponentRendererProps = {
   layout: Layout;
   containerId?: string;
 };
+
+export type LetterDynamicComponentRendererProps = DynamicComponentRendererProps & {
+  id: string;
+}
 
 export type ContainerDIVProps = {
   children: T_BlockElement[];

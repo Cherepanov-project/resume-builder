@@ -1,11 +1,11 @@
 import { useNavigate } from 'react-router-dom';
-import { IGridContainers, setCurrentContainer } from '@/store/landingBuilder/layoutSlice';
+import { IGridContainers, setCurrentContainer } from '@/store/LetterBuilderStore/letterLayoutSlice';
 import ResponsiveGridLayout, { Layout } from 'react-grid-layout';
 import ContainerToolsPanel from '../ContainerToolsPanel';
 import { useAppDispatch, useTypedSelector } from '@/hooks/cvTemplateHooks';
-import { DynamicComponentRendererProps, T_BlockElement } from '@/types/landingBuilder';
-import { addElement, addGridContainer, changeElement, setWindowWidth } from '@store/landingBuilder/layoutSlice';
-import { Suspense, lazy, memo, useEffect, useState } from 'react';
+import { LetterDynamicComponentRendererProps, T_BlockElement } from '@/types/landingBuilder';
+import { addElement, addGridContainer, changeElement, setWindowWidth } from '@store/LetterBuilderStore/letterLayoutSlice';
+import React, { Suspense, lazy, memo, useEffect, useState } from 'react';
 import ComponentPreloader from '@/components/atoms/ComponentPreloader';
 import ElementToolsPanel from '../ElementToolsPanel';
 import { PlusCircleFilled, PlusCircleOutlined } from '@ant-design/icons';
@@ -15,12 +15,15 @@ import classes from './GridContainer.module.scss';
 // ========================================================================== \\
 // Отрисовываем динамический компонент
 // По сути это зависимый компонент, который отвечает за рендеринг условного блока
-const DynamicComponentRenderer: React.FC<DynamicComponentRendererProps> = memo(
-  ({ Component, props, columns, source, children, layout, containerId }) => {
+  const DynamicComponentRenderer: React.FC<LetterDynamicComponentRendererProps> = memo(
+  //const DynamicComponentRenderer: React.FC<DynamicComponentRendererProps> = 
+  ({id, Component, props, columns, source, children, layout, containerId }) => {
     const DynamicComponent = lazy(() => import(`../../${source}/LineBlocks/${Component}/index.ts`));
+
     return (
       <Suspense fallback={<ComponentPreloader />}>
         <DynamicComponent
+          id={id}
           key={Component}
           props={props}
           columns={columns}
@@ -32,7 +35,7 @@ const DynamicComponentRenderer: React.FC<DynamicComponentRendererProps> = memo(
       </Suspense>
     );
   },
-);
+)
 // ========================================================================== \\
 
 
@@ -114,6 +117,13 @@ export const GridContainer = (container: IGridContainers) => {
         isDroppable
         onDrop={(layout: Layout[], layoutItem: Layout) => {
           const draggableItem = currentDraggableItem;
+          
+          if (draggableItem) {
+            if (draggableItem.props) {
+              if (draggableItem.props.isChild) return;
+            }
+          }
+
           const id = container.id;
 
           const newLayoutItem = {
@@ -135,6 +145,7 @@ export const GridContainer = (container: IGridContainers) => {
           <div key={el.layout.i} className={classes['item']} >
             <ElementToolsPanel layout={el.layout} id={container.id} setDraggingInnerItem={handleSetDraggingInnerItem} elClass='drag-area'/>
             <DynamicComponentRenderer
+              id={el.id}
               Component={el.name}
               source={el.source || 'atoms'}
               props={el.props}

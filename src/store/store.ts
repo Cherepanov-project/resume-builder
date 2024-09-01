@@ -17,6 +17,7 @@ import experienceReducer from './cvTemplate/experienceSlice';
 import socialReducer from './cvTemplate/socialSlice';
 import hobbiesReducer from './cvTemplate/hobbiesSlice';
 import layoutReducer from './landingBuilder/layoutSlice';
+import letterLayoutReducer from './LetterBuilderStore/letterLayoutSlice';
 import utilityReducer from './landingBuilder/utilitySlice';
 import cardReducer from './cardSlice';
 import sectionsManagerReducer from './landingBuilder/sectionsManagerSlice';
@@ -38,6 +39,7 @@ const rootReducer = combineReducers({
   social: socialReducer,
   hobbies: hobbiesReducer,
   layout: layoutReducer,
+  letterLayout: letterLayoutReducer,
   utility: utilityReducer,
   card: cardReducer,
   sectionsManager: sectionsManagerReducer,

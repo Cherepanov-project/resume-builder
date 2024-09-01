@@ -8,7 +8,7 @@ import { GridContainer } from '@organisms/GridContainer';
 // ========================================================================== \\
 
 const LetterConstructorWorkspace: React.FC = () => {
-  const gridContainers = useTypedSelector((state) => state.layout.gridContainers);
+  const gridContainers = useTypedSelector((state) => state.letterLayout.gridContainers);
   return (
     <div className={classes['workspace']}>
       <div className={classes['wrapper']}>

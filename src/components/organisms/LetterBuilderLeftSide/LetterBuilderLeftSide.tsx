@@ -7,6 +7,7 @@ import LetterCardList from '@/utils/LetterCardList';
 import LetterLinesList from '@/utils/LetterLinesList';
 import { setDraggableItem, addElement } from '@/store/landingBuilder/layoutSlice';
 import { useDispatch } from 'react-redux';
+import { nanoid } from '@reduxjs/toolkit';
 
 const LetterBuilderLeftSide = () => {
   const LetterCardElementArray = LetterCardList.map((item) => {
@@ -16,25 +17,29 @@ const LetterBuilderLeftSide = () => {
         key={item.id}
         text={item.text} 
         icon={item.icon}
+        id={item.id}
+        name={item.name}
       />
     )
   });
+
   const dispatch = useDispatch();
+
   const LineCardElementArray = LetterLinesList.map((item) => {
-
-
     const handleDragStart = (e, item) => {
       console.log('STARTED DRAGGING', item);
       const serializableItem = {
-        id: item.id,
+        id: nanoid(),
         name: item.name,
         layout: {
           w: 4,
           h: 3,
         },
         props: {
+          isChild: false,
           text: 'Пример текста',
         },
+        children: [],
       };
       e.dataTransfer.setData("text/plain", JSON.stringify(serializableItem));
       dispatch(setDraggableItem({ item: serializableItem }));
@@ -55,7 +60,7 @@ const LetterBuilderLeftSide = () => {
 
     
     const handleDragOver = (e) => {
-      e.preventDefault();
+      // e.preventDefault();
       console.log('OUT OF LAYOUT')
     };
     return (
