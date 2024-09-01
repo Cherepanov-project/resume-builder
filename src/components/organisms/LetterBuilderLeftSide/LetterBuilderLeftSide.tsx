@@ -82,7 +82,7 @@ const LetterBuilderLeftSide = () => {
     <Box sx={{ width: '500px', height: '100%' }}>
       <FullWidthTabs 
         TabList={TabList}
-        ViewChild={LetterCardElementArray}
+        ElementCard={LetterCardElementArray}
         LineCard={LineCardElementArray}
       />
     </Box>

@@ -29,7 +29,7 @@ const TabPanel = (props: TabPanelProps) => {
       {...other}
     >
       {value === index && (
-        <Box sx={{ boxSizing: 'border-box', paddingTop: '10px', paddingBottom: '10px', background: '#f9f9f9', height: 'calc(100vh - 95px)', }}>
+        <Box sx={{ boxSizing: 'border-box', paddingTop: '10px', paddingBottom: '10px', background: '#f9f9f9', height: 'calc(100vh - 97px)', }}>
           <CustomScroll heightRelativeToParent="calc(100%)">
             <Box sx={{ 
               boxSizing: 'border-box',
@@ -60,12 +60,12 @@ type Tab = { id: number, label: string, icon: React.FunctionComponent<TabIconPro
 
 interface FullWidthTabsProps {
   TabList: Array<Tab>
-  ViewChild: Array<JSX.Element>
+  ElementCard: Array<JSX.Element>
   LineCard: Array<JSX.Element>
 }
 
 
-const FullWidthTabs = ({ TabList, ViewChild, LineCard }: FullWidthTabsProps) => {
+const FullWidthTabs = ({ TabList, ElementCard, LineCard }: FullWidthTabsProps) => {
   const theme = useTheme();
   const [value, setValue] = React.useState(0);
 
@@ -144,7 +144,7 @@ const FullWidthTabs = ({ TabList, ViewChild, LineCard }: FullWidthTabsProps) => 
         onChangeIndex={handleChangeIndex}
       >
         <TabPanel value={value} index={0} dir={theme.direction}>
-          {ViewChild}
+          {ElementCard}
         </TabPanel>
         <TabPanel value={value} index={1} dir={theme.direction}>
           {LineCard} 
