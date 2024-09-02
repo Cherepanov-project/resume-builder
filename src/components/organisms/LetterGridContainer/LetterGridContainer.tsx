@@ -29,7 +29,6 @@ import classes from './LetterGridContainer.module.scss';
           children={children}
           layout={layout}
           containerId={containerId}
-          //blockWidth={blockWidth}
         />
       </Suspense>
     );
@@ -144,7 +143,6 @@ export const LetterGridContainer = (container: IGridContainers) => {
               Component={el.name}
               source={el.source || 'atoms'}
               props={el.props}
-              //blockWidth={el.props.blockWidth}
               columns={el.columns || 1}
               layout={el.layout}
               children={el.children}
