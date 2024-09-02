@@ -1,14 +1,12 @@
 import { useNavigate } from 'react-router-dom';
 import { IGridContainers, setCurrentContainer } from '@/store/LetterBuilderStore/letterLayoutSlice';
 import ResponsiveGridLayout, { Layout } from 'react-grid-layout';
-import ContainerToolsPanel from '../ContainerToolsPanel';
 import { useAppDispatch, useTypedSelector } from '@/hooks/cvTemplateHooks';
 import { LetterDynamicComponentRendererProps, T_BlockElement } from '@/types/landingBuilder';
-import { addElement, addGridContainer, changeElement, setWindowWidth } from '@store/LetterBuilderStore/letterLayoutSlice';
+import { addElement, changeElement, setWindowWidth } from '@store/LetterBuilderStore/letterLayoutSlice';
 import React, { Suspense, lazy, memo, useEffect, useState } from 'react';
 import ComponentPreloader from '@/components/atoms/ComponentPreloader';
 import ElementToolsPanel from '../ElementToolsPanel';
-import { PlusCircleFilled, PlusCircleOutlined } from '@ant-design/icons';
 
 import classes from './LetterGridContainer.module.scss';
 
@@ -47,7 +45,6 @@ export const LetterGridContainer = (container: IGridContainers) => {
   
   const width = useTypedSelector((state) => state.layout.windowWidth);
   const [isHover, setIsHover] = useState(false);
-  const [isButtonHover, setIsButtonHover] = useState(false);
   const [isDraggingInnerItem, setIsDraggingInnerItem] = useState(false);
 
   const handleSetDraggingInnerItem = (isDragging: boolean) => {
@@ -63,7 +60,7 @@ export const LetterGridContainer = (container: IGridContainers) => {
     return () => {
       window.removeEventListener('resize', handleResize);
     };
-  }, []);
+  }, [dispatch]);
 
   const workspaceLayout = container.elements.activeElements.reduce(
     (acc: Layout[], el: T_BlockElement) => {
@@ -94,7 +91,6 @@ export const LetterGridContainer = (container: IGridContainers) => {
       onMouseLeave={() => {
         if (isHover) {
           setIsHover(false);
-          // dispatch(setCurrentContainer(''));
         }
       }}
       onDragOver={(evt) => {
@@ -105,7 +101,6 @@ export const LetterGridContainer = (container: IGridContainers) => {
         }
       }}
     >
-      {/* <ContainerToolsPanel id={container.id} /> */}
       <ResponsiveGridLayout
         className={classes['grid']}
         layout={workspaceLayout}
@@ -161,28 +156,6 @@ export const LetterGridContainer = (container: IGridContainers) => {
         )})}
       </ResponsiveGridLayout>
 
-      {/* {isHover && (
-        <button
-          className={classes['add-button']}
-          onClick={() => dispatch(addGridContainer(container.id))}
-          onMouseEnter={() => {
-            if (!isButtonHover) {
-              setIsButtonHover(true);
-            }
-          }}
-          onMouseLeave={() => {
-            if (isButtonHover) {
-              setIsButtonHover(false);
-            }
-          }}
-        >
-          {!isButtonHover ? (
-            <PlusCircleOutlined style={{ color: '#2dc08d', fontSize: 30 }} onPointerEnter={undefined} onPointerLeave={undefined}/>
-          ) : (
-            <PlusCircleFilled style={{ color: '#2dc08d', fontSize: 30 }} onPointerEnter={undefined} onPointerLeave={undefined} />
-          )}
-        </button>
-      )} */}
       <button onClick={handleEmailClick}>email</button>
     </div>
   );

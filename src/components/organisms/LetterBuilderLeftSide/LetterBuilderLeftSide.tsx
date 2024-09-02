@@ -61,7 +61,7 @@ const LetterBuilderLeftSide = () => {
 
     
     const handleDragOver = (e) => {
-      // e.preventDefault();
+      e.preventDefault();
       console.log('OUT OF LAYOUT')
     };
     return (
