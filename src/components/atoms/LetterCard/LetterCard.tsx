@@ -13,7 +13,6 @@ const LetterCard = ({id, icon, text, name}: LetterCardProps) => {
   const dispatch = useAppDispatch();
 
   const handleDragStart = (e: React.DragEvent, id: number) => {
-    console.log('STARTED DRAGGING', id);
     const serializableItem = {
       id: id,
       name: name,
@@ -29,7 +28,6 @@ const LetterCard = ({id, icon, text, name}: LetterCardProps) => {
     };
     e.dataTransfer.setData("text/plain", JSON.stringify(serializableItem));
     dispatch(setDraggableItem({item: serializableItem}));
-    console.log({ item: serializableItem });
   };
 
   const handleDragOver = (e: React.DragEvent) => {

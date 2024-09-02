@@ -4,6 +4,7 @@ import { useTypedSelector } from '@/hooks/cvTemplateHooks';
 import { useAppDispatch } from '@/hooks/cvTemplateHooks';
 import { addChildElement } from '@/store/LetterBuilderStore/letterLayoutSlice';
 import ComponentPreloader from '../ComponentPreloader';
+import { ISettingsInputItem } from '@/types/landingBuilder';
 import theme from './Theme';
 
 interface LineCardProps {
@@ -11,6 +12,9 @@ interface LineCardProps {
   id: string;
   draggable: boolean;
   blockWidth: string[];
+  props: {
+    [key: string]: string | string[] | number | { [key: string]: string | number } | ISettingsInputItem[] | [string, string][];
+  };
   onDragStart: (e: React.DragEvent, id: string) => void;
   onDrop?: (e: React.DragEvent, id: string) => void;
   onDragOver?: (e: React.DragEvent) => void;
@@ -35,7 +39,7 @@ const DynamicChildComponentRenderer: React.FC<DynamicChildComponentRendererProps
   },
 )
 
-const BlockLine = ({ id, onDragStart, blockWidth }: LineCardProps) => {
+const BlockLine = ({ id, onDragStart, props }: LineCardProps) => {
   const gridContainers = useTypedSelector((state) => state.letterLayout.gridContainers);
   const currentDraggableItem = useTypedSelector((state) => state.letterLayout.currentDraggableItem);
   const dispatch = useAppDispatch();
@@ -55,13 +59,13 @@ const BlockLine = ({ id, onDragStart, blockWidth }: LineCardProps) => {
       if (typeof container.elements.activeElements[index].children !== 'undefined') {
         if (container.elements.activeElements[index].children.length > 0) {
           container.elements.activeElements[index].children.forEach((child, indexChild) => {
-            if (typeof container.elements.activeElements[index].children[indexChild] !== 'undefined' &&
-                container.elements.activeElements[index].children[indexChild] !== null
+            if (typeof child !== 'undefined' &&
+                child !== null
             ) {
               childrenElements[indexChild] = (
                 <DynamicChildComponentRenderer
                   source={'atoms'}
-                  Component={container.elements.activeElements[index].children[indexChild].name}
+                  Component={child.name}
                 />
               )
             } else {
@@ -73,20 +77,26 @@ const BlockLine = ({ id, onDragStart, blockWidth }: LineCardProps) => {
     } 
   })
 
-  const blockElements = blockWidth.map((width, index) => (
-    <TableCell
-      key={index}
-      variant="letterBlockCell"
-      sx={{
-        width: width,
-        color: childrenElements[index] ? 'black' : '#4cb9ea',
-        textAlign: 'center',
-      }}
-      onDrop={() => handleDrop(index)}
-    >
-      {childrenElements[index] ? childrenElements[index] : 'Перетащить блоки контента сюда'}
-    </TableCell>
-  ))
+  let blockElements: Array<JSX.Element | null> = []
+
+  if (typeof props.blockWidth === 'object') {
+    if (Array.isArray(props.blockWidth)) {
+      blockElements = props.blockWidth.map((width, index) => (
+        <TableCell
+          key={index}
+          variant="letterBlockCell"
+          sx={{
+            width: width,
+            color: childrenElements[index] ? 'black' : '#4cb9ea',
+            textAlign: 'center',
+          }}
+          onDrop={() => handleDrop(index)}
+        >
+          {childrenElements[index] ? childrenElements[index] : 'Перетащить блоки контента сюда'}
+        </TableCell>
+      ))
+    }
+  }
 
   return (
     <ThemeProvider theme={theme}>

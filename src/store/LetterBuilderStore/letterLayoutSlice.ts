@@ -3,7 +3,7 @@ import { customAlphabet } from 'nanoid';
 
 import { insertChild } from '@/utils';
 import { addBaseScript } from '@/utils/scriptAssigner';
-import { Layout } from 'react-grid-layout';
+// import { Layout } from 'react-grid-layout';
 import { T_BlockElement, LetterT_BlockElement } from '@/types/landingBuilder';
 
 const nanoid = customAlphabet('ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz', 15);
@@ -31,7 +31,7 @@ export interface IGridContainers {
 
 interface LayoutState {
   gridContainers: IGridContainers[];
-  currentDraggableItem: Layout | null;
+  currentDraggableItem: LetterT_BlockElement | null;
   currentContainer: string;
   windowWidth: number;
 }
@@ -94,7 +94,7 @@ const letterLayoutSlice = createSlice({
           maxH: draggableItem.layout.maxH ?? 1000000,
         },
       };
-      let activeElements: T_BlockElement[] = [];
+      let activeElements: LetterT_BlockElement[] = [];
       state.gridContainers.forEach((container /*, index*/) => {
         if (container.id === containerId) {
           for (const el of container.elements.activeElements) {
@@ -105,14 +105,14 @@ const letterLayoutSlice = createSlice({
               newElement.layout.y += el.layout.h;
             }
           }
-          activeElements = container.elements.activeElements as T_BlockElement[]
+          activeElements = container.elements.activeElements as LetterT_BlockElement[]
           return (activeElements);
         }
       });
       const renewElements = insertChild(activeElements, parentElement, newElement);
       state.gridContainers = state.gridContainers.map((container) => {
         if (container.id === containerId) {
-          container.elements.activeElements = [...(renewElements as T_BlockElement[])];
+          container.elements.activeElements = [...(renewElements as LetterT_BlockElement[])];
         }
         return container;
       });

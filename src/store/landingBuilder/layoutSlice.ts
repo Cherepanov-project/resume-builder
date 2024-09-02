@@ -3,8 +3,7 @@ import { customAlphabet } from 'nanoid';
 
 import { insertChild } from '@/utils';
 import { addBaseScript } from '@/utils/scriptAssigner';
-import { Layout } from 'react-grid-layout';
-import { T_BlockElement } from '@/types/landingBuilder';
+import { LetterT_BlockElement, T_BlockElement } from '@/types/landingBuilder';
 
 const nanoid = customAlphabet('ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz', 15);
 
@@ -27,7 +26,7 @@ export interface IGridContainers {
 
 interface LayoutState {
   gridContainers: IGridContainers[];
-  currentDraggableItem: Layout | null;
+  currentDraggableItem: LetterT_BlockElement | null;
   currentContainer: string;
   windowWidth: number;
 }

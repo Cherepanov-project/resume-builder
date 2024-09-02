@@ -15,7 +15,7 @@ import classes from './LetterGridContainer.module.scss';
 // По сути это зависимый компонент, который отвечает за рендеринг условного блока
   const DynamicComponentRenderer: React.FC<LetterDynamicComponentRendererProps> = memo(
   //const DynamicComponentRenderer: React.FC<DynamicComponentRendererProps> = 
-  ({id, blockWidth, Component, props, columns, source, children, layout, containerId }) => {
+  ({id, Component, props, columns, source, children, layout, containerId }) => {
     const DynamicComponent = lazy(() => import(`../../${source}/LineBlocks/index.ts`));
 
     return (
@@ -29,7 +29,7 @@ import classes from './LetterGridContainer.module.scss';
           children={children}
           layout={layout}
           containerId={containerId}
-          blockWidth={blockWidth}
+          //blockWidth={blockWidth}
         />
       </Suspense>
     );
@@ -115,9 +115,7 @@ export const LetterGridContainer = (container: IGridContainers) => {
           const draggableItem = currentDraggableItem;
           
           if (draggableItem) {
-            if (draggableItem.props) {
-              if (draggableItem.props.isChild) return;
-            }
+            if (draggableItem.props.isChild) return;
           }
 
           const id = container.id;
@@ -146,7 +144,7 @@ export const LetterGridContainer = (container: IGridContainers) => {
               Component={el.name}
               source={el.source || 'atoms'}
               props={el.props}
-              blockWidth={el.props.blockWidth}
+              //blockWidth={el.props.blockWidth}
               columns={el.columns || 1}
               layout={el.layout}
               children={el.children}

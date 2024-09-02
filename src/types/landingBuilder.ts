@@ -81,7 +81,7 @@ export type T_BlockElement = {
 
 export type LetterT_BlockElement = T_BlockElement & {
   id: string;
-  props: LetterT_SectionElementProps;
+  //props: LetterT_SectionElementProps;
 }
 
 export type T_SidebarMenuItem = {
@@ -96,9 +96,7 @@ export type T_ComponentProps = {
 // Типизация компонентов
 export type DynamicComponentRendererProps = {
   Component?: string;
-  props?: {
-    [key: string]: string | number | { [key: string]: string | number } | ISettingsInputItem[] | [string, string][];
-  };
+  props?: T_SectionElementProps;
   columns?: number;
   source: string;
   elementScript?: string;
@@ -110,7 +108,7 @@ export type DynamicComponentRendererProps = {
 
 export type LetterDynamicComponentRendererProps = DynamicComponentRendererProps & {
   id: string;
-  blockWidth: string[];
+  //blockWidth: string[];
 }
 
 export type ContainerDIVProps = {
@@ -242,6 +240,8 @@ export type T_SectionElements = {
 };
 
 export type T_SectionElementProps = {
+  isChild?: boolean;
+  blockWidth?: string[];
   name?: string;
   key?: string;
   index?: string;
@@ -280,6 +280,7 @@ export type T_SectionElementProps = {
 
 export type LetterT_SectionElementProps = T_SectionElementProps & {
     blockWidth: string[];
+    isChild: boolean;
 }
 
 export interface ILayoutBlock {
