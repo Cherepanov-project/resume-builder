@@ -1,18 +1,18 @@
 import { Button, Typography, ThemeProvider } from "@mui/material"
-import { IconGIFS } from "@components/atoms/Icons/LetterCardIcons"
+import { IconStickers } from "@components/atoms/Icons/LetterCardIcons"
 import theme from "../Theme"
 
-const GifsComponent = () => {
+const StickersComponent = () => {
   return ( 
     <ThemeProvider theme={theme}>
       <Typography variant="body1" color="#515659">
-        <IconGIFS color="#515659" scale={1.3}/><br/>
+        <IconStickers color="#515659" scale={1.3}/><br/>
         <Button variant="letterCard"> 
-          Search for gifs with Giphy
+          Search for stickers with Giphy
         </Button>
       </Typography>
     </ThemeProvider>
   )
 }
 
-export default GifsComponent
+export default StickersComponent
