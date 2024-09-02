@@ -4,7 +4,7 @@ import { CustomScroll } from 'react-custom-scroll';
 import 'react-grid-layout/css/styles.css';
 import 'react-resizable/css/styles.css';
 import classes from './LetterConstructorWorkspace.module.scss';
-import { GridContainer } from '@organisms/GridContainer';
+import { LetterGridContainer } from '@organisms/LetterGridContainer';
 import { Box } from '@mui/material';
 import '@components/molecules/FullWidthTabs/ScrollBar.scss';
 // ========================================================================== \\
@@ -17,7 +17,7 @@ const LetterConstructorWorkspace: React.FC = () => {
         <div className={classes['workspace']}>
           <div className={classes['wrapper']}>
             {gridContainers.map((container: IGridContainers) => (
-              <GridContainer key={container.id} {...container} />
+              <LetterGridContainer key={container.id} {...container} />
             ))}
           </div>
         </div>
