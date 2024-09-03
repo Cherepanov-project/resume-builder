@@ -5,6 +5,7 @@ import { useAppDispatch } from '@/hooks/cvTemplateHooks';
 import { addChildElement } from '@/store/LetterBuilderStore/letterLayoutSlice';
 import ComponentPreloader from '../ComponentPreloader';
 import { ISettingsInputItem } from '@/types/landingBuilder';
+import { nanoid } from 'nanoid';
 import theme from './Theme';
 
 interface LineCardProps {
@@ -50,8 +51,7 @@ const BlockLine = ({ id, onDragStart, props }: LineCardProps) => {
     }
   };
 
-  const childrenElements: Array<Array<JSX.Element | null>> = [] 
-  console.log('gridContainer', gridContainers)
+  const childrenElements: Array<Array<JSX.Element | null>> = []
 
   let blockElements: Array<JSX.Element | null> = []
 
@@ -63,32 +63,36 @@ const BlockLine = ({ id, onDragStart, props }: LineCardProps) => {
         
       if (index > -1) {
         if (typeof gridContainers[0].elements.activeElements[index].children !== 'undefined') {
-          gridContainers[0].elements.activeElements[index].children[indexBlock].forEach((child) => {
-            if (typeof child !== 'undefined') {
-              if (Array.isArray(childrenElements[indexBlock])) {
-                childrenElements[indexBlock].push((
-                  <DynamicChildComponentRenderer
-                    source={'atoms'}
-                    Component={child.name}
-                  />
-                ))
-              } else {
-                childrenElements[indexBlock] = [] as (JSX.Element | null)[]
-                childrenElements[indexBlock].push((
-                  <DynamicChildComponentRenderer
-                    source={'atoms'}
-                    Component={child.name}
-                  />
-                ))
+          if (typeof gridContainers[0].elements.activeElements[index].children[indexBlock] !== 'undefined') {
+            gridContainers[0].elements.activeElements[index].children[indexBlock].children?.forEach((child) => {
+              if (typeof child !== 'undefined') {
+                if (Array.isArray(childrenElements[indexBlock])) {
+                  childrenElements[indexBlock].push((
+                    <DynamicChildComponentRenderer
+                      key={nanoid()}
+                      source={'atoms'}
+                      Component={child.name}
+                    />
+                  ))
+                } else {
+                  childrenElements[indexBlock] = [] as (JSX.Element | null)[]
+                  childrenElements[indexBlock].push((
+                    <DynamicChildComponentRenderer
+                      key={nanoid()}
+                      source={'atoms'}
+                      Component={child.name}
+                    />
+                  ))
+                }
               }
-            }
-          })
+            })
+          }
         }
       }
       
       return (
         <TableCell
-          key={indexBlock}
+          key={nanoid()}
           variant="letterBlockCell"
           sx={{
             width: width,
@@ -108,9 +112,10 @@ const BlockLine = ({ id, onDragStart, props }: LineCardProps) => {
 
   return (
     <ThemeProvider theme={theme}>
-      <Table>
-        <TableBody> 
+      <Table key={nanoid()}>
+        <TableBody key={nanoid()}> 
           <TableRow
+            key={nanoid()}
             id={id}
             draggable
             onDragStart={(e) => onDragStart(e, id)}

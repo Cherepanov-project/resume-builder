@@ -127,10 +127,24 @@ const letterLayoutSlice = createSlice({
 
         if (index > -1) {
           if (container.elements.activeElements[index].children) {
-            container.elements.activeElements[index].children[indexChild] = [
-              ...container.elements.activeElements[index].children[indexChild],
-              draggableItem
-            ]
+            if (typeof container.elements.activeElements[index].children[indexChild] === 'undefined') {
+              container.elements.activeElements[index].children[indexChild] = {
+                name: `Cell${indexChild}`,
+                props: {
+                  style: {},
+                  text: 'Пример текста',
+                }, 
+                layout: {
+                  i: '',
+                  x: 4,
+                  y: 5,
+                  w: 5,
+                  h: 2,
+                },
+                source: 'TableCell',
+                children: [] as T_BlockElement[]}  
+            }
+            container.elements.activeElements[index].children[indexChild].children?.push(draggableItem)
           }
         }
       })
