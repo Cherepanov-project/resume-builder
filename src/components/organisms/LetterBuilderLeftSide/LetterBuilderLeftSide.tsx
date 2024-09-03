@@ -26,8 +26,7 @@ const LetterBuilderLeftSide = () => {
   const dispatch = useDispatch();
 
   const LineCardElementArray = LetterLinesList.map((item) => {
-    const handleDragStart = (e, item) => {
-      console.log('STARTED DRAGGING', item);
+    const handleDragStart = (e: React.DragEvent<Element>, item: typeof LetterLinesList[number]) => {
       const serializableItem = {
         id: nanoid(),
         name: item.name,
@@ -43,9 +42,7 @@ const LetterBuilderLeftSide = () => {
         children: [],
       };
       e.dataTransfer.setData("text/plain", JSON.stringify(serializableItem));
-      dispatch(setDraggableItem({ item: serializableItem }));
-      console.log({ item: serializableItem });
-      
+      dispatch(setDraggableItem({ item: serializableItem }));   
     };
 
 
