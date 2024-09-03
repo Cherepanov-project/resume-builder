@@ -39,7 +39,7 @@ const LetterBuilderLeftSide = () => {
           blockWidth: item.blockWidth,
           text: 'Пример текста',
         },
-        children: [],
+        children: item.children,
       };
       e.dataTransfer.setData("text/plain", JSON.stringify(serializableItem));
       dispatch(setDraggableItem({ item: serializableItem }));   

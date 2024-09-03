@@ -50,51 +50,59 @@ const BlockLine = ({ id, onDragStart, props }: LineCardProps) => {
     }
   };
 
-  const childrenElements: Array<JSX.Element | null> = [] 
-  
-  gridContainers.forEach((container) => {
-    const index = container.elements.activeElements.findIndex((item) => item.id === id)
+  const childrenElements: Array<Array<JSX.Element | null>> = [] 
+  console.log('gridContainer', gridContainers)
 
-    if (index > -1) {
-      if (typeof container.elements.activeElements[index].children !== 'undefined') {
-        if (container.elements.activeElements[index].children.length > 0) {
-          container.elements.activeElements[index].children.forEach((child, indexChild) => {
-            if (typeof child !== 'undefined' &&
-                child !== null
-            ) {
-              childrenElements[indexChild] = (
-                <DynamicChildComponentRenderer
-                  source={'atoms'}
-                  Component={child.name}
-                />
-              )
-            } else {
-              childrenElements[indexChild] = null
+  let blockElements: Array<JSX.Element | null> = []
+
+  const index = gridContainers[0].elements.activeElements.findIndex((item) => item.id === id)
+
+  if (typeof props.blockWidth === 'object') {
+    if (Array.isArray(props.blockWidth)) {
+      blockElements = props.blockWidth.map((width, indexBlock) => {
+        
+      if (index > -1) {
+        if (typeof gridContainers[0].elements.activeElements[index].children !== 'undefined') {
+          gridContainers[0].elements.activeElements[index].children[indexBlock].forEach((child) => {
+            if (typeof child !== 'undefined') {
+              if (Array.isArray(childrenElements[indexBlock])) {
+                childrenElements[indexBlock].push((
+                  <DynamicChildComponentRenderer
+                    source={'atoms'}
+                    Component={child.name}
+                  />
+                ))
+              } else {
+                childrenElements[indexBlock] = [] as (JSX.Element | null)[]
+                childrenElements[indexBlock].push((
+                  <DynamicChildComponentRenderer
+                    source={'atoms'}
+                    Component={child.name}
+                  />
+                ))
+              }
             }
           })
         }
       }
-    } 
-  })
-
-  let blockElements: Array<JSX.Element | null> = []
-
-  if (typeof props.blockWidth === 'object') {
-    if (Array.isArray(props.blockWidth)) {
-      blockElements = props.blockWidth.map((width, index) => (
+      
+      return (
         <TableCell
-          key={index}
+          key={indexBlock}
           variant="letterBlockCell"
           sx={{
             width: width,
-            color: childrenElements[index] ? 'black' : '#4cb9ea',
+            color: childrenElements[indexBlock] ? 'black' : '#4cb9ea',
             textAlign: 'center',
+            display: 'flex',
+            flexDirection: 'column',
+            gap: '15px',
           }}
-          onDrop={() => handleDrop(index)}
+          onDrop={() => handleDrop(indexBlock)}
         >
-          {childrenElements[index] ? childrenElements[index] : 'Перетащить блоки контента сюда'}
+          {childrenElements[indexBlock] ? childrenElements[indexBlock] : 'Перетащить блоки контента сюда'}
         </TableCell>
-      ))
+      )})
     }
   }
 

@@ -127,7 +127,10 @@ const letterLayoutSlice = createSlice({
 
         if (index > -1) {
           if (container.elements.activeElements[index].children) {
-            container.elements.activeElements[index].children[indexChild] = draggableItem
+            container.elements.activeElements[index].children[indexChild] = [
+              ...container.elements.activeElements[index].children[indexChild],
+              draggableItem
+            ]
           }
         }
       })
