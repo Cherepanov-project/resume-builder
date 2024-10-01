@@ -10,6 +10,7 @@ import NotFoundPage from './pages/NotFoundPage';
 import WorkSpace from '@organisms/WorkSpace';
 import LandingPreview from '@pages/LandingPreview';
 import { LandingBuilderStartPage } from './pages/LandingBuilderStartPage copy';
+import LetterConstructorPage from './pages/LetterConstructorPage';
 import { ProtectedRoute } from './components/atoms/ProtectedRoute/ProtectedRoute.tsx'
 
 function App() {
@@ -22,6 +23,7 @@ function App() {
           <Route path="/sign-up" element={<AuthPage />} />
           <Route path="/intro" element={<ProtectedRoute component={IntroPage} />} />
           <Route path="/landing-builder-start-page" element={<ProtectedRoute component={LandingBuilderStartPage} />} />
+          <Route path="/landing-letter-constructor-page" element={<ProtectedRoute component={LetterConstructorPage} />} />
           <Route path="/landing-builder"
             element={<ProtectedRoute component={LandingBuilder} />}
           >
