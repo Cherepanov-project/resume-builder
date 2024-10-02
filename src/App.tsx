@@ -11,7 +11,8 @@ import WorkSpace from '@organisms/WorkSpace';
 import LandingPreview from '@pages/LandingPreview';
 import { LandingBuilderStartPage } from './pages/LandingBuilderStartPage copy';
 import { ProtectedRoute } from './components/atoms/ProtectedRoute/ProtectedRoute.tsx'
-
+import LetterBuilderPage from './pages/LetterBuilderPage/LetterBuilderPage.tsx';
+import EmailPage from './pages/LetterBuilderPage/EmailPage.tsx';
 function App() {
 
   return (
@@ -21,6 +22,8 @@ function App() {
           <Route path="/sign-in" element={<AuthPage />} />
           <Route path="/sign-up" element={<AuthPage />} />
           <Route path="/intro" element={<ProtectedRoute component={IntroPage} />} />
+          <Route path="/letter-builder-page" element={<ProtectedRoute component={LetterBuilderPage} />} />
+             <Route path="/email" element={<EmailPage />} />
           <Route path="/landing-builder-start-page" element={<ProtectedRoute component={LandingBuilderStartPage} />} />
           <Route path="/landing-builder"
             element={<ProtectedRoute component={LandingBuilder} />}
