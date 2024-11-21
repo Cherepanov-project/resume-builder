@@ -14,7 +14,6 @@ const EmailPage = () => {
     (state: RootState) => state.letterLayout.gridContainers[0].elements.activeElements,
   );
   const [sending, setSending] = useState(false);
-
   // Функция для извлечения процентного значения из строки `calc`
   const extractPercent = (calcValue: string): number => {
     const match = calcValue.match(/calc\(([\d.]+)%\s*-\s*\d+px\)/);
