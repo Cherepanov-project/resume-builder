@@ -1,9 +1,5 @@
-import { Divider } from "@mui/material"
-
 const DividerComponent = () => {
-  return (
-    <Divider sx={{width: '100%'}}/>
-  )
-}
+  return <div className="w-full border-t border-gray-300" />;
+};
 
-export default DividerComponent
+export default DividerComponent;

@@ -1,13 +1,15 @@
-import { Typography } from "@mui/material"
-import { IconCarousel } from "@components/atoms/Icons/LetterCardIcons"
+import { IconCarousel } from "@components/atoms/Icons/LetterCardIcons";
 
 const CarouselComponent = () => {
-  return ( 
-    <Typography variant="body1" color="#515659">
-      <IconCarousel color="#515659" scale={1.3}/><br/>
+  return (
+    <div className="text-base text-[#515659]">
+      <div className="ml-4">
+        <IconCarousel color="#515659" scale={2} />
+      </div>
+      <br />
       Карусель
-    </Typography>
-  )
-}
+    </div>
+  );
+};
 
-export default CarouselComponent
+export default CarouselComponent;

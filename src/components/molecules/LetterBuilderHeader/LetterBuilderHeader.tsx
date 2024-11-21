@@ -1,68 +1,41 @@
-import * as React from 'react';
-import { Stack, ThemeProvider } from '@mui/material';
-import Divider from '@mui/material/Divider';
-import VisibilityIcon from '@mui/icons-material/Visibility';
-import VisibilityOffIcon from '@mui/icons-material/VisibilityOff';
-import Button from '@mui/material/Button';
-import CustomizedMenus from '@components/molecules/CustomizedMenus';
-import theme from '@components/molecules/LetterBuilderHeader/LetterBuilderTheme';
+import { useState } from "react";
+import { Visibility, VisibilityOff } from "@mui/icons-material";
+import CustomizedMenus from "@components/molecules/CustomizedMenus";
 
 const LetterBuilderHeader = () => {
-  const [visibleStructure, setVisibleStructure] = React.useState<boolean>(true);
-  
-  const visibleIcon = visibleStructure ? <VisibilityIcon /> : <VisibilityOffIcon />
-  const buttonVisibleText = visibleStructure ? 'Отобразить структуру' : 'Скрыть структуру'
-  const onClickHandler = () => {
-      setVisibleStructure((visibleStructure) => !visibleStructure)
-  }
-  
-  return (
-    <ThemeProvider theme={theme}>
-      <Stack height={50} width={'100%'} direction={'row'} justifyContent={'space-between'} sx={{
-        backgroundColor: '#505659',
-        fontSize: '12px',
-      }}>
-        <Stack 
-          direction={'row'} 
-          height={'100%'}
-          divider={
-            <Divider 
-              orientation="vertical" 
-              sx={{
-                  backgroundColor: 'gray',
-                  height: '30px',
-                  alignSelf: 'center',
-              }} 
-            />
-          }>
-          <CustomizedMenus />
-          <Button 
-            startIcon={visibleIcon} 
-            variant="visible" 
-            onClick={onClickHandler}
-          >
-            {buttonVisibleText}
-          </Button>
-        </Stack>
-        <Stack alignItems={'center'} direction={'row'} spacing={3} mr={2}>
-          <Button variant="buttonSave">
-            Сохранить
-          </Button>
-          <Button  
-            variant="buttonSave" 
-            sx={{
-              backgroundColor: '#1db7ad',
-              '&:hover': {
-                backgroundColor: '#1db7ad',
-              },
-            }}
-          >
-            Продолжить
-          </Button>
-        </Stack>
-      </Stack>
-    </ThemeProvider>
-  )
-}
+  const [visibleStructure, setVisibleStructure] = useState<boolean>(true);
 
-export default LetterBuilderHeader
+  const visibleIcon = visibleStructure ? <Visibility /> : <VisibilityOff />;
+  const buttonVisibleText = visibleStructure ? "Отобразить структуру" : "Скрыть структуру";
+  const onClickHandler = () => {
+    setVisibleStructure((prev) => !prev);
+  };
+
+  return (
+    <div className="flex items-center justify-between h-30 w-full bg-gray-700 text-xs text-white">
+      {/* Left Section */}
+      <div className="flex items-center h-full divide-x divide-gray-500 ">
+        <CustomizedMenus />
+        <button
+          onClick={onClickHandler}
+          className="ml-5 items-center px-4 text-white transition bg-gray-700 "
+        >
+          {visibleIcon}
+          <span className="ml-2">{buttonVisibleText}</span>
+        </button>
+      </div>
+
+      {/* Right Section */}
+      <div className="flex items-center space-x-4 mr-4">
+        <button className="px-4 py-2 bg-gray-500 rounded hover:bg-gray-600 transition">
+          Сохранить
+        </button>
+        <button className="px-4 py-2 bg-teal-500 rounded hover:bg-teal-500 transition">
+          Продолжить
+        </button>
+      </div>
+    </div>
+  );
+};
+
+export default LetterBuilderHeader;

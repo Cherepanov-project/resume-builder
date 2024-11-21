@@ -1,7 +1,5 @@
-import { Typography } from "@mui/material"
-
 const TextComponent = () => {
-    return <Typography variant="body1">Я новый текстовый блок</Typography>
-}
+  return <p>Я новый текстовый блок</p>;
+};
 
-export default  TextComponent
+export default TextComponent;

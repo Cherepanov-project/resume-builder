@@ -1,14 +1,8 @@
-import * as React from 'react';
-import SwipeableViews from 'react-swipeable-views';
-import { useTheme } from '@mui/material/styles';
-import AppBar from '@mui/material/AppBar';
-import Tabs from '@mui/material/Tabs';
-import Tab from '@mui/material/Tab';
-import Typography from '@mui/material/Typography';
-import Box from '@mui/material/Box';
-import { TabIconProps } from '@/components/atoms/Icons/TabIcons';
-import { CustomScroll } from "react-custom-scroll";
-import '../FullWidthTabs/ScrollBar.scss';
+/* eslint-disable @typescript-eslint/no-explicit-any */
+import * as React from "react";
+import SwipeableViews from "react-swipeable-views";
+import { useTheme } from "@mui/material/styles";
+import "../FullWidthTabs/ScrollBar.scss";
 
 interface TabPanelProps {
   children?: React.ReactNode;
@@ -16,145 +10,75 @@ interface TabPanelProps {
   index: number;
   value: number;
 }
-  
-const TabPanel = (props: TabPanelProps) => {
-  const { children, value, index, ...other } = props;
 
-  return (
-    <div
-      role="tabpanel"
-      hidden={value !== index}
-      id={`full-width-tabpanel-${index}`}
-      aria-labelledby={`full-width-tab-${index}`}
-      {...other}
-    >
-      {value === index && (
-        <Box sx={{ boxSizing: 'border-box', paddingTop: '10px', paddingBottom: '10px', background: '#f9f9f9', height: 'calc(100vh - 97px)', }}>
-          <CustomScroll heightRelativeToParent="calc(100%)">
-            <Box sx={{ 
-              boxSizing: 'border-box',
-              paddingRight: '20px',
-              paddingLeft: '20px', 
-              background: '#f9f9f9',  
-              maxHeight: '100%'
-            }}>
-              <Typography component="div" sx={{ paddingTop: '10px', paddingBottom: '15px', display: 'flex', justifyContent: 'space-evenly', flexWrap: 'wrap', gap: '15px'}}>
-                {children}
-              </Typography>
-            </Box>
-          </CustomScroll>
-        </Box>
-      )}
-    </div>
-  );
-}
+const TabPanel = ({ children, value, index, ...other }: TabPanelProps) => (
+  <div
+    role="tabpanel"
+    hidden={value !== index}
+    id={`full-width-tabpanel-${index}`}
+    aria-labelledby={`full-width-tab-${index}`}
+    {...other}
+  >
+    {value === index && (
+      <div className="box-border pt-2.5 pb-2.5 bg-[#f9f9f9] h-[calc(100vh-97px)]">
+        <div className="relative h-full overflow-y-auto">
+          <div className="box-border px-5 bg-[#f9f9f9] h-full">
+            <div className="pt-2.5 pb-3.5 flex justify-evenly flex-wrap gap-4">{children}</div>
+          </div>
+        </div>
+      </div>
+    )}
+  </div>
+);
 
-const a11yProps = (index: number) => {
-  return {
-    id: `full-width-tab-${index}`,
-    'aria-controls': `full-width-tabpanel-${index}`,
-  };
-}
-
-type Tab = { id: number, label: string, icon: React.FunctionComponent<TabIconProps> }
+type Tab = { id: number; label: string; icon: React.FunctionComponent<any> };
 
 interface FullWidthTabsProps {
-  TabList: Array<Tab>
-  ElementCard: Array<JSX.Element>
-  LineCard: Array<JSX.Element>
+  TabList: Array<Tab>;
+  ElementCard: Array<JSX.Element>;
+  LineCard: Array<JSX.Element>;
 }
-
 
 const FullWidthTabs = ({ TabList, ElementCard, LineCard }: FullWidthTabsProps) => {
   const theme = useTheme();
   const [value, setValue] = React.useState(0);
 
-  const handleChange = (event: React.SyntheticEvent, newValue: number) => {
-    setValue(newValue);
-  };
-
-  const handleChangeIndex = (index: number) => {
-    setValue(index);
-  };
-
-  const TabElementArray = TabList.map((tab) => {
-    const TabIconElement = tab.icon;
-    return (
-      <Tab 
-        key={tab.id}
-        label={tab.label} 
-        {...a11yProps(0)}
-        disableFocusRipple
-        disableRipple
-        icon={<TabIconElement width={20} height={20} value={value} id={tab.id} colorActive={'#516167'} colorPassive={'#93989a'} />}
-        iconPosition="start"
-        sx={{
-          minWidth: 'max-content',
-          minHeight: '45px',
-          fontSize: '13px',
-          padding: '12px 5px',
-          background: value === tab.id ? '#f9f9f9' : '#d6d9dc',
-          color: value === tab.id ? '#516167' : '#93989a',
-          borderRight: tab.id !== TabList.length - 1 ? '1px solid #c7c7c7' : 'none',
-          borderBottom: value === tab.id ? '1px solid #f9f9f9' : '1px solid #c7c7c7',
-          transition: 'borderBottom 0s',
-          justifyContent: 'space-evenly',
-          '&:focus': {
-            outline: 'none',
-          },
-          '&:hover': {
-            border: 'none',
-            borderRight: tab.id !== TabList.length - 1 ? '1px solid #c7c7c7' : 'none',
-            borderBottom: value === tab.id ? '1px solid #f9f9f9' : '1px solid #c7c7c7',
-          }
-        }} 
-      />
-    )
-  });
+  const handleChangeIndex = (index: number) => setValue(index);
 
   return (
-    <Box sx={{ bgcolor: 'background.paper', width: '411px', border: '1px solid #c7c7c7' }}>
-      <AppBar 
-        position="static"
-        sx={{
-          boxShadow: 'none',
-        }}
-      >
-        <Tabs
-          value={value}
-          onChange={handleChange}
-          textColor="inherit"
-          variant="fullWidth"
-          aria-label="full width tabs example"
-          sx={{
-            color: '#93989a',
-            background: '#d6d9dc',
-            minHeight: '45px',
-          }}
-          TabIndicatorProps={{
-            sx: {backgroundColor: 'transparent'},
-          }}
-        >
-          {TabElementArray}
-        </Tabs>
-      </AppBar>
-      <SwipeableViews
-        axis="x"
-        index={value}
-        onChangeIndex={handleChangeIndex}
-      >
+    <div className="bg-white w-[411px]">
+      <div className="bg-[#d6d9dc] flex justify-between shadow-none min-h-[45px]">
+        {TabList.map((tab, idx) => {
+          const TabIconElement = tab.icon;
+          return (
+            <button
+              key={tab.id}
+              onClick={() => setValue(idx)}
+              className={`flex items-center text-xs px-1 py-3 min-h-[45px] rounded-none ${
+                value === tab.id
+                  ? "bg-[#f9f9f9] text-[#516167] border-r-0"
+                  : "bg-[#d6d9dc] text-[#93989a] border-r-0"
+              } ${idx === TabList.length - 1 ? "" : ""} focus:outline-none`}
+            >
+              <TabIconElement width={20} height={20} colorActive="#516167" colorPassive="#93989a" />
+              <span className='ml-1'>{tab.label}</span>
+            </button>
+          );
+        })}
+      </div>
+      <SwipeableViews axis="x" index={value} onChangeIndex={handleChangeIndex}>
         <TabPanel value={value} index={0} dir={theme.direction}>
           {ElementCard}
         </TabPanel>
         <TabPanel value={value} index={1} dir={theme.direction}>
-          {LineCard} 
+          {LineCard}
         </TabPanel>
         <TabPanel value={value} index={2} dir={theme.direction}>
           Настройки
         </TabPanel>
       </SwipeableViews>
-    </Box>
+    </div>
   );
-}
+};
 
 export default FullWidthTabs;

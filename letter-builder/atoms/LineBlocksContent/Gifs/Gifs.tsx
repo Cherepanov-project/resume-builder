@@ -1,18 +1,17 @@
-import { Button, Typography, ThemeProvider } from "@mui/material"
-import { IconGIFS } from "@components/atoms/Icons/LetterCardIcons"
-import theme from "../Theme"
+import { IconGIFS } from "@components/atoms/Icons/LetterCardIcons";
 
 const GifsComponent = () => {
-  return ( 
-    <ThemeProvider theme={theme}>
-      <Typography variant="body1" color="#515659">
-        <IconGIFS color="#515659" scale={1.3}/><br/>
-        <Button variant="letterCard"> 
-          Search for gifs with Giphy
-        </Button>
-      </Typography>
-    </ThemeProvider>
-  )
-}
+  return (
+    <div className="text-gray-600">
+      <div className="flex items-center justify-center">
+        <IconGIFS color="#515659" scale={1.3} />
+      </div>
+      <br />
+      <button className="bg-blue-500 text-white py-2 px-4 rounded hover:bg-blue-600">
+        Search for gifs with Giphy
+      </button>
+    </div>
+  );
+};
 
-export default GifsComponent
+export default GifsComponent;

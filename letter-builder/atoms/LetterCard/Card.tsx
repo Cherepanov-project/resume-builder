@@ -1,74 +1,40 @@
-import { Box, Typography } from "@mui/material"
+import React from "react";
 
 interface CardProps {
-  icon: JSX.Element
-  text: string
-  isMouseDown?: boolean
-  x?: number
-  y?: number
+  icon: JSX.Element;
+  text: string;
+  isMouseDown?: boolean;
+  x?: number;
+  y?: number;
 }
 
-const Card = ({icon, text, isMouseDown, x, y}: CardProps) => {
+const Card = ({ icon, text, isMouseDown, x, y }: CardProps) => {
   return (
-    <Box
+    <div
       draggable
-      sx={{
-        boxSizing: 'border-box',
-        width: isMouseDown ? 'calc(33.3% - 15px)' : '100%',
-        position: isMouseDown ? 'absolute' : 'relative',
-        opacity: isMouseDown ? '80%' : '100%',
-        left: isMouseDown ? `calc(${x}px - 0px)` : '0',
-        top: isMouseDown ? `calc(${y}px - 70px)` : '0',
-        zIndex: isMouseDown ? '100' : '1',
-        background: '#fff',
-        borderRadius: '3px',
-        display: 'block',
-        minHeight: '118px',
-        padding: '18px 10px 10px 15px',
-        border: '1px solid #ccc',
-        boxShadow: '0 1px 1px rgba(0,0,0,0.1)',
-        transitionDuration: '.15s',
-        '&:hover': {
-          boxShadow: '0 6px 10px rgba(0, 0, 0, .35)',
-          border: '1px solid #ffffff',
-          cursor: 'pointer',
-        }
-      }}>
-      <Box sx={{
-        boxSizing: 'border-box',
-        verticalAlign: 'top',
-        alignItems: 'center',
-        display: 'flex',
-        position: 'relative',
-        flexFlow: 'column',
-        justifyContent: 'center',
-      }}>
-        <Box sx={{
-          margin: '8px auto 15px auto',
-          flex: '1.9 0 66%',
-        }}>
-          {icon}
-        </Box>
-        <Box>
-          <Typography sx={{
-            paddingTop: "0",
-            hyphens: 'auto',
-            wordBreak: 'break-word',
-            wordWrap: 'break-word',
-            fontSize: '12px',
-            height: '26.4px',
-            lineHeight: '1.1',
-            marginTop: '4px',
-            overflow: 'hidden',
-            textAlign: 'center',
-            textTransform: 'uppercase',
-          }}>
+      className={`box-border bg-white rounded-[3px] min-h-[118px] p-[18px_10px_10px_15px] border border-gray-300 shadow-sm transition-shadow duration-150 hover:shadow-lg hover:border-white hover:cursor-pointer ${
+        isMouseDown ? `absolute opacity-80 z-[100]` : `relative opacity-100 z-[1]`
+      }`}
+      style={
+        isMouseDown
+          ? {
+              width: "calc(33.3% - 15px)",
+              left: `calc(${x}px - 0px)`,
+              top: `calc(${y}px - 70px)`,
+            }
+          : { width: "100%" }
+      }
+    >
+      <div className="box-border flex flex-col items-center justify-center relative">
+        <div className="my-[8px_auto_15px_auto] flex-[1.9_0_66%]">{icon}</div>
+        <div>
+          <p className="pt-0 hyphens-auto break-words text-[12px] h-[26.4px] leading-[1.1] mt-[4px] overflow-hidden text-center uppercase">
             {text}
-          </Typography>
-        </Box>
-      </Box>
-    </Box>
-  )
-}
+          </p>
+        </div>
+      </div>
+    </div>
+  );
+};
 
 export default Card;

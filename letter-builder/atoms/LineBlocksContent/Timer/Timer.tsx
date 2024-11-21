@@ -1,18 +1,15 @@
-import { Button, Typography, ThemeProvider } from "@mui/material"
-import { IconTimer } from "@components/atoms/Icons/LetterCardIcons"
-import theme from "../Theme"
+import { IconTimer } from "@components/atoms/Icons/LetterCardIcons";
 
 const TimerComponent = () => {
-  return ( 
-    <ThemeProvider theme={theme}>
-      <Typography variant="body1" color="#515659">
-        <IconTimer color="#515659" scale={1.3}/><br/>
-        <Button variant="letterCard"> 
-          Edit timer
-        </Button>
-      </Typography>
-    </ThemeProvider>
-  )
-}
+  return (
+    <div className="text-base text-[#515659]">
+      <div>
+        <IconTimer color="#515659" scale={0.6} />
+      </div>
+      <br />
+      Edit timer
+    </div>
+  );
+};
 
-export default TimerComponent
+export default TimerComponent;

@@ -1,4 +1,5 @@
-import classes from './ComponentPreloader.module.scss';
+import React from 'react'
+import classes from '.';
 
 const ComponentPreloader: React.FC = () => {
   return <div className={classes['preloader-wrap']}>Loading...</div>;

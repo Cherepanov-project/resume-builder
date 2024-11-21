@@ -1,50 +1,22 @@
-import { IconButton, Stack } from "@mui/material"
+import { FaFacebook, FaTwitter, FaInstagram, FaLinkedin } from "react-icons/fa";
 
 const SocialNetworksComponent = () => {
   return (
-    <Stack direction="row" alignItems="center" gap={0.1}>
-      <IconButton href="https://www.facebook.com/">
-        <img 
-          prefix="https://www.facebook.com/" 
-          alt="Facebook" 
-          src="https://app-rsrc.getbee.io/public/resources/social-networks-icon-sets/circle-color/facebook@2x.png" 
-          title="Facebook"
-          width="auto" 
-          height="32px"
-        />
-      </IconButton>
-      <IconButton href="https://twitter.com/">
-        <img 
-          prefix="https://twitter.com/" 
-          alt="X" 
-          src="https://app-rsrc.getbee.io/public/resources/social-networks-icon-sets/circle-color/twitter@2x.png" 
-          title="X" 
-          width="auto" 
-          height="32px"
-        />
-      </IconButton>
-      <IconButton href="https://instagram.com/">
-        <img 
-          prefix="https://instagram.com/" 
-          alt="Instagram" 
-          src="https://app-rsrc.getbee.io/public/resources/social-networks-icon-sets/circle-color/instagram@2x.png" 
-          title="Instagram"
-          width="auto"
-          height="32px"
-        />
-      </IconButton>
-      <IconButton  href="https://www.linkedin.com/">
-        <img
-          prefix="https://www.linkedin.com/"
-          alt="LinkedIn"
-          src="https://app-rsrc.getbee.io/public/resources/social-networks-icon-sets/circle-color/linkedin@2x.png"
-          title="LinkedIn"
-          width="auto"
-          height="32px"
-        />
-      </IconButton>
-    </Stack>
-  )
-}
+    <div className="flex items-center gap-4">
+      <a href="" className="flex justify-center items-center w-5 h-5">
+        <FaFacebook className="w-5 h-5 text-blue-600" title="Facebook" />
+      </a>
+      <a href="" className="flex justify-center items-center w-5 h-5">
+        <FaTwitter className="w-5 h-5 text-blue-500" title="Twitter" />
+      </a>
+      <a href="" className="flex justify-center items-center w-5 h-5">
+        <FaInstagram className="w-5 h-5 text-pink-500" title="Instagram" />
+      </a>
+      <a href="" className="flex justify-center items-center w-5 h-5">
+        <FaLinkedin className="w-5 h-5 text-blue-700" title="LinkedIn" />
+      </a>
+    </div>
+  );
+};
 
-export default SocialNetworksComponent
+export default SocialNetworksComponent;

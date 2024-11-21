@@ -1,13 +1,15 @@
-import { Typography } from "@mui/material"
-import { IconMenu } from "@components/atoms/Icons/LetterCardIcons"
+import { IconMenu } from "@components/atoms/Icons/LetterCardIcons";
 
 const MenuComponent = () => {
-  return ( 
-    <Typography variant="body1" color="#515659">
-      <IconMenu color="#515659" scale={1.3}/><br/>
+  return (
+    <p className="text-base text-[#515659]">
+      <div className="flex items-center justify-center">
+        <IconMenu color="#515659" scale={1.3} />
+      </div>
+      <br />
       Меню
-    </Typography>
-  )
-}
+    </p>
+  );
+};
 
-export default MenuComponent
+export default MenuComponent;
