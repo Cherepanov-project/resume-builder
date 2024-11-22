@@ -1,19 +1,18 @@
-import { FaFacebook, FaTwitter, FaInstagram, FaLinkedin } from "react-icons/fa";
-
 const SocialNetworksComponent = () => {
   return (
-    <div className="flex items-center gap-4">
-      <a href="" className="flex justify-center items-center w-5 h-5">
-        <FaFacebook className="w-5 h-5 text-blue-600" title="Facebook" />
+    <div className="flex justify-center items-center gap-4" style={{ gap: "4" }}>
+      <a href="" className="flex justify-center items-center">
+        <img src="https://ignasiya.github.io/icons-builder/facebook.png" alt="icon-facebook" />
       </a>
-      <a href="" className="flex justify-center items-center w-5 h-5">
-        <FaTwitter className="w-5 h-5 text-blue-500" title="Twitter" />
+      <a href="" className="flex justify-center items-center ">
+        <img src="https://ignasiya.github.io/icons-builder/twitter.png" alt="icon-twitter" />
       </a>
-      <a href="" className="flex justify-center items-center w-5 h-5">
-        <FaInstagram className="w-5 h-5 text-pink-500" title="Instagram" />
+      <a href="" className="flex justify-center items-center ">
+        <img src="https://ignasiya.github.io/icons-builder/instagram.png" alt="icon-instagram" />
       </a>
-      <a href="" className="flex justify-center items-center w-5 h-5">
-        <FaLinkedin className="w-5 h-5 text-blue-700" title="LinkedIn" />
+
+      <a href="" className="flex justify-center items-center">
+        <img src="https://ignasiya.github.io/icons-builder/linkedIn.png" alt="icon-linkedIn" />
       </a>
     </div>
   );

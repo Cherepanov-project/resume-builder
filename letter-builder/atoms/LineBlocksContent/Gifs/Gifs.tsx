@@ -1,10 +1,10 @@
-import { IconGIFS } from "@components/atoms/Icons/LetterCardIcons";
+import { IconPngGIFS } from "@components/atoms/Icons/LetterCardIcons";
 
 const GifsComponent = () => {
   return (
     <div className="text-gray-600">
       <div className="flex items-center justify-center">
-        <IconGIFS color="#515659" scale={1.3} />
+        <IconPngGIFS scale={1.3} />
       </div>
       <br />
       <button className="bg-blue-500 text-white py-2 px-4 rounded hover:bg-blue-600">

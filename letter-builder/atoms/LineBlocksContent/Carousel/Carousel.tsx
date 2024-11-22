@@ -1,12 +1,11 @@
-import { IconCarousel } from "@components/atoms/Icons/LetterCardIcons";
+import { IconPngCarousel } from "@components/atoms/Icons/LetterCardIcons";
 
 const CarouselComponent = () => {
   return (
     <div className="text-base text-[#515659]">
-      <div className="ml-4">
-        <IconCarousel color="#515659" scale={2} />
+      <div className="flex items-center justify-center">
+        <IconPngCarousel scale={2} />
       </div>
-      <br />
       Карусель
     </div>
   );

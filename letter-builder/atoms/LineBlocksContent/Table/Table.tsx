@@ -1,28 +1,84 @@
 const TableComponent = () => {
   return (
-    <table className="min-w-full border-collapse border border-gray-300">
-      <thead className="bg-gray-200 text-gray-800 text-left text-sm leading-5">
+    <table
+      style={{
+        minWidth: "100%",
+        borderCollapse: "collapse",
+        border: "1px solid #D1D5DB",
+      }}
+    >
+      <thead
+        style={{
+          backgroundColor: "#E5E7EB",
+          color: "#374151",
+          textAlign: "left",
+          fontSize: "0.875rem",
+          lineHeight: "1.25rem",
+        }}
+      >
         <tr>
-          <th className="p-2 border border-gray-300">Заголовок</th>
-          <th className="p-2 border border-gray-300"></th>
-          <th className="p-2 border border-gray-300"></th>
+          <th
+            style={{
+              width: "300px",
+              padding: "0.5rem",
+              border: "1px solid #D1D5DB",
+              textAlign: "center",
+            }}
+          >
+            Заголовок
+          </th>
+          <th
+            style={{
+              padding: "0.5rem",
+              border: "1px solid #D1D5DB",
+            }}
+          ></th>
         </tr>
       </thead>
-      <tbody className="text-gray-800">
+      <tbody
+        style={{
+          color: "#374151",
+        }}
+      >
         <tr>
-          <td className="p-2 border border-gray-300">Параграф</td>
-          <td className="p-2 border border-gray-300"></td>
-          <td className="p-2 border border-gray-300"></td>
+          <td
+            style={{
+              width: "200px",
+              padding: "0.5rem",
+              border: "1px solid #D1D5DB",
+            }}
+          >
+            Параграф
+          </td>
+          <td
+            style={{
+              width: "400px",
+              padding: "0.5rem",
+              border: "1px solid #D1D5DB",
+            }}
+          ></td>
         </tr>
         <tr>
-          <td className="p-2 border border-gray-300">Параграф</td>
-          <td className="p-2 border border-gray-300"></td>
-          <td className="p-2 border border-gray-300"></td>
+          <td style={{ width: "200px", padding: "0.5rem", border: "1px solid #D1D5DB" }}>
+            Параграф
+          </td>
+          <td
+            style={{
+              padding: "0.5rem",
+              border: "1px solid #D1D5DB",
+            }}
+          ></td>
         </tr>
         <tr>
-          <td className="p-2 border border-gray-300">Параграф</td>
-          <td className="p-2 border border-gray-300"></td>
-          <td className="p-2 border border-gray-300"></td>
+          <td style={{ width: "200px", padding: "0.5rem", border: "1px solid #D1D5DB" }}>
+            Параграф
+          </td>
+          <td
+            style={{
+              padding: "0.5rem",
+              border: "1px solid #D1D5DB",
+            }}
+          ></td>
         </tr>
       </tbody>
     </table>

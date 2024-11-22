@@ -1,20 +1,22 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
-import * as React from "react";
+import { useState } from "react";
 import { useSelector } from "react-redux";
 import { RootState } from "../../store/store";
 import emailjs from "emailjs-com";
-import { useState } from "react";
-import * as componentMap from "../../../letter-builder/atoms/LineBlocksContent";
 import ReactDOMServer from "react-dom/server";
+import { Modal, Button } from "antd";
+import * as componentMap from "../../../letter-builder/atoms/LineBlocksContent";
 
 const EmailPage = () => {
-  // Количество колонок
   const numberOfColumns = 6;
   const elements = useSelector(
     (state: RootState) => state.letterLayout.gridContainers[0].elements.activeElements,
   );
-  const [sending, setSending] = useState(false);
-  // Функция для извлечения процентного значения из строки `calc`
+
+  const [isModalVisible, setIsModalVisible] = useState(false);
+  const [tableHTML, setTableHTML] = useState("");
+
+  // Функция для вычисления colspan из блоков
   const extractPercent = (calcValue: string): number => {
     const match = calcValue.match(/calc\(([\d.]+)%\s*-\s*\d+px\)/);
     if (calcValue === "100%") {
@@ -23,11 +25,11 @@ const EmailPage = () => {
     if (match) {
       return parseFloat(match[1]);
     }
-    return 100 / numberOfColumns; // Возвращаем стандартное значение, если не удалось распарсить
+    return 100 / numberOfColumns;
   };
 
-  // Функция для рендеринга строк таблицы для каждого элемента
-  const renderTableRows = () => {
+  // Генерация структуры таблицы
+  const parseTreeToTable = (elements: any[], numberOfColumns: number) => {
     if (!elements || elements.length === 0) {
       return (
         <tr>
@@ -43,46 +45,28 @@ const EmailPage = () => {
       return (
         <tr key={index}>
           {blockWidths.map((blockWidth: string, i: number) => {
-            const colspan = extractPercent(blockWidth) + "%";
-            const blockWidthPercent = extractPercent(blockWidth) + "%";
-            const elementInCell = element.children[i]?.children[0]?.name || "No Content"; //
-            console.log(elementInCell);
+            const colspan = extractPercent(blockWidth);
+            const elementInCell = element.children[i]?.children[0]?.name || "No Content";
+
+            // Рендер компонента из componentMap, если он существует
+            const RenderedComponent = componentMap[elementInCell];
+
             return (
               <td
                 key={i}
-                colSpan={colspan as any}
+                colSpan={colspan}
                 style={{
-                  width: blockWidthPercent,
-                  border: "1px solid transparent",
-                  height: "50px",
-                  boxSizing: "border-box",
+                  width: `${colspan}%`,
+                  padding: "10px",
+                  border: "1px solid #ddd",
                   textAlign: "center",
-                  justifyContent: "center",
                 }}
               >
-                <div
-                  style={{
-                    width: "auto",
-                    display: "flex",
-                    justifyContent: "center",
-                    alignItems: "center",
-                  }}
-                >
-                  {Object.keys(componentMap).includes(elementInCell) ? (
-                    React.createElement(componentMap[elementInCell])
-                  ) : (
-                    <div
-                      style={{
-                        width: "auto",
-                        display: "flex",
-                        justifyContent: "center",
-                        alignItems: "center",
-                      }}
-                    >
-                      {elementInCell}
-                    </div>
-                  )}
-                </div>
+                {RenderedComponent ? (
+                  <RenderedComponent key={`${elementInCell}-${index}`} />
+                ) : (
+                  elementInCell
+                )}
               </td>
             );
           })}
@@ -91,78 +75,78 @@ const EmailPage = () => {
     });
   };
 
-  // Функция для генерации HTML-кода таблицы
+  // Генерация HTML таблицы
   const generateTableHTML = () => {
-    const tableRows = renderTableRows();
-    const tableHTML = ReactDOMServer.renderToString(
-      // Преобразуем в строку
-      <div
+    return ReactDOMServer.renderToString(
+      <table
         style={{
-          padding: "0 30% 0 30%",
-          color: "#000000",
+          borderSpacing: "10px",
           backgroundColor: "#ffffff",
+          color: "#000000",
+          fontFamily: "Arial, sans-serif",
+          fontSize: "16px",
+          width: "100%",
           borderCollapse: "collapse",
         }}
       >
-        <table
-          style={{
-            borderSpacing: "10px",
-            width: "100%",
-            backgroundColor: "#ffffff",
-            color: "#000000",
-            fontFamily: "Arial, sans-serif",
-            fontSize: "16px",
-          }}
-        >
-          <tbody>{tableRows}</tbody>
-        </table>
-      </div>,
+       <h1>Письмо</h1>
+        <tbody>{parseTreeToTable(elements, numberOfColumns)}</tbody>
+      </table>,
     );
-    return tableHTML; // Возвращаем строку с HTML-кодом
   };
 
-  // Функция для отправки email
-  const sendEmail = () => {
-    setSending(true);
+  // Показ модалки с таблицей
+  const showTableModal = () => {
     const htmlContent = generateTableHTML();
-    const params = {
-      message: htmlContent,
-    };
+    setTableHTML(htmlContent);
+    setIsModalVisible(true);
+  };
+
+  // Отправка email
+  const sendEmail = (htmlContent: string) => {
+    const params = { message: htmlContent };
     emailjs.send("service_urk9e0t", "template_reenkpp", params, "IU1C_Yy4ZqGnKKkWQ").then(
-      (response) => {
-        console.log("Success:", response);
-        setSending(false);
-        alert("Email sent successfully!");
-      },
-      (error) => {
-        console.error("Error:", error);
-        setSending(false);
-        alert("Failed to send email.");
-      },
+      () => alert("Email sent successfully!"),
+      (error) => alert(`Failed to send email: ${error.message}`),
     );
   };
 
   return (
-    <div style={{ width: "40%", height: "100vh", position: "relative", margin: "0% 30% 0% 30%" }}>
-      <h1 className="font-bold m-5">Email Content</h1>
+    <div style={{ width: "40%", margin: "0 auto", padding: "20px" }}>
+      <h1 className="font-bold mb-5">Email Content</h1>
       <table
         style={{
-          borderCollapse: "separate",
-          borderRadius: "5px",
-          borderSpacing: "10px",
           width: "100%",
-          border: "2px solid black",
+          border: "1px solid black",
+          marginBottom: "20px",
+          borderCollapse: "collapse",
         }}
       >
-        <tbody>{renderTableRows()}</tbody>
+        <tbody>{parseTreeToTable(elements, numberOfColumns)}</tbody>
       </table>
-      <button
-        onClick={sendEmail}
-        disabled={sending}
-        style={{ margin: "20px 0 20px 0", padding: "10px 20px", fontSize: "16px", color: "#ffff" }}
+      <Button
+        type="primary"
+        onClick={showTableModal}
+        style={{ marginBottom: "20px", height: "40px" }}
       >
-        {sending ? "Sending..." : "Send Email"}
-      </button>
+        Preview Table
+      </Button>
+      <Modal
+        title="Generated Table Preview"
+        visible={isModalVisible}
+        onOk={() => {
+          sendEmail(tableHTML);
+          setIsModalVisible(false);
+        }}
+        onCancel={() => setIsModalVisible(false)}
+        okText="Send Email"
+        cancelText="Close"
+      >
+        <div
+          style={{ maxHeight: "400px", overflow: "auto", width: "100%" }}
+          dangerouslySetInnerHTML={{ __html: tableHTML }}
+        />
+      </Modal>
     </div>
   );
 };
