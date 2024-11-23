@@ -2,12 +2,20 @@ import { IconPngStickers } from "@components/atoms/Icons/LetterCardIcons";
 
 const StickersComponent = () => {
   return (
-    <div className="text-[#515659]">
-      <div className="flex items-center justify-center">
+    <div style={{ color: "#ffffff" }}>
+      <div className="flex justify-center" style={{ marginBottom: "1rem" }}>
         <IconPngStickers scale={1.3} />
       </div>
-      <br />
-      <button className="bg-transparent text-[#515659] border border-[#515659] py-2 px-4 rounded-md hover:bg-[#515659] hover:text-white transition duration-150">
+      <button
+        style={{
+          border: "none",
+          color: "#ffffff",
+          backgroundColor: "#3B82F6",
+          padding: "0.5rem 1rem",
+          borderRadius: "0.375rem",
+          transition: "background-color 0.15s",
+        }}
+      >
         Search for stickers with Giphy
       </button>
     </div>

@@ -43,14 +43,13 @@ const EmailPage = () => {
     return elements.map((element: any, index: number) => {
       const blockWidths = element.props?.blockWidth || Array(numberOfColumns).fill("auto");
       return (
-        <tr key={index}>
+        <tr key={index} style={{ borderRadius: "10px" }}>
           {blockWidths.map((blockWidth: string, i: number) => {
             const colspan = extractPercent(blockWidth);
             const elementInCell = element.children[i]?.children[0]?.name || "No Content";
 
             // Рендер компонента из componentMap, если он существует
             const RenderedComponent = componentMap[elementInCell];
-
             return (
               <td
                 key={i}
@@ -87,9 +86,9 @@ const EmailPage = () => {
           fontSize: "16px",
           width: "100%",
           borderCollapse: "collapse",
+          borderRadius: "10px",
         }}
       >
-       <h1>Письмо</h1>
         <tbody>{parseTreeToTable(elements, numberOfColumns)}</tbody>
       </table>,
     );
@@ -105,7 +104,7 @@ const EmailPage = () => {
   // Отправка email
   const sendEmail = (htmlContent: string) => {
     const params = { message: htmlContent };
-    emailjs.send("service_urk9e0t", "template_reenkpp", params, "IU1C_Yy4ZqGnKKkWQ").then(
+    emailjs.send("service_y54kxzj", "template_4mjikrh", params, "0awoCT5NCBuJvs--s").then(
       () => alert("Email sent successfully!"),
       (error) => alert(`Failed to send email: ${error.message}`),
     );
@@ -117,9 +116,10 @@ const EmailPage = () => {
       <table
         style={{
           width: "100%",
-          border: "1px solid black",
+          border: "2px solid black",
           marginBottom: "20px",
           borderCollapse: "collapse",
+          borderRadius: "10px",
         }}
       >
         <tbody>{parseTreeToTable(elements, numberOfColumns)}</tbody>

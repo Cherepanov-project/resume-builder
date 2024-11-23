@@ -183,7 +183,7 @@ export const IconPngTimer = ({ width, scale }: IconProps) => {
   return (
     <img
       src="https://ignasiya.github.io/icons-builder/icon-timer.png"
-      width={width ? width : 36}
+      width={width ? width : 25}
       style={{ transform: `scale(${scale ? scale : 1})`, aspectRatio: 1, objectFit: "contain" }}
       alt="icon-timer"
     />

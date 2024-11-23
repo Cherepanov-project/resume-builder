@@ -1,5 +1,12 @@
 const DividerComponent = () => {
-  return <div className="w-full border-t border-gray-300" />;
+  return (
+    <div
+      style={{
+        width: "100%",
+        borderTop: "1px solid #D1D5DB",
+      }}
+    />
+  );
 };
 
 export default DividerComponent;
