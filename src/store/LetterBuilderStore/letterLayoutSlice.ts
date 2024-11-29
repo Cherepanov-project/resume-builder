@@ -1,12 +1,11 @@
-import { createSlice } from '@reduxjs/toolkit';
-import { customAlphabet } from 'nanoid';
-
-import { insertChild } from '@/utils';
-import { addBaseScript } from '@/utils/scriptAssigner';
+import { createSlice } from "@reduxjs/toolkit";
+import { customAlphabet } from "nanoid";
+import { insertChild } from "@/utils";
+import { addBaseScript } from "@/utils/scriptAssigner";
 // import { Layout } from 'react-grid-layout';
-import { T_BlockElement, LetterT_BlockElement } from '@/types/landingBuilder';
+import { T_BlockElement, LetterT_BlockElement } from "@/types/landingBuilder";
 
-const nanoid = customAlphabet('ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz', 15);
+const nanoid = customAlphabet("ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz", 15);
 
 interface ElementsType {
   activeElements: T_BlockElement[];
@@ -54,12 +53,12 @@ const initialState: LayoutState = {
     },
   ],
   currentDraggableItem: null,
-  currentContainer: '',
+  currentContainer: "",
   windowWidth: window.innerWidth,
 };
 
 const letterLayoutSlice = createSlice({
-  name: 'layout',
+  name: "layout",
   initialState,
   reducers: {
     setWindowWidth(state, action) {
@@ -69,14 +68,14 @@ const letterLayoutSlice = createSlice({
     addElement(state, action) {
       const { draggableItem, layoutItem, parentElement, id } = action.payload;
       if (!draggableItem) {
-        console.error('Invalid draggableItem or layoutItem:', draggableItem, layoutItem);
+        console.error("Invalid draggableItem or layoutItem:", draggableItem, layoutItem);
         return; // Прекращаем выполнение, если данные невалидны
       }
       const containerId = id;
       // Задаем уникальный ID блоку и параметры
       //при дропе добавляем скрипт с эвент листенером в виде строки
       const elemId = nanoid();
-  
+
       const newElement = {
         ...draggableItem,
         elementScript: addBaseScript(elemId, draggableItem),
@@ -105,8 +104,8 @@ const letterLayoutSlice = createSlice({
               newElement.layout.y += el.layout.h;
             }
           }
-          activeElements = container.elements.activeElements as LetterT_BlockElement[]
-          return (activeElements);
+          activeElements = container.elements.activeElements as LetterT_BlockElement[];
+          return activeElements;
         }
       });
       const renewElements = insertChild(activeElements, parentElement, newElement);
@@ -122,82 +121,87 @@ const letterLayoutSlice = createSlice({
     addChildElement(state, action) {
       const { draggableItem, idParentElement, indexChild } = action.payload;
 
+      const item = { ...draggableItem, id: nanoid() };
+
       state.gridContainers.map((container) => {
-        const index = container.elements.activeElements.findIndex((element) => element.id === idParentElement)
+        const index = container.elements.activeElements.findIndex(
+          (element) => element.id === idParentElement,
+        );
 
         if (index > -1) {
           if (container.elements.activeElements[index].children) {
-            if (typeof container.elements.activeElements[index].children[indexChild] === 'undefined') {
+            if (
+              typeof container.elements.activeElements[index].children[indexChild] === "undefined"
+            ) {
               container.elements.activeElements[index].children[indexChild] = {
                 name: `Cell${indexChild}`,
                 props: {
                   style: {},
-                  text: 'Пример текста',
-                }, 
+                  text: "Пример текста",
+                },
                 layout: {
-                  i: '',
+                  i: "",
                   x: 4,
                   y: 5,
                   w: 5,
                   h: 2,
                 },
-                source: 'TableCell',
-                children: [] as T_BlockElement[]}  
+                source: "TableCell",
+                children: [] as T_BlockElement[],
+              };
             }
-            container.elements.activeElements[index].children[indexChild].children?.push(draggableItem)
+            container.elements.activeElements[index].children[indexChild].children?.push(item);
           }
         }
-      })
+      });
       state.currentDraggableItem = null;
     },
-    // Копируем блок
     copyElement(state, action) {
-      state.gridContainers.forEach((container, index) => {
-        let indx: number;
-        if (container.id === action.payload.id) {
-          if (action.payload.elementId) {
-            indx = container.elements.activeElements.findIndex(
-              (element) => element.layout.i === action.payload.parentLayout.i,
-            );
-          } else {
-            indx = container.elements.activeElements.findIndex(
-              (element) => element.layout.i === action.payload.layout.i,
-            );
-          }
-          // Если elementId передан в payload, дублируем элемент внутри секции
-          if (action.payload.elementId) {
-            // Находим индекс элемента внутри children
-            const element = container.elements.activeElements[indx];
-            const elIndx = element.children!.findIndex(
-              (child) => child.layout.i === action.payload.elementId
-            );
+      const { id, elementId, layout, parentLayout } = action.payload;
 
-            // Если нашли индекс элемента внутри children, дублируем его внутри секции
-            if (elIndx !== undefined && elIndx !== -1) {
-              const newElement = {
-                ...element.children![elIndx],
-                layout: {
-                  ...element.children![elIndx].layout,
-                  x: element.children![elIndx].layout.x + element.children![elIndx].layout.w, //// если хотим чтобы скопированный элемент появлялся cправа от элемента
-                  i: nanoid(),
-                },
-              };
-              // Вставляем новый элемент внутри children
-              state.gridContainers[index].elements.activeElements[indx].children?.splice(elIndx + 1, 0, newElement);
-            }
-          } else {
-            // Иначе, дублируем саму секцию
-            const newElement = {
-              ...container.elements.activeElements[indx],
+      state.gridContainers.forEach((container) => {
+        if (container.id !== id) return;
+
+        const findElementIndex = (layoutId): number =>
+          container.elements.activeElements.findIndex((element) => element.layout.i === layoutId);
+
+        const parentIndex = findElementIndex(parentLayout?.i || layout.i);
+
+        if (parentIndex === -1) return;
+
+        if (elementId) {
+          // Дублируем элемент внутри children
+          const parentElement = container.elements.activeElements[parentIndex];
+          const childIndex = parentElement.children?.findIndex(
+            (child) => child.layout.i === elementId,
+          );
+
+          if (childIndex !== undefined && childIndex !== -1) {
+            const originalChild = parentElement.children[childIndex];
+            const newChild = {
+              ...originalChild,
               layout: {
-                ...container.elements.activeElements[indx].layout,
-                y: container.elements.activeElements[indx].layout.y + container.elements.activeElements[indx].layout.h,
+                ...originalChild.layout,
+                x: originalChild.layout.x + originalChild.layout.w, // Скопированный элемент справа
                 i: nanoid(),
               },
             };
-            // Вставляем новый элемент после текущего элемента
-            state.gridContainers[index].elements.activeElements.splice(indx + 1, 0, newElement);
+            parentElement.children?.splice(childIndex + 1, 0, newChild);
           }
+        } else {
+          // Дублируем секцию
+          const originalElement = container.elements.activeElements[parentIndex];
+          const newElement = {
+            ...originalElement,
+            id: nanoid(),
+            layout: {
+              ...originalElement.layout,
+              y: originalElement.layout.y + originalElement.layout.h, // Новый элемент ниже
+              i: nanoid(),
+            },
+          };
+          console.log(newElement);
+          container.elements.activeElements.splice(parentIndex + 1, 0, newElement);
         }
       });
     },
@@ -221,40 +225,31 @@ const letterLayoutSlice = createSlice({
     },
     // Удаляем блок из рабочей области
     deleteElement(state, action) {
+      const { id, elementId, layout, parentLayout } = action.payload;
+
       state.gridContainers.forEach((container) => {
-        let indx: number;
-        if (container.id === action.payload.id) {
-          if (action.payload.elementId) {
-            indx = container.elements.activeElements.findIndex(
-              (element) => element.layout.i === action.payload.parentLayout.i,
-            );
-          } else {
-            indx = container.elements.activeElements.findIndex(
-              (element) => element.layout.i === action.payload.layout.i,
-            );
-          }
+        if (container.id !== id) return;
 
-          // Если elementId передан в payload, удаляем элемент внутри секции
-          if (action.payload.elementId) {
-            // Находим индекс элемента внутри children
-            const element = container.elements.activeElements[indx];
-            const elIndx = element.children!.findIndex(
-              (child) => child.layout.i === action.payload.elementId
-            );
+        const findElementIndex = (layoutId) =>
+          container.elements.activeElements.findIndex((element) => element.layout.i === layoutId);
 
-            // Если нашли индекс элемента внутри children, удаляем его
-            if (elIndx !== undefined && elIndx !== -1) {
-              state.gridContainers.forEach((container) => {
-                const containerIndx = container.elements.activeElements.findIndex(
-                  (element) => element.layout.i === action.payload.parentLayout.i,
-                );
-                container.elements.activeElements[containerIndx].children!.splice(elIndx, 1);
-              });
-            }
-          } else {
-            // Иначе, удаляем саму секцию
-            container.elements.activeElements.splice(indx, 1);
+        const parentIndex = findElementIndex(parentLayout?.i || layout.i);
+
+        if (parentIndex === -1) return;
+
+        if (elementId) {
+          // Удаляем элемент внутри children
+          const parentElement = container.elements.activeElements[parentIndex];
+          const childIndex = parentElement.children?.findIndex(
+            (child) => child.layout.i === elementId,
+          );
+
+          if (childIndex !== undefined && childIndex !== -1) {
+            parentElement.children.splice(childIndex, 1);
           }
+        } else {
+          // Удаляем всю секцию
+          container.elements.activeElements.splice(parentIndex, 1);
         }
       });
     },
@@ -277,7 +272,7 @@ const letterLayoutSlice = createSlice({
         };
         state.gridContainers.splice(indx + 1, 0, newContainer);
       } else {
-        console.error('Container not found for ID:', action.payload);
+        console.error("Container not found for ID:", action.payload);
       }
     },
     copyGridContainer(state, action) {
@@ -349,7 +344,7 @@ const letterLayoutSlice = createSlice({
             const element = container.elements.activeElements[indx];
             if (element && element.children) {
               elIndx = element.children.findIndex(
-                (child) => child.layout.i === action.payload.elementId
+                (child) => child.layout.i === action.payload.elementId,
               );
             }
           }
@@ -365,7 +360,6 @@ const letterLayoutSlice = createSlice({
           }
         }
       });
-
     },
     // Уменьшаем количество колонок в блоке
     decreaseElementColumns(state, action) {
@@ -388,7 +382,7 @@ const letterLayoutSlice = createSlice({
             const element = container.elements.activeElements[indx];
             if (element && element.children) {
               elIndx = element.children.findIndex(
-                (child) => child.layout.i === action.payload.elementId
+                (child) => child.layout.i === action.payload.elementId,
               );
             }
           }
@@ -423,7 +417,7 @@ const letterLayoutSlice = createSlice({
                     ...el.props.style,
                   },
                   text: el.props.text,
-                  wrapperStyle: { ...el.props.wrapperStyle, ...action.payload.wrapperStyle},
+                  wrapperStyle: { ...el.props.wrapperStyle, ...action.payload.wrapperStyle },
                   textStyle: { ...action.payload.textStyle },
                 },
               };
@@ -445,31 +439,30 @@ const letterLayoutSlice = createSlice({
                   ...el.props,
                   [el.name]: [...action.payload.values],
                   size: action.payload.size === 0 ? 1 : action.payload.size,
-                  style:{
+                  style: {
                     ...el.props.style,
-                    ...action.payload.style
+                    ...action.payload.style,
                   },
                   textStyle: {
                     ...el.props.textStyle,
-                    ...action.payload.textStyle
+                    ...action.payload.textStyle,
                   },
                 },
               };
             } else if (el.children && el.children.length > 0) {
-              el.children.forEach((child, indx) =>  {
+              el.children.forEach((child, indx) => {
                 if (child.layout.i === action.payload.id) {
-
                   state.gridContainers[i].elements.activeElements[index].children![indx] = {
                     ...child,
                     props: {
                       [child.name]: [...action.payload.values],
-                      text: '',
+                      text: "",
                       size: action.payload.size === 0 ? 1 : action.payload.size,
                       style: action.payload.style,
-                    }
-                  }
+                    },
+                  };
                 }
-              })
+              });
             }
           });
         }
@@ -478,7 +471,7 @@ const letterLayoutSlice = createSlice({
     clearStore(state) {
       state.gridContainers = initialState.gridContainers;
       state.currentDraggableItem = null;
-      state.currentContainer = '';
+      state.currentContainer = "";
     },
   },
 });

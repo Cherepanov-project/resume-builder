@@ -1,4 +1,4 @@
-import { IconButton } from '@mui/material';
+import { IconButton } from "@mui/material";
 import {
   OpenWith,
   Settings,
@@ -6,19 +6,19 @@ import {
   Delete,
   AddCircleOutline,
   RemoveCircleOutline,
-} from '@mui/icons-material';
+} from "@mui/icons-material";
 
 import {
   deleteElement,
   copyElement,
   increaseElementColumns,
   decreaseElementColumns,
-} from '@store/landingBuilder/layoutSlice';
-import { useAppDispatch } from '@hooks/cvTemplateHooks';
-import { Layout } from 'react-grid-layout';
+} from "@store/landingBuilder/layoutSlice";
+import { useAppDispatch } from "@hooks/cvTemplateHooks";
+import { Layout } from "react-grid-layout";
 
-import classes from './ElementToolsPanel.module.scss';
-import { initPanel } from '@/store/landingBuilder/settingsPanelSlice';
+import classes from "./ElementToolsPanel.module.scss";
+import { initPanel } from "@/store/landingBuilder/settingsPanelSlice";
 
 type ElementToolsPanelProps = {
   layout: Layout;
@@ -29,11 +29,18 @@ type ElementToolsPanelProps = {
   elClass: string;
 };
 
-const ElementToolsPanel: React.FC<ElementToolsPanelProps> = ({ layout, id, elementId, parentLayout, setDraggingInnerItem, elClass }) => {
+const ElementToolsPanel: React.FC<ElementToolsPanelProps> = ({
+  layout,
+  id,
+  elementId,
+  parentLayout,
+  setDraggingInnerItem,
+  elClass,
+}) => {
   const dispatch = useAppDispatch();
 
   const handleSettings = () => {
-    dispatch(initPanel({ type: 'section', sectionID: layout.i, moduleID: '0' }));
+    dispatch(initPanel({ type: "section", sectionID: layout.i, moduleID: "0" }));
   };
 
   const handleInnerItemDragStart = () => {
@@ -45,11 +52,15 @@ const ElementToolsPanel: React.FC<ElementToolsPanelProps> = ({ layout, id, eleme
   };
 
   return (
-    <div className={classes['element-container']}>
-      <div className={classes['tools-panel']}>
-        <IconButton aria-label="Move Item" color="primary" className={elClass}
-                    onMouseDown={handleInnerItemDragStart}
-                    onMouseUp={handleInnerItemDragEnd}>
+    <div className={classes["element-container"]}>
+      <div className={classes["tools-panel"]}>
+        <IconButton
+          aria-label="Move Item"
+          color="primary"
+          className={elClass}
+          onMouseDown={handleInnerItemDragStart}
+          onMouseUp={handleInnerItemDragEnd}
+        >
           <OpenWith />
         </IconButton>
         <IconButton
@@ -58,9 +69,9 @@ const ElementToolsPanel: React.FC<ElementToolsPanelProps> = ({ layout, id, eleme
           color="primary"
           onClick={() => {
             if (elementId) {
-              dispatch(decreaseElementColumns({ layout, id, elementId, parentLayout }))
+              dispatch(decreaseElementColumns({ layout, id, elementId, parentLayout }));
             } else {
-              dispatch(decreaseElementColumns({ layout, id }))
+              dispatch(decreaseElementColumns({ layout, id }));
             }
           }}
         >
@@ -72,9 +83,9 @@ const ElementToolsPanel: React.FC<ElementToolsPanelProps> = ({ layout, id, eleme
           color="primary"
           onClick={() => {
             if (elementId) {
-              dispatch(increaseElementColumns({ layout, id, elementId, parentLayout }))
+              dispatch(increaseElementColumns({ layout, id, elementId, parentLayout }));
             } else {
-              dispatch(increaseElementColumns({ layout, id }))
+              dispatch(increaseElementColumns({ layout, id }));
             }
           }}
         >
@@ -94,9 +105,9 @@ const ElementToolsPanel: React.FC<ElementToolsPanelProps> = ({ layout, id, eleme
           color="primary"
           onClick={() => {
             if (elementId) {
-              dispatch(copyElement({ layout, id, elementId, parentLayout }))
+              dispatch(copyElement({ layout, id, elementId, parentLayout }));
             } else {
-              dispatch(copyElement({ layout, id }))
+              dispatch(copyElement({ layout, id }));
             }
           }}
         >
@@ -108,9 +119,9 @@ const ElementToolsPanel: React.FC<ElementToolsPanelProps> = ({ layout, id, eleme
           color="primary"
           onClick={() => {
             if (elementId) {
-              dispatch(deleteElement({ layout, id, elementId, parentLayout }))
+              dispatch(deleteElement({ layout, id, elementId, parentLayout }));
             } else {
-              dispatch(deleteElement({ layout, id }))
+              dispatch(deleteElement({ layout, id }));
             }
           }}
         >

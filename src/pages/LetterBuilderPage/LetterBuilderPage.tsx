@@ -1,4 +1,5 @@
 import LetterBuilderLeftSide from "../../../letter-builder/LetterBuilderLeftSide/LetterBuilderLeftSide";
+import { LetterBuilderSetting } from "../../../letter-builder/LetterBuilderRightSide";
 import LetterConstructorWorkspace from "../../../letter-builder/LetterConstructorWorkspace/LetterConstructorWorkspace";
 import LetterBuilderHeader from "@/components/molecules/LetterBuilderHeader";
 
@@ -11,6 +12,7 @@ const LetterBuilderPage = () => {
       <Stack height={"100%"} direction={"row"}>
         <LetterBuilderLeftSide />
         <LetterConstructorWorkspace />
+        <LetterBuilderSetting />
       </Stack>
     </Box>
   );

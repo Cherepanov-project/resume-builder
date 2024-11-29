@@ -11,7 +11,7 @@
 .container:hover {
   border-bottom: 1px dashed rgba(90, 90, 90, 1);
   border-top: 1px dashed rgba(90, 90, 90, 1);
-  transition: all ease-in-out .3s;
+  transition: all ease-in-out 0.3s;
 }
 
 .container:first-child {
@@ -20,7 +20,7 @@
 
 .grid {
   display: flex;
-  width: 1200px;
+  width: 100%;
   min-height: 1600px;
   padding: 20px;
   margin: 0 auto;
@@ -35,7 +35,7 @@
 
 .grid::before,
 .grid::after {
-  content: '';
+  content: "";
   position: absolute;
   top: 0;
   height: 100%;
@@ -46,12 +46,12 @@
 
 .grid::before {
   left: 0;
-  width: 30%; /* Ширина псевдоэлемента слева */
+  width: 20%; /* Ширина псевдоэлемента слева */
 }
 
 .grid::after {
   right: 0;
-  width: 30%; /* Ширина псевдоэлемента справа */
+  width: 20%; /* Ширина псевдоэлемента справа */
 }
 
 .react-resizable-handle {
@@ -78,7 +78,8 @@
   background-color: white;
 }
 
-.add-button, .add-button:hover {
+.add-button,
+.add-button:hover {
   width: 30px;
   height: 30px;
   padding: 0;

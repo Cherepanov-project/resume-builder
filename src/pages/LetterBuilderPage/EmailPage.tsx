@@ -1,7 +1,7 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
 import { useState } from "react";
-import { useSelector } from "react-redux";
-import { RootState } from "../../store/store";
+import { Provider, useSelector } from "react-redux";
+import store, { RootState } from "../../store/store";
 import emailjs from "emailjs-com";
 import ReactDOMServer from "react-dom/server";
 import { Modal, Button } from "antd";
@@ -47,6 +47,7 @@ const EmailPage = () => {
           {blockWidths.map((blockWidth: string, i: number) => {
             const colspan = extractPercent(blockWidth);
             const elementInCell = element.children[i]?.children[0]?.name || "No Content";
+            const id = element.children[i]?.children[0]?.id || "";
 
             // Рендер компонента из componentMap, если он существует
             const RenderedComponent = componentMap[elementInCell];
@@ -63,7 +64,7 @@ const EmailPage = () => {
                 }}
               >
                 {RenderedComponent ? (
-                  <RenderedComponent key={`${elementInCell}-${index}`} />
+                  <RenderedComponent key={`${elementInCell}-${index}`} id={id} />
                 ) : (
                   elementInCell
                 )}
@@ -77,22 +78,26 @@ const EmailPage = () => {
 
   // Генерация HTML таблицы
   const generateTableHTML = () => {
-    return ReactDOMServer.renderToString(
-      <table
-        style={{
-          borderSpacing: "10px",
-          backgroundColor: "#ffffff",
-          color: "#000000",
-          fontFamily: "Arial, sans-serif",
-          fontSize: "16px",
-          width: "100%",
-          borderCollapse: "collapse",
-        }}
-      >
-       <h1>Письмо</h1>
-        <tbody>{parseTreeToTable(elements, numberOfColumns)}</tbody>
-      </table>,
+    const tableContent = (
+      <Provider store={store}>
+        <table
+          style={{
+            borderSpacing: "10px",
+            backgroundColor: "#ffffff",
+            color: "#000000",
+            fontFamily: "Arial, sans-serif",
+            fontSize: "16px",
+            width: "100%",
+            borderCollapse: "collapse",
+          }}
+        >
+          <h1>Письмо</h1>
+          <tbody>{parseTreeToTable(elements, numberOfColumns)}</tbody>
+        </table>
+      </Provider>
     );
+
+    return ReactDOMServer.renderToString(tableContent);
   };
 
   // Показ модалки с таблицей
@@ -105,7 +110,7 @@ const EmailPage = () => {
   // Отправка email
   const sendEmail = (htmlContent: string) => {
     const params = { message: htmlContent };
-    emailjs.send("service_urk9e0t", "template_reenkpp", params, "IU1C_Yy4ZqGnKKkWQ").then(
+    emailjs.send("service_gxpmdyt", "template_7v9l30z", params, "oC8h9jJ9xBoUrMdh7").then(
       () => alert("Email sent successfully!"),
       (error) => alert(`Failed to send email: ${error.message}`),
     );

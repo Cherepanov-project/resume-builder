@@ -1,4 +1,4 @@
-import { IconButton } from '@mui/material';
+import { IconButton } from "@mui/material";
 import {
   OpenWith,
   Settings,
@@ -6,19 +6,17 @@ import {
   Delete,
   // AddCircleOutline,
   // RemoveCircleOutline,
-} from '@mui/icons-material';
+} from "@mui/icons-material";
 
 import {
   deleteElement,
   copyElement,
   // increaseElementColumns,
   // decreaseElementColumns,
-} from '@store/landingBuilder/layoutSlice';
-import { useAppDispatch } from '@hooks/cvTemplateHooks';
-import { Layout } from 'react-grid-layout';
-
-import classes from './ElementToolsPanel.module.scss';
-import { initPanel } from '@/store/landingBuilder/settingsPanelSlice';
+} from "@store/LetterBuilderStore/letterLayoutSlice";
+import { useAppDispatch } from "@hooks/cvTemplateHooks";
+import { Layout } from "react-grid-layout";
+import classes from "./ElementToolsPanel.module.scss";
 
 type ElementToolsPanelProps = {
   layout: Layout;
@@ -29,12 +27,17 @@ type ElementToolsPanelProps = {
   elClass: string;
 };
 
-const ElementToolsPanel: React.FC<ElementToolsPanelProps> = ({ layout, id, elementId, parentLayout, setDraggingInnerItem, elClass }) => {
+const ElementToolsPanel: React.FC<ElementToolsPanelProps> = ({
+  layout,
+  id,
+  elementId,
+  parentLayout,
+  setDraggingInnerItem,
+  elClass,
+}) => {
   const dispatch = useAppDispatch();
 
-  const handleSettings = () => {
-    dispatch(initPanel({ type: 'section', sectionID: layout.i, moduleID: '0' }));
-  };
+  const handleSettings = () => {};
 
   const handleInnerItemDragStart = () => {
     setDraggingInnerItem(true);
@@ -45,11 +48,15 @@ const ElementToolsPanel: React.FC<ElementToolsPanelProps> = ({ layout, id, eleme
   };
 
   return (
-    <div className={classes['element-container']}>
-      <div className={classes['tools-panel-left']}>
-        <IconButton aria-label="Move Item" color="primary" className={elClass}
-                    onMouseDown={handleInnerItemDragStart}
-                    onMouseUp={handleInnerItemDragEnd}>
+    <div className={classes["element-container"]}>
+      <div className={classes["tools-panel-left"]}>
+        <IconButton
+          aria-label="Move Item"
+          color="primary"
+          className={elClass}
+          onMouseDown={handleInnerItemDragStart}
+          onMouseUp={handleInnerItemDragEnd}
+        >
           <OpenWith />
         </IconButton>
         {/* <IconButton
@@ -80,8 +87,8 @@ const ElementToolsPanel: React.FC<ElementToolsPanelProps> = ({ layout, id, eleme
         >
           <AddCircleOutline />
         </IconButton> */}
-        </div>
-        <div className={classes['tools-panel-right']}>
+      </div>
+      <div className={classes["tools-panel-right"]}>
         <IconButton
           aria-label="Configure Item"
           title="Дополнительные настройки"
@@ -96,9 +103,9 @@ const ElementToolsPanel: React.FC<ElementToolsPanelProps> = ({ layout, id, eleme
           color="primary"
           onClick={() => {
             if (elementId) {
-              dispatch(copyElement({ layout, id, elementId, parentLayout }))
+              dispatch(copyElement({ layout, id, elementId, parentLayout }));
             } else {
-              dispatch(copyElement({ layout, id }))
+              dispatch(copyElement({ layout, id }));
             }
           }}
         >
@@ -110,16 +117,16 @@ const ElementToolsPanel: React.FC<ElementToolsPanelProps> = ({ layout, id, eleme
           color="primary"
           onClick={() => {
             if (elementId) {
-              dispatch(deleteElement({ layout, id, elementId, parentLayout }))
+              dispatch(deleteElement({ layout, id, elementId, parentLayout }));
             } else {
-              dispatch(deleteElement({ layout, id }))
+              dispatch(deleteElement({ layout, id }));
             }
           }}
         >
           <Delete />
         </IconButton>
-        </div>
       </div>
+    </div>
   );
 };
 

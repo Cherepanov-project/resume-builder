@@ -1,24 +1,24 @@
-import { useState, useEffect, useRef } from 'react';
-import './ImageMenu.scss';
-import { useAppDispatch, useTypedSelector } from '@/hooks/cvTemplateHooks';
-import { closeImageMenu } from '@/store/landingBuilder/settingsPanelSlice';
+import { useState, useEffect, useRef } from "react";
+import "./ImageMenu.scss";
+import { useAppDispatch, useTypedSelector } from "@/hooks/cvTemplateHooks";
+import { closeImageMenu } from "@/store/landingBuilder/settingsPanelSlice";
 
 type listItemType = { [key: string]: string };
 
 const ImageMenu = () => {
   const dispatch = useAppDispatch();
 
-  const isShown = useTypedSelector((state) => state.settingsPanel.imageMenu);
+  const isShown = useTypedSelector((state) => state.imageMenu.imageMenu);
 
   const [list, setList] = useState<listItemType[]>([]);
-  const [curItem, setCurItem] = useState({ url: '', alt: 'Image Alternative' });
+  const [curItem, setCurItem] = useState({ url: "", alt: "Image Alternative" });
 
   const urlRef = useRef<HTMLInputElement>(null);
   const altRef = useRef<HTMLInputElement>(null);
 
   const handleChange = () => {
-    let url = '';
-    let alt = '';
+    let url = "";
+    let alt = "";
     if (urlRef.current !== null) {
       url = urlRef.current.value;
     }
@@ -32,7 +32,7 @@ const ImageMenu = () => {
   };
 
   const getList = async () => {
-    const request = await fetch('https://jsonplaceholder.typicode.com/photos');
+    const request = await fetch("https://jsonplaceholder.typicode.com/photos");
     if (request.ok) {
       const result = await request.json();
       const json = result.slice(0, 20);
@@ -115,10 +115,7 @@ const ImageMenu = () => {
               >
                 CANCEL
               </button>
-              <button
-                className="apply-btn"
-                type="button"
-              >
+              <button className="apply-btn" type="button">
                 APPLY
               </button>
             </div>

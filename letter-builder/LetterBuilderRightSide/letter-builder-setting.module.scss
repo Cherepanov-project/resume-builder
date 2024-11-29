@@ -1,0 +1,25 @@
+.setting {
+  position: absolute;
+  z-index: 100;
+  top: 51px;
+  left: 0;
+  bottom: 0;
+  background-color: rgb(249 249 249 / var(--tw-bg-opacity, 1));
+  padding-left: 1.25rem;
+  padding-right: 1.25rem;
+  transition: transform ease-in-out 0.3s;
+  transform: translate(-410px, 0);
+
+  &.open {
+    transform: translate(0, 0);
+  }
+}
+
+.close_button {
+  position: inherit !important;
+  top: 10px;
+  right: 10px;
+}
+
+.content {
+}

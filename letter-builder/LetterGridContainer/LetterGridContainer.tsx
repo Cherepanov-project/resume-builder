@@ -20,16 +20,18 @@ const DynamicComponentRenderer: React.FC<LetterDynamicComponentRendererProps> = 
 
     return (
       <Suspense fallback={<ComponentPreloader />}>
-        <DynamicComponent
-          id={id}
-          key={Component}
-          props={props}
-          columns={columns}
-          source={source}
-          children={children}
-          layout={layout}
-          containerId={containerId}
-        />
+        <div style={{ zIndex: 1, position: "relative" }}>
+          <DynamicComponent
+            id={id}
+            key={Component}
+            props={props}
+            columns={columns}
+            source={source}
+            children={children}
+            layout={layout}
+            containerId={containerId}
+          />
+        </div>
       </Suspense>
     );
   },

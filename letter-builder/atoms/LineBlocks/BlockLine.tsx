@@ -31,15 +31,18 @@ interface LineCardProps {
 interface DynamicChildComponentRendererProps {
   source?: string;
   Component: string;
+  id: string;
 }
+
 const DynamicChildComponentRenderer: React.FC<DynamicChildComponentRendererProps> = memo(
-  ({ Component }) => {
+  ({ Component, id }) => {
     if (typeof Component === "undefined") return null;
+
     const DynamicComponent = lazy(() => import(`../LineBlocksContent/${Component}/index.ts`));
 
     return (
       <Suspense fallback={<ComponentPreloader />}>
-        <DynamicComponent key={Component} />
+        <DynamicComponent key={id} id={id} />
       </Suspense>
     );
   },
@@ -90,6 +93,7 @@ const BlockLine = ({ id, onDragStart, props }: LineCardProps) => {
                         key={nanoid()}
                         source={"atoms"}
                         Component={child.name}
+                        id={child.id}
                       />,
                     );
                   } else {
@@ -99,6 +103,7 @@ const BlockLine = ({ id, onDragStart, props }: LineCardProps) => {
                         key={nanoid()}
                         source={"atoms"}
                         Component={child.name}
+                        id={child.id}
                       />,
                     );
                   }
