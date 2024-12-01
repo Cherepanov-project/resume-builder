@@ -104,11 +104,21 @@ export function LetterBuilderSetting() {
   };
 
   const handlePaddingBlockChange = (event: React.ChangeEvent<HTMLInputElement>) => {
-    dispatch(updateElement({ paddingBlock: event.target.value + "px" }));
+    dispatch(
+      updateElement({
+        paddingTop: event.target.value + "px",
+        paddingBottom: event.target.value + "px",
+      }),
+    );
   };
 
   const handlePaddingInlineChange = (event: React.ChangeEvent<HTMLInputElement>) => {
-    dispatch(updateElement({ paddingInline: event.target.value + "px" }));
+    dispatch(
+      updateElement({
+        paddingLeft: event.target.value + "px",
+        paddingRight: event.target.value + "px",
+      }),
+    );
   };
 
   console.log(history);

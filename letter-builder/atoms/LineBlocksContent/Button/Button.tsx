@@ -1,5 +1,5 @@
 import { useAppDispatch } from "@store/store";
-import { addElement, initPanel } from "@/store/LetterBuilderStore/styleModule";
+import { addElement, initPanel, updateText } from "@/store/LetterBuilderStore/styleModule";
 import { useAppSelector } from "@/store/store";
 import { useEffect } from "react";
 
@@ -30,6 +30,10 @@ const ButtonComponent = ({ id }: { id: string }) => {
     dispatch(initPanel(id));
   };
 
+  const handleTextChange = (text: string) => {
+    dispatch(updateText({ id, text }));
+  };
+
   return (
     <a
       href={parameters?.href || ""}
@@ -40,9 +44,12 @@ const ButtonComponent = ({ id }: { id: string }) => {
         borderWidth: "1px",
         ...parameters?.styles,
       }}
+      contentEditable
+      suppressContentEditableWarning
       onClick={handleOpen}
+      onBlur={(e) => handleTextChange(e.target.textContent || "Кнопка")}
     >
-      Кнопка
+      {parameters?.text || "Кнопка"}
     </a>
   );
 };

@@ -19,6 +19,7 @@ const initialState: SettingsPanelState = {
 
 export const addElement = createAction<ElementState>("settingsPanel/addElement");
 export const updateElement = createAction<Style | Href>("settingsPanel/updateElement");
+export const updateText = createAction<{ id: string; text: string }>("settingsPanel/updateText");
 export const undo = createAction("settingsPanel/undo");
 export const redo = createAction("settingsPanel/redo");
 export const initPanel = createAction<string>("settingsPanel/initPanel");
@@ -49,6 +50,15 @@ const settingsPanelSlice = createSlice({
           element.styles = { ...element.styles, ...action.payload };
           updateHistory(state, { id: selectedId, styles: element.styles });
         }
+      }
+    });
+    builder.addCase(updateText, (state, action: PayloadAction<{ id: string; text: string }>) => {
+      const { id, text } = action.payload;
+
+      const element = state.elements[id];
+
+      if (element) {
+        element.text = text;
       }
     });
     builder.addCase(undo, (state) => {

@@ -4,11 +4,14 @@ export type Style = {
 
 export type Href = string;
 
+export type Text = string;
+
 export type ElementState = {
   id: string;
   styles: Style;
   type: "button";
   href?: Href;
+  text?: Text;
 };
 
 export type HistoryState = {
