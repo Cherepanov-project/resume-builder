@@ -22,6 +22,7 @@ export type SettingsPanelState = {
   selectedElement?: string;
   elements: Record<string, ElementState>;
   history: HistoryState[];
+  currentHistoryIndex: number;
 };
 
 function isHref(payload: unknown): payload is Href {

@@ -20,7 +20,7 @@ import {
   FormatUnderlined,
   FormatStrikethrough,
 } from "@mui/icons-material";
-import { updateElement } from "@/store/LetterBuilderStore/styleModule";
+import { redo, undo, updateElement } from "@/store/LetterBuilderStore/styleModule";
 import { useState } from "react";
 import css from "./letter-builder-setting.module.scss";
 
@@ -29,6 +29,7 @@ export function LetterBuilderSetting() {
   const selectedEl = useAppSelector((state) => state.styleModule.selectedElement);
   const element = useAppSelector((state) => state.styleModule.elements?.[selectedEl || ""]);
   const history = useAppSelector((state) => state.styleModule.history);
+  const currentHistoryIndex = useAppSelector((state) => state.styleModule.currentHistoryIndex);
 
   const dispatch = useAppDispatch();
 
@@ -120,14 +121,24 @@ export function LetterBuilderSetting() {
           justifyContent: "space-between",
           alignItems: "center",
           width: "100%",
-          padding: "8px",
+          height: "50px",
         }}
       >
         <Box sx={{ display: "flex", gap: 2 }}>
-          <IconButton aria-label="undo" color="primary">
+          <IconButton
+            aria-label="undo"
+            color="primary"
+            onClick={() => dispatch(undo())}
+            disabled={currentHistoryIndex === 0}
+          >
             <ArrowBack />
           </IconButton>
-          <IconButton aria-label="redo" color="primary">
+          <IconButton
+            aria-label="redo"
+            color="primary"
+            onClick={() => dispatch(redo())}
+            disabled={currentHistoryIndex === history.length - 1}
+          >
             <ArrowForward />
           </IconButton>
         </Box>
