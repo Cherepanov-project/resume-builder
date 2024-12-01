@@ -1,5 +1,5 @@
 import { useAppDispatch } from "@store/store";
-import { addElement } from "@/store/LetterBuilderStore/styleModule";
+import { addElement, initPanel } from "@/store/LetterBuilderStore/styleModule";
 import { useAppSelector } from "@/store/store";
 import { useEffect } from "react";
 
@@ -15,9 +15,9 @@ const ButtonComponent = ({ id }: { id: string }) => {
           styles: {
             backgroundColor: "#2563eb",
             color: "#ffffff",
-            padding: "8px 20px",
-            border: "none",
             borderRadius: "6px",
+            fontSize: "14px",
+            lineHeight: "20px",
           },
           type: "button",
         }),
@@ -25,14 +25,22 @@ const ButtonComponent = ({ id }: { id: string }) => {
     }
   }, [parameters, dispatch, id]);
 
+  const handleOpen = (event: React.MouseEvent) => {
+    event.preventDefault();
+    dispatch(initPanel(id));
+  };
+
   return (
     <a
-      href={parameters?.href}
+      href={parameters?.href || ""}
       style={{
         cursor: "pointer",
         transition: "all 0.2s ease-in-out",
+        borderStyle: "solid",
+        borderWidth: "1px",
         ...parameters?.styles,
       }}
+      onClick={handleOpen}
     >
       Кнопка
     </a>

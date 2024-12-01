@@ -4,6 +4,7 @@ import { insertChild } from "@/utils";
 import { addBaseScript } from "@/utils/scriptAssigner";
 // import { Layout } from 'react-grid-layout';
 import { T_BlockElement, LetterT_BlockElement } from "@/types/landingBuilder";
+import { replaceIdWithNanoid } from "@/utils/replaceIdWithId";
 
 const nanoid = customAlphabet("ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz", 15);
 
@@ -191,17 +192,19 @@ const letterLayoutSlice = createSlice({
         } else {
           // Дублируем секцию
           const originalElement = container.elements.activeElements[parentIndex];
+
           const newElement = {
             ...originalElement,
-            id: nanoid(),
             layout: {
               ...originalElement.layout,
-              y: originalElement.layout.y + originalElement.layout.h, // Новый элемент ниже
+              y: originalElement.layout.y + originalElement.layout.h,
               i: nanoid(),
             },
           };
-          console.log(newElement);
-          container.elements.activeElements.splice(parentIndex + 1, 0, newElement);
+
+          const newElementWithNewId = replaceIdWithNanoid(newElement);
+
+          container.elements.activeElements.splice(parentIndex + 1, 0, newElementWithNewId);
         }
       });
     },

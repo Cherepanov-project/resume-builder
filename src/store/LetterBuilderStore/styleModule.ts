@@ -1,31 +1,7 @@
 import { createAction, createSlice } from "@reduxjs/toolkit";
 import type { PayloadAction } from "@reduxjs/toolkit";
-
-type Style = {
-  [property: string]: string | number;
-};
-
-type Href = string;
-
-type ElementState = {
-  id: string;
-  styles: Style;
-  type: "button";
-  href?: Href;
-};
-
-type HistoryState = {
-  id: string;
-  styles?: Style;
-  href?: Href;
-};
-
-type SettingsPanelState = {
-  shown: boolean;
-  selectedElement?: string;
-  elements: Record<string, ElementState>;
-  history: HistoryState[];
-};
+import type { Href, Style, SettingsPanelState, ElementState } from "@/types/letterBuilder";
+import { isHref, isStyle } from "@/types/letterBuilder";
 
 const initialState: SettingsPanelState = {
   shown: false,
@@ -45,7 +21,6 @@ const settingsPanelSlice = createSlice({
   reducers: {},
   extraReducers: (builder) => {
     builder.addCase(addElement, (state, action: PayloadAction<ElementState>) => {
-      console.log(state.elements);
       state.elements[action.payload.id] = action.payload;
       state.history.push({ id: action.payload.id });
     });
@@ -54,14 +29,16 @@ const settingsPanelSlice = createSlice({
       if (!selectedId) return;
 
       const element = state.elements[selectedId];
+
       if (element) {
-        if (element.href) {
-          element.href = action.payload as Href;
+        if (isHref(action.payload)) {
+          element.href = action.payload;
           state.history.push({ id: selectedId, href: element.href });
         }
-        if (element.styles) {
-          element.styles = { ...element.styles, ...(action.payload as Style) };
-          state.history.push({ id: selectedId, styles: element.styles });
+
+        if (isStyle(action.payload) && element.styles) {
+          element.styles = { ...element.styles, ...action.payload };
+          state.history.push({ id: selectedId, styles: action.payload });
         }
       }
     });
