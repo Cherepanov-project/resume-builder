@@ -1,9 +1,10 @@
+
 const ButtonComponent = () => {
   return (
     <button
       style={{
         backgroundColor: "#2563eb",
-        color: "#ffffff",
+        color: "#fff",
         padding: "8px 20px",
         border: "none",
         borderRadius: "6px",
