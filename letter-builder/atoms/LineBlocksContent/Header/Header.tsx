@@ -1,7 +1,5 @@
-import { Typography } from "@mui/material"
-
 const Header = () => {
-    return <Typography variant="h2" sx={{fontSize: '28px'}}>Новый заголовок</Typography>
-}
+  return <h2 style={{ fontSize: "1.5rem" }}>Новый заголовок</h2>;
+};
 
-export default Header
+export default Header;

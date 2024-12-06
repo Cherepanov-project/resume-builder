@@ -1,7 +1,5 @@
-import { Typography } from "@mui/material"
-
 const Paragraph = () => {
-    return <Typography variant="body1">Я новый параграф</Typography>
-}
+  return <p>Я новый параграф</p>;
+};
 
-export default Paragraph
+export default Paragraph;

@@ -1,9 +1,12 @@
-import { Divider } from "@mui/material"
-
 const DividerComponent = () => {
   return (
-    <Divider sx={{width: '100%'}}/>
-  )
-}
+    <div
+      style={{
+        width: "100%",
+        borderTop: "1px solid #D1D5DB",
+      }}
+    />
+  );
+};
 
-export default DividerComponent
+export default DividerComponent;

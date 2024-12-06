@@ -1,7 +1,5 @@
-import { Typography } from "@mui/material"
-
 const Image = () => {
-    return <Typography variant="body1">Здесь будет картинка</Typography>
-}
+  return <p style={{ fontSize: "1rem" }}>Здесь будет картинка</p>;
+};
 
-export default Image
+export default Image;

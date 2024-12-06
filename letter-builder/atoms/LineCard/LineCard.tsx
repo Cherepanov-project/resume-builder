@@ -1,5 +1,3 @@
-import Box from '@mui/material/Box';
-
 interface LineCardProps {
   icon: JSX.Element;
   id: string;
@@ -11,43 +9,18 @@ interface LineCardProps {
 
 const LineCard = ({ icon, id, onDragStart, onDrop, onDragOver }: LineCardProps) => {
   return (
-    <Box
+    <div
       id={id}
       draggable
       onDragStart={(e) => onDragStart(e, id)}
       onDragOver={(e) => onDragOver(e)}
       onDrop={(e) => onDrop(e, id)}
-      sx={{
-        boxSizing: 'border-box',
-        width: '100%',
-        background: '#fff',
-        borderRadius: '3px',
-        display: 'block',
-        padding: '15px',
-        border: '1px solid #ccc',
-        boxShadow: '0 1px 1px rgba(0,0,0,0.1)',
-        transitionDuration: '.15s',
-        '&:hover': {
-          boxShadow: '0 6px 10px rgba(0, 0, 0, .35)',
-          border: '1px solid #ffffff',
-          cursor: 'grab'
-        }
-      }}
+      className="w-full bg-white rounded-[3px] block p-4 border border-gray-300 shadow-sm transition-all duration-150 hover:shadow-lg hover:border-white cursor-grab"
     >
-      <Box
-        sx={{
-          boxSizing: 'border-box',
-          verticalAlign: 'top',
-          alignItems: 'center',
-          display: 'flex',
-          position: 'relative',
-          flexFlow: 'column',
-          justifyContent: 'center',
-        }}
-      >
+      <div className="box-border flex flex-col items-center justify-center relative align-top">
         {icon}
-      </Box>
-    </Box>
+      </div>
+    </div>
   );
 };
 

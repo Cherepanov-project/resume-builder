@@ -1,13 +1,16 @@
-import { Typography } from "@mui/material"
-import { IconVideo } from "@components/atoms/Icons/LetterCardIcons"
+import { IconPngVideo } from "@components/atoms/Icons/LetterCardIcons";
 
 const VideoComponent = () => {
-  return ( 
-    <Typography variant="body1" color="#515659">
-      <IconVideo color="#515659" scale={1.3}/><br/>
-      Видео
-    </Typography>
-  )
-}
+  const iconStyle = { color: "#515659", scale: 1.3 };
 
-export default VideoComponent
+  return (
+    <div style={{ color: "#515659", textAlign: "center" }}>
+      <div className="flex justify-center" style={{ marginBottom: "0.5rem" }}>
+        <IconPngVideo {...iconStyle} />
+      </div>
+      Видео
+    </div>
+  );
+};
+
+export default VideoComponent;

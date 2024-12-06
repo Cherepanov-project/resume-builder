@@ -1,9 +1,5 @@
-import { Box } from "@mui/material"
-
 const Spacer = () => {
-  return (
-    <Box sx={{width: '100%', height: '50px'}}/>
-  )
-}
+  return <div style={{ width: "100%", height: "3rem" }} />;
+};
 
-export default Spacer
+export default Spacer;

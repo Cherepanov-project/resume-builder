@@ -1,7 +1,5 @@
-import { Typography } from "@mui/material"
+const Html = () => {
+  return <h2 style={{ fontSize: "1.5rem" }}>HTML код</h2>;
+};
 
-const HtmlComponent = () => {
-    return <Typography variant="body1">HTML код</Typography>
-}
-
-export default HtmlComponent
+export default Html;

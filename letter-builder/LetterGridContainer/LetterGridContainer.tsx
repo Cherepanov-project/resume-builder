@@ -1,13 +1,17 @@
-import { IGridContainers, setCurrentContainer } from '@/store/LetterBuilderStore/letterLayoutSlice';
-import ResponsiveGridLayout, { Layout } from 'react-grid-layout';
-import { useAppDispatch, useTypedSelector } from '@/hooks/cvTemplateHooks';
-import { LetterDynamicComponentRendererProps, T_BlockElement } from '@/types/landingBuilder';
-import { addElement, changeElement, setWindowWidth } from '@store/LetterBuilderStore/letterLayoutSlice';
-import React, { Suspense, lazy, memo, useEffect, useState } from 'react';
-import ComponentPreloader from '@/components/atoms/ComponentPreloader';
-import ElementToolsPanel from '../organismis/ElementToolsPanel/ElementToolsPanel';
-import { useNavigate } from 'react-router-dom';
-import classes from './LetterGridContainer.module.scss';
+import { IGridContainers, setCurrentContainer } from "@/store/LetterBuilderStore/letterLayoutSlice";
+import ResponsiveGridLayout, { Layout } from "react-grid-layout";
+import { useAppDispatch, useTypedSelector } from "@/hooks/cvTemplateHooks";
+import { LetterDynamicComponentRendererProps, T_BlockElement } from "@/types/landingBuilder";
+import {
+  addElement,
+  changeElement,
+  setWindowWidth,
+} from "@store/LetterBuilderStore/letterLayoutSlice";
+import React, { Suspense, lazy, memo, useEffect, useState } from "react";
+import ComponentPreloader from "@/components/atoms/ComponentPreloader";
+import ElementToolsPanel from "../organismis/ElementToolsPanel/ElementToolsPanel";
+import { useNavigate } from "react-router-dom";
+import classes from "./LetterGridContainer.module.scss";
 
 // Отрисовываем динамический компонент
 const DynamicComponentRenderer: React.FC<LetterDynamicComponentRendererProps> = memo(
@@ -53,9 +57,9 @@ export const LetterGridContainer = (container: IGridContainers) => {
       dispatch(setWindowWidth(window.innerWidth));
     };
 
-    window.addEventListener('resize', handleResize);
+    window.addEventListener("resize", handleResize);
     return () => {
-      window.removeEventListener('resize', handleResize);
+      window.removeEventListener("resize", handleResize);
     };
   }, [dispatch]);
 
@@ -74,17 +78,17 @@ export const LetterGridContainer = (container: IGridContainers) => {
 
   const handleEmailButtonClick = () => {
     // Сохранение данных о расположении блоков
-    const layoutData = container.elements.activeElements.map(el => ({
+    const layoutData = container.elements.activeElements.map((el) => ({
       id: el.id,
       layout: el.layout,
     }));
     const layoutString = JSON.stringify(layoutData);
-  
+
     // Создание HTML-шаблона
     const htmlTemplate = `
-      <div class="${classes['container']}">
+      <div class="${classes["container"]}">
         <ResponsiveGridLayout
-          class="${classes['grid']}"
+          class="${classes["grid"]}"
           layout="${JSON.stringify(workspaceLayout)}"
           cols="1"
           rowHeight="${container.height}"
@@ -94,15 +98,17 @@ export const LetterGridContainer = (container: IGridContainers) => {
           isDroppable="false"
           isResizable="false"
         >
-          ${container.elements.activeElements.map((el) => `
+          ${container.elements.activeElements
+            .map(
+              (el) => `
             <div
               key="${el.layout.i}"
-              class="${classes['item']}"
+              class="${classes["item"]}"
             >
               <DynamicComponentRenderer
                 id="${el.id}"
                 Component="${el.name}"
-                source="${el.source || 'atoms'}"
+                source="${el.source || "atoms"}"
                 props="${JSON.stringify(el.props)}"
                 columns="${el.columns || 1}"
                 layout="${JSON.stringify(el.layout)}"
@@ -110,13 +116,15 @@ export const LetterGridContainer = (container: IGridContainers) => {
                 containerId="${container.id}"
               />
             </div>
-          `).join('')}
+          `,
+            )
+            .join("")}
         </ResponsiveGridLayout>
       </div>
     `;
-  
+
     // Переход на страницу email
-    navigate('/email', {
+    navigate("/email", {
       state: {
         layoutData: layoutString,
         htmlTemplate: htmlTemplate,
@@ -126,7 +134,7 @@ export const LetterGridContainer = (container: IGridContainers) => {
 
   return (
     <div
-      className={classes['container']}
+      className={classes["container"]}
       onMouseEnter={() => {
         if (!isHover) {
           setIsHover(true);
@@ -146,15 +154,16 @@ export const LetterGridContainer = (container: IGridContainers) => {
         }
       }}
     >
-      <button 
-        className={classes['email-button']}
+      <button
+        style={{ color: "#ffff", marginLeft: "10px" }}
+        className={classes["email-button"]}
         onClick={handleEmailButtonClick}
       >
         Email Us
       </button>
 
       <ResponsiveGridLayout
-        className={classes['grid']}
+        className={classes["grid"]}
         layout={workspaceLayout}
         cols={1}
         rowHeight={container.height}
@@ -162,7 +171,7 @@ export const LetterGridContainer = (container: IGridContainers) => {
         margin={[8, 8]}
         isDraggable={!isDraggingInnerItem}
         isDroppable
-        isResizable={false} 
+        isResizable={false}
         onDrop={(layout: Layout[], layoutItem: Layout) => {
           const draggableItem = currentDraggableItem;
 
@@ -186,15 +195,15 @@ export const LetterGridContainer = (container: IGridContainers) => {
           dispatch(addElement({ draggableItem, layoutItem: newLayoutItem, layout, id }));
         }}
         draggableHandle=".drag-area"
-        onResizeStop={handleChangeLayout} 
+        onResizeStop={handleChangeLayout}
         onDragStop={handleChangeLayout}
-      > 
+      >
         {container.elements.activeElements.map((el) => {
           const isActive = activeElement === el.id;
           return (
             <div
               key={el.layout.i}
-              className={`${classes['item']} ${isActive ? classes['active'] : ''}`}
+              className={`${classes["item"]} ${isActive ? classes["active"] : ""}`}
               onClick={() => handleElementClick(el.id)}
             >
               {isActive && (
@@ -208,7 +217,7 @@ export const LetterGridContainer = (container: IGridContainers) => {
               <DynamicComponentRenderer
                 id={el.id}
                 Component={el.name}
-                source={el.source || 'atoms'}
+                source={el.source || "atoms"}
                 props={el.props}
                 columns={el.columns || 1}
                 layout={el.layout}

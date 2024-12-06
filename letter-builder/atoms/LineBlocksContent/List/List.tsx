@@ -1,13 +1,11 @@
-import { Typography, List, ListItem } from "@mui/material"
-
 const ListComponent = () => {
   return (
-    <Typography variant="body1">
-      <List sx={{ listStyle: 'disc' }}>
-        <ListItem component="li">Это неупорядоченный список</ListItem>
-      </List>  
-    </Typography>
-  )
-}
+    <p style={{ fontSize: "1rem" }}>
+      <ul style={{ paddingLeft: "1.25rem" }}>
+        <li>Это неупорядоченный список</li>
+      </ul>
+    </p>
+  );
+};
 
-export default ListComponent
+export default ListComponent;
