@@ -6,10 +6,12 @@ export type Href = string;
 
 export type Text = string;
 
+export type TypeElement = "button" | "text";
+
 export type ElementState = {
   id: string;
   styles: Style;
-  type: "button";
+  type: TypeElement;
   href?: Href;
   text?: Text;
 };

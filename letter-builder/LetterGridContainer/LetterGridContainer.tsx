@@ -202,6 +202,13 @@ export const LetterGridContainer = (container: IGridContainers) => {
       >
         {container.elements.activeElements.map((el) => {
           const isActive = activeElement === el.id;
+          const idsElements = el.children.reduce((acc, item) => {
+            for (const child of item.children) {
+              acc.push(child.id);
+            }
+            return acc;
+          }, []);
+
           return (
             <div
               key={el.layout.i}
@@ -212,6 +219,7 @@ export const LetterGridContainer = (container: IGridContainers) => {
                 <ElementToolsPanel
                   layout={el.layout}
                   id={container.id}
+                  elementsIds={idsElements}
                   setDraggingInnerItem={handleSetDraggingInnerItem}
                   elClass="drag-area"
                 />

@@ -17,6 +17,7 @@ import {
 import { useAppDispatch } from "@hooks/cvTemplateHooks";
 import { Layout } from "react-grid-layout";
 import classes from "./ElementToolsPanel.module.scss";
+import { clearElements } from "@/store/LetterBuilderStore/styleModule";
 
 type ElementToolsPanelProps = {
   layout: Layout;
@@ -25,6 +26,7 @@ type ElementToolsPanelProps = {
   elementId?: string;
   setDraggingInnerItem: (isDragging: boolean) => void;
   elClass: string;
+  elementsIds: string[];
 };
 
 const ElementToolsPanel: React.FC<ElementToolsPanelProps> = ({
@@ -33,6 +35,7 @@ const ElementToolsPanel: React.FC<ElementToolsPanelProps> = ({
   elementId,
   parentLayout,
   setDraggingInnerItem,
+  elementsIds,
   elClass,
 }) => {
   const dispatch = useAppDispatch();
@@ -121,6 +124,8 @@ const ElementToolsPanel: React.FC<ElementToolsPanelProps> = ({
             } else {
               dispatch(deleteElement({ layout, id }));
             }
+
+            dispatch(clearElements(elementsIds));
           }}
         >
           <Delete />

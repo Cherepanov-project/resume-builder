@@ -24,6 +24,7 @@ export const undo = createAction("settingsPanel/undo");
 export const redo = createAction("settingsPanel/redo");
 export const initPanel = createAction<string>("settingsPanel/initPanel");
 export const closePanel = createAction("settingsPanel/closePanel");
+export const clearElements = createAction<string[]>("settingsPanel/clearElements");
 
 const settingsPanelSlice = createSlice({
   name: "settingsPanel",
@@ -98,6 +99,27 @@ const settingsPanelSlice = createSlice({
       if (action.styles) {
         element.styles = { ...element.styles, ...action.styles };
       }
+    });
+    builder.addCase(clearElements, (state, action: PayloadAction<string[]>) => {
+      action.payload.forEach((id) => {
+        delete state.elements[id];
+
+        if (state.history.length > 0) {
+          state.history = state.history.filter((action) => action.id !== id);
+        }
+
+        if (state.currentHistoryIndex >= 0) {
+          const currentAction = state.history[state.currentHistoryIndex];
+          if (currentAction?.id === id) {
+            state.currentHistoryIndex -= 1;
+          }
+        }
+
+        if (state.selectedElement === id) {
+          state.selectedElement = undefined;
+          state.shown = false;
+        }
+      });
     });
     builder.addCase(initPanel, (state, action: PayloadAction<string>) => {
       if (!state.shown) {
