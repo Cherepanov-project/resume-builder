@@ -1,85 +1,92 @@
-const TableComponent = () => {
+import { useStyleElement } from "../../../hooks/useStyleElement";
+import { useState } from "react";
+
+const TableComponent = ({ id }: { id: string }) => {
+  const { handleOpen, handleTextChange, parameters } = useStyleElement(
+    id,
+    {
+      backgroundColor: "#ffffff",
+      color: "#333333",
+      fontSize: "14px",
+      lineHeight: "20px",
+    },
+    "table",
+  );
+
+  const [tableData, setTableData] = useState(
+    parameters?.text
+      ? JSON.parse(parameters.text)
+      : [
+          ["Заголовок", "Заголовок", "Заголовок"],
+          ["Ячейка", "Ячейка", "Ячейка"],
+        ],
+  );
+
+  const defaultStyles = {
+    minWidth: "100%",
+    borderCollapse: "collapse" as const,
+    textAlign: "center" as const,
+    border: "1px solid #e2e8f0",
+    transition: "all 0.2s ease-in-out",
+  };
+
+  const { backgroundColor, color, ...otherStyles } = parameters?.styles || {};
+
+  const headerStyles = {
+    backgroundColor: backgroundColor || "#E5E7EB",
+    color: color || "#333333",
+  };
+
+  const handleDataChange = (rowIndex: number, columnIndex: number, value: string) => {
+    const newData = [...tableData];
+    newData[rowIndex][columnIndex] = value;
+    setTableData(newData);
+
+    handleTextChange(JSON.stringify(newData));
+  };
+
+  const [tableHeader, ...tableBody] = tableData;
+
   return (
     <table
       style={{
-        minWidth: "100%",
-        borderCollapse: "collapse",
-        border: "1px solid #D1D5DB",
+        ...defaultStyles,
+        ...otherStyles,
       }}
+      onClick={handleOpen}
     >
-      <thead
-        style={{
-          backgroundColor: "#E5E7EB",
-          color: "#374151",
-          textAlign: "left",
-          fontSize: "0.875rem",
-          lineHeight: "1.25rem",
-        }}
-      >
+      <thead>
         <tr>
-          <th
-            style={{
-              width: "300px",
-              padding: "0.5rem",
-              border: "1px solid #D1D5DB",
-              textAlign: "center",
-            }}
-          >
-            Заголовок
-          </th>
-          <th
-            style={{
-              padding: "0.5rem",
-              border: "1px solid #D1D5DB",
-            }}
-          ></th>
+          {tableHeader.map((item: string, index: number) => (
+            <th
+              key={index}
+              style={headerStyles}
+              contentEditable
+              suppressContentEditableWarning
+              onBlur={(e) => handleDataChange(0, index, e.target.textContent || "Заголовок")}
+            >
+              {item}
+            </th>
+          ))}
         </tr>
       </thead>
-      <tbody
-        style={{
-          color: "#374151",
-        }}
-      >
-        <tr>
-          <td
-            style={{
-              width: "200px",
-              padding: "0.5rem",
-              border: "1px solid #D1D5DB",
-            }}
-          >
-            Параграф
-          </td>
-          <td
-            style={{
-              width: "400px",
-              padding: "0.5rem",
-              border: "1px solid #D1D5DB",
-            }}
-          ></td>
-        </tr>
-        <tr>
-          <td style={{ width: "200px", padding: "0.5rem", border: "1px solid #D1D5DB" }}>
-            Параграф
-          </td>
-          <td
-            style={{
-              padding: "0.5rem",
-              border: "1px solid #D1D5DB",
-            }}
-          ></td>
-        </tr>
-        <tr>
-          <td style={{ width: "200px", padding: "0.5rem", border: "1px solid #D1D5DB" }}>
-            Параграф
-          </td>
-          <td
-            style={{
-              padding: "0.5rem",
-              border: "1px solid #D1D5DB",
-            }}
-          ></td>
-        </tr>
+      <tbody>
+        {tableBody.map((row: string[], rowIndex: number) => (
+          <tr key={rowIndex}>
+            {row.map((item, columnIndex) => (
+              <td
+                key={columnIndex}
+                contentEditable
+                suppressContentEditableWarning
+                onBlur={(e) =>
+                  handleDataChange(rowIndex + 1, columnIndex, e.target.textContent || "Ячейка")
+                }
+              >
+                {item}
+              </td>
+            ))}
+          </tr>
+        ))}
       </tbody>
     </table>
   );

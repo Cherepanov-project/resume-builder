@@ -24,6 +24,7 @@ type Props = {
 const elementConfig = {
   button: ["link", "text", "padding", "background", "border"],
   text: ["text"],
+  table: ["text", "background"],
 };
 
 export const StyleAccordion = ({ element }: Props) => {

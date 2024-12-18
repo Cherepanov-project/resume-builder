@@ -1,13 +1,17 @@
 import { useStyleElement } from "../../../hooks/useStyleElement";
 
 const ButtonComponent = ({ id }: { id: string }) => {
-  const { handleOpen, handleTextChange, parameters } = useStyleElement(id, {
-    backgroundColor: "#2563eb",
-    color: "#ffffff",
-    borderRadius: "6px",
-    fontSize: "14px",
-    lineHeight: "20px",
-  });
+  const { handleOpen, handleTextChange, parameters } = useStyleElement(
+    id,
+    {
+      backgroundColor: "#2563eb",
+      color: "#ffffff",
+      borderRadius: "6px",
+      fontSize: "14px",
+      lineHeight: "20px",
+    },
+    "button",
+  );
 
   return (
     <a

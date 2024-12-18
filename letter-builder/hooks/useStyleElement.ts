@@ -2,9 +2,9 @@ import { useAppDispatch } from "@store/store";
 import { addElement, initPanel, updateText } from "@/store/LetterBuilderStore/styleModule";
 import { useAppSelector } from "@/store/store";
 import { useEffect } from "react";
-import type { Style } from "@/types/letterBuilder";
+import type { Style, TypeElement } from "@/types/letterBuilder";
 
-export const useStyleElement = (id: string, defaultStyle: Style) => {
+export const useStyleElement = (id: string, defaultStyle: Style, type?: TypeElement) => {
   const dispatch = useAppDispatch();
   const parameters = useAppSelector((state) => state.styleModule.elements?.[id]);
 
@@ -16,11 +16,11 @@ export const useStyleElement = (id: string, defaultStyle: Style) => {
           styles: {
             ...defaultStyle,
           },
-          type: "text",
+          type: type || "text",
         }),
       );
     }
-  }, [parameters, dispatch, defaultStyle, id]);
+  }, [parameters, dispatch, defaultStyle, type, id]);
 
   const handleOpen = (event: React.MouseEvent) => {
     event.preventDefault();
