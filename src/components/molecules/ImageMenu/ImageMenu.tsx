@@ -8,7 +8,7 @@ type listItemType = { [key: string]: string };
 const ImageMenu = () => {
   const dispatch = useAppDispatch();
 
-  const isShown = useTypedSelector((state) => state.imageMenu.imageMenu);
+  const isShown = useTypedSelector((state) => state.settingsPanel.imageMenu);
 
   const [list, setList] = useState<listItemType[]>([]);
   const [curItem, setCurItem] = useState({ url: "", alt: "Image Alternative" });
