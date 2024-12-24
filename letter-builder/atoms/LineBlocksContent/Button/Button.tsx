@@ -9,6 +9,7 @@ const ButtonComponent = ({ id }: { id: string }) => {
       borderRadius: "6px",
       fontSize: "14px",
       lineHeight: "20px",
+      fontFamily: "Roboto, sans-serif",
     },
     "button",
   );

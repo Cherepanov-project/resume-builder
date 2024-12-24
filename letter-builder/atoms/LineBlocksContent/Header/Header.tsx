@@ -5,6 +5,7 @@ const Header = ({ id }: { id: string }) => {
     color: "#000",
     fontSize: "20px",
     lineHeight: "24px",
+    fontFamily: "Roboto, sans-serif",
   });
 
   return (

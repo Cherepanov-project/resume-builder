@@ -9,6 +9,7 @@ const TableComponent = ({ id }: { id: string }) => {
       color: "#333333",
       fontSize: "14px",
       lineHeight: "20px",
+      fontFamily: "Roboto, sans-serif",
     },
     "table",
   );
