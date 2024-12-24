@@ -5,6 +5,7 @@ const Paragraph = ({ id }: { id: string }) => {
     color: "#000",
     fontSize: "14px",
     lineHeight: "20px",
+    fontFamily: "Roboto, sans-serif",
   });
 
   return (

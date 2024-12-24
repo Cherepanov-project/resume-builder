@@ -7,6 +7,8 @@ import {
   TextField,
   IconButton,
   Typography,
+  Select,
+  MenuItem,
 } from "@mui/material";
 import {
   ExpandMore,
@@ -15,7 +17,7 @@ import {
   FormatUnderlined,
   FormatStrikethrough,
 } from "@mui/icons-material";
-import { useSidebarLetter } from "../../hooks/useSidebarLetter";
+import { fonts, useSidebarLetter } from "../../hooks/useSidebarLetter";
 
 type Props = {
   element: ElementState;
@@ -42,6 +44,7 @@ export const StyleAccordion = ({ element }: Props) => {
     handleTextColorChange,
     handleTextSizeChange,
     handleLineHeightChange,
+    handleFontFamilyChange,
     handleBorderRadiusChange,
     handleBorderColorChange,
     handlePaddingBlockChange,
@@ -231,6 +234,19 @@ export const StyleAccordion = ({ element }: Props) => {
             onChange={handleLineHeightChange}
             variant="outlined"
           />
+
+          <Select
+            sx={{ width: "100%" }}
+            value={element?.styles.fontFamily || ""}
+            onChange={handleFontFamilyChange}
+            displayEmpty
+          >
+            {fonts.map((font) => (
+              <MenuItem key={font.name} value={font.family}>
+                <span style={{ fontFamily: font.family }}>{font.name}</span>
+              </MenuItem>
+            ))}
+          </Select>
         </AccordionDetails>
       ),
     },

@@ -2,6 +2,66 @@ import type { ElementState } from "@/types/letterBuilder";
 import { useState } from "react";
 import { useAppDispatch } from "@/store/store";
 import { updateElement } from "@/store/LetterBuilderStore/styleModule";
+import { SelectChangeEvent } from "@mui/material";
+
+export const fonts = [
+  {
+    name: "Roboto",
+    family: "Roboto, sans-serif",
+    cdn: "https://fonts.googleapis.com/css2?family=Roboto:wght@400;700&subset=cyrillic",
+  },
+  {
+    name: "Open Sans",
+    family: "Open Sans, sans-serif",
+    cdn: "https://fonts.googleapis.com/css2?family=Open+Sans:wght@400;700&subset=cyrillic",
+  },
+  {
+    name: "Montserrat",
+    family: "Montserrat, sans-serif",
+    cdn: "https://fonts.googleapis.com/css2?family=Montserrat:wght@400;700&subset=cyrillic",
+  },
+
+  // Декоративные
+  {
+    name: "Lobster",
+    family: "Lobster, cursive",
+    cdn: "https://fonts.googleapis.com/css2?family=Lobster&subset=cyrillic",
+  },
+  {
+    name: "Playfair Display",
+    family: "Playfair Display, serif",
+    cdn: "https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;700&subset=cyrillic",
+  },
+
+  // Рукописные
+  {
+    name: "Pacifico",
+    family: "Pacifico, cursive",
+    cdn: "https://fonts.googleapis.com/css2?family=Pacifico&subset=cyrillic",
+  },
+  {
+    name: "Comfortaa",
+    family: "Comfortaa, sans-serif",
+    cdn: "https://fonts.googleapis.com/css2?family=Comfortaa:wght@400;700&subset=cyrillic",
+  },
+
+  // Минималистичные
+  {
+    name: "Exo 2",
+    family: "Exo 2, sans-serif",
+    cdn: "https://fonts.googleapis.com/css2?family=Exo+2:wght@400;700&subset=cyrillic",
+  },
+  {
+    name: "PT Sans",
+    family: "PT Sans, sans-serif",
+    cdn: "https://fonts.googleapis.com/css2?family=PT+Sans:wght@400;700&subset=cyrillic",
+  },
+  {
+    name: "Marck Script",
+    family: "Marck Script, cursive",
+    cdn: "https://fonts.googleapis.com/css2?family=Marck+Script&subset=cyrillic",
+  },
+];
 
 export const useSidebarLetter = (element: ElementState) => {
   const dispatch = useAppDispatch();
@@ -64,6 +124,21 @@ export const useSidebarLetter = (element: ElementState) => {
     dispatch(updateElement({ lineHeight: event.target.value + "px" }));
   };
 
+  const handleFontFamilyChange = (event: SelectChangeEvent<string>) => {
+    const selectedFont = event.target.value;
+
+    const font = fonts.find((font) => font.family === selectedFont);
+
+    if (font) {
+      const link = document.createElement("link");
+      link.href = font.cdn;
+      link.rel = "stylesheet";
+      document.head.appendChild(link);
+
+      dispatch(updateElement({ fontFamily: selectedFont }));
+    }
+  };
+
   const handleBorderRadiusChange = (event: React.ChangeEvent<HTMLInputElement>) => {
     dispatch(updateElement({ borderRadius: event.target.value + "px" }));
   };
@@ -102,6 +177,7 @@ export const useSidebarLetter = (element: ElementState) => {
     handleTextColorChange,
     handleTextSizeChange,
     handleLineHeightChange,
+    handleFontFamilyChange,
     handleBorderRadiusChange,
     handleBorderColorChange,
     handlePaddingBlockChange,
