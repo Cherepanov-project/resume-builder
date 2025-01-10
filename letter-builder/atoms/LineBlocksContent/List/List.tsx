@@ -1,10 +1,82 @@
-const ListComponent = () => {
+import { useEffect } from "react";
+import { useStyleElement } from "../../../hooks/useStyleElement";
+import { addListValue } from "@/store/LetterBuilderStore/styleModule";
+import { useAppDispatch } from "@/store/store";
+
+const ListComponent = ({ id }: { id: string }) => {
+  const { handleOpen, parameters } = useStyleElement(id, {
+    color: "#000",
+    fontSize: "14px",
+    lineHeight: "20px",
+    fontFamily: "Roboto, sans-serif",
+  });
+  let arrList: string[] = [""];
+  if (parameters?.valueList) arrList = Object.values(parameters.valueList);
+
+  const dispatch = useAppDispatch();
+  useEffect(() => {
+    if (parameters?.valueList) arrList = Object.values(parameters.valueList);
+  }, [parameters?.valueList]);
+
+  const onChangeHandle = (e: React.ChangeEvent<HTMLInputElement>, key: number) => {
+    const textList = e.target.value;
+    dispatch(addListValue({ id, key, textList }));
+  };
+
+  const onKeyDownHandle = (e, key: number) => {
+    switch (e.code) {
+      case "Enter":
+        if (e.target.value.length > 0) {
+          key = key + 1;
+          const textList = "";
+          dispatch(addListValue({ id, textList, key }));
+        }
+        break;
+
+      case "Backspace":
+        if (arrList.length > 1 && e.target.value.length === 0) dispatch(addListValue({ id, key }));
+        break;
+
+      default:
+        break;
+    }
+  };
+
   return (
-    <p className="text-base">
-      <ul className="pl-5">
-        <li>Это неупорядоченный список</li>
-      </ul>
-    </p>
+    <>
+      <div>
+        <ul
+          className="pl-5"
+          style={{
+            cursor: "pointer",
+            transition: "all 0.2s ease-in-out",
+            outline: "none",
+            listStyleType: "disc",
+            ...parameters?.styles,
+          }}
+        >
+          {arrList.map((item: string, idx: number) => {
+            const defItem = parameters?.valueList || [""];
+            const key = idx;
+            return (
+              <li key={key}>
+                <input
+                  style={{
+                    width: "200px",
+                    border: "none",
+                  }}
+                  onClick={handleOpen}
+                  placeholder="Это новый пункт"
+                  onChange={(e) => onChangeHandle(e, key)}
+                  onKeyDown={(e) => onKeyDownHandle(e, key)}
+                  defaultValue={item || defItem[key]}
+                ></input>
+              </li>
+            );
+          })}
+        </ul>
+      </div>
+    </>
   );
 };
 

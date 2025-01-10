@@ -25,6 +25,7 @@ export const redo = createAction("settingsPanel/redo");
 export const initPanel = createAction<string>("settingsPanel/initPanel");
 export const closePanel = createAction("settingsPanel/closePanel");
 export const clearElements = createAction<string[]>("settingsPanel/clearElements");
+export const addListValue = createAction<{}>("settingsPanel/addListValue");
 
 const settingsPanelSlice = createSlice({
   name: "settingsPanel",
@@ -134,6 +135,28 @@ const settingsPanelSlice = createSlice({
       }
 
       state.selectedElement = undefined;
+    });
+    builder.addCase(addListValue, (state, action: any) => {
+      const { id, key, textList } = action.payload;
+      const element = state.elements[id];
+
+      if (!element.valueList) element.valueList = {};
+      if (textList === undefined) {
+        delete element.valueList[key];
+        const values = Object.values(element.valueList);
+        const keys = Object.keys(element.valueList);
+
+        element.valueList = {};
+        const newKeys = keys.map((item) => {
+          if (Number(item) > key) item = String(Number(item) - 1);
+          return item;
+        });
+        newKeys.map((k, i) => {
+          element.valueList![k] = values[i];
+        });
+      } else {
+        element.valueList[key] = textList;
+      }
     });
   },
 });

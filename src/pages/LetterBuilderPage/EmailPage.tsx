@@ -51,7 +51,7 @@ const EmailPage = () => {
 
             // Рендер компонента из componentMap, если он существует
             const RenderedComponent = componentMap[elementInCell];
-
+            
             return (
               <td
                 key={i}
@@ -110,7 +110,7 @@ const EmailPage = () => {
   // Отправка email
   const sendEmail = (htmlContent: string) => {
     const params = { message: htmlContent };
-    emailjs.send("service_gxpmdyt", "template_7v9l30z", params, "oC8h9jJ9xBoUrMdh7").then(
+    emailjs.send("service_6rybb4c", "template_c2fv928", params, "V_snah8XM2QtKOA1G").then(
       () => alert("Email sent successfully!"),
       (error) => alert(`Failed to send email: ${error.message}`),
     );

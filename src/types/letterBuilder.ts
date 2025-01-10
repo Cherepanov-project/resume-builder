@@ -14,6 +14,7 @@ export type ElementState = {
   type: TypeElement;
   href?: Href;
   text?: Text;
+  valueList?: {};
 };
 
 export type HistoryState = {
