@@ -30,40 +30,35 @@ export const addListValue = createAction<{}>("settingsPanel/addListValue");
 const settingsPanelSlice = createSlice({
   name: "settingsPanel",
   initialState,
-  reducers: {},
-  extraReducers: (builder) => {
-    builder.addCase(addElement, (state, action: PayloadAction<ElementState>) => {
-      state.elements[action.payload.id] = action.payload;
-      state.history.push({ id: action.payload.id });
-    });
-    builder.addCase(updateElement, (state, action: PayloadAction<Style | Href>) => {
+  reducers: {
+    addElement: (state, { payload }: PayloadAction<ElementState>) => {
+      state.elements[payload.id] = payload;
+      state.history.push({ id: payload.id });
+    },
+    updateElement: (state, { payload }: PayloadAction<Style | Href>) => {
       const selectedId = state.selectedElement;
       if (!selectedId) return;
 
       const element = state.elements[selectedId];
 
       if (element) {
-        if (isHref(action.payload)) {
-          element.href = action.payload;
+        if (isHref(payload)) {
+          element.href = payload;
           updateHistory(state, { id: selectedId, href: element.href });
         }
 
-        if (isStyle(action.payload) && element.styles) {
-          element.styles = { ...element.styles, ...action.payload };
+        if (isStyle(payload) && element.styles) {
+          element.styles = { ...element.styles, ...payload };
           updateHistory(state, { id: selectedId, styles: element.styles });
         }
       }
-    });
-    builder.addCase(updateText, (state, action: PayloadAction<{ id: string; text: string }>) => {
-      const { id, text } = action.payload;
+    },
+    updateText: (state, { payload }: PayloadAction<{ id: string; text: string }>) => {
+      const { id, text } = payload;
 
-      const element = state.elements[id];
-
-      if (element) {
-        element.text = text;
-      }
-    });
-    builder.addCase(undo, (state) => {
+      if (state.elements[id]) state.elements[id].text = text;
+    },
+    undo: (state) => {
       if (state.currentHistoryIndex <= 0) return;
 
       state.currentHistoryIndex -= 1;
@@ -81,8 +76,8 @@ const settingsPanelSlice = createSlice({
       if (action.styles) {
         element.styles = { ...element.styles, ...action.styles };
       }
-    });
-    builder.addCase(redo, (state) => {
+    },
+    redo: (state) => {
       if (state.currentHistoryIndex >= state.history.length - 1) return;
 
       state.currentHistoryIndex += 1;
@@ -100,9 +95,9 @@ const settingsPanelSlice = createSlice({
       if (action.styles) {
         element.styles = { ...element.styles, ...action.styles };
       }
-    });
-    builder.addCase(clearElements, (state, action: PayloadAction<string[]>) => {
-      action.payload.forEach((id) => {
+    },
+    clearElements: (state, { payload }: PayloadAction<string[]>) => {
+      payload.forEach((id) => {
         delete state.elements[id];
 
         if (state.history.length > 0) {
@@ -121,43 +116,45 @@ const settingsPanelSlice = createSlice({
           state.shown = false;
         }
       });
-    });
-    builder.addCase(initPanel, (state, action: PayloadAction<string>) => {
+    },
+    initPanel: (state, { payload }: PayloadAction<string>) => {
       if (!state.shown) {
         state.shown = true;
       }
 
-      state.selectedElement = action.payload;
-    });
-    builder.addCase(closePanel, (state) => {
+      state.selectedElement = payload;
+    },
+    closePanel: (state) => {
       if (state.shown) {
         state.shown = false;
       }
 
       state.selectedElement = undefined;
-    });
-    builder.addCase(addListValue, (state, action: any) => {
-      const { id, key, textList } = action.payload;
-      const element = state.elements[id];
+    },
+    addListValue: (
+      state,
+      { payload }: PayloadAction<{ id: string; key: number; textList?: string | undefined }>,
+    ) => {
+      const { id, key, textList } = payload;
 
-      if (!element.valueList) element.valueList = {};
+      if (!state.elements[id].valueList) state.elements[id].valueList = {};
       if (textList === undefined) {
-        delete element.valueList[key];
-        const values = Object.values(element.valueList);
-        const keys = Object.keys(element.valueList);
+        delete state.elements[id].valueList[key];
+        const values = Object.values(state.elements[id].valueList);
+        const keys = Object.keys(state.elements[id].valueList);
 
-        element.valueList = {};
+        state.elements[id].valueList = {};
         const newKeys = keys.map((item) => {
           if (Number(item) > key) item = String(Number(item) - 1);
           return item;
         });
         newKeys.map((k, i) => {
-          element.valueList![k] = values[i];
+          state.elements[id].valueList![k] = values[i];
         });
       } else {
-        element.valueList[key] = textList;
+        state.elements[id].valueList[key] = textList;
       }
-    });
+    },
   },
 });
 
