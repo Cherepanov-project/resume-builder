@@ -159,6 +159,7 @@ export const LetterGridContainer = (container: IGridContainers) => {
         }
       }}
     >
+      {/* Кнопка Email Us - стайлинг */}
       <button
         style={{
           color: isHoverBtn ? "white" : "gray",
