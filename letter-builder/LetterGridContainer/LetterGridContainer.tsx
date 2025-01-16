@@ -46,6 +46,9 @@ export const LetterGridContainer = (container: IGridContainers) => {
   const [activeElement, setActiveElement] = useState<string | null>(null);
   const navigate = useNavigate();
 
+  //добавлен isHoverBtn для работы inline стиля hover на кнопке Email Us
+  const [isHoverBtn, setIsHoverBtn] = useState(false);
+
   const handleSetDraggingInnerItem = (isDragging: boolean) => {
     setIsDraggingInnerItem(isDragging);
   };
@@ -156,10 +159,22 @@ export const LetterGridContainer = (container: IGridContainers) => {
         }
       }}
     >
+      {/* Кнопка Email Us - стайлинг */}
       <button
-        style={{ color: "#ffff", marginLeft: "10px" }}
+        style={{
+          color: isHoverBtn ? "white" : "gray",
+          marginLeft: "10px",
+          marginTop: "2px",
+          marginBottom: "2px",
+          transition: "background-color 0.6s ease 0.2s, color 0.4s ease 0.2s",
+          backgroundColor: isHoverBtn ? "darkcyan" : "rgb(30 122 127 / .2)",
+          borderColor: isHoverBtn ? "#fff" : "rgba(0, 0, 0, 0.1)",
+          border: isHoverBtn ? "1px solid white" : "1px solid gray",
+        }}
         className={classes["email-button"]}
         onClick={handleEmailButtonClick}
+        onMouseEnter={() => setIsHoverBtn(true)}
+        onMouseLeave={() => setIsHoverBtn(false)}
       >
         Email Us
       </button>
