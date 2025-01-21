@@ -1,0 +1,7 @@
+.rcs-inner-handle {
+    background-color: rgba(0, 0, 0, 0.2) !important; 
+    width: 7px !important;
+    &:hover {
+        width: 10px;
+    }
+}

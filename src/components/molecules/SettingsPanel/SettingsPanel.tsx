@@ -1,19 +1,19 @@
-import './SettingsPanel.scss';
-import CloseIcon from '@mui/icons-material/Close';
-import { useAppDispatch, useTypedSelector } from '@/hooks/cvTemplateHooks';
-import { closePanel } from '@/store/landingBuilder/settingsPanelSlice';
-import React, { useEffect, useLayoutEffect, useRef, useState } from 'react';
-import ContainerDIVSettings from '@atoms/ContainerDIVSettings';
-import InputUpdate from '../InputUpdate';
-import ButtonsSettingsPanel from '@atoms/ButtonsSettingsPanel';
-import { IElementProps, ISettingsInputItem, T_BlockElement } from '@/types/landingBuilder';
-import SliderSettings from '../SliderSettings';
-import { Alert, Box, Typography } from '@mui/material';
-import BasicRatingSettings from '@/components/atoms/BasicRatingSettings';
-import BasicToolTipSettings from '@/components/atoms/BasicToolTipSettings';
-import LayoutBlockButtonSettings from '@/components/atoms/LayoutBlockButtonSettings';
-import LayoutBlockModalSettings from '@/components/atoms/LayoutBlockModalSettings';
-import LayoutBlockTextSettings from '@/components/atoms/LayoutBlockTextSettings';
+import "./SettingsPanel.scss";
+import CloseIcon from "@mui/icons-material/Close";
+import { useAppDispatch, useTypedSelector } from "@/hooks/cvTemplateHooks";
+import { closePanel } from "@/store/landingBuilder/settingsPanelSlice";
+import React, { useEffect, useLayoutEffect, useRef, useState } from "react";
+import ContainerDIVSettings from "@atoms/ContainerDIVSettings";
+import InputUpdate from "../InputUpdate";
+import ButtonsSettingsPanel from "@atoms/ButtonsSettingsPanel";
+import { IElementProps, ISettingsInputItem, T_BlockElement } from "@/types/landingBuilder";
+import SliderSettings from "../SliderSettings";
+import { Alert, Box, Typography } from "@mui/material";
+import BasicRatingSettings from "@/components/atoms/BasicRatingSettings";
+import BasicToolTipSettings from "@/components/atoms/BasicToolTipSettings";
+import LayoutBlockButtonSettings from "@/components/atoms/LayoutBlockButtonSettings";
+import LayoutBlockModalSettings from "@/components/atoms/LayoutBlockModalSettings";
+import LayoutBlockTextSettings from "@/components/atoms/LayoutBlockTextSettings";
 
 const SettingsPanel: React.FC = () => {
   const dispatch = useAppDispatch();
@@ -25,9 +25,9 @@ const SettingsPanel: React.FC = () => {
   const panelRef = useRef<HTMLDivElement>(null);
 
   useLayoutEffect(() => {
-    document.addEventListener('mousedown', handleClick);
+    document.addEventListener("mousedown", handleClick);
     return () => {
-      document.removeEventListener('mousedown', handleClick);
+      document.removeEventListener("mousedown", handleClick);
     };
   });
 
@@ -57,17 +57,17 @@ const SettingsPanel: React.FC = () => {
   const backgroundColor = currentElement?.props?.style?.backgroundColor;
 
   function findPropsName(props: IElementProps | undefined): ISettingsInputItem[] | undefined {
-    if (name === 'RadioButtons') {
+    if (name === "RadioButtons") {
       return props?.RadioButtons;
-    } else if (name === 'Checkboxes') {
+    } else if (name === "Checkboxes") {
       return props?.Checkboxes;
-    } else if (name === 'DropdownList') {
+    } else if (name === "DropdownList") {
       return props?.DropdownList;
-    } else if (name === 'Slider') {
+    } else if (name === "Slider") {
       return props?.Slider;
-    } else if (name === 'PhotoGallery') {
+    } else if (name === "PhotoGallery") {
       return props?.PhotoGallery;
-    } else if (name === 'Avatars') {
+    } else if (name === "Avatars") {
       return props?.Avatars;
     }
   }
@@ -93,28 +93,28 @@ const SettingsPanel: React.FC = () => {
   }, [currentElement, size]);
 
   function СheckingLabel(list: ISettingsInputItem[]) {
-    if (name && name !== 'PhotoGallery') {
+    if (name && name !== "PhotoGallery") {
       const labelsList = list.map((item) => item.value);
       return new Set(labelsList).size !== labelsList.length;
     }
     return false;
   }
 
-  const accessNames = ['RadioButtons', 'Checkboxes', 'DropdownList', 'PhotoGallery', 'Avatars'];
-  const accesTextBlock = ['Title', 'HeaderTitle', 'Paragraph', 'Anchor'];
+  const accessNames = ["RadioButtons", "Checkboxes", "DropdownList", "PhotoGallery", "Avatars"];
+  const accesTextBlock = ["Title", "HeaderTitle", "Paragraph", "Anchor"];
 
-  const showTextPanelVisible = accesTextBlock.includes(name || '');
-  const isButtonsPanelVisible = accessNames.includes(name || '');
-  
-  const showSliderSettings = name === 'Slider';
-  const showRatingSettings = name == 'RatingSystem';
-  const showBasicToolTipSettings = name === 'Tooltip';
-  const showLayoutBlockButtonSettings = name === 'ButtonBlock';
-  const showLayoutBlockModalSettings = name === 'ModalWindow';
+  const showTextPanelVisible = accesTextBlock.includes(name || "");
+  const isButtonsPanelVisible = accessNames.includes(name || "");
+
+  const showSliderSettings = name === "Slider";
+  const showRatingSettings = name == "RatingSystem";
+  const showBasicToolTipSettings = name === "Tooltip";
+  const showLayoutBlockButtonSettings = name === "ButtonBlock";
+  const showLayoutBlockModalSettings = name === "ModalWindow";
 
   return isShown ? (
     <Box ref={panelRef} className="list__wrap">
-      <Box className={'list__title'}>
+      <Box className={"list__title"}>
         <Typography variant="h3" className="title">
           Settings
         </Typography>
@@ -129,7 +129,7 @@ const SettingsPanel: React.FC = () => {
         <SliderSettings
           itemsList={itemsList}
           setItemsList={setItemsList}
-          name={name || ''}
+          name={name || ""}
           elementsSize={elementsSize}
           setElementsSize={setElementsSize}
         />
@@ -139,7 +139,7 @@ const SettingsPanel: React.FC = () => {
         <InputUpdate
           itemsList={itemsList}
           setItemsList={setItemsList}
-          name={name || ''}
+          name={name || ""}
           elementsSize={elementsSize}
           setElementsSize={setElementsSize}
         />
@@ -149,20 +149,18 @@ const SettingsPanel: React.FC = () => {
 
       {showBasicToolTipSettings && <BasicToolTipSettings elSize={elSize} setElSize={setElSize} />}
 
-      {showLayoutBlockButtonSettings && (
-        <LayoutBlockButtonSettings 
-        setStyle={setStyle}
-        />
-      )}
-      {showTextPanelVisible && <LayoutBlockTextSettings index={index} textStyle={textStyle}/>}
+      {showLayoutBlockButtonSettings && <LayoutBlockButtonSettings setStyle={setStyle} />}
+      {showTextPanelVisible && <LayoutBlockTextSettings index={index} textStyle={textStyle} />}
       {showLayoutBlockModalSettings && <LayoutBlockModalSettings />}
 
       <Box className="settings-panel">
-        {type === 'section' &&
+        {type === "section" &&
           !showBasicToolTipSettings &&
           !showRatingSettings &&
           !showLayoutBlockButtonSettings &&
-          !showLayoutBlockModalSettings && <ContainerDIVSettings backgroundColor={backgroundColor}  setStyle={setStyle} />}
+          !showLayoutBlockModalSettings && (
+            <ContainerDIVSettings backgroundColor={backgroundColor} setStyle={setStyle} />
+          )}
       </Box>
 
       <ButtonsSettingsPanel
