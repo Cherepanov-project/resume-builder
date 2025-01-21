@@ -26,6 +26,7 @@ export const initPanel = createAction<string>("settingsPanel/initPanel");
 export const closePanel = createAction("settingsPanel/closePanel");
 export const clearElements = createAction<string[]>("settingsPanel/clearElements");
 export const addListValue = createAction<{}>("settingsPanel/addListValue");
+export const addTimer = createAction<{}>("settingsPanel/addTimer");
 
 const settingsPanelSlice = createSlice({
   name: "settingsPanel",
@@ -153,6 +154,72 @@ const settingsPanelSlice = createSlice({
         });
       } else {
         state.elements[id].valueList[key] = textList;
+      }
+    },
+    addTimer: (
+      state,
+      {
+        payload,
+      }: PayloadAction<{
+        id: string;
+        installDate?: number;
+        installTime?: number;
+        background?: string;
+        color?: string;
+        save?: boolean;
+        size?: string;
+        counter?: number;
+      }>,
+    ) => {
+      const { id, installDate, installTime, background, color, save, size, counter } = payload;
+      if (!state.elements[id].timerList)
+        state.elements[id].timerList = {
+          color: "#FF0000",
+          background: "#2400ff",
+          installTime: 0,
+          installDate: 0,
+        };
+      if (installDate) {
+        state.elements[id].timerList = {
+          ...state.elements[id].timerList,
+          installDate,
+        };
+      }
+      if (installTime) {
+        state.elements[id].timerList = {
+          ...state.elements[id].timerList,
+          installTime,
+        };
+      }
+      if (background) {
+        state.elements[id].timerList = {
+          ...state.elements[id].timerList,
+          background,
+        };
+      }
+      if (color) {
+        state.elements[id].timerList = {
+          ...state.elements[id].timerList,
+          color,
+        };
+      }
+      if (save) {
+        state.elements[id].timerList = {
+          ...state.elements[id].timerList,
+          save,
+        };
+      }
+      if (size) {
+        state.elements[id].timerList = {
+          ...state.elements[id].timerList,
+          size,
+        };
+      }
+      if (counter) {
+        state.elements[id].timerList = {
+          ...state.elements[id].timerList,
+          counter,
+        };
       }
     },
   },
