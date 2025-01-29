@@ -1,0 +1,1 @@
+export { HobbiesPDF } from './HobbiesPDF';

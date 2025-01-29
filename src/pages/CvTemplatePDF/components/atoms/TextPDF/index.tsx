@@ -1,0 +1,1 @@
+export { TextPDF } from './TextPDF';

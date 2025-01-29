@@ -1,0 +1,11 @@
+@import "../../../assets/style/variables.scss";
+
+.background-layout--dark {
+  width: 100%;
+  height: 100%;
+  position: absolute;
+  top: 0;
+  z-index: -1;
+  background: transparent;
+  background: radial-gradient(circle, transparent 0%, $base-text-color 100%);
+}

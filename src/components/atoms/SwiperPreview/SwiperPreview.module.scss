@@ -1,0 +1,36 @@
+.swiper-preview {
+  &__title-container {
+    display: flex;
+    margin: 5px 0;
+  }
+  grid-template-areas:
+    'checkbox title title'
+    'swiper swiper swiper';
+  &__checkbox {
+    grid-area: checkbox;
+    margin: 0 auto;
+    margin-right: 0;
+  }
+  &__title {
+    color: #2dc08d;
+    margin: 0 auto;
+    margin-left: 10px;
+    grid-area: title;
+    text-transform: uppercase;
+    font-weight: 900;
+  }
+  &__swiper {
+    padding-right: 5px;
+    grid-area: swiper;
+    width: 75%;
+    height: 60px;
+    border-radius: 5px;
+  }
+  &__swiper-slide {
+    color: aliceblue;
+    font-size: 26px;
+    text-align: center;
+    display: flex;
+    background-color: #a0e4cc;
+  }
+}

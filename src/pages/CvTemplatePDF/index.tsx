@@ -1,0 +1,1 @@
+export { CvTemplatePDF } from './CvTemplatePDF';

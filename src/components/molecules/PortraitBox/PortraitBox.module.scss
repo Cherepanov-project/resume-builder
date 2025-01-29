@@ -1,0 +1,17 @@
+.portraitBox {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  gap: 40px;
+  margin-bottom: 20px;
+}
+
+.portraitBox__text {
+  margin: 0;
+  padding-top: 10px;
+
+  &:first-child {
+    font-weight: 700;
+    margin-bottom: 10px;
+  }
+}

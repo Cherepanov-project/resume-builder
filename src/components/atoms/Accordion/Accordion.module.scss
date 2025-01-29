@@ -1,0 +1,47 @@
+.accordion-item {
+	margin: 0;
+	margin-bottom: 15px;
+	padding-left: 15px;
+	text-align: left; /* Прижимаем текст к левому краю */
+  	word-wrap: break-word; /* Переносим текст на новую строку, если не вмещается */
+	border-bottom: 1px solid grey;
+	cursor: pointer;
+}
+
+.accordion-item:hover {
+	background-color: rgba($color: #adadad, $alpha: 0.1);
+}
+
+.accordion-title {
+	display: flex;
+	justify-content: space-between;
+	align-items: center;
+}
+
+.accordion-button {
+	border: none;
+	background-color: transparent;
+	padding: 0;
+	margin-right: 5px;
+	border-radius: 50%;
+	width: 25px;
+	height: 25px;
+}
+
+.accordion-button:hover {
+	background-color: rgba($color: #b3b3b3, $alpha: .2);
+	border-radius: 50%;
+}
+
+.accordion-title {
+  margin: 0;
+	margin-bottom: 5px;
+}
+.accordion-content {
+	overflow: hidden;
+	transition: max-height 0.3s ease-out;
+}
+
+.accordion-content p {
+	margin: 0;
+}

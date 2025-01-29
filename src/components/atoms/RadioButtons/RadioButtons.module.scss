@@ -1,0 +1,15 @@
+.container {
+  display: flex;
+}
+
+.checkbox {
+  padding: 3px 10px;
+  margin: 0;
+}
+.label {
+  font-family: 'Inter', sans-serif;
+  font-size: 16px;
+}
+.wrapper{
+  height: calc(100% - 37px);
+}

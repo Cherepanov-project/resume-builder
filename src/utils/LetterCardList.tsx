@@ -1,0 +1,133 @@
+import {
+  IconPngHeader,
+  IconPngParagraph,
+  IconPngList,
+  IconPngImages,
+  IconPngButton,
+  IconPngTable,
+  IconPngDivider,
+  IconPngSpacer,
+  IconPngSocialNetwork,
+  IconPngHTML,
+  IconPngVideo,
+  IconPngIcons,
+  IconPngMenu,
+  IconPngText,
+  IconPngCarousel,
+  IconPngGIFS,
+  IconPngStickers,
+  IconPngTimer,
+} from "@/components/atoms/Icons/LetterCardIcons";
+
+const LetterCardList = [
+  {
+    text: "ЗАГОЛОВОК",
+    icon: <IconPngHeader scale={1.3} />,
+    id: 0,
+    name: "Header",
+  },
+  {
+    text: "Параграф",
+    icon: <IconPngParagraph scale={1.3} />,
+    id: 1,
+    name: "Paragraph",
+  },
+  {
+    text: "Список",
+    icon: <IconPngList scale={1.3} />,
+    id: 2,
+    name: "List",
+  },
+  {
+    text: "Картинки",
+    icon: <IconPngImages scale={1.3} />,
+    id: 3,
+    name: "Images",
+  },
+  {
+    text: "Кнопка",
+    icon: <IconPngButton scale={1.3} />,
+    id: 4,
+    name: "Button",
+  },
+  {
+    text: "Table",
+    icon: <IconPngTable scale={1.3} />,
+    id: 5,
+    name: "Table",
+  },
+  {
+    text: "Делитель",
+    icon: <IconPngDivider scale={1.3} />,
+    id: 6,
+    name: "Divider",
+  },
+  {
+    text: "Спейсер",
+    icon: <IconPngSpacer scale={1.4} />,
+    id: 7,
+    name: "Spacer",
+  },
+  {
+    text: "Соцсети",
+    icon: <IconPngSocialNetwork scale={1.3} />,
+    id: 8,
+    name: "SocialNetworks",
+  },
+  {
+    text: "HTML",
+    icon: <IconPngHTML scale={1.3} />,
+    id: 9,
+    name: "Html",
+  },
+  {
+    text: "Видео",
+    icon: <IconPngVideo scale={1.3} />,
+    id: 10,
+    name: "Video",
+  },
+  {
+    text: "Иконки",
+    icon: <IconPngIcons scale={1.3} />,
+    id: 11,
+    name: "Icons",
+  },
+  {
+    text: "Меню",
+    icon: <IconPngMenu scale={1.3} />,
+    id: 12,
+    name: "Menu",
+  },
+  {
+    text: "Текст",
+    icon: <IconPngText scale={1.3} />,
+    id: 13,
+    name: "Text",
+  },
+  {
+    text: "Карусель",
+    icon: <IconPngCarousel scale={1.7} />,
+    id: 14,
+    name: "Carousel",
+  },
+  {
+    text: "GIFS",
+    icon: <IconPngGIFS scale={1.3} />,
+    id: 15,
+    name: "Gifs",
+  },
+  {
+    text: "STICKERS",
+    icon: <IconPngStickers scale={1.3} />,
+    id: 16,
+    name: "Stickers",
+  },
+  {
+    text: "COUNTDOWN TIMER",
+    icon: <IconPngTimer scale={1.3} />,
+    id: 17,
+    name: "Timer",
+  },
+];
+
+export default LetterCardList;

@@ -1,0 +1,44 @@
+$SliderBackgroundColor: rgba(250, 250, 250, 0.3);
+$SliderBorderColor: black;
+
+.swiperContainer {
+  height: 100%;
+  width: 100vw;
+  display: flex;
+  position: relative;
+  padding: 12px;
+  padding-right: 12px;
+  box-sizing: border-box;
+  transition-timing-function: linear;
+  border: solid 2px $SliderBorderColor;
+  border-radius: 4px;
+}
+
+.swiper1 {
+  height: auto;
+  width: 100%;
+  justify-content: center;
+  align-items: center;
+  transition-timing-function: linear;
+  padding-top: 20px;
+  padding-bottom: 20px;
+
+  .swiper-wrapper {
+    transition-timing-function: linear;
+  }
+}
+
+.swiper1 .SwiperSliderContainer {
+  width: min-content;
+  height: min-content;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+
+  transition-timing-function: linear;
+}
+
+.swiperContainer {
+  background-color: $SliderBackgroundColor;
+  margin-top: 100px;
+}

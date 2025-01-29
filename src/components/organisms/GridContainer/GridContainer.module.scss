@@ -1,0 +1,71 @@
+.container {
+    box-sizing: content-box;
+    padding-bottom: 28px;
+    border-bottom: 1px dashed rgba(90, 90, 90, 0.2);
+    border-top: 1px dashed rgba(90, 90, 90, 0.2);
+    margin-top: -1px;
+    position: relative;
+
+    &:hover {
+      border-bottom: 1px dashed rgba(90, 90, 90, 1);
+      border-top: 1px dashed rgba(90, 90, 90, 1);
+      transition: all ease-in-out .3s;
+    }
+
+    &:first-child {
+      border-top: 1px dashed transparent;
+    }
+  }
+
+  .grid {
+    width: 100%;
+    min-height: 100%;
+  }
+
+  .item {
+    border-radius: 2px;
+
+    &:hover {
+      transition: background-color 0.3s ease-in-out;
+      background-color: white;
+    }
+    & > span {
+      bottom: -3px !important;
+      background-image: none !important;
+
+      &:after {
+        right: 0;
+        bottom: 0;
+        border-color: transparent !important;
+        transition: border-color 0.3s ease-in-out;
+      }
+    }
+    &:hover > span:after {
+      border-color: #1976d2 !important;
+    }
+
+    & > span:first-of-type {
+      position: absolute;
+      z-index: 3;
+      left: -3px !important;
+    }
+
+    & > span:last-of-type {
+      position: absolute;
+      z-index: 3;
+      right: -3px !important;
+    }
+  }
+
+  .add-button, .add-button:hover {
+    width: 30px;
+    height: 30px;
+    padding: 0;
+    border-radius: 50%;
+    position: absolute;
+    bottom: -15px;
+    left: 50%;
+    background-color: white;
+    border: 2px solid transparent;
+    cursor: pointer;
+  }
