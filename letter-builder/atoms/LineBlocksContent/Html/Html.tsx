@@ -69,6 +69,14 @@ const HtmlPreviewer = () => {
             dangerouslySetInnerHTML={{ __html: previewHtml }}
           ></div>
         </div>
+        <div>
+          <h3>Только HTML эксперты</h3>
+
+          <p>
+            Использование собственного кода может привести к нарушениям в отображении письма.
+            Используйте валидный и адаптивный HTML.
+          </p>
+        </div>
       </div>
     </div>
   );
