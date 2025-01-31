@@ -54,18 +54,18 @@ const VideoComponent = () => {
     setVideoTitle(event.target.value); // Обновляем название видео
   };
 
-  const applyVideo = () => {
-    if (isValidYouTubeUrl(videoUrl)) {
-      dispatch(toggleSidebar(false));
-    } else {
-      alert("Введите корректный URL YouTube");
-    }
-  };
+  // const applyVideo = () => {
+  //   if (isValidYouTubeUrl(videoUrl)) {
+  //     dispatch(toggleSidebar(false));
+  //   } else {
+  //     alert("Введите корректный URL YouTube");
+  //   }
+  // };
 
-  const isValidYouTubeUrl = (url: string) => {
-    const youtubeRegex = /^(https?:\/\/)?(www\.)?(youtube\.com|youtu\.be)\/.+$/;
-    return youtubeRegex.test(url);
-  };
+  // const isValidYouTubeUrl = (url: string) => {
+  //   const youtubeRegex = /^(https?:\/\/)?(www\.)?(youtube\.com|youtu\.be)\/.+$/;
+  //   return youtubeRegex.test(url);
+  // };
 
   const getYouTubeEmbedUrl = (url: string) => {
     const videoIdMatch = url.match(
