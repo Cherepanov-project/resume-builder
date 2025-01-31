@@ -7,19 +7,15 @@
 import React from "react";
 import { useSelector, useDispatch } from "react-redux";
 import { RootState } from "@/store/store";
-import { setHtmlCode, setPreviewHtml } from "../../../reducers/htmlReducer";
+import { setHtmlCode } from "../../../reducers/htmlReducer";
 
 const HtmlPreviewer = () => {
   const htmlCode = useSelector((state: RootState) => state.html.htmlCode);
-  const previewHtml = useSelector((state: RootState) => state.html.previewHtml);
   const dispatch = useDispatch();
 
+  //добавлено изменение в realtime, вместо кнопки on-demand
   const handleHtmlChange = (event: React.ChangeEvent<HTMLTextAreaElement>) => {
     dispatch(setHtmlCode(event.target.value));
-  };
-
-  const generatePreview = () => {
-    dispatch(setPreviewHtml(htmlCode));
   };
 
   return (
@@ -41,42 +37,29 @@ const HtmlPreviewer = () => {
             backgroundColor: "transparent",
           }}
         ></textarea>
-        <button
-          onClick={generatePreview}
-          style={{
-            display: "block",
-            marginBottom: "10px",
-            padding: "10px",
-            fontSize: "14px",
-            border: "1px solid #ccc",
-            backgroundColor: "transparent",
-            cursor: "pointer",
-          }}
-        >
-          Преобразовать
-        </button>
-        <div>
-          <h3 style={{ fontSize: "16px", marginBottom: "10px" }}>Предпросмотр:</h3>
-          <div
-            className="html-preview"
-            style={{
-              border: "1px solid #ccc",
-              padding: "10px",
-              backgroundColor: "#f9f9f9",
-              marginBottom: "10px",
-              minHeight: "50px",
-            }}
-            dangerouslySetInnerHTML={{ __html: previewHtml }}
-          ></div>
-        </div>
-        <div>
-          <h3>Только HTML эксперты</h3>
+      </div>
 
-          <p>
-            Использование собственного кода может привести к нарушениям в отображении письма.
-            Используйте валидный и адаптивный HTML.
-          </p>
-        </div>
+      <div>
+        <div
+          className="html-preview"
+          style={{
+            border: "1px solid #ccc",
+            padding: "10px",
+            backgroundColor: "#f9f9f9",
+            marginBottom: "10px",
+            minHeight: "50px",
+          }}
+          dangerouslySetInnerHTML={{ __html: htmlCode }}
+        ></div>
+      </div>
+
+      <div>
+        <h3>Только HTML эксперты</h3>
+
+        <p>
+          Использование собственного кода может привести к нарушениям в отображении письма.
+          Используйте валидный и адаптивный HTML.
+        </p>
       </div>
     </div>
   );
