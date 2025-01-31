@@ -1,9 +1,3 @@
-// const Html = () => {
-//   return <h2 className="text-2xl">HTML код</h2>;
-// };
-
-// export default Html;
-
 import React from "react";
 import { useSelector, useDispatch } from "react-redux";
 import { RootState } from "@/store/store";
@@ -13,54 +7,79 @@ const HtmlPreviewer = () => {
   const htmlCode = useSelector((state: RootState) => state.html.htmlCode);
   const dispatch = useDispatch();
 
-  //добавлено изменение в realtime, вместо кнопки on-demand
+  // Обработчик изменений кода
   const handleHtmlChange = (event: React.ChangeEvent<HTMLTextAreaElement>) => {
     dispatch(setHtmlCode(event.target.value));
   };
 
+  // Нумерация строк
+  const lines = htmlCode.split("\n");
+
   return (
     <div className="html-previewer" style={{ fontFamily: "Arial, sans-serif", padding: "10px" }}>
-      <div>
-        <h2 style={{ fontSize: "18px", marginBottom: "10px" }}>HTML код</h2>
+      <h2 style={{ fontSize: "18px", marginBottom: "10px" }}>HTML код</h2>
+      <div style={{ display: "flex", border: "1px solid #ccc", backgroundColor: "#f9f9f9" }}>
+        <div
+          style={{
+            padding: "10px",
+            backgroundColor: "#e0e0e0",
+            textAlign: "right",
+            fontFamily: "monospace",
+            minWidth: "40px",
+            userSelect: "none",
+          }}
+        >
+          {lines.map((_, index) => (
+            <div key={index}>{index + 1}</div>
+          ))}
+        </div>
         <textarea
           value={htmlCode}
           onChange={handleHtmlChange}
-          placeholder="<div>Ваш HTML код!</div>"
+          placeholder="<div> Я новый HTML блок.</div>"
           style={{
-            width: "100%",
-            height: "150px",
+            flex: 1,
             padding: "10px",
             fontSize: "14px",
-            border: "1px solid #ccc",
-            marginBottom: "10px",
-            resize: "vertical",
+            fontFamily: "monospace",
+            border: "none",
+            outline: "none",
+            resize: "none",
+            minHeight: "150px",
             backgroundColor: "transparent",
           }}
-        ></textarea>
+        />
       </div>
-
-      <div>
-        <div
-          className="html-preview"
+      <div
+        style={{
+          fontSize: "10px",
+          backgroundColor: "transparent",
+          textAlign: "left",
+        }}
+      >
+        <h3
           style={{
-            border: "1px solid #ccc",
-            padding: "10px",
-            backgroundColor: "#f9f9f9",
-            marginBottom: "10px",
-            minHeight: "50px",
+            fontWeight: "bold",
           }}
-          dangerouslySetInnerHTML={{ __html: htmlCode }}
-        ></div>
-      </div>
-
-      <div>
-        <h3>Только HTML эксперты</h3>
-
+        >
+          Только HTML эксперты
+        </h3>
         <p>
           Использование собственного кода может привести к нарушениям в отображении письма.
           Используйте валидный и адаптивный HTML.
         </p>
       </div>
+      <div
+        className="html-preview"
+        style={{
+          border: "1px solid #ccc",
+          padding: "10px",
+          backgroundColor: "#f9f9f9",
+          marginTop: "10px",
+          minHeight: "50px",
+        }}
+        dangerouslySetInnerHTML={{ __html: htmlCode }}
+      />
     </div>
   );
 };

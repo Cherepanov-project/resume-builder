@@ -1,71 +1,36 @@
-// import { IconPngVideo } from "@components/atoms/Icons/LetterCardIcons";
-
-// const VideoComponent = () => {
-//   const iconStyle = { color: "#515659", scale: 1.3 };
-
-//   return (
-//     <div className="text-[#515659]">
-//       <div className="flex items-center justify-center">
-//         <IconPngVideo {...iconStyle} />
-//       </div>
-//       <br />
-//       Видео
-//     </div>
-//   );
-// };
-
-// export default VideoComponent;
-
-// import { IconPngVideo } from "@components/atoms/Icons/LetterCardIcons";
-
-// const VideoComponent = () => {
-//   const iconStyle = { color: "#515659", scale: 1.3 };
-
-//   return (
-//     <div className="text-[#515659]">
-//       <div className="flex items-center justify-center">
-//         <IconPngVideo {...iconStyle} />
-//       </div>
-//       <br />
-//       Видео
-//     </div>
-//   );
-// };
-
-// export default VideoComponent;
-
 import React, { useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { IconPngVideo } from "@components/atoms/Icons/LetterCardIcons";
 import { RootState } from "@/store/store";
 import { setVideoUrl, toggleSidebar } from "../../../reducers/videoSlice";
+import TextField from "@mui/material/TextField";
 
 const VideoComponent = () => {
   const dispatch = useDispatch();
   const { isSidebarOpen, videoUrl } = useSelector((state: RootState) => state.video);
 
-  const [videoTitle, setVideoTitle] = useState(""); // Для хранения названия видео
+  const [videoTitle, setVideoTitle] = useState("");
+  const [padding, setPadding] = useState({
+    top: 10,
+    right: 10,
+    bottom: 10,
+    left: 10,
+  });
 
   const handleInputChange = (event: React.ChangeEvent<HTMLInputElement>) => {
     dispatch(setVideoUrl(event.target.value));
   };
 
   const handleTitleChange = (event: React.ChangeEvent<HTMLInputElement>) => {
-    setVideoTitle(event.target.value); // Обновляем название видео
+    setVideoTitle(event.target.value);
   };
 
-  // const applyVideo = () => {
-  //   if (isValidYouTubeUrl(videoUrl)) {
-  //     dispatch(toggleSidebar(false));
-  //   } else {
-  //     alert("Введите корректный URL YouTube");
-  //   }
-  // };
-
-  // const isValidYouTubeUrl = (url: string) => {
-  //   const youtubeRegex = /^(https?:\/\/)?(www\.)?(youtube\.com|youtu\.be)\/.+$/;
-  //   return youtubeRegex.test(url);
-  // };
+  const handlePaddingChange = (side: string, value: number) => {
+    setPadding((prevPadding) => ({
+      ...prevPadding,
+      [side]: value,
+    }));
+  };
 
   const getYouTubeEmbedUrl = (url: string) => {
     const videoIdMatch = url.match(
@@ -99,26 +64,28 @@ const VideoComponent = () => {
           frameBorder="0"
           allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
           allowFullScreen
+          style={{
+            paddingTop: `${padding.top}px`,
+            paddingRight: `${padding.right}px`,
+            paddingBottom: `${padding.bottom}px`,
+            paddingLeft: `${padding.left}px`,
+          }}
         ></iframe>
       )}
 
       {isSidebarOpen && (
-        <div className="sidebar" style={{ marginTop: "10px" }}>
-          <h3 style={{ fontSize: "12px", marginBottom: "8px" }}>Введите URL YouTube видео</h3>
-          <input
-            type="text"
-            placeholder="https://www.youtube.com/watch?v=..."
+        <div
+          className="sidebar"
+          style={{ marginTop: "10px", height: "100%", display: "flex", flexDirection: "column" }}
+        >
+          <TextField
+            label="URL"
+            variant="filled"
             value={videoUrl}
             onChange={handleInputChange}
+            fullWidth
             style={{
-              display: "block",
               marginBottom: "8px",
-              width: "100%",
-              padding: "5px",
-              fontSize: "12px",
-              color: "#000",
-              border: "1px solid #ccc",
-              backgroundColor: "transparent",
             }}
           />
 
@@ -126,6 +93,7 @@ const VideoComponent = () => {
             style={{
               fontSize: "10px",
               backgroundColor: "transparent",
+              textAlign: "left",
             }}
           >
             <p>
@@ -133,22 +101,89 @@ const VideoComponent = () => {
               ссылаться на предоставленный URL.
             </p>
           </div>
-          <input
-            type="text"
-            placeholder="Название видео"
+
+          <TextField
+            label="Название видео"
+            variant="filled"
             value={videoTitle}
             onChange={handleTitleChange}
+            fullWidth
             style={{
-              display: "block",
               marginBottom: "8px",
-              width: "100%",
-              padding: "5px",
-              fontSize: "12px",
-              color: "#000",
-              border: "1px solid #ccc",
-              backgroundColor: "transparent",
             }}
           />
+
+          <div className="padding-editor" style={{ marginTop: "20px", flexGrow: 1 }}>
+            <h4 style={{ fontSize: "12px", textAlign: "left" }}>Отступы видео</h4>
+            <div
+              className="padding-controls"
+              style={{ display: "flex", justifyContent: "space-between" }}
+            >
+              <div>
+                <label>Сверху:</label>
+                <input
+                  type="number"
+                  value={padding.top}
+                  onChange={(e) => handlePaddingChange("top", +e.target.value)}
+                  style={{
+                    width: "50px",
+                    marginBottom: "8px",
+                    backgroundColor: "transparent",
+                    border: "1px solid black",
+                  }}
+                />
+              </div>
+              <div>
+                <label>Справа:</label>
+                <input
+                  type="number"
+                  value={padding.right}
+                  onChange={(e) => handlePaddingChange("right", +e.target.value)}
+                  style={{
+                    width: "50px",
+                    marginBottom: "8px",
+                    backgroundColor: "transparent",
+                    border: "1px solid black",
+                  }}
+                />
+              </div>
+            </div>
+
+            <div
+              className="padding-controls"
+              style={{ display: "flex", justifyContent: "space-between" }}
+            >
+              <div>
+                <label>Снизу:</label>
+                <input
+                  type="number"
+                  value={padding.bottom}
+                  onChange={(e) => handlePaddingChange("bottom", +e.target.value)}
+                  style={{
+                    width: "50px",
+                    marginBottom: "8px",
+                    backgroundColor: "transparent",
+                    border: "1px solid black",
+                  }}
+                />
+              </div>
+              <div>
+                <label>Слева:</label>
+                <input
+                  type="number"
+                  value={padding.left}
+                  onChange={(e) => handlePaddingChange("left", +e.target.value)}
+                  style={{
+                    width: "50px",
+                    marginBottom: "8px",
+                    backgroundColor: "transparent",
+                    border: "1px solid black",
+                  }}
+                />
+              </div>
+            </div>
+          </div>
+
           <button
             onClick={() => dispatch(toggleSidebar(false))}
             style={{
@@ -160,14 +195,13 @@ const VideoComponent = () => {
               border: "1px solid #ccc",
               backgroundColor: "transparent",
               cursor: "pointer",
+              marginTop: "8px",
             }}
           >
-            Х
+            Скрыть редактор
           </button>
         </div>
       )}
-
-      <div>{videoTitle}</div>
     </div>
   );
 };
