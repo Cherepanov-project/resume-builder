@@ -102,13 +102,11 @@ const IconsComponent = () => {
               )}
             </div>
           )}
-
-          {/* Кнопка исчезает, когда скрыты все кнопки */}
           <button
             onClick={() => setHideButtons(true)}
             className="mt-4 bg-gray-500 text-white px-4 py-2 rounded"
           >
-            Скрыть все кнопки
+            Скрыть редактор
           </button>
         </>
       )}

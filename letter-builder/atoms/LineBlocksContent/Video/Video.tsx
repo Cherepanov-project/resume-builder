@@ -11,11 +11,11 @@ const VideoComponent = () => {
   const [advancedPadding, setAdvancedPadding] = useState(false);
   const [videoTitle, setVideoTitle] = useState("");
   const [padding, setPadding] = useState({
-    top: 0,
-    right: 0,
-    bottom: 0,
-    left: 0,
-    all: 0,
+    top: 10,
+    right: 10,
+    bottom: 10,
+    left: 10,
+    all: 10,
   });
 
   const handleInputChange = (event: React.ChangeEvent<HTMLInputElement>) =>
@@ -34,7 +34,7 @@ const VideoComponent = () => {
       {!isSidebarOpen && !videoUrl && (
         <div onClick={() => dispatch(toggleSidebar(true))} className="video-icon text-[#515659]">
           <div className="flex items-center justify-center">
-            <IconPngVideo />
+            <IconPngVideo style={{ color: "#515659", scale: 1.3 }} />
           </div>
           <br />
           Видео
@@ -116,8 +116,10 @@ const VideoComponent = () => {
                       label="Сверху"
                       type="number"
                       variant="filled"
-                      InputLabelProps={{
-                        shrink: true,
+                      slotProps={{
+                        inputLabel: {
+                          shrink: true,
+                        },
                       }}
                       style={{
                         margin: "4px",
@@ -133,8 +135,10 @@ const VideoComponent = () => {
                       label="Справа"
                       type="number"
                       variant="filled"
-                      InputLabelProps={{
-                        shrink: true,
+                      slotProps={{
+                        inputLabel: {
+                          shrink: true,
+                        },
                       }}
                       value={padding.right}
                       onChange={(e) => handlePaddingChange("right", +e.target.value)}
@@ -153,8 +157,10 @@ const VideoComponent = () => {
                       label="Снизу"
                       type="number"
                       variant="filled"
-                      InputLabelProps={{
-                        shrink: true,
+                      slotProps={{
+                        inputLabel: {
+                          shrink: true,
+                        },
                       }}
                       value={padding.bottom}
                       onChange={(e) => handlePaddingChange("bottom", +e.target.value)}
@@ -170,8 +176,10 @@ const VideoComponent = () => {
                       label="Слева"
                       type="number"
                       variant="filled"
-                      InputLabelProps={{
-                        shrink: true,
+                      slotProps={{
+                        inputLabel: {
+                          shrink: true,
+                        },
                       }}
                       value={padding.left}
                       onChange={(e) => handlePaddingChange("left", +e.target.value)}
@@ -190,8 +198,10 @@ const VideoComponent = () => {
                   label="Все стороны"
                   type="number"
                   variant="filled"
-                  InputLabelProps={{
-                    shrink: true,
+                  slotProps={{
+                    inputLabel: {
+                      shrink: true,
+                    },
                   }}
                   value={padding.all}
                   onChange={(e) => handlePaddingChange("all", +e.target.value)}
