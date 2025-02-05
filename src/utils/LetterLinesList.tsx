@@ -20,6 +20,7 @@ const LetterLinesList = [
     icon: <IconLinesFirst scale={1} />,
     blockWidth: ["100%"],
     id: 0,
+    text: "Пример текста",
     children: [] as T_BlockElement[],
   },
   {
@@ -27,6 +28,7 @@ const LetterLinesList = [
     icon: <IconLinesSecond scale={1} />,
     blockWidth: ["calc(25% - 8px)", "calc(75% - 8px)"],
     id: 1,
+    text: "Пример текста",
     children: [] as T_BlockElement[],
   },
   {
@@ -34,6 +36,7 @@ const LetterLinesList = [
     icon: <IconLinesThird scale={1} />,
     blockWidth: ["calc(33% - 8px)", "calc(67% - 8px)"],
     id: 2,
+    text: "Пример текста",
     children: [] as T_BlockElement[],
   },
   {
@@ -41,6 +44,7 @@ const LetterLinesList = [
     icon: <IconLinesFourth scale={1} />,
     blockWidth: ["calc(50% - 8px)", "calc(50% - 8px)"],
     id: 3,
+    text: "Пример текста",
     children: [] as T_BlockElement[],
   },
   {
@@ -48,6 +52,7 @@ const LetterLinesList = [
     icon: <IconLinesFive scale={1} />,
     blockWidth: ["calc(67% - 8px)", "calc(33% - 8px)"],
     id: 4,
+    text: "Пример текста",
     children: [] as T_BlockElement[],
   },
   {
@@ -55,6 +60,7 @@ const LetterLinesList = [
     icon: <IconLinesSix scale={1} />,
     blockWidth: ["calc(75% - 8px)", "calc(25% - 8px)"],
     id: 5,
+    text: "Пример текста",
     children: [] as T_BlockElement[],
   },
   {
@@ -62,6 +68,7 @@ const LetterLinesList = [
     icon: <IconLinesSeven scale={1} />,
     blockWidth: ["calc(33.4% - 8px)", "calc(33.4% - 8px)", "calc(33.4% - 8px)"],
     id: 6,
+    text: "Пример текста",
     children: [] as T_BlockElement[],
   },
   {
@@ -69,6 +76,7 @@ const LetterLinesList = [
     icon: <IconLinesEight scale={1} />,
     blockWidth: ["calc(25% - 8px)", "calc(25% - 8px)", "calc(50% - 8px)"],
     id: 7,
+    text: "Пример текста",
     children: [] as T_BlockElement[],
   },
   {
@@ -76,6 +84,7 @@ const LetterLinesList = [
     icon: <IconLinesNine scale={1} />,
     blockWidth: ["calc(25% - 8px)", "calc(50% - 8px)", "calc(25% - 8px)"],
     id: 8,
+    text: "Пример текста",
     children: [] as T_BlockElement[],
   },
   {
@@ -83,6 +92,7 @@ const LetterLinesList = [
     icon: <IconLinesTen scale={1} />,
     blockWidth: ["calc(50% - 8px)", "calc(25% - 8px)", "calc(25% - 8px)"],
     id: 9,
+    text: "Пример текста",
     children: [] as T_BlockElement[],
   },
   {
@@ -90,6 +100,7 @@ const LetterLinesList = [
     icon: <IconLinesEleven scale={1} />,
     blockWidth: ["calc(25% - 8px)", "calc(25% - 8px)", "calc(25% - 8px)", "calc(25% - 8px)"],
     id: 10,
+    text: "Пример текста",
     children: [] as T_BlockElement[],
   },
   {
@@ -104,6 +115,7 @@ const LetterLinesList = [
       "calc(16.666% - 8px)",
     ],
     id: 11,
+    text: "Пример текста",
     children: [] as T_BlockElement[],
   },
 ];
