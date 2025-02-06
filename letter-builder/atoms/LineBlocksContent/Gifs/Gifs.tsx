@@ -6,25 +6,31 @@ const GifsComponent = () => {
   const [isPopOverVisible, setPopOverVisibility] = useState(false);
   const [gifs, setGifs] = useState<string[]>([]);
   const [currGif, setCurrGif] = useState<string>("");
+  const [loading, setLoading] = useState(false);
 
   const gf = new GiphyFetch("PuZUD4zqFLkDgmrlnoZCLS0zRQGDwsV7");
 
   const fetchGifs = async () => {
     try {
+      setLoading(true);
       const { data } = await gf.trending({ limit: 9 });
       setGifs(data.map((item) => item.images.fixed_height.url));
     } catch (error) {
       console.error("Error fetching GIFs:", error);
+    } finally {
+      setLoading(false);
     }
   };
 
   const handleSearch = async (q: string) => {
+    setGifs([]);
     if (!q) {
       fetchGifs();
       return;
     }
 
     try {
+      setLoading(true);
       const { data } = await gf.search(q, {
         sort: "relevant",
         lang: "en",
@@ -34,6 +40,8 @@ const GifsComponent = () => {
       setGifs(data.map((item) => item.images.fixed_height.url));
     } catch (err) {
       console.error("Error while searching: ", err);
+    } finally {
+      setLoading(false);
     }
   };
 
@@ -54,14 +62,19 @@ const GifsComponent = () => {
     };
   }, []);
 
+  const closePopOver = () => {
+    setPopOverVisibility(false);
+    setGifs([]);
+  };
+
   useEffect(() => {
-    fetchGifs();
-  }, []);
+    if (isPopOverVisible) fetchGifs();
+  }, [isPopOverVisible]);
 
   return (
     <>
       {isPopOverVisible && (
-        <div className="fixed inset-0 z-50 flex justify-center items-center bg-black/70">
+        <div className="fixed inset-0 z-10000 flex justify-center items-center bg-black/70">
           <div
             draggable="false"
             className="relative bg-white shadow-2xl w-[600px] max-h-[80vh] rounded-md p-4 overflow-hidden"
@@ -70,7 +83,7 @@ const GifsComponent = () => {
               <span className="text-gray-500 font-semibold">Powered by GIPHY</span>
               <button
                 className="text-white hover:text-red-500"
-                onClick={() => setPopOverVisibility(false)}
+                onClick={closePopOver}
               >
                 X
               </button>
@@ -83,22 +96,26 @@ const GifsComponent = () => {
               className="w-full bg-white border border-gray-300 rounded-md px-4 py-2 mb-4 focus:outline-none focus:ring-2 focus:ring-blue-400"
             />
 
-            <div className="grid grid-cols-3 gap-3 max-h-[400px] overflow-y-auto custom-scrollbar">
-              {gifs.map((gif, index) => (
-                <button
-                  key={index}
-                  type="button"
-                  onClick={() => handleChoose(gif)}
-                  className="focus:outline-none"
-                >
-                  <img
-                    src={gif}
-                    alt={`GIF ${index}`}
-                    className="w-full h-40 object-cover rounded"
-                  />
-                </button>
-              ))}
-            </div>
+            {loading ? (
+              <p className="text-center">Loading...</p>
+            ) : (
+              <div className="grid grid-cols-3 gap-3 max-h-[400px] overflow-y-auto custom-scrollbar">
+                {gifs.map((gif, index) => (
+                  <button
+                    key={index}
+                    type="button"
+                    onClick={() => handleChoose(gif)}
+                    className="focus:outline-none"
+                  >
+                    <img
+                      src={gif}
+                      alt={`GIF ${index}`}
+                      className="w-full h-40 object-cover rounded"
+                    />
+                  </button>
+                ))}
+              </div>
+            )}
           </div>
         </div>
       )}
@@ -131,7 +148,6 @@ const GifsComponent = () => {
       </div>
 
       <style jsx>{`
-        /* Скрытие скроллбара */
         .custom-scrollbar {
           scrollbar-width: none;
         }
