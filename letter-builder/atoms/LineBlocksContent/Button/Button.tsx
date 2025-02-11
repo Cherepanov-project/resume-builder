@@ -1,12 +1,14 @@
 import { useStyleElement } from "../../../hooks/useStyleElement";
 
+import Button from "@mui/material/Button";
+
 const ButtonComponent = ({ id }: { id: string }) => {
   const { handleOpen, handleTextChange, parameters } = useStyleElement(
     id,
     {
       backgroundColor: "#2563eb",
       color: "#ffffff",
-      borderRadius: "6px",
+      borderRadius: "10px",
       fontSize: "14px",
       lineHeight: "20px",
       fontFamily: "Roboto, sans-serif",
@@ -15,23 +17,43 @@ const ButtonComponent = ({ id }: { id: string }) => {
   );
 
   return (
-    <a
-      href={parameters?.href || ""}
-      style={{
-        cursor: "pointer",
-        transition: "all 0.2s ease-in-out",
-        borderStyle: "solid",
-        borderWidth: "1px",
-        outline: "none",
-        ...parameters?.styles,
-      }}
-      contentEditable
-      suppressContentEditableWarning
-      onClick={handleOpen}
-      onBlur={(e) => handleTextChange(e.target.textContent || "Кнопка")}
-    >
-      {parameters?.text || "Кнопка"}
-    </a>
+    <>
+      <Button
+        variant="contained"
+        href={parameters?.href || ""}
+        style={{
+          cursor: "pointer",
+          transition: "all 0.2s ease-in-out",
+          borderStyle: "solid",
+          borderWidth: "1px",
+          outline: "none",
+          ...parameters?.styles,
+        }}
+        contentEditable
+        suppressContentEditableWarning
+        onClick={handleOpen}
+        onBlur={(e) => handleTextChange(e.target.textContent || "Кнопка")}
+      >
+        {parameters?.text || "Кнопка"}
+      </Button>
+      {/* <a
+        href={parameters?.href || ""}
+        style={{
+          cursor: "pointer",
+          transition: "all 0.2s ease-in-out",
+          borderStyle: "solid",
+          borderWidth: "1px",
+          outline: "none",
+          ...parameters?.styles,
+        }}
+        contentEditable
+        suppressContentEditableWarning
+        onClick={handleOpen}
+        onBlur={(e) => handleTextChange(e.target.textContent || "Кнопка")}
+      >
+        {parameters?.text || "Кнопка"}
+      </a> */}
+    </>
   );
 };
 

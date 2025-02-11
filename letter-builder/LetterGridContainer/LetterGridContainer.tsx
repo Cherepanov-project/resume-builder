@@ -215,11 +215,19 @@ export const LetterGridContainer = (container: IGridContainers) => {
         onResizeStop={handleChangeLayout}
         onDragStop={handleChangeLayout}
       >
+        {/* сделать проверку */}
         {container.elements.activeElements.map((el) => {
           const isActive = activeElement === el.id;
-          const idsElements = el.children.reduce((acc, item) => {
+          const idsElements = (el.children || []).reduce((acc, item) => {
+            // Проверяем, что item и item.children существуют
+            if (!item || !item.children) return acc;
+
+            // Перебираем item.children
             for (const child of item.children) {
-              acc.push(child.id);
+              // Проверяем, что child и child.id существуют
+              if (child?.id) {
+                acc.push(child.id);
+              }
             }
             return acc;
           }, []);

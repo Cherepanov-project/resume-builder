@@ -74,66 +74,51 @@ const BlockLine = ({ id, onDragStart, props }: LineCardProps) => {
 
   const index = gridContainers[0].elements.activeElements.findIndex((item) => item.id === id);
 
-  if (typeof props.blockWidth === "object") {
-    if (Array.isArray(props.blockWidth)) {
-      blockElements = props.blockWidth.map((width, indexBlock) => {
-        if (index > -1) {
-          if (typeof gridContainers[0].elements.activeElements[index].children !== "undefined") {
-            if (
-              typeof gridContainers[0].elements.activeElements[index].children[indexBlock] !==
-              "undefined"
-            ) {
-              gridContainers[0].elements.activeElements[index].children[
-                indexBlock
-              ].children?.forEach((child) => {
-                if (typeof child !== "undefined") {
-                  if (Array.isArray(childrenElements[indexBlock])) {
-                    childrenElements[indexBlock].push(
-                      <DynamicChildComponentRenderer
-                        key={nanoid()}
-                        source={"atoms"}
-                        Component={child.name}
-                        id={child.id}
-                      />,
-                    );
-                  } else {
-                    childrenElements[indexBlock] = [] as (JSX.Element | null)[];
-                    childrenElements[indexBlock].push(
-                      <DynamicChildComponentRenderer
-                        key={nanoid()}
-                        source={"atoms"}
-                        Component={child.name}
-                        id={child.id}
-                      />,
-                    );
-                  }
-                }
-              });
-            }
-          }
-        }
+  if (typeof props.blockWidth === "object" && Array.isArray(props.blockWidth)) {
+    blockElements = props.blockWidth.map((width, indexBlock) => {
+      if (index > -1) {
+        const children = gridContainers[0]?.elements?.activeElements[index]?.children || [];
+        const currentChild = children[indexBlock];
 
-        return (
-          <TableCell
-            key={nanoid()}
-            variant="letterBlockCell"
-            sx={{
-              width: width,
-              color: childrenElements[indexBlock] ? "black" : "#4cb9ea",
-              textAlign: "center",
-              display: "flex",
-              flexDirection: "column",
-              gap: "15px",
-              justifyContent: "center",
-              alignItems: "center",
-            }}
-            onDrop={() => handleDrop(indexBlock)}
-          >
-            {childrenElements[indexBlock] ? childrenElements[indexBlock] : "блок"}
-          </TableCell>
-        );
-      });
-    }
+        if (currentChild?.children) {
+          currentChild.children.forEach((child) => {
+            if (child) {
+              if (!Array.isArray(childrenElements[indexBlock])) {
+                childrenElements[indexBlock] = [];
+              }
+              childrenElements[indexBlock].push(
+                <DynamicChildComponentRenderer
+                  key={nanoid()}
+                  source={"atoms"}
+                  Component={child.name}
+                  id={child.id}
+                />,
+              );
+            }
+          });
+        }
+      }
+
+      return (
+        <TableCell
+          key={nanoid()}
+          variant="letterBlockCell"
+          sx={{
+            width: width,
+            color: childrenElements[indexBlock] ? "black" : "#4cb9ea",
+            textAlign: "center",
+            display: "flex",
+            flexDirection: "column",
+            gap: "15px",
+            justifyContent: "center",
+            alignItems: "center",
+          }}
+          onDrop={() => handleDrop(indexBlock)}
+        >
+          {childrenElements[indexBlock] ? childrenElements[indexBlock] : "блок"}
+        </TableCell>
+      );
+    });
   }
 
   return (
