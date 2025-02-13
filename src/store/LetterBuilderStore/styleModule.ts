@@ -25,7 +25,7 @@ export const redo = createAction("settingsPanel/redo");
 export const initPanel = createAction<string>("settingsPanel/initPanel");
 export const closePanel = createAction("settingsPanel/closePanel");
 export const clearElements = createAction<string[]>("settingsPanel/clearElements");
-export const addListValue = createAction<{}>("settingsPanel/addListValue");
+export const addListValue = createAction<object>("settingsPanel/addListValue");
 
 const settingsPanelSlice = createSlice({
   name: "settingsPanel",

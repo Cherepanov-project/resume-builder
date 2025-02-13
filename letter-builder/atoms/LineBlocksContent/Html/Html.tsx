@@ -1,75 +1,94 @@
-// const Html = () => {
-//   return <h2 className="text-2xl">HTML код</h2>;
-// };
-
-// export default Html;
-
-import React from "react";
+import React, { useState } from "react";
 import { useSelector, useDispatch } from "react-redux";
 import { RootState } from "@/store/store";
-import { setHtmlCode, setPreviewHtml } from "../../../reducers/htmlReducer";
+import { setHtmlCode } from "../../../reducers/htmlReducer";
 
 const HtmlPreviewer = () => {
   const htmlCode = useSelector((state: RootState) => state.html.htmlCode);
-  const previewHtml = useSelector((state: RootState) => state.html.previewHtml);
   const dispatch = useDispatch();
+  const [isHtmlEditorClosed, setIsHtmlEditorClosed] = useState(true);
 
   const handleHtmlChange = (event: React.ChangeEvent<HTMLTextAreaElement>) => {
     dispatch(setHtmlCode(event.target.value));
   };
 
-  const generatePreview = () => {
-    dispatch(setPreviewHtml(htmlCode));
-  };
+  const lines = htmlCode.split("\n");
 
   return (
     <div className="html-previewer" style={{ fontFamily: "Arial, sans-serif", padding: "10px" }}>
-      <div>
-        <h2 style={{ fontSize: "18px", marginBottom: "10px" }}>HTML код</h2>
-        <textarea
-          value={htmlCode}
-          onChange={handleHtmlChange}
-          placeholder="<div>Ваш HTML код!</div>"
-          style={{
-            width: "100%",
-            height: "150px",
-            padding: "10px",
-            fontSize: "14px",
-            border: "1px solid #ccc",
-            marginBottom: "10px",
-            resize: "vertical",
-            backgroundColor: "transparent",
-          }}
-        ></textarea>
-        <button
-          onClick={generatePreview}
-          style={{
-            display: "block",
-            marginBottom: "10px",
-            padding: "10px",
-            fontSize: "14px",
-            border: "1px solid #ccc",
-            backgroundColor: "transparent",
-            cursor: "pointer",
-          }}
-        >
-          Преобразовать
-        </button>
-        <div>
-          <h3 style={{ fontSize: "16px", marginBottom: "10px" }}>Предпросмотр:</h3>
-          <div
-            className="html-preview"
+      {!isHtmlEditorClosed && (
+        <>
+          <h2 style={{ fontSize: "18px", marginBottom: "10px" }}>Ваш HTML код</h2>
+          <div style={{ display: "flex", border: "1px solid #ccc", backgroundColor: "#f9f9f9" }}>
+            <div
+              style={{
+                padding: "10px",
+                backgroundColor: "#e0e0e0",
+                textAlign: "right",
+                fontFamily: "monospace",
+                minWidth: "40px",
+                userSelect: "none",
+              }}
+            >
+              {lines.map((_, index) => (
+                <div key={index}>{index + 1}</div>
+              ))}
+            </div>
+            <textarea
+              value={htmlCode}
+              onChange={handleHtmlChange}
+              placeholder="<div> Я новый HTML блок.</div>"
+              style={{
+                flex: 1,
+                padding: "10px",
+                fontSize: "14px",
+                fontFamily: "monospace",
+                border: "none",
+                outline: "none",
+                resize: "none",
+                minHeight: "150px",
+                backgroundColor: "transparent",
+              }}
+            />
+          </div>
+          <div style={{ fontSize: "10px", backgroundColor: "transparent", textAlign: "left" }}>
+            <h3 style={{ fontWeight: "bold" }}>Только HTML эксперты</h3>
+            <p>
+              Использование собственного кода может привести к нарушениям в отображении письма.
+              Используйте валидный и адаптивный HTML.
+            </p>
+          </div>
+          <button
+            onClick={() => setIsHtmlEditorClosed(!isHtmlEditorClosed)}
             style={{
+              display: "block",
+              width: "100%",
+              padding: "5px",
+              fontSize: "12px",
+              color: "#000",
               border: "1px solid #ccc",
-              padding: "10px",
-              backgroundColor: "#f9f9f9",
-              marginBottom: "10px",
-              minHeight: "50px",
+              backgroundColor: "transparent",
+              cursor: "pointer",
+              marginTop: "8px",
             }}
-            dangerouslySetInnerHTML={{ __html: previewHtml }}
-          ></div>
-        </div>
-      </div>
+          >
+            Скрыть редактор
+          </button>
+        </>
+      )}
+
+      <div
+        className="html-preview"
+        style={{
+          border: "1px solid #ccc",
+          padding: "10px",
+          backgroundColor: "#f9f9f9",
+          marginTop: "10px",
+          minHeight: "50px",
+        }}
+        onClick={() => setIsHtmlEditorClosed(false)}
+        dangerouslySetInnerHTML={{ __html: htmlCode }}
+      />
     </div>
   );
 };

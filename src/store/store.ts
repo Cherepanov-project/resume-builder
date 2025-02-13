@@ -28,6 +28,7 @@ import userReducer from "./userSlice";
 import videoReducer, { videoMiddleware } from "../../letter-builder/reducers/videoSlice";
 import htmlReducer, { htmlMiddleware } from "../../letter-builder/reducers/htmlReducer";
 import { useSelector, TypedUseSelectorHook, useDispatch } from "react-redux";
+import iconsReducer from "../../letter-builder/reducers/iconsSlice";
 
 //конфиг для persist
 const persistConfig = {
@@ -53,6 +54,7 @@ const rootReducer = combineReducers({
   user: userReducer,
   video: videoReducer,
   html: htmlReducer,
+  icons: iconsReducer,
 });
 
 //преобразование редьюсера для persist
