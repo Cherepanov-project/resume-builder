@@ -1,8 +1,5 @@
 import { createSlice, PayloadAction } from "@reduxjs/toolkit";
-<<<<<<< HEAD
-=======
 import { Middleware } from "redux";
->>>>>>> origin/nekrasov
 
 interface HtmlState {
   htmlCode: string;
@@ -37,11 +34,7 @@ export const htmlSlice = createSlice({
   },
 });
 
-<<<<<<< HEAD
 export const htmlMiddleware: any = (store: any) => (next: any) => (action: any) => {
-=======
-export const htmlMiddleware: Middleware = (store) => (next) => (action) => {
->>>>>>> origin/nekrasov
   const result = next(action);
   if (action.type.startsWith("html/")) {
     try {

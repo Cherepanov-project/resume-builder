@@ -1,8 +1,5 @@
 import { createSlice, PayloadAction } from "@reduxjs/toolkit";
-<<<<<<< HEAD
-=======
 import { Middleware } from "redux";
->>>>>>> origin/nekrasov
 
 interface VideoState {
   isSidebarOpen: boolean;
@@ -37,11 +34,7 @@ export const videoSlice = createSlice({
   },
 });
 
-<<<<<<< HEAD
 export const videoMiddleware: any = (store: any) => (next: any) => (action: any) => {
-=======
-export const videoMiddleware: Middleware = (store) => (next) => (action) => {
->>>>>>> origin/nekrasov
   const result = next(action);
   if (action.type.startsWith("video/")) {
     try {
