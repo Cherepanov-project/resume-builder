@@ -20,7 +20,7 @@ const DynamicComponentRenderer: React.FC<LetterDynamicComponentRendererProps> = 
 
     return (
       <Suspense fallback={<ComponentPreloader />}>
-        <div style={{ zIndex: 1, position: "relative" }}>
+        <div style={{ position: "relative" }}>
           <DynamicComponent
             id={id}
             key={Component}

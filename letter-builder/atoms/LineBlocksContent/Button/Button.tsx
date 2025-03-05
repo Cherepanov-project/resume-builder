@@ -17,43 +17,24 @@ const ButtonComponent = ({ id }: { id: string }) => {
   );
 
   return (
-    <>
-      <Button
-        variant="contained"
-        href={parameters?.href || ""}
-        style={{
-          cursor: "pointer",
-          transition: "all 0.2s ease-in-out",
-          borderStyle: "solid",
-          borderWidth: "1px",
-          outline: "none",
-          ...parameters?.styles,
-        }}
-        contentEditable
-        suppressContentEditableWarning
-        onClick={handleOpen}
-        onBlur={(e) => handleTextChange(e.target.textContent || "Кнопка")}
-      >
-        {parameters?.text || "Кнопка"}
-      </Button>
-      {/* <a
-        href={parameters?.href || ""}
-        style={{
-          cursor: "pointer",
-          transition: "all 0.2s ease-in-out",
-          borderStyle: "solid",
-          borderWidth: "1px",
-          outline: "none",
-          ...parameters?.styles,
-        }}
-        contentEditable
-        suppressContentEditableWarning
-        onClick={handleOpen}
-        onBlur={(e) => handleTextChange(e.target.textContent || "Кнопка")}
-      >
-        {parameters?.text || "Кнопка"}
-      </a> */}
-    </>
+    <Button
+      variant="contained"
+      href={parameters?.href || ""}
+      style={{
+        cursor: "pointer",
+        transition: "all 0.2s ease-in-out",
+        borderStyle: "solid",
+        borderWidth: "1px",
+        outline: "none",
+        ...parameters?.styles,
+      }}
+      contentEditable
+      suppressContentEditableWarning
+      onClick={handleOpen}
+      onBlur={(e) => handleTextChange(e.target.textContent || "Кнопка")}
+    >
+      {parameters?.text || "Кнопка"}
+    </Button>
   );
 };
 

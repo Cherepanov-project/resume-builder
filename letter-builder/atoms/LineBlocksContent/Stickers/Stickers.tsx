@@ -68,7 +68,10 @@ const StickersComponent = () => {
   return (
     <>
       {isPopOverVisible && (
-        <div className="fixed inset-0 z-50 flex justify-center items-center bg-black/70">
+        <div
+          style={{ zIndex: 1 }}
+          className="fixed inset-0 flex justify-center items-center bg-black/70"
+        >
           <div
             draggable="false"
             className="relative bg-white shadow-2xl w-[600px] max-h-[80vh] rounded-md p-4 overflow-hidden"

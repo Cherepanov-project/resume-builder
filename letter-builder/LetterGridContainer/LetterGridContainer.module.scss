@@ -46,12 +46,12 @@
 
 .grid::before {
   left: 0;
-  width: 20%; /* Ширина псевдоэлемента слева */
+  width: 10%; /* Ширина псевдоэлемента слева */
 }
 
 .grid::after {
   right: 0;
-  width: 20%; /* Ширина псевдоэлемента справа */
+  width: 10%; /* Ширина псевдоэлемента справа */
 }
 
 .react-resizable-handle {
@@ -70,7 +70,7 @@
 .item {
   position: relative !important;
   width: 100% !important;
-  padding: 0 30% 0 30%;
+  padding: 0 15% 0 15%;
   height: auto !important;
   transform: none !important;
   border-radius: 2px;

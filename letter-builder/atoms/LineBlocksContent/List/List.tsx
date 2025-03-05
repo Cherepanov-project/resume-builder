@@ -5,7 +5,6 @@ import { useAppDispatch } from "@/store/store";
 
 const ListComponent = ({ id }: { id: string }) => {
   const { handleOpen, parameters } = useStyleElement(id, {
-    color: "#000",
     fontSize: "14px",
     lineHeight: "20px",
     fontFamily: "Roboto, sans-serif",
@@ -48,6 +47,7 @@ const ListComponent = ({ id }: { id: string }) => {
         <ul
           className="pl-5"
           style={{
+            color: "#000",
             cursor: "pointer",
             transition: "all 0.2s ease-in-out",
             outline: "none",
@@ -59,11 +59,12 @@ const ListComponent = ({ id }: { id: string }) => {
             const defItem = parameters?.valueList || [""];
             const key = idx;
             return (
-              <li key={key}>
+              <li key={key} style={{}}>
                 <input
                   style={{
                     width: "200px",
                     border: "none",
+                    backgroundColor: "#fff",
                   }}
                   onClick={handleOpen}
                   placeholder="Это новый пункт"

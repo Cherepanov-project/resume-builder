@@ -6,7 +6,7 @@ const GifsComponent = () => {
   const [isPopOverVisible, setPopOverVisibility] = useState(false);
   const [gifs, setGifs] = useState<string[]>([]);
   const [currGif, setCurrGif] = useState<string>("");
-  const [loading, setLoading] = useState(false);
+  const [loading, setLoading] = useState<boolean>(false);
 
   const gf = new GiphyFetch("PuZUD4zqFLkDgmrlnoZCLS0zRQGDwsV7");
 
@@ -74,17 +74,17 @@ const GifsComponent = () => {
   return (
     <>
       {isPopOverVisible && (
-        <div className="fixed inset-0 z-10000 flex justify-center items-center bg-black/70">
+        <div
+          style={{ zIndex: 1 }}
+          className="fixed inset-0 flex justify-center items-center bg-black/70"
+        >
           <div
             draggable="false"
             className="relative bg-white shadow-2xl w-[600px] max-h-[80vh] rounded-md p-4 overflow-hidden"
           >
             <div className="flex justify-between items-center mb-4">
               <span className="text-gray-500 font-semibold">Powered by GIPHY</span>
-              <button
-                className="text-white hover:text-red-500"
-                onClick={closePopOver}
-              >
+              <button className="text-white hover:text-red-500" onClick={closePopOver}>
                 X
               </button>
             </div>
