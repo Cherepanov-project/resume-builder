@@ -10,7 +10,7 @@ const GifsComponent = () => {
 
   const gf = new GiphyFetch("PuZUD4zqFLkDgmrlnoZCLS0zRQGDwsV7");
 
-  const fetchGifs = async () => {
+  const fetchGifs = async()=> {
     try {
       setLoading(true);
       const { data } = await gf.trending({ limit: 9 });
@@ -22,7 +22,7 @@ const GifsComponent = () => {
     }
   };
 
-  const handleSearch = async (q: string) => {
+  const handleSearch = async (q) => {
     setGifs([]);
     if (!q) {
       fetchGifs();
