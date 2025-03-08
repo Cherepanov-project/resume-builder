@@ -1,7 +1,7 @@
 import { IGridContainers, setCurrentContainer } from "@/store/LetterBuilderStore/letterLayoutSlice";
 import ResponsiveGridLayout, { Layout } from "react-grid-layout";
 import { useAppDispatch, useTypedSelector } from "@/hooks/cvTemplateHooks";
-import { LetterDynamicComponentRendererProps, T_BlockElement } from "@/types/landingBuilder";
+import { DynamicComponentRendererProps, T_BlockElement, CustomLayout } from "@/types/landingBuilder";
 import {
   addElement,
   changeElement,
@@ -12,6 +12,8 @@ import ComponentPreloader from "@/components/atoms/ComponentPreloader";
 import ElementToolsPanel from "../organismis/ElementToolsPanel/ElementToolsPanel";
 import { useNavigate } from "react-router-dom";
 import classes from "./LetterGridContainer.module.scss";
+
+export type LetterDynamicComponentRendererProps = DynamicComponentRendererProps;
 
 // Отрисовываем динамический компонент
 const DynamicComponentRenderer: React.FC<LetterDynamicComponentRendererProps> = memo(
@@ -41,13 +43,13 @@ export const LetterGridContainer = (container: IGridContainers) => {
   const dispatch = useAppDispatch();
   const currentDraggableItem = useTypedSelector((state) => state.layout.currentDraggableItem);
   const width = useTypedSelector((state) => state.layout.windowWidth);
-  const [isHover, setIsHover] = useState(false);
-  const [isDraggingInnerItem, setIsDraggingInnerItem] = useState(false);
+  const [isHover, setIsHover] = useState<boolean>(false);
+  const [isDraggingInnerItem, setIsDraggingInnerItem] = useState<boolean>(false);
   const [activeElement, setActiveElement] = useState<string | null>(null);
   const navigate = useNavigate();
 
   //добавлен isHoverBtn для работы inline стиля hover на кнопке Email Us
-  const [isHoverBtn, setIsHoverBtn] = useState(false);
+  const [isHoverBtn, setIsHoverBtn] = useState<boolean>(false);
 
   const handleSetDraggingInnerItem = (isDragging: boolean) => {
     setIsDraggingInnerItem(isDragging);
@@ -190,7 +192,7 @@ export const LetterGridContainer = (container: IGridContainers) => {
         isDroppable
         isResizable={false}
         onDrop={(layout: Layout[], layoutItem: Layout) => {
-          const draggableItem = currentDraggableItem;
+          const draggableItem = currentDraggableItem as CustomLayout;
 
           if (draggableItem && draggableItem.props.isChild) return;
 

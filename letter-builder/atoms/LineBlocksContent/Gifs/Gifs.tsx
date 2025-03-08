@@ -147,7 +147,7 @@ const GifsComponent = () => {
         )}
       </div>
 
-      <style jsx>{`
+      <style>{`
         .custom-scrollbar {
           scrollbar-width: none;
         }

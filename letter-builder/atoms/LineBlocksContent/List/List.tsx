@@ -65,6 +65,8 @@ const ListComponent = ({ id }: { id: string }) => {
                     width: "200px",
                     border: "none",
                     backgroundColor: "#fff",
+                    display: "flex",
+                    flexDirection: "column",
                   }}
                   onClick={handleOpen}
                   placeholder="Это новый пункт"

@@ -6,7 +6,7 @@ const StickersComponent = () => {
   const [isPopOverVisible, setPopOverVisibility] = useState(false);
   const [stickers, setStickers] = useState<string[]>([]);
   const [currSticker, setCurrSticker] = useState<string>("");
-  const [loading, setLoading] = useState(false);
+  const [loading, setLoading] = useState<boolean>(false);
 
   const gf = new GiphyFetch("PuZUD4zqFLkDgmrlnoZCLS0zRQGDwsV7");
 
@@ -151,8 +151,7 @@ const StickersComponent = () => {
         )}
       </div>
 
-      <style jsx>{`
-        /* Скрытие скроллбара */
+      <style>{`
         .custom-scrollbar {
           scrollbar-width: none;
         }

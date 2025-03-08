@@ -1,5 +1,11 @@
 import { Layout } from "react-grid-layout";
 
+export interface CustomLayout extends Layout {
+  props: {
+    isChild?: boolean;
+  };
+}
+
 interface ElementsType {
   activeElements: T_BlockElement[];
 }
@@ -108,8 +114,6 @@ export type DynamicComponentRendererProps = {
   layout: Layout;
   containerId?: string;
 };
-
-
 
 export type ContainerDIVProps = {
   children: T_BlockElement[];
