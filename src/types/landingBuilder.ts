@@ -71,6 +71,7 @@ export interface IStyleFormObj {
 
 // Гигачадовая типизация от Кенси
 export type T_BlockElement = {
+  id?: string;
   name: string;
   title?: string;
   url?: string;
