@@ -1,5 +1,4 @@
-import { createSlice, PayloadAction } from "@reduxjs/toolkit";
-import { Middleware } from "redux";
+import { createSlice, PayloadAction, Middleware, AnyAction } from "@reduxjs/toolkit";
 
 interface VideoState {
   isSidebarOpen: boolean;
@@ -34,7 +33,7 @@ export const videoSlice = createSlice({
   },
 });
 
-export const videoMiddleware: any = (store: any) => (next: any) => (action: any) => {
+export const videoMiddleware: Middleware = (store) => (next) => (action: AnyAction) => {
   const result = next(action);
   if (action.type.startsWith("video/")) {
     try {

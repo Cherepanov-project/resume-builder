@@ -1,5 +1,4 @@
-import { createSlice, PayloadAction } from "@reduxjs/toolkit";
-import { Middleware } from "redux";
+import { createSlice, PayloadAction, Middleware, AnyAction } from "@reduxjs/toolkit";
 
 interface HtmlState {
   htmlCode: string;
@@ -34,7 +33,7 @@ export const htmlSlice = createSlice({
   },
 });
 
-export const htmlMiddleware: any = (store: any) => (next: any) => (action: any) => {
+export const htmlMiddleware: Middleware = (store) => (next) => (action: AnyAction) => {
   const result = next(action);
   if (action.type.startsWith("html/")) {
     try {
