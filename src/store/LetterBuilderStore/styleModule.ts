@@ -137,11 +137,12 @@ const settingsPanelSlice = createSlice({
     ) => {
       const { id, key, textList } = payload;
 
+      if (!state.elements[id]) return;
       if (!state.elements[id].valueList) state.elements[id].valueList = {};
       if (textList === undefined) {
         delete state.elements[id].valueList[key];
-        const values = Object.values(state.elements[id].valueList);
-        const keys = Object.keys(state.elements[id].valueList);
+        const values = Object.values(state.elements[id].valueList || {});
+        const keys = Object.keys(state.elements[id].valueList || {});
 
         state.elements[id].valueList = {};
         const newKeys = keys.map((item) => {
@@ -152,6 +153,7 @@ const settingsPanelSlice = createSlice({
           state.elements[id].valueList![k] = values[i];
         });
       } else {
+        if (!state.elements[id].valueList) return;
         state.elements[id].valueList[key] = textList;
       }
     },
