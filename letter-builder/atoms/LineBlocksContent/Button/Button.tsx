@@ -1,8 +1,13 @@
+import React from "react";
 import { useStyleElement } from "../../../hooks/useStyleElement";
 
 import Button from "@mui/material/Button";
 
-const ButtonComponent = ({ id }: { id: string }) => {
+interface ButtonComponentProps {
+  id: string;
+}
+
+const ButtonComponent: React.FC<ButtonComponentProps> = ({ id }) => {
   const { handleOpen, handleTextChange, parameters } = useStyleElement(
     id,
     {
@@ -16,6 +21,10 @@ const ButtonComponent = ({ id }: { id: string }) => {
     "button",
   );
 
+  if (!parameters) {
+    return <div>Loading...</div>;
+  }
+
   return (
     <Button
       variant="contained"
@@ -26,12 +35,18 @@ const ButtonComponent = ({ id }: { id: string }) => {
         borderStyle: "solid",
         borderWidth: "1px",
         outline: "none",
-        ...parameters?.styles,
+        ...(parameters?.styles || {}),
       }}
       contentEditable
       suppressContentEditableWarning
       onClick={handleOpen}
       onBlur={(e) => handleTextChange(e.target.textContent || "Кнопка")}
+      onKeyDown={(e) => {
+        if (e.key === "Enter") {
+          e.preventDefault();
+          e.currentTarget.blur();
+        }
+      }}
     >
       {parameters?.text || "Кнопка"}
     </Button>
