@@ -130,9 +130,9 @@ const letterLayoutSlice = createSlice({
 
         if (index > -1) {
           const parentElement = container.elements.activeElements[index];
-          if (parentElement.children) {
-            if (typeof parentElement[indexChild] === "undefined") {
-              parentElement[indexChild] = {
+          if (parentElement && parentElement.children) {
+            if (!parentElement.children[indexChild]) {
+              parentElement.children[indexChild] = {
                 name: `Cell${indexChild}`,
                 props: {
                   style: {},
