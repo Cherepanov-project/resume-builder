@@ -81,7 +81,7 @@ export type T_BlockElement = {
   columns?: number;
   elementScript?: string;
   interactiveType?: "button" | "slider";
-  props: T_SectionElementProps; //{[key: string]: string | {[key: string]: string}}
+  props: T_SectionElementProps;
   children?: T_BlockElement[];
   layout: Layout;
 };

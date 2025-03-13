@@ -1,7 +1,11 @@
 import { IGridContainers, setCurrentContainer } from "@/store/LetterBuilderStore/letterLayoutSlice";
 import ResponsiveGridLayout, { Layout } from "react-grid-layout";
 import { useAppDispatch, useTypedSelector } from "@/hooks/cvTemplateHooks";
-import { DynamicComponentRendererProps, T_BlockElement, CustomLayout } from "@/types/landingBuilder";
+import {
+  DynamicComponentRendererProps,
+  T_BlockElement,
+  CustomLayout,
+} from "@/types/landingBuilder";
 import {
   addElement,
   changeElement,
@@ -220,7 +224,7 @@ export const LetterGridContainer = (container: IGridContainers) => {
         {/* сделать проверку */}
         {container.elements.activeElements.map((el) => {
           const isActive = activeElement === el.id;
-          const idsElements = (el.children || []).reduce((acc, item) => {
+          const idsElements = (el.children || []).reduce((acc: string[], item) => {
             // Проверяем, что item и item.children существуют
             if (!item || !item.children) return acc;
 
@@ -232,13 +236,17 @@ export const LetterGridContainer = (container: IGridContainers) => {
               }
             }
             return acc;
-          }, []);
+          }, [] as string[]);
 
           return (
             <div
               key={el.layout.i}
               className={`${classes["item"]} ${isActive ? classes["active"] : ""}`}
-              onClick={() => handleElementClick(el.id)}
+              onClick={() => {
+                if (el.id) {
+                  handleElementClick(el.id);
+                }
+              }}
             >
               {isActive && (
                 <ElementToolsPanel
@@ -252,7 +260,7 @@ export const LetterGridContainer = (container: IGridContainers) => {
               <DynamicComponentRenderer
                 id={el.id}
                 Component={el.name}
-                source={el.source || "atoms"}
+                source={(el.source || "atoms") as string}
                 props={el.props}
                 columns={el.columns || 1}
                 layout={el.layout}

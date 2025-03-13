@@ -30,8 +30,8 @@ const EmailPage: React.FC = () => {
   const [tableHTML, setTableHTML] = useState<string>("");
   const numberOfColumns = 6;
 
-  const elements: Element[] = useSelector(
-    (state: RootState) => state.letterLayout.gridContainers[0].elements.activeElements,
+  const elements = useSelector(
+    (state: RootState) => state.letterLayout.gridContainers[0].elements.activeElements as Element[],
   );
   // Функция для вычисления colspan из блоков
   const extractPercent = (calcValue: string): number => {

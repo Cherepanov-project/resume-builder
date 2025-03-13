@@ -138,22 +138,29 @@ const settingsPanelSlice = createSlice({
       const { id, key, textList } = payload;
 
       if (!state.elements[id]) return;
-      if (!state.elements[id].valueList) state.elements[id].valueList = {};
+
+      if (!state.elements[id].valueList) {
+        state.elements[id].valueList = {};
+      }
+
       if (textList === undefined) {
-        delete state.elements[id].valueList[key];
+        delete state.elements[id].valueList?.[key];
         const values = Object.values(state.elements[id].valueList || {});
         const keys = Object.keys(state.elements[id].valueList || {});
 
         state.elements[id].valueList = {};
+        
         const newKeys = keys.map((item) => {
           if (Number(item) > key) item = String(Number(item) - 1);
           return item;
         });
+
         newKeys.map((k, i) => {
-          state.elements[id].valueList![k] = values[i];
+          if (state.elements[id].valueList) {
+            state.elements[id].valueList[k] = values[i];
+          }
         });
       } else {
-        if (!state.elements[id].valueList) return;
         state.elements[id].valueList[key] = textList;
       }
     },
