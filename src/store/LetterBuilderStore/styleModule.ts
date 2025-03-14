@@ -71,11 +71,11 @@ const settingsPanelSlice = createSlice({
       if (!element) return;
 
       if (action.href) {
-        (element as any).href = action.href;
+        element.href = action.href;
       }
 
       if (action.styles) {
-        (element as any).styles = { ...(element as any).styles, ...action.styles };
+        element.styles = { ...element.styles, ...action.styles };
       }
     },
     redo: (state) => {
@@ -90,11 +90,11 @@ const settingsPanelSlice = createSlice({
       if (!element) return;
 
       if (action.href) {
-        (element as any).href = action.href;
+        element.href = action.href;
       }
 
       if (action.styles) {
-        (element as any).styles = { ...(element as any).styles, ...action.styles };
+        element.styles = { ...element.styles, ...action.styles };
       }
     },
     clearElements: (state, { payload }: PayloadAction<string[]>) => {
@@ -145,7 +145,7 @@ const settingsPanelSlice = createSlice({
       }
 
       if (textList === undefined) {
-        delete state.elements[id].valueList?.[key];
+        delete (state.elements[id].valueList as any)[key];
         const values = Object.values(state.elements[id].valueList || {});
         const keys = Object.keys(state.elements[id].valueList || {});
 
@@ -158,11 +158,11 @@ const settingsPanelSlice = createSlice({
 
         newKeys.map((k, i) => {
           if (state.elements[id].valueList) {
-            state.elements[id].valueList[k] = values[i];
+            (state.elements[id].valueList as any)[k] = values[i];
           }
         });
       } else {
-        state.elements[id].valueList[key] = textList;
+        (state.elements[id].valueList as any)[key] = textList;
       }
     },
   },
