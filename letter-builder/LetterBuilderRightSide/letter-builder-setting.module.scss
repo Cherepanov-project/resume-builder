@@ -1,0 +1,37 @@
+.setting {
+  width: 411px;
+  max-height: 100%;
+  position: absolute;
+  top: 51px;
+  left: 0;
+  bottom: 0;
+  background-color: rgb(249 249 249 / var(--tw-bg-opacity, 1));
+  padding-left: 1.25rem;
+  padding-right: 1.25rem;
+  transition: transform ease-in-out 0.3s;
+  transform: translate(-411px, 0);
+  overflow-y: scroll;
+  overflow-x: hidden;
+  scroll-behavior: smooth;
+
+  &::-webkit-scrollbar {
+    width: 8px;
+  }
+
+  &::-webkit-scrollbar-track {
+    background: var(--background-color);
+  }
+
+  &::-webkit-scrollbar-thumb {
+    background: rgba(0, 0, 0, 0.3);
+    border-radius: var(--border-radius);
+  }
+
+  &::-webkit-scrollbar-thumb:hover {
+    background: rgba(0, 0, 0, 0.2);
+  }
+
+  &.open {
+    transform: translate(0, 0);
+  }
+}

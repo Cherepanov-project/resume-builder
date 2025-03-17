@@ -55,8 +55,8 @@ const IntroPage = () => {
           secondBox='url("./../../../src/assets/images/defaultSlides/3.jpg")'
         />
         <IntroPageSection
-          title="Use the content blocks"
-          content="We've built out a multitude of content blocks for you to use in your landing pages. From
+          title="EMAIL CONSTUCTION"
+          content="We've built   out a multitude of content blocks for you to use in your landing pages. From
           hero sections, forms, CTAs to pricing sections. Everything you need to get started
           building polished, modern landing pages."
           firstBox='url("./../../../src/assets/images/defaultSlides/2.jpg")'

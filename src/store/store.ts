@@ -1,4 +1,4 @@
-import { combineReducers, configureStore } from '@reduxjs/toolkit';
+import { combineReducers, configureStore } from "@reduxjs/toolkit";
 import {
   persistStore,
   persistReducer,
@@ -8,25 +8,31 @@ import {
   PERSIST,
   PURGE,
   REGISTER,
-} from 'redux-persist';
-import storage from 'redux-persist/lib/storage'; // defaults to localStorage for web
+} from "redux-persist";
+import storage from "redux-persist/lib/storage"; // defaults to localStorage for web
 
-import allPersonaInfoReducer from './cvTemplate/allPersonaInfoSlice';
-import educationReducer from './cvTemplate/educationSlice';
-import experienceReducer from './cvTemplate/experienceSlice';
-import socialReducer from './cvTemplate/socialSlice';
-import hobbiesReducer from './cvTemplate/hobbiesSlice';
-import layoutReducer from './landingBuilder/layoutSlice';
-import utilityReducer from './landingBuilder/utilitySlice';
-import cardReducer from './cardSlice';
-import sectionsManagerReducer from './landingBuilder/sectionsManagerSlice';
-import settingsPanelReducer from './landingBuilder/settingsPanelSlice';
-import swiperReducer from './landingBuilder/swiperSlice';
-import userReducer from './userSlice';
+import allPersonaInfoReducer from "./cvTemplate/allPersonaInfoSlice";
+import educationReducer from "./cvTemplate/educationSlice";
+import experienceReducer from "./cvTemplate/experienceSlice";
+import socialReducer from "./cvTemplate/socialSlice";
+import hobbiesReducer from "./cvTemplate/hobbiesSlice";
+import layoutReducer from "./landingBuilder/layoutSlice";
+import letterLayoutReducer from "./LetterBuilderStore/letterLayoutSlice";
+import utilityReducer from "./landingBuilder/utilitySlice";
+import cardReducer from "./cardSlice";
+import sectionsManagerReducer from "./landingBuilder/sectionsManagerSlice";
+import settingsPanelReducer from "./landingBuilder/settingsPanelSlice";
+import styleModuleSlice from "./LetterBuilderStore/styleModule";
+import swiperReducer from "./landingBuilder/swiperSlice";
+import userReducer from "./userSlice";
+import videoReducer, { videoMiddleware } from "../../letter-builder/reducers/videoSlice";
+import htmlReducer, { htmlMiddleware } from "../../letter-builder/reducers/htmlReducer";
+import { useSelector, TypedUseSelectorHook, useDispatch } from "react-redux";
+import iconsReducer from "../../letter-builder/reducers/iconsSlice";
 
 //конфиг для persist
 const persistConfig = {
-  key: 'root',
+  key: "root",
   storage,
 };
 
@@ -38,12 +44,17 @@ const rootReducer = combineReducers({
   social: socialReducer,
   hobbies: hobbiesReducer,
   layout: layoutReducer,
+  letterLayout: letterLayoutReducer,
   utility: utilityReducer,
   card: cardReducer,
   sectionsManager: sectionsManagerReducer,
   settingsPanel: settingsPanelReducer,
+  styleModule: styleModuleSlice,
   swiper: swiperReducer,
   user: userReducer,
+  video: videoReducer,
+  html: htmlReducer,
+  icons: iconsReducer,
 });
 
 //преобразование редьюсера для persist
@@ -57,7 +68,9 @@ const store = configureStore({
       serializableCheck: {
         ignoredActions: [FLUSH, REHYDRATE, PAUSE, PERSIST, PURGE, REGISTER],
       },
-    }),
+    })
+      .concat(htmlMiddleware)
+      .concat(videoMiddleware),
 });
 
 //обертка персиста над стором
@@ -65,3 +78,6 @@ export const persistor = persistStore(store);
 export default store;
 export type RootState = ReturnType<typeof store.getState>;
 export type AppDispatch = typeof store.dispatch;
+
+export const useAppSelector: TypedUseSelectorHook<RootState> = useSelector;
+export const useAppDispatch = () => useDispatch<AppDispatch>();

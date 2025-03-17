@@ -1,9 +1,9 @@
-import { setProps } from '@/store/landingBuilder/layoutSlice';
-import { useAppDispatch } from '@/hooks/cvTemplateHooks';
-import { IButtonsSettingsPanelProps } from '@/types/landingBuilder';
-import { closePanel } from '@/store/landingBuilder/settingsPanelSlice';
-import { useState } from 'react';
-import { Alert, Stack, Button, Box } from '@mui/material';
+import { setProps } from "@/store/landingBuilder/layoutSlice";
+import { useAppDispatch } from "@/hooks/cvTemplateHooks";
+import { IButtonsSettingsPanelProps } from "@/types/landingBuilder";
+import { closePanel } from "@/store/landingBuilder/settingsPanelSlice";
+import { useState } from "react";
+import { Alert, Stack, Button, Box } from "@mui/material";
 
 const ButtonsSettingsPanel = ({
   elementId,

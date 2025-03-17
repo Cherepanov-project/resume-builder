@@ -1,26 +1,26 @@
-import { useAppDispatch } from '@/hooks/cvTemplateHooks';
-import { initImageMenu } from '@/store/landingBuilder/settingsPanelSlice';
-import { useEffect, useLayoutEffect, useRef, useState } from 'react';
-import { HexColorPicker } from 'react-colorful';
+import { useAppDispatch } from "@/hooks/cvTemplateHooks";
+import { initImageMenu } from "@/store/landingBuilder/settingsPanelSlice";
+import { useEffect, useLayoutEffect, useRef, useState } from "react";
+import { HexColorPicker } from "react-colorful";
 
 interface IProps {
-  setStyle: React.Dispatch<React.SetStateAction<React.CSSProperties>>,
-  backgroundColor: string | undefined,   
+  setStyle: React.Dispatch<React.SetStateAction<React.CSSProperties>>;
+  backgroundColor: string | undefined;
 }
 
-const ContainerDIVSettings: React.FC<IProps> = ({backgroundColor, setStyle }) => {
+const ContainerDIVSettings: React.FC<IProps> = ({ backgroundColor, setStyle }) => {
   const dispatch = useAppDispatch();
 
-  const [image, setImage] = useState('Input URL');
-  const [color, setColor] = useState(backgroundColor ? backgroundColor : '#ffffff');
+  const [image, setImage] = useState("Input URL");
+  const [color, setColor] = useState(backgroundColor ? backgroundColor : "#ffffff");
   const [colorOpen, setColorOpen] = useState(false);
 
   const colorRef = useRef<HTMLDivElement>(null);
 
   useLayoutEffect(() => {
-    document.addEventListener('mousedown', handleClick);
+    document.addEventListener("mousedown", handleClick);
     return () => {
-      document.removeEventListener('mousedown', handleClick);
+      document.removeEventListener("mousedown", handleClick);
     };
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
