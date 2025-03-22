@@ -43,8 +43,21 @@
   flex-direction: row;
   z-index: 1;
 }
-//   &:hover .tools-panel {
-//     opacity: 1;
-//     pointer-events: auto;
-//   }
-// }
+
+.drag-handle {
+  cursor: grab;
+  
+  &:active {
+    cursor: grabbing;
+  }
+  
+  &::before {
+    content: '';
+    position: absolute;
+    top: -5px;
+    left: -5px;
+    right: -5px;
+    bottom: -5px;
+    z-index: -1;
+  }
+}
