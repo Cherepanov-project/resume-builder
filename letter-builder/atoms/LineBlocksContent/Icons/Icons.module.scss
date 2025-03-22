@@ -1,0 +1,197 @@
+.iconsWrapper {
+  position: relative;
+  
+  &:hover .element-container {
+    display: flex;
+  }
+}
+
+.iconsGrid {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 1rem;
+  justify-content: center;
+  margin-bottom: 1rem;
+}
+
+.iconItem {
+  cursor: pointer;
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  padding: 0.75rem;
+  border-radius: 0.375rem;
+  z-index: 0;
+  transition: all 0.2s ease;
+  
+  &:hover {
+    background-color: rgba(243, 244, 246, 1);
+  }
+  
+  &.selected {
+    background-color: rgba(219, 234, 254, 1);
+    border: 1px solid rgba(96, 165, 250, 1);
+  }
+}
+
+.iconContainer {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  width: 3rem;
+  height: 3rem;
+  pointer-events: auto;
+}
+
+.deleteButton {
+  position: absolute;
+  top: 0;
+  right: 0;
+  z-index: 20;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  width: 1.25rem;
+  height: 1.25rem;
+  color: rgb(107, 114, 128);
+  background-color: white;
+  border-radius: 9999px;
+  opacity: 0;
+  transition: opacity 0.2s ease, background-color 0.2s ease, color 0.2s ease;
+  
+  &:hover {
+    background-color: rgb(239, 68, 68);
+    color: white;
+  }
+  
+  .iconItem:hover & {
+    opacity: 1;
+  }
+}
+
+.addButton {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  padding: 0.5rem;
+  width: 6rem;
+  height: 6rem;
+  border-radius: 0.375rem;
+  border: 2px dashed rgb(209, 213, 219);
+  cursor: pointer;
+  transition: background-color 0.2s ease;
+  
+  &:hover {
+    background-color: rgba(249, 250, 251, 1);
+  }
+  
+  svg {
+    color: rgb(156, 163, 175);
+  }
+}
+
+.modalOverlay {
+  position: fixed;
+  inset: 0;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  background-color: rgba(0, 0, 0, 0.7);
+  z-index: 50;
+}
+
+.modalContent {
+  position: relative;
+  background-color: white;
+  box-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.25);
+  width: 600px;
+  max-height: 80vh;
+  border-radius: 0.375rem;
+  padding: 1rem;
+  overflow: hidden;
+}
+
+.modalHeader {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 1rem;
+}
+
+.categoryTabs {
+  display: flex;
+  overflow-x: auto;
+  gap: 0.5rem;
+  padding-bottom: 0.5rem;
+  margin-bottom: 1rem;
+}
+
+.categoryTab {
+  padding: 0.25rem 0.75rem;
+  border-radius: 0.25rem;
+  white-space: nowrap;
+  
+  &.active {
+    background-color: rgb(59, 130, 246);
+    color: white;
+  }
+  
+  &:not(.active) {
+    background-color: rgb(229, 231, 235);
+    
+    &:hover {
+      background-color: rgb(209, 213, 219);
+    }
+  }
+}
+
+.iconsGrid {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 0.75rem;
+  max-height: 400px;
+  overflow-y: auto;
+}
+
+.iconButton {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  padding: 0.75rem;
+  height: 6rem;
+  border-radius: 0.25rem;
+  background-color: lightgray;
+  cursor: pointer;
+  transition: background-color 0.2s ease;;
+  border: 1px solid rgb(229, 231, 235);
+  transition: all 0.2s ease;
+  
+  &:hover {
+    background-color: rgba(239, 246, 255, 1);
+  }
+  
+  &:focus {
+    outline: none;
+  }
+}
+
+.customScrollbar {
+  scrollbar-width: thin;
+  scrollbar-color: rgba(156, 163, 175, 0.5) transparent;
+  
+  &::-webkit-scrollbar {
+    width: 6px;
+  }
+  
+  &::-webkit-scrollbar-track {
+    background: transparent;
+  }
+  
+  &::-webkit-scrollbar-thumb {
+    background-color: rgba(156, 163, 175, 0.5);
+    border-radius: 3px;
+  }
+}

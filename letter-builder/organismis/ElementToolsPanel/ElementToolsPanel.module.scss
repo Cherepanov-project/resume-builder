@@ -6,6 +6,7 @@
   & > button {
     padding: 5px;
     border-radius: 0;
+    pointer-events: auto; 
 
     &:first-child {
       background-color: $bg-static-light;
@@ -16,12 +17,14 @@
     }
   }
 }
+
 .tools-panel-right {
   z-index: 3;
 
   & > button {
     padding: 5px;
     border-radius: 0;
+    pointer-events: auto; 
 
     &:first-child {
       background-color: $bg-static-light;
@@ -32,6 +35,7 @@
     }
   }
 }
+
 .element-container {
   display: flex;
   position: absolute;
@@ -42,6 +46,7 @@
   justify-content: space-between;
   flex-direction: row;
   z-index: 1;
+  pointer-events: none; 
 }
 
 .drag-handle {
@@ -60,4 +65,9 @@
     bottom: -5px;
     z-index: -1;
   }
+}
+
+.element-container button {
+  z-index: 15;
+  background-color: rgba(255, 255, 255, 0.85); 
 }
