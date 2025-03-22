@@ -72,6 +72,9 @@ const IconsComponent: React.FC<IconComponentProps> = ({ id, layout, parentLayout
   const [currentCategory, setCurrentCategory] = useState<string>("fa");
   const [, setDraggingInnerItem] = useState<boolean>(false);
 
+  // Определяем, есть ли уже иконки для текущего элемента
+  const hasIcons = icons.length > 0;
+
   const iconLibraries: IconLibrary[] = [
     { id: "fa", name: "Font Awesome", library: FaIcons },
     { id: "ai", name: "Ant Design", library: AiIcons },
@@ -289,7 +292,7 @@ const IconsComponent: React.FC<IconComponentProps> = ({ id, layout, parentLayout
       )}
 
       <div className="text-[#515659] flex flex-col items-center">
-        <div className={styles.iconsGrid}>
+        <div className={styles.iconsFlex}>
           {icons.map((icon) => (
             <div
               key={icon.id}
@@ -315,12 +318,15 @@ const IconsComponent: React.FC<IconComponentProps> = ({ id, layout, parentLayout
             </div>
           ))}
           
-          <div
-            className={styles.addButton}
-            onClick={() => setPopOverVisibility(true)}
-          >
-            <MdIcons.MdAdd size={30} />
-          </div>
+          {/* Показываем кнопку добавления только если нет иконок */}
+          {!hasIcons && (
+            <div
+              className={styles.addButton}
+              onClick={() => setPopOverVisibility(true)}
+            >
+              <MdIcons.MdAdd size={30} />
+            </div>
+          )}
         </div>
       </div>
     </div>
