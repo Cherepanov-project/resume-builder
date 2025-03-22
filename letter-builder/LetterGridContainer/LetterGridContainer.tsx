@@ -19,7 +19,6 @@ import classes from "./LetterGridContainer.module.scss";
 
 export type LetterDynamicComponentRendererProps = DynamicComponentRendererProps;
 
-// Отрисовываем динамический компонент
 const DynamicComponentRenderer: React.FC<LetterDynamicComponentRendererProps> = memo(
   ({ id, Component, props, columns, source, children, layout, containerId }) => {
     const DynamicComponent = lazy(() => import(`../${source}/LineBlocks/index.ts`));
@@ -52,7 +51,6 @@ export const LetterGridContainer = (container: IGridContainers) => {
   const [activeElement, setActiveElement] = useState<string | null>(null);
   const navigate = useNavigate();
 
-  //добавлен isHoverBtn для работы inline стиля hover на кнопке Email Us
   const [isHoverBtn, setIsHoverBtn] = useState<boolean>(false);
 
   const handleSetDraggingInnerItem = (isDragging: boolean) => {
@@ -88,14 +86,12 @@ export const LetterGridContainer = (container: IGridContainers) => {
   };
 
   const handleEmailButtonClick = () => {
-    // Сохранение данных о расположении блоков
     const layoutData = container.elements.activeElements.map((el) => ({
       id: el.id,
       layout: el.layout,
     }));
     const layoutString = JSON.stringify(layoutData);
 
-    // Создание HTML-шаблона
     const htmlTemplate = `
       <div class="${classes["container"]}">
         <ResponsiveGridLayout
@@ -134,7 +130,6 @@ export const LetterGridContainer = (container: IGridContainers) => {
       </div>
     `;
 
-    // Переход на страницу email
     navigate("/email", {
       state: {
         layoutData: layoutString,
@@ -167,17 +162,7 @@ export const LetterGridContainer = (container: IGridContainers) => {
     >
       {/* Кнопка Email Us - стайлинг */}
       <button
-        style={{
-          color: isHoverBtn ? "white" : "gray",
-          marginLeft: "10px",
-          marginTop: "2px",
-          marginBottom: "2px",
-          transition: "background-color 0.6s ease 0.2s, color 0.4s ease 0.2s",
-          backgroundColor: isHoverBtn ? "darkcyan" : "rgb(30 122 127 / .2)",
-          borderColor: isHoverBtn ? "#fff" : "rgba(0, 0, 0, 0.1)",
-          border: isHoverBtn ? "1px solid white" : "1px solid gray",
-        }}
-        className={classes["email-button"]}
+        className={`${classes["email-button"]} ${isHoverBtn ? classes["email-button--hover"] : ""}`}
         onClick={handleEmailButtonClick}
         onMouseEnter={() => setIsHoverBtn(true)}
         onMouseLeave={() => setIsHoverBtn(false)}
@@ -225,12 +210,9 @@ export const LetterGridContainer = (container: IGridContainers) => {
         {container.elements.activeElements.map((el) => {
           const isActive = activeElement === el.id;
           const idsElements = (el.children || []).reduce((acc: string[], item) => {
-            // Проверяем, что item и item.children существуют
             if (!item || !item.children) return acc;
 
-            // Перебираем item.children
             for (const child of item.children) {
-              // Проверяем, что child и child.id существуют
               if (child?.id) {
                 acc.push(child.id);
               }

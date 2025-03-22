@@ -30,7 +30,7 @@
   flex-direction: column;
   flex-wrap: wrap;
   align-content: center;
-  position: relative; /* Обеспечивает правильное позиционирование псевдоэлементов */
+  position: relative; 
 }
 
 .grid::before,
@@ -46,12 +46,12 @@
 
 .grid::before {
   left: 0;
-  width: 10%; /* Ширина псевдоэлемента слева */
+  width: 10%; 
 }
 
 .grid::after {
   right: 0;
-  width: 10%; /* Ширина псевдоэлемента справа */
+  width: 10%;
 }
 
 .react-resizable-handle {
@@ -99,5 +99,26 @@
 }
 
 .item.active {
-  border: 1px solid #1976d2; /* Пример активного элемента */
+  border: 1px solid #1976d2; 
+}
+
+
+.email-button {
+  color: gray;
+  margin: 2px 0 2px 10px;
+  transition: background-color 0.6s ease 0.2s, color 0.4s ease 0.2s;
+  background-color: rgb(30 122 127 / .2);
+  border: 1px solid gray;
+  border-color: rgba(0, 0, 0, 0.1);
+
+  &--hover {
+    color: white;
+    background-color: darkcyan;
+    border: 1px solid white;
+    border-color: #fff;
+  }
+}
+
+.dynamic-component-wrapper {
+  position: relative;
 }
