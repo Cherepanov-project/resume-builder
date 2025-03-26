@@ -147,14 +147,7 @@ const GifsComponent = () => {
         )}
       </div>
 
-      <style jsx>{`
-        .custom-scrollbar {
-          scrollbar-width: none;
-        }
-        .custom-scrollbar::-webkit-scrollbar {
-          display: none;
-        }
-      `}</style>
+      
     </>
   );
 };

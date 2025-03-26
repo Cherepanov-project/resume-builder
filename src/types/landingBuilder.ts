@@ -104,7 +104,7 @@ export type DynamicComponentRendererProps = {
   source: string;
   elementScript?: string;
   interactiveType?: "button" | "slider";
-  children?: T_BlockElement[];
+  children?: T_BlockElement[] ;
   layout: Layout;
   containerId?: string;
 };
