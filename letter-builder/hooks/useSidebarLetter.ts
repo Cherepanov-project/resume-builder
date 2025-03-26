@@ -3,6 +3,7 @@ import { useState } from "react";
 import { useAppDispatch } from "@/store/store";
 import { updateElement } from "@/store/LetterBuilderStore/styleModule";
 import { SelectChangeEvent } from "@mui/material";
+import { useDebouncedCallback } from 'use-debounce';
 
 export const fonts = [
   {
@@ -65,7 +66,6 @@ export const fonts = [
 
 export const useSidebarLetter = (element: ElementState) => {
   const dispatch = useAppDispatch();
-
   const [href, setHref] = useState(element?.href || "");
   const [bold, setBold] = useState(element?.styles?.fontWeight === "bold");
   const [italic, setItalic] = useState(element?.styles?.fontStyle === "italic");
@@ -74,8 +74,26 @@ export const useSidebarLetter = (element: ElementState) => {
     element?.styles?.textDecoration === "line-through",
   );
 
+
+  const debounsed:(event: string, typeColor: string) => void = useDebouncedCallback(
+    (event, typeColor) => {
+      const ev = event
+      // const a = tupe
+      // console.log(a)
+    dispatch(updateElement({ [typeColor] : ev}));
+  }
+    , 20)
+
   const handleBackgroundColorChange = (event: React.ChangeEvent<HTMLInputElement>) => {
-    dispatch(updateElement({ backgroundColor: event.target.value }));
+    const ev = event.target.value 
+    debounsed( ev, 'backgroundColor')
+    // dispatch(updateElement({ backgroundColor: event.target.value }));
+  };
+  
+  const handleTextColorChange = (event: React.ChangeEvent<HTMLInputElement>) => {
+    const ev = event.target.value
+    debounsed(ev, 'color')
+    // dispatch(updateElement({ color: event.target.value }));
   };
 
   const handleHrefChange = (event: React.ChangeEvent<HTMLInputElement>) => {
@@ -83,6 +101,8 @@ export const useSidebarLetter = (element: ElementState) => {
   };
 
   const handleHrefBlur = () => {
+    console.log('start')
+
     dispatch(updateElement(href));
   };
 
@@ -112,9 +132,6 @@ export const useSidebarLetter = (element: ElementState) => {
     dispatch(updateElement({ textDecoration: strikethrough ? "none" : "line-through" }));
   };
 
-  const handleTextColorChange = (event: React.ChangeEvent<HTMLInputElement>) => {
-    dispatch(updateElement({ color: event.target.value }));
-  };
 
   const handleTextSizeChange = (event: React.ChangeEvent<HTMLInputElement>) => {
     dispatch(updateElement({ fontSize: event.target.value + "px" }));
@@ -144,10 +161,13 @@ export const useSidebarLetter = (element: ElementState) => {
   };
 
   const handleBorderColorChange = (event: React.ChangeEvent<HTMLInputElement>) => {
-    dispatch(updateElement({ borderColor: event.target.value }));
+    const ev = event.target.value
+    debounsed(ev, 'borderColor')    
+    // dispatch(updateElement({ borderColor: event.target.value }));
   };
 
   const handlePaddingBlockChange = (event: React.ChangeEvent<HTMLInputElement>) => {
+    console.log(event)
     dispatch(
       updateElement({
         paddingTop: event.target.value + "px",
@@ -157,6 +177,7 @@ export const useSidebarLetter = (element: ElementState) => {
   };
 
   const handlePaddingInlineChange = (event: React.ChangeEvent<HTMLInputElement>) => {
+    console.log(event)
     dispatch(
       updateElement({
         paddingLeft: event.target.value + "px",

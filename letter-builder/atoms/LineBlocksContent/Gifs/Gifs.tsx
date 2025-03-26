@@ -22,7 +22,7 @@ const GifsComponent = () => {
     }
   };
 
-  const handleSearch = async (q) => {
+  const handleSearch = async (q: string) => {
     setGifs([]);
     if (!q) {
       fetchGifs();
@@ -70,6 +70,8 @@ const GifsComponent = () => {
   useEffect(() => {
     if (isPopOverVisible) fetchGifs();
   }, [isPopOverVisible]);
+
+
 
   return (
     <>
@@ -143,13 +145,21 @@ const GifsComponent = () => {
             >
               Search for gifs with Giphy
             </button>
-          </>
+            </>
         )}
       </div>
-
+      <style >{`
+              .custom-scrollbar {
+                scrollbar-width: none;
+              }
+              .custom-scrollbar::-webkit-scrollbar {
+                display: none;
+              }
+            `}</style>
       
     </>
   );
 };
 
 export default GifsComponent;
+

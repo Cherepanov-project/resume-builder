@@ -75,7 +75,7 @@ export type T_BlockElement = {
   elementScript?: string;
   interactiveType?: "button" | "slider";
   props: T_SectionElementProps; //{[key: string]: string | {[key: string]: string}}
-  children?: T_BlockElement[];
+  children?: T_BlockElement[] | never[];
   layout: Layout;
 };
 

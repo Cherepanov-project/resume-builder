@@ -1,5 +1,6 @@
+/* eslint-disable @typescript-eslint/no-explicit-any */
 import { createSlice, PayloadAction } from "@reduxjs/toolkit";
-import { Middleware } from "redux";
+// import { Middleware } from "redux";
 
 interface VideoState {
   isSidebarOpen: boolean;

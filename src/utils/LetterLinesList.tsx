@@ -1,3 +1,4 @@
+/* eslint-disable @typescript-eslint/no-explicit-any */
 import { T_BlockElement } from "@/types/landingBuilder";
 import {
   IconLinesFirst,

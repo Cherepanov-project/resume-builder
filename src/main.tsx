@@ -9,7 +9,7 @@ import { PersistGate } from 'redux-persist/integration/react';
 import Auth0ProviderWithRedirectCallback from './components/atoms/Auth0ProviderWithRedirectCallback/Auth0ProviderWithRedirectCallback.tsx';
 
 ReactDOM.createRoot(document.getElementById('root')!).render(
-  <React.StrictMode>
+  // <React.StrictMode>
     <BrowserRouter>
       <Auth0ProviderWithRedirectCallback
         authorizationParams={{
@@ -22,6 +22,6 @@ ReactDOM.createRoot(document.getElementById('root')!).render(
           </PersistGate>
         </Provider>
       </Auth0ProviderWithRedirectCallback>
-    </BrowserRouter>
-  </React.StrictMode>,
+    </BrowserRouter>,
+  // </React.StrictMode>,
 );

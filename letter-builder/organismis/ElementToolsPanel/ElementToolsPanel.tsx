@@ -51,12 +51,13 @@ const ElementToolsPanel: React.FC<ElementToolsPanelProps> = ({
   };
 
   return (
-    <div className={classes["element-container"]}>
+    <div className={classes["element-container"]} >
       <div className={classes["tools-panel-left"]}>
         <IconButton
           aria-label="Move Item"
           color="primary"
           className={elClass}
+          style={{marginLeft:"5px"}}
           onMouseDown={handleInnerItemDragStart}
           onMouseUp={handleInnerItemDragEnd}
         >
@@ -127,6 +128,7 @@ const ElementToolsPanel: React.FC<ElementToolsPanelProps> = ({
 
             dispatch(clearElements(elementsIds));
           }}
+          style={{marginRight:'5px'}}
         >
           <Delete />
         </IconButton>

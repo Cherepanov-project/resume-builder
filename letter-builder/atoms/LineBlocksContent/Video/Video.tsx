@@ -154,7 +154,7 @@ import { useDispatch, useSelector } from "react-redux";
 import { IconPngVideo } from "@components/atoms/Icons/LetterCardIcons";
 import { RootState } from "@/store/store";
 import { setVideoUrl, toggleSidebar } from "../../../reducers/videoSlice";
-import { TextField, FormGroup, FormControlLabel, Switch } from "@mui/material";
+// import { TextField, FormGroup, FormControlLabel, Switch } from "@mui/material";
 
 const VideoComponent = () => {
   const dispatch = useDispatch();
@@ -202,11 +202,12 @@ const VideoComponent = () => {
 
       {videoUrl && (
         <iframe
-          width="100%"
-          height="100%"
+          
+          width="1%"
+          height="5%"
           src={getYouTubeEmbedUrl(videoUrl)}
           title="YouTube video player"
-          frameBorder="0"
+          // frameBorder="0"
           allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
           allowFullScreen
         ></iframe>

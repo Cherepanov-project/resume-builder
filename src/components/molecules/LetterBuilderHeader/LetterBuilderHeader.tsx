@@ -21,7 +21,7 @@ const LetterBuilderHeader = () => {
           className="ml-5 items-center px-4 text-white transition bg-gray-700 "
         >
           {visibleIcon}
-          <span className="ml-2">{buttonVisibleText}</span>
+          <span className={`ml-2`}>{buttonVisibleText}</span>
         </button>
       </div>
 

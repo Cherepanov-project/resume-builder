@@ -65,6 +65,7 @@ export interface IStyleFormObj {
 
 // Гигачадовая типизация от Кенси
 export type T_BlockElement = {
+  id: number| string;
   name: string;
   title?: string;
   url?: string;
@@ -75,7 +76,7 @@ export type T_BlockElement = {
   elementScript?: string;
   interactiveType?: "button" | "slider";
   props: T_SectionElementProps; //{[key: string]: string | {[key: string]: string}}
-  children?: T_BlockElement[];
+  children?: never[] | T_BlockElement[];
   layout: Layout;
 };
 

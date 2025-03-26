@@ -1,9 +1,10 @@
+/* eslint-disable react-hooks/exhaustive-deps */
 import { IconPngStickers } from "@components/atoms/Icons/LetterCardIcons";
 import { GiphyFetch } from "@giphy/js-fetch-api";
 import { useEffect, useMemo, useState } from "react";
 
 const StickersComponent = () => {
-  const [isPopOverVisible, setPopOverVisibility] = useState(false);
+  const [isPopOverVisible, setPopOverVisibility] = useState<boolean>(false);
   const [stickers, setStickers] = useState<string[]>([]);
   const [currSticker, setCurrSticker] = useState<string>("");
   const [loading, setLoading] = useState(false);
@@ -151,17 +152,22 @@ const StickersComponent = () => {
         )}
       </div>
 
-      <style jsx>{`
-        /* Скрытие скроллбара */
-        .custom-scrollbar {
-          scrollbar-width: none;
-        }
-        .custom-scrollbar::-webkit-scrollbar {
-          display: none;
-        }
-      `}</style>
+      
     </>
   );
 };
 
 export default StickersComponent;
+
+
+
+
+// <style jsx>{`
+//         /* Скрытие скроллбара */
+//         .custom-scrollbar {
+//           scrollbar-width: none;
+//         }
+//         .custom-scrollbar::-webkit-scrollbar {
+//           display: none;
+//         }
+//       `}</style>

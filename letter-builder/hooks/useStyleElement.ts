@@ -23,7 +23,9 @@ export const useStyleElement = (id: string, defaultStyle: Style, type?: TypeElem
   }, [parameters, dispatch, defaultStyle, type, id]);
 
   const handleOpen = (event: React.MouseEvent) => {
-    event.preventDefault();
+    // console.log(event.target)
+    // event.preventDefault();
+    
     dispatch(initPanel(id));
   };
 

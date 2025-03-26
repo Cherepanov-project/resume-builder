@@ -18,14 +18,25 @@ import {
   IconPngStickers,
   IconPngTimer,
 } from "@/components/atoms/Icons/LetterCardIcons";
+import { T_BlockElement } from "@/types/landingBuilder";
 
-const LetterCardList = [
+type Items = {
+  text: string,
+icon: JSX.Element,
+id: number,
+name: string,
+children: [] | T_BlockElement[],
+blockWidth: string[],
+}
+type Item = Items[]
+
+const LetterCardList:Item = [
   {
     text: "ЗАГОЛОВОК",
     icon: <IconPngHeader scale={1.3} />,
     id: 0,
     name: "Header",
-    children: [],
+    children: [] ,
     blockWidth: ["100%"],
   },
   {

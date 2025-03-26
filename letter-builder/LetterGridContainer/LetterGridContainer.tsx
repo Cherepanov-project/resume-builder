@@ -1,7 +1,8 @@
+/* eslint-disable @typescript-eslint/no-explicit-any */
 import { IGridContainers, setCurrentContainer } from "@/store/LetterBuilderStore/letterLayoutSlice";
 import ResponsiveGridLayout, { Layout } from "react-grid-layout";
 import { useAppDispatch, useTypedSelector } from "@/hooks/cvTemplateHooks";
-import { LetterDynamicComponentRendererProps, T_BlockElement } from "@/types/landingBuilder";
+import {  T_BlockElement } from "@/types/landingBuilder";
 import {
   addElement,
   changeElement,
@@ -12,6 +13,7 @@ import ComponentPreloader from "@/components/atoms/ComponentPreloader";
 import ElementToolsPanel from "../organismis/ElementToolsPanel/ElementToolsPanel";
 import { useNavigate } from "react-router-dom";
 import classes from "./LetterGridContainer.module.scss";
+import { LetterDynamicComponentRendererProps } from '../types/landingBuilder';
 
 // Отрисовываем динамический компонент
 const DynamicComponentRenderer: React.FC<LetterDynamicComponentRendererProps> = memo(
@@ -192,7 +194,7 @@ export const LetterGridContainer = (container: IGridContainers) => {
         onDrop={(layout: Layout[], layoutItem: Layout) => {
           const draggableItem = currentDraggableItem;
 
-          if (draggableItem && draggableItem.props.isChild) return;
+          // if (draggableItem && draggableItem.props.isChild) return;
 
           const id = container.id;
 
@@ -218,7 +220,7 @@ export const LetterGridContainer = (container: IGridContainers) => {
         {/* сделать проверку */}
         {container.elements.activeElements.map((el) => {
           const isActive = activeElement === el.id;
-          const idsElements = (el.children || []).reduce((acc, item) => {
+          const idsElements = (el.children || []).reduce((acc:any[], item:T_BlockElement) => {
             // Проверяем, что item и item.children существуют
             if (!item || !item.children) return acc;
 
