@@ -1,16 +1,20 @@
 .swiper-preview {
+  display: grid; // Ensure this is a grid container
+  grid-template-areas:
+    'checkbox title title'
+    'swiper swiper swiper';
+
   &__title-container {
     display: flex;
     margin: 5px 0;
   }
-  grid-template-areas:
-    'checkbox title title'
-    'swiper swiper swiper';
+
   &__checkbox {
     grid-area: checkbox;
     margin: 0 auto;
     margin-right: 0;
   }
+
   &__title {
     color: #2dc08d;
     margin: 0 auto;
@@ -19,6 +23,7 @@
     text-transform: uppercase;
     font-weight: 900;
   }
+
   &__swiper {
     padding-right: 5px;
     grid-area: swiper;
@@ -26,6 +31,7 @@
     height: 60px;
     border-radius: 5px;
   }
+
   &__swiper-slide {
     color: aliceblue;
     font-size: 26px;

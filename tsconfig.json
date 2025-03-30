@@ -15,8 +15,7 @@
     "skipLibCheck": true,
     "strict": true,
     "forceConsistentCasingInFileNames": true,
-    "noImplicitAny": false,
-
+    "noImplicitAny": true,
     "paths": {
       "@/*": ["./src/*"],
       "@assets/*": ["./src/assets/*"],

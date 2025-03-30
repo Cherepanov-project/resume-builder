@@ -4,14 +4,22 @@ import { useWatch } from "react-hook-form";
 import { templatePDFStyles } from '@/pages/CvTemplatePDF/const';
 import { StyleOptionType } from '@/pages/CvTemplatePDF/const';
 
-const ExperiencePreview = ({styleName}) => {
+type ExperienceFormDataType = { 
+  'work-title': string,
+  'company': string,
+  'experience-from-year': string,
+  'experience-to-year': string,
+  'company-info': string 
+}
 
-  const style: StyleOptionType = templatePDFStyles[styleName].style;
+const ExperiencePreview = ({ styleName }: { styleName: string }) => {
+
+  const style: StyleOptionType = templatePDFStyles[styleName as keyof typeof templatePDFStyles].style;
   const { Subtitle, SubtitleSpecial, Experiences, Experience, ExperienceTitle, ExperienceTime, ExperiencePosition, ExperienceDescription, Text} = style
 
   const experienceFormData = useWatch({name: 'experienceData'})
   const experienceData: ExperienceDataType[] = []
-  experienceFormData.forEach((experience) => {
+  experienceFormData.forEach((experience : ExperienceFormDataType) => {
     const newExperience: ExperienceDataType = {
       position: experience['work-title'],
       name: experience.company,
