@@ -16,6 +16,7 @@ const initialState: SettingsPanelState = {
   elements: {},
   history: [],
   currentHistoryIndex: -1,
+
 };
 
 export const addElement = createAction<ElementState>("settingsPanel/addElement");
@@ -38,6 +39,7 @@ const settingsPanelSlice = createSlice({
     },
     updateElement: (state, { payload }: PayloadAction<Style | Href>) => {
       const selectedId = state.selectedElement;
+      // console.log(payload)
       if (!selectedId) return;
 
       const element = state.elements[selectedId];
@@ -56,6 +58,7 @@ const settingsPanelSlice = createSlice({
     },
     updateText: (state, { payload }: PayloadAction<{ id: string; text: string }>) => {
       const { id, text } = payload;
+
 
       if (state.elements[id]) state.elements[id].text = text;
     },

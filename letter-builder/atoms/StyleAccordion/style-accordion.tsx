@@ -62,7 +62,7 @@ export const StyleAccordion = ({ element }: Props) => {
       content: (
         <AccordionDetails>
           <TextField
-            label="Ссылка"
+            label="Укажите ссылку в формате http://сайт "
             type="text"
             value={href}
             onChange={handleHrefChange}
@@ -70,6 +70,7 @@ export const StyleAccordion = ({ element }: Props) => {
             onKeyDown={handleKeyDown}
             variant="outlined"
             fullWidth
+            placeholder="Укажите ссылку в формате http://сайт"
           />
         </AccordionDetails>
       ),

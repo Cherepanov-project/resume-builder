@@ -1,8 +1,10 @@
+/* eslint-disable @typescript-eslint/no-unused-vars */
 import type { ElementState } from "@/types/letterBuilder";
 import { useState } from "react";
 import { useAppDispatch } from "@/store/store";
 import { updateElement } from "@/store/LetterBuilderStore/styleModule";
 import { SelectChangeEvent } from "@mui/material";
+import { useDebouncedCallback } from "use-debounce";
 
 export const fonts = [
   {
@@ -63,7 +65,19 @@ export const fonts = [
   },
 ];
 
+
+
 export const useSidebarLetter = (element: ElementState) => {
+
+  
+
+
+  const debounce = useDebouncedCallback((e) => {
+    dispatch(updateElement(e));
+
+    console.log(e);
+  }, 100);
+  
   const dispatch = useAppDispatch();
 
   const [href, setHref] = useState(element?.href || "");
@@ -74,8 +88,12 @@ export const useSidebarLetter = (element: ElementState) => {
     element?.styles?.textDecoration === "line-through",
   );
 
+
+
   const handleBackgroundColorChange = (event: React.ChangeEvent<HTMLInputElement>) => {
-    dispatch(updateElement({ backgroundColor: event.target.value }));
+    // dispatch(updateElement({ backgroundColor: event.target.value }));
+    debounce({ backgroundColor: event.target.value });
+
   };
 
   const handleHrefChange = (event: React.ChangeEvent<HTMLInputElement>) => {
@@ -113,7 +131,7 @@ export const useSidebarLetter = (element: ElementState) => {
   };
 
   const handleTextColorChange = (event: React.ChangeEvent<HTMLInputElement>) => {
-    dispatch(updateElement({ color: event.target.value }));
+    debounce({ color: event.target.value });
   };
 
   const handleTextSizeChange = (event: React.ChangeEvent<HTMLInputElement>) => {
@@ -144,7 +162,7 @@ export const useSidebarLetter = (element: ElementState) => {
   };
 
   const handleBorderColorChange = (event: React.ChangeEvent<HTMLInputElement>) => {
-    dispatch(updateElement({ borderColor: event.target.value }));
+   debounce({ borderColor: event.target.value });
   };
 
   const handlePaddingBlockChange = (event: React.ChangeEvent<HTMLInputElement>) => {

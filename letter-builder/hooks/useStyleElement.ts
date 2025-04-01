@@ -25,6 +25,7 @@ export const useStyleElement = (id: string, defaultStyle: Style, type?: TypeElem
   const handleOpen = (event: React.MouseEvent) => {
     event.preventDefault();
     dispatch(initPanel(id));
+    
   };
 
   const handleTextChange = (text: string) => {

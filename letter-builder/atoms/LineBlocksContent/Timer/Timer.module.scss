@@ -1,0 +1,43 @@
+@font-face {
+  font-family: "moscow";
+  src: url("./fonts/MOSCOW2024.otf") format("opentype");
+}
+
+.timer {
+  width: 100%;
+  display: flex;
+  // background-color: lightgray;
+  gap: 15px;
+  padding: 15px;
+
+  
+  &__div {
+    display: flex;
+    flex-wrap: wrap;
+    padding-left: 5px;
+    & img {
+      margin-top: 5px;
+      margin-left: 5px;
+    }
+    &:hover {
+      cursor: pointer;
+    }
+  }
+  .reset {
+    width: 20px;
+    // color:red;
+  }
+}
+.h2 {
+  position: relative;
+  color: rgb(0, 62, 0);
+  font-family: "moscow";
+}
+
+.closeIcon {
+  color:red;
+  position: absolute;
+  right: -10px;
+  top: -15px;
+  padding: 8px 0;
+}

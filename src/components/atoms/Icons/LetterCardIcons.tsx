@@ -19,7 +19,7 @@ export const IconPngCarousel = ({ width, scale }: IconProps) => {
     <img
       src="https://ignasiya.github.io/icons-builder/icon-carousel.png"
       width={width ? width : 36}
-      style={{ transform: `scale(${scale ? scale : 1})`, aspectRatio: 1, objectFit: "contain" }}
+      style={{ transform: `scale(${scale ? scale : 1})`, aspectRatio: 1, objectFit: "contain", display:'block', marginLeft:"auto", marginRight:"auto", marginBottom:'25px'}}
       alt="icon-carousel"
     />
   );

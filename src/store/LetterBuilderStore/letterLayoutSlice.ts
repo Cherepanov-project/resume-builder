@@ -150,7 +150,7 @@ const letterLayoutSlice = createSlice({
               };
             }
             parentElement.children[indexChild].children?.push(item);
-          }
+                      }
         }
       });
       state.currentDraggableItem = null;
@@ -235,7 +235,7 @@ const letterLayoutSlice = createSlice({
 
         const findElementIndex = (layoutId) =>
           container.elements.activeElements.findIndex((element) => element.layout.i === layoutId);
-
+        console.log(container.elements.activeElements);
         const parentIndex = findElementIndex(parentLayout?.i || layout.i);
 
         if (parentIndex === -1) return;
