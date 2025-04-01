@@ -77,6 +77,12 @@ const SectionsManager: FC = () => {
     { icon: <RemoveSharp />, name: 'Remove row', onClick: removeRow, visible: visible[1] },
   ];
 
+  const previewData = {
+    content: 'section',
+    settings: {},
+    style: {},
+  };
+
   return (
     <Box
       sx={{
@@ -132,7 +138,7 @@ const SectionsManager: FC = () => {
                 ))}
               </SpeedDial>
             </Box>
-            <PreviewButtonsContainer label="Preview Section" preview="section" />
+            <PreviewButtonsContainer label="Preview Section" preview={previewData} />
           </Box>
         </Item>
       </Stack>

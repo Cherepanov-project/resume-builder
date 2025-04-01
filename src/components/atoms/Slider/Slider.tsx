@@ -13,7 +13,7 @@ const Slider: FC<ILayoutBlock> = ({ props }) => {
   const { Slider } = props;
   const slidesList = Slider;
 
-  const [currentPreset, setCurrentPreset] = useState<T_SwiperPreset>(swiperPresets[presetName]);
+  const [currentPreset, setCurrentPreset] = useState<T_SwiperPreset>(swiperPresets[presetName as keyof typeof swiperPresets]);
   const slides = () => {
     return (
       <>
@@ -33,7 +33,7 @@ const Slider: FC<ILayoutBlock> = ({ props }) => {
   );
 
   useEffect(() => {
-    setCurrentPreset(swiperPresets[presetName]);
+    setCurrentPreset(swiperPresets[presetName as keyof typeof swiperPresets]);
   }, [presetName]);
 
   return (

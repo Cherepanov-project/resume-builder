@@ -39,7 +39,7 @@ const InputUpdate = ({
         item.id === id ? (isTitle ? { ...item, title: value } : { ...item, img: value }) : item,
       );
     }
-    setItemsList(updatedItemsList);
+    setItemsList(updatedItemsList as ISettingsInputItem[]);
   };
 
   const handleRemoveInput = (id: T_Id) => {

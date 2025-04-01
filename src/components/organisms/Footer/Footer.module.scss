@@ -1,5 +1,5 @@
-@import "../../molecules/DefaultContainer/DefaultContainer.scss";
-@import "../../../assets/style/variables.scss";
+@use "../../molecules/DefaultContainer/DefaultContainer.scss" as *;
+@use "../../../assets/style/variables.scss" as *;
 
 ul {
   list-style: none;

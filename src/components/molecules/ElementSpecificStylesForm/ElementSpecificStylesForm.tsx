@@ -6,7 +6,13 @@ import {
 import styles from './ElementSpecificStylesForm.module.scss'
 import Item from '@atoms/StyledPaperItem';
 
-const ElementSpecificStylesForm = ({handleUpdate, col }) => {
+const ElementSpecificStylesForm = ({
+  handleUpdate,
+  col
+}: {
+  handleUpdate: (type: string, value: Record<string, string>, colIndex: number) => void,
+  col: number
+}) => {
   const [borderOn, setBorderOn] = useState<number>(0);
   const styleInputs = [
     {

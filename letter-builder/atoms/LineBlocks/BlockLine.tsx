@@ -125,19 +125,19 @@ const BlockLine = ({ id, onDragStart, props }: LineCardProps) => {
     <ThemeProvider theme={theme}>
       <Table key={nanoid()}>
         <TableBody key={nanoid()}>
-          <TableRow
-            key={nanoid()}
-            id={id}
-            draggable
-            onDragStart={(e) => onDragStart(e, id)}
-            sx={{
-              display: "flex",
-              flexDirection: "row",
-              flexWrap: "nowrap",
-            }}
-          >
-            {blockElements}
-          </TableRow>
+        <TableRow
+          key={nanoid()}
+          id={id}
+          draggable
+          onDragStart={(e) => typeof onDragStart === 'function' ? onDragStart(e, id) : undefined}
+          sx={{
+            display: "flex",
+            flexDirection: "row",
+            flexWrap: "nowrap",
+          }}
+        >
+          {blockElements}
+        </TableRow>
         </TableBody>
       </Table>
     </ThemeProvider>

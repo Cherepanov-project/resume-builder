@@ -8,9 +8,6 @@ import Box from '@mui/material/Box';
 import Typography from '@mui/material/Typography';
 import { IGridContainers, setWindowWidth } from '@/store/landingBuilder/layoutSlice'
 
-// ========================================================================== \\
-// Отрисовываем динамический компонент
-// По сути это зависимый компонент, который отвечает за рендеринг условного блока
 const DynamicComponentRenderer: React.FC<DynamicComponentRendererProps> = ({
   Component,
   props,
@@ -34,9 +31,7 @@ const DynamicComponentRenderer: React.FC<DynamicComponentRendererProps> = ({
     </Suspense>
   );
 };
-//убираем перерендер компонентов превью
 const MemoDynamicComponentRenderer = memo(DynamicComponentRenderer);
-// ========================================================================== \\
 
 const PreviewSpace = () => {
   const dispatch = useAppDispatch();
@@ -54,8 +49,7 @@ const PreviewSpace = () => {
     return () => {
       window.removeEventListener('resize', handleResize);
     };
-  }, []);
-  // расчет координаты x элемента ( зависит от суммы w предыдущих в ряду )
+  }, [dispatch]);
   const calcX = (row: number, col: number) => {
     if (col !== 1) {
       let sum = 0;
@@ -68,7 +62,6 @@ const PreviewSpace = () => {
     }
   };
 
-  // расчет координаты y элемента ( зависит от суммы max h предыдущих строк )
   const calcY = (row: number) => {
     if (row > 1) {
       let x = 1;
@@ -91,7 +84,6 @@ const PreviewSpace = () => {
       arr.push(...data[i]);
     }
 
-    // сохранение только координат блоков, у которых выбраны элементы из Select options
     const filteredArr = arr.filter((el) => el.name);
     for (const container of gridContainersPreview) {
       activeElements = activeElements.concat(container.elements.activeElements);
@@ -110,19 +102,15 @@ const PreviewSpace = () => {
     }
   }
 
-  // мемоизируем массив Layout
   const previewLayout: ResponsiveGridLayout.Layout[] = useMemo(() => {
-    // console.log('memo')
     return activeElements.reduce((acc: Layout[], el: T_BlockElement) => {
       const previewElem = { ...el.layout };
       previewElem.isDraggable = false;
       previewElem.static = true;
       return [...acc, previewElem];
     }, []);
-    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [activeElements]);
 
-  //сортировка может потребоваться для настройки респонсива
   const sortedPreviewLayout = previewLayout.sort((a, b) => {
     if (a.y < b.y) {
       return -1;
@@ -130,14 +118,12 @@ const PreviewSpace = () => {
     if (a.y > b.y) {
       return 1;
     }
-    // If 'y' is equal, compare by 'x' property
     if (a.x < b.x) {
       return -1;
     }
     if (a.x > b.x) {
       return 1;
     }
-    // If both 'y' and 'x' are equal, no need to sort further
     return 0;
   });
   console.log(sortedPreviewLayout);
