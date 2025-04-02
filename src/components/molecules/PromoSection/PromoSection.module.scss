@@ -1,8 +1,8 @@
-@import "../../molecules/DefaultContainer/DefaultContainer.scss";
-@import "../../atoms/MainTitle/MainTitle.scss";
-@import "../../atoms/DefaultSubTitle/DefaultSubTitle.scss";
-@import "../../../assets/style/variables.scss";
-@import "../../atoms/BackgroundLayoutDark/BackgroundLayoutDark.scss";
+@use "../../molecules/DefaultContainer/DefaultContainer.scss" as *;
+@use "../../atoms/MainTitle/MainTitle.scss" as *;
+@use "../../atoms/DefaultSubTitle/DefaultSubTitle.scss" as *;
+@use "../../../assets/style/variables.scss" as *;
+@use "../../atoms/BackgroundLayoutDark/BackgroundLayoutDark.scss" as *;
 
 .promo {
   &-content-wrapper {

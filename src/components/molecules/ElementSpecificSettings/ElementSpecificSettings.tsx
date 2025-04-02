@@ -78,32 +78,36 @@ const ElementSpecificSettings = () => {
   const [accordion, setAccordion] = useState<AccordionData>(layoutElement.props.accordion || []);
   const [selectList, setSelectList] = useState<ISettingsInputItem[]>([{id: nanoid(), value: ''}]);
 
-  const handleUpdate = (type: string, value: string | AccordionData, i: number): void => {
+  const handleUpdate = (type: string, value: string | number | boolean | Record<string, unknown> | unknown[], i: number): void => {
     const newValue = JSON.parse(JSON.stringify(layoutRow));
-    const names = ['url', 'title', 'text', 'description', 'imgUrl', 'buttonText']
-
+    const names = ['url', 'title', 'text', 'description', 'imgUrl', 'buttonText'];
+  
     switch (type) {
       case 'type': {
-        const label = typeof value === 'string' ? getLabel(value, url, title, description, text, imgUrl, buttonText, accordion) : getLabel(value[0][0], url, title, description, text, imgUrl, buttonText, accordion);
-        
+        const label = typeof value === 'string'
+          ? getLabel(value, url, title, description, text, imgUrl, buttonText, accordion)
+          : Array.isArray(value) && typeof value[0] === 'string'
+          ? getLabel(value[0], url, title, description, text, imgUrl, buttonText, accordion)
+          : getLabel('', url, title, description, text, imgUrl, buttonText, accordion);
+  
         newValue[i].children = value;
         newValue[i].name = value;
         newValue[i].type = label.label;
         newValue[i].props.key = label.key;
         newValue[i].layout = label.layout;
-
+  
         if (label.value) {
           newValue[i].props.value = label.title.value;
         }
-
+  
         if (label.url) newValue[i].url = label.url;
         dispatch(editRowDate({ row, date: newValue }));
         break;
       }
-      case names.includes(type) ? type : '' : {
+      case names.includes(type) ? type : '': {
         newValue[i].props[type] = value;
         dispatch(editRowDate({ row, date: newValue }));
-        break
+        break;
       }
       case 'accordion': {
         newValue[i].props.accordion = value;
@@ -163,7 +167,7 @@ const ElementSpecificSettings = () => {
             settingsOptionsValues={settingsOptionsValues}
             handleUpdate={handleUpdate}
             setAccordion={setAccordion}
-            SelectList={selectList}
+            SelectList={selectList.map(item => ({ ...item, id: item.id || nanoid(), value: item.value || '' }))}
             setSelectList={setSelectList}
             col={col}
           />
@@ -173,7 +177,9 @@ const ElementSpecificSettings = () => {
         <AccordionSummary expandIcon={<ExpandMore />}>Style Settings</AccordionSummary>
         <AccordionDetails>
         <ElementSpecificStylesForm
-          handleUpdate={handleUpdate}
+          handleUpdate={(type: string, value: Record<string, string>, colIndex: number) => {
+            handleUpdate(type, value, colIndex);
+          }}
           col={col}></ElementSpecificStylesForm>
         </AccordionDetails>
       </Accordion>

@@ -11,7 +11,15 @@ import {
   TextField,
 } from '@mui/material';
 
-const SectionSpecificSettings = ({ type, setType, name, setName }) => {
+interface SectionSpecificSettingsType {
+    type: string;
+    setType: (value: string) => void;
+    name: string;
+    setName: (value: string) => void;
+  } 
+
+
+const SectionSpecificSettings: React.FC<SectionSpecificSettingsType> = ({ type, setType, name, setName }) => {
   return (
     <Box sx={{ m: '15px' }}>
       <Stack>

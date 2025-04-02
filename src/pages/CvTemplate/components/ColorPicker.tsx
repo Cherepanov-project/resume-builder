@@ -1,15 +1,21 @@
 import { FC, useState } from 'react';
 import { Box } from '@mui/material';
+
 interface IProps {
-  handleStyleChange;
+  handleStyleChange: (color: string, place: string, style: string) => void;
   place: string;
   styles: string;
 }
 
-const ColorPicker: FC<IProps> = ({ handleStyleChange, place, styles }) => {
-  const [selectedCircle, setSelectedCircle] = useState(null);
+interface Circle {
+  color: string;
+  id: number;
+}
 
-  const circles = [
+const ColorPicker: FC<IProps> = ({ handleStyleChange, place, styles }) => {
+  const [selectedCircle, setSelectedCircle] = useState<number | null>(null);
+
+  const circles: Circle[] = [
     { color: 'red', id: 1 },
     { color: 'blue', id: 2 },
     { color: 'green', id: 3 },
@@ -17,7 +23,7 @@ const ColorPicker: FC<IProps> = ({ handleStyleChange, place, styles }) => {
     { color: 'black', id: 5 },
   ];
 
-  const handleClick = (circleId, circleColor, place, style) => {
+  const handleClick = (circleId: number, circleColor: string, place: string, style: string): void => {
     setSelectedCircle(circleId);
     handleStyleChange(circleColor, place, style);
   };

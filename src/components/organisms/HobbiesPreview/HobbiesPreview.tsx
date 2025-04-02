@@ -4,14 +4,14 @@ import { useWatch } from "react-hook-form";
 import { templatePDFStyles } from '@/pages/CvTemplatePDF/const';
 import { StyleOptionType } from '@/pages/CvTemplatePDF/const';
 
-const HobbiesPreview = ({styleName}) => {
+const HobbiesPreview = ({ styleName }: { styleName: string }) => {
 
-  const style: StyleOptionType = templatePDFStyles[styleName].style;
+  const style: StyleOptionType = templatePDFStyles[styleName as keyof typeof templatePDFStyles].style;
   const { Subtitle, SubtitleSpecial, Hobbies, Hobbie, HobbieBullets, Text} = style
 
   const hobbyFormData = useWatch({name: 'hobbyData'})
   const hobbyData: HobbyDataType[] = []
-  hobbyFormData.forEach((hobbyForm) => {
+  hobbyFormData.forEach((hobbyForm: { label: string }) => {
     const newHobby: HobbyDataType = {
       hobby: hobbyForm.label
     }

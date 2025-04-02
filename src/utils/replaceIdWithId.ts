@@ -1,18 +1,21 @@
 import { nanoid } from "nanoid";
+import { T_BlockElement } from "@/types/landingBuilder";
 
-export const replaceIdWithNanoid = (obj: any): any => {
-  if (Array.isArray(obj)) {
-    return obj.map((item) => replaceIdWithNanoid(item));
-  } else if (typeof obj === "object" && obj !== null) {
-    const newObj: any = {};
-    for (const key in obj) {
-      if (key === "id") {
-        newObj[key] = nanoid();
-      } else {
-        newObj[key] = replaceIdWithNanoid(obj[key]);
-      }
-    }
-    return newObj;
+export const replaceIdWithNanoid = (element: T_BlockElement): T_BlockElement => {
+  const newElement: T_BlockElement = {
+    ...element,
+    layout: {
+      ...element.layout,
+      i: nanoid(),
+    },
+    id: nanoid(),
+  };
+
+  if (element.children && Array.isArray(element.children)) {
+    newElement.children = element.children.map(child => 
+      replaceIdWithNanoid(child)
+    );
   }
-  return obj;
+
+  return newElement;
 };

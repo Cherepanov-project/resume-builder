@@ -7,26 +7,49 @@ import {
   OutlinedInput,
   TextField,
   SelectChangeEvent,
-} from '@mui/material'
+} from '@mui/material';
 import Item from '@atoms/StyledPaperItem';
 import { nanoid } from 'nanoid';
 
 type AccordionData = Array<[string, string]>;
 
+interface SelectListItem {
+  id: string;
+  value: string;
+}
 
-const ElementSpecificSettingsForm = ({
-  type, 
-  text, 
-  title, 
-  description, 
-  url, 
-  imgUrl, 
-  buttonText, 
-  accordion, 
-  settingsOptionsValues, 
-  setAccordion, 
-  handleUpdate, 
-  col, 
+type FormValue = string | AccordionData | SelectListItem[];
+
+interface IProps {
+  type: string;
+  text: string;
+  title: string;
+  description: string;
+  url: string;
+  imgUrl: string;
+  buttonText: string;
+  accordion: AccordionData;
+  settingsOptionsValues: string[];
+  setAccordion: (accordion: AccordionData) => void;
+  handleUpdate: (field: string, value: FormValue, colIndex: number) => void;
+  col: number;
+  SelectList: SelectListItem[];
+  setSelectList: (list: SelectListItem[]) => void;
+}
+
+const ElementSpecificSettingsForm: React.FC<IProps> = ({
+  type,
+  text,
+  title,
+  description,
+  url,
+  imgUrl,
+  buttonText,
+  accordion,
+  settingsOptionsValues,
+  setAccordion,
+  handleUpdate,
+  col,
   SelectList,
   setSelectList,
 }) => {
@@ -40,9 +63,8 @@ const ElementSpecificSettingsForm = ({
               labelId="type-label"
               sx={{ width: '220px' }}
               value={type}
-              onChange={(e: SelectChangeEvent<string>) => {
-                type = e.target.value;
-                console.log(e.target.value); // Проверка
+              // Change the type assignment in onChange
+              onChange={(e: SelectChangeEvent) => {
                 handleUpdate('type', e.target.value, col - 1);
               }}
               input={<OutlinedInput label="Choose element type" />}
@@ -62,7 +84,6 @@ const ElementSpecificSettingsForm = ({
                 label="Enter target text:"
                 value={text}
                 onChange={(e: React.ChangeEvent<HTMLTextAreaElement>) => {
-                  text = e.target.value;
                   handleUpdate('text', e.target.value, col - 1);
                 }}
               />
@@ -114,12 +135,12 @@ const ElementSpecificSettingsForm = ({
         {type === 'DropdownList' || type ===  'Slider'|| type === 'CheckboxGroup' ? (
           <Item>
             <FormControl>
-              {SelectList.map((item: string[], index: number) => (
+              {SelectList.map((item, index: number) => (
                 <div key={index}>
                   <TextField 
                     style={{marginBottom:'15px'}}
                     label={`Enter ${type.toLowerCase()} ${type==='Slider' ? 'image url':'item'} ${index + 1}:`}
-                    value={item[0]}
+                    value={item.value}
                     onChange={(e: React.ChangeEvent<HTMLInputElement>) => {
                       const updatedList = [...SelectList];
                       updatedList[index] = {id: nanoid(), value: e.target.value}
@@ -164,7 +185,6 @@ const ElementSpecificSettingsForm = ({
                 label="Enter target title:"
                 value={title}
                 onChange={(e: React.ChangeEvent<HTMLTextAreaElement>) => {
-                  title = e.target.value;
                   handleUpdate('title', e.target.value, col - 1);
                 }}
               />
@@ -178,7 +198,6 @@ const ElementSpecificSettingsForm = ({
                 label="Enter target description:"
                 value={description}
                 onChange={(e: React.ChangeEvent<HTMLTextAreaElement>) => {
-                  description = e.target.value;
                   handleUpdate('description', e.target.value, col - 1);
                 }}
               />
@@ -199,7 +218,6 @@ const ElementSpecificSettingsForm = ({
                 label="Enter target URL:"
                 value={url}
                 onChange={(e: React.ChangeEvent<HTMLTextAreaElement>) => {
-                  url = e.target.value;
                   handleUpdate('url', e.target.value, col - 1);
                 }}
               />
@@ -213,7 +231,6 @@ const ElementSpecificSettingsForm = ({
                 label="Enter target image URL:"
                 value={imgUrl}
                 onChange={(e: React.ChangeEvent<HTMLTextAreaElement>) => {
-                  imgUrl = e.target.value;
                   handleUpdate('imgUrl', e.target.value, col - 1);
                 }}
               />
@@ -227,7 +244,6 @@ const ElementSpecificSettingsForm = ({
                 label="Enter target button text:"
                 value={buttonText}
                 onChange={(e: React.ChangeEvent<HTMLTextAreaElement>) => {
-                  buttonText = e.target.value;
                   handleUpdate('buttonText', e.target.value, col - 1);
                 }}
               />

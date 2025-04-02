@@ -1,5 +1,5 @@
 import { lazy, Suspense, useRef, useEffect, useState, ComponentType } from 'react';
-import ResponsiveGridLayout, { Layout } from 'react-grid-layout';
+import ReactGridLayout, { WidthProvider, Responsive as ResponsiveGridLayout, Layout } from 'react-grid-layout';
 
 import { addElement } from '@/store/landingBuilder/layoutSlice';
 import { useAppDispatch, useTypedSelector } from '@hooks/cvTemplateHooks';
@@ -16,8 +16,10 @@ import classes from './ContainerDIV.module.scss';
 import { nanoid } from 'nanoid';
 import ElementToolsPanel from '@/components/organisms/ElementToolsPanel/ElementToolsPanel';
 
-// Отрисовываем динамический компонент
-// По сути это зависимый компонент, который отвечает за рендеринг условного блока
+const ResponsiveGridLayoutWithWidth = WidthProvider(ResponsiveGridLayout) as React.ComponentType<
+  ReactGridLayout.ResponsiveProps & ReactGridLayout.WidthProviderProps
+>;
+
 const DynamicComponentRenderer: React.FC<DynamicComponentRendererProps> = ({
   Component,
   props,
@@ -52,19 +54,16 @@ const DynamicComponentRenderer: React.FC<DynamicComponentRendererProps> = ({
   );
 };
 
-const ContainerDIV: React.FC<ContainerDIVProps> = ({ children, layout, columns, props, containerId }) => {
+const ContainerDIV: React.FC<ContainerDIVProps> = ({ children, layout, columns = 1, props, containerId }) => {
   const dispatch = useAppDispatch();
   const containerRef = useRef(null);
   const [width, setWidth] = useState(0);
   const draggableItem = useTypedSelector((state) => state.layout.currentDraggableItem);
 
-
   useEffect(() => {
-    // Для выравнивания дочерних элементов указываем начальное значение ширины родителя.
     const containerWidth = (containerRef.current! as HTMLElement).getBoundingClientRect().width;
     setWidth(containerWidth);
 
-    // Отслеживаем изменение ширины родителя, чтобы динамически изменять ширину дочерних элементов.
     const handleResize = () => {
       setWidth(containerWidth);
     };
@@ -74,8 +73,7 @@ const ContainerDIV: React.FC<ContainerDIVProps> = ({ children, layout, columns, 
     return () => {
       window.removeEventListener('resize', handleResize);
     };
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [layout.w, window.innerWidth]); // Мониторим изменения ширины родителя и окна браузера.
+  }, [layout.w]); 
 
   const handleDropElement = (_layout: Layout[], layoutItem: Layout, event: Event) => {
     const targetElement = event.target as HTMLElement;
@@ -104,7 +102,6 @@ const ContainerDIV: React.FC<ContainerDIVProps> = ({ children, layout, columns, 
     setIsDraggingInnerItem(isDragging);
   };
 
-
   return (
     <div 
     ref={containerRef} 
@@ -112,12 +109,12 @@ const ContainerDIV: React.FC<ContainerDIVProps> = ({ children, layout, columns, 
     data-id={layout.i} 
     style={style}
     >
-      <ResponsiveGridLayout
-        layout={workspaceLayout}
-        cols={columns}
+      <ResponsiveGridLayoutWithWidth
+        layouts={{ lg: workspaceLayout, md: workspaceLayout, sm: workspaceLayout }}
+        cols={{ lg: columns, md: columns, sm: columns }}
         width={width}
         rowHeight={30}
-        margin={[10, 0]} //меняем расстояние между элементами внутри секции
+        margin={[10, 0]} 
         isDraggable={!isDraggingInnerItem}
         isDroppable
         onDrop={handleDropElement}
@@ -144,7 +141,7 @@ const ContainerDIV: React.FC<ContainerDIVProps> = ({ children, layout, columns, 
               </div>
             );
           })}
-      </ResponsiveGridLayout>
+      </ResponsiveGridLayoutWithWidth>
     </div>
   );
 };

@@ -5,7 +5,11 @@ import { Accordion, AccordionDetails, AccordionSummary, Box, Button } from '@mui
 import { useEffect, useState } from 'react';
 import { useDispatch } from 'react-redux';
 
-const RowSpecificSettings = ({ setToggleMenu }) => {
+interface Props {
+  setToggleMenu: (value: string) => void;
+}
+
+const RowSpecificSettings: React.FC<Props> = ({ setToggleMenu }) => {
   const layoutDate = useTypedSelector((state) => state.sectionsManager.layoutDate);
   const dispatch = useDispatch();
   const [showMore, setShowMore] = useState(false);

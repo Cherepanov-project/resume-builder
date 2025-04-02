@@ -52,7 +52,13 @@ const SliderSettings = ({ itemsList, setItemsList }: ISettingsInputUpdateProps) 
             <p className="ant-upload-text">Click or drag file to this area to add slides</p>
           </Upload.Dragger>
         </Form.Item>
-        <AddImageLinkInput itemlist={itemsList} setItemList={setItemsList} />
+        <AddImageLinkInput 
+          itemlist={itemsList.map(item => ({
+            id: item.id || nanoid(),
+            value: item.value || ''
+          }))}
+          setItemList={setItemsList} 
+        />
       </Form.Item>
     </Form>
   );

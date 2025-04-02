@@ -1,6 +1,6 @@
-@import "../../molecules/DefaultContainer/DefaultContainer.scss";
-@import "../../atoms/DefaultTitle/DefaultTitle.scss";
-@import "../../../assets/style/variables.scss";
+@use "../../molecules/DefaultContainer/DefaultContainer.scss" as *;
+@use "../../atoms/DefaultTitle/DefaultTitle.scss" as *;
+@use "../../../assets/style/variables.scss" as *;
 
 .accordeon-container {
   background-color: $bg-static-light;

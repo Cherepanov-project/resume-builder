@@ -4,13 +4,16 @@ import { DevTool } from '@hookform/devtools';
 import { Box, Typography } from '@mui/material';
 import { useState } from 'react';
 import { useForm, SubmitHandler, FormProvider } from 'react-hook-form';
+import { yupResolver } from '@hookform/resolvers/yup';
 
 import classes from './CvTemplate.module.scss';
 
-import { validationSchema, msObj, methodsObj, transformedData } from './utils/index';
+import { validationSchema, msObj, transformedData } from './utils/index';
 import { SideBarItem, CardForm, FinishResume, ChoosingResumeOption } from './components/index';
 import { addAllPersonalInfo } from '@store/cvTemplate/allPersonaInfoSlice.ts';
 import { StylesNameKeys } from '@pages/CvTemplatePDF/const';
+
+type IMSObj = typeof msObj;
 
 interface IFormInputs extends yup.InferType<typeof validationSchema> {}
 
@@ -19,18 +22,22 @@ const CvTemplate = () => {
   const [showElement, setShowElement] = useState(true);
   const [activeStep, setActiveStep] = useState(0);
   const [nameTemplate, setNameTemplate] = useState<StylesNameKeys>('oslo');
-  // eslint-disable-next-line @typescript-eslint/ban-ts-comment
-  // @ts-expect-error
-  const methods: UseFormReturn<IFormInputs> = useForm<IFormInputs>(methodsObj);
+  
+  const methods = useForm<IFormInputs>({
+    resolver: yupResolver(validationSchema),
+    mode: 'onChange',
+  });
+  
   const { control, handleSubmit } = methods;
 
-  const handleChangeStep = (ms: string): void => {
+  const handleChangeStep = (ms: keyof IMSObj): void => {
     setActiveStep(msObj[ms]);
   };
 
   const onSubmit: SubmitHandler<IFormInputs> = (data) => {
-    dispatch(addAllPersonalInfo(transformedData(data)));
-    handleChangeStep('plus');
+    const formData = data as unknown as Parameters<typeof transformedData>[0];
+    dispatch(addAllPersonalInfo(transformedData(formData)));
+    handleChangeStep('plus' as keyof IMSObj);
   };
 
   const handleButtonClick = (nameResume: StylesNameKeys) => {
@@ -64,7 +71,10 @@ const CvTemplate = () => {
           </Box>
         )
       ) : (
-        <FinishResume nameTemplate={nameTemplate} handleReset={() => handleChangeStep('reset')} />
+        <FinishResume 
+          nameTemplate={nameTemplate} 
+          handleReset={() => handleChangeStep('reset' as keyof IMSObj)} 
+        />
       )}
     </Box>
   );
