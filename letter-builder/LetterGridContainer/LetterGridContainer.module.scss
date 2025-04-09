@@ -75,7 +75,8 @@
   transform: none !important;
   border-radius: 2px;
   box-sizing: border-box;
-  background-color: white;
+  background-color: transparent;
+  z-index: 10;
 }
 
 .add-button,
@@ -100,4 +101,9 @@
 
 .item.active {
   border: 1px solid #1976d2; /* Пример активного элемента */
+}
+
+
+:global .react-grid-item.react-grid-placeholder {
+  opacity: 0;
 }

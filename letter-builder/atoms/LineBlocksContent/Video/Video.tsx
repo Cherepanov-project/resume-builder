@@ -10,6 +10,7 @@ interface VideoComponentProps {
   props?: Record<string, any>;
   layout?: Record<string, any>;
   containerId?: string;
+  type?: string;
 }
 
 const VideoComponent: React.FC<VideoComponentProps> = ({ 
