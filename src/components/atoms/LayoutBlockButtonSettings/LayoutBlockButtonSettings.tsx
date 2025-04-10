@@ -10,7 +10,7 @@ export interface IProps {
 }
 
 
-const LayoutBlockButtonSettings = ({ setStyle }) => {
+const LayoutBlockButtonSettings = ({ setStyle }: IProps) => {
   const dispatch = useAppDispatch();
   const [bgColor, setBGColor] = useState('#ffff');
   const [borderColor, setBorderColor] = useState('#000');
@@ -40,20 +40,15 @@ const LayoutBlockButtonSettings = ({ setStyle }) => {
     return () => {
       document.removeEventListener('mousedown', handleClick);
     };
-    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
   useEffect(() => {
-    // вывести в отдельную функцию
     setStyle({
-      i: layout,
-      style: { backgroundColor: bgColor, border: `2px solid ${borderColor}`, color: textColor },
-      text: text,
-      url: url,
-      wrapperStyle: { textAlign: 'center' },
-      textStyle: { fontSize: '16px' },
-      inputStyle: { width: '100%', height: '100%', border: 'none' },
+      backgroundColor: bgColor,
+      border: `2px solid ${borderColor}`,
+      color: textColor,
     });
+
     dispatch(
       setSectionStyle({
         i: layout,
@@ -65,8 +60,7 @@ const LayoutBlockButtonSettings = ({ setStyle }) => {
         inputStyle: { width: '100%', height: '100%', border: 'none' },
       }),
     );
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [bgColor, borderColor, text, textColor]);
+  }, [bgColor, borderColor, text, textColor, dispatch, layout, setStyle, url]);
 
   const handleBGColorInput = (e: React.ChangeEvent<HTMLInputElement>) => {
     setBGColor(e.target.value);

@@ -1,6 +1,10 @@
-import { withAuthenticationRequired } from '@auth0/auth0-react';
+import { withAuthenticationRequired, WithAuthenticationRequiredOptions } from '@auth0/auth0-react';
 
-export const ProtectedRoute = ({ component, ...args }) => {
+interface ProtectedRouteProps extends WithAuthenticationRequiredOptions {
+  component: React.ComponentType;
+}
+
+export const ProtectedRoute = ({ component, ...args }: ProtectedRouteProps) => {
   const Component = withAuthenticationRequired(component, args);
   return <Component />;
 };

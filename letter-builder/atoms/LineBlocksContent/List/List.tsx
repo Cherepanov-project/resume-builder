@@ -1,4 +1,4 @@
-import { useEffect } from "react";
+import { useEffect, useState } from "react";
 import { useStyleElement } from "../../../hooks/useStyleElement";
 import { addListValue } from "@/store/LetterBuilderStore/styleModule";
 import { useAppDispatch } from "@/store/store";
@@ -9,12 +9,14 @@ const ListComponent = ({ id }: { id: string }) => {
     lineHeight: "20px",
     fontFamily: "Roboto, sans-serif",
   });
-  let arrList: string[] = [""];
-  if (parameters?.valueList) arrList = Object.values(parameters.valueList);
+  const [arrList, setArrList] = useState<string[]>([""]);
 
   const dispatch = useAppDispatch();
+  
   useEffect(() => {
-    if (parameters?.valueList) arrList = Object.values(parameters.valueList);
+    if (parameters?.valueList) {
+      setArrList(Object.values(parameters.valueList));
+    }
   }, [parameters?.valueList]);
 
   const onChangeHandle = (e: React.ChangeEvent<HTMLInputElement>, key: number) => {
@@ -22,10 +24,10 @@ const ListComponent = ({ id }: { id: string }) => {
     dispatch(addListValue({ id, key, textList }));
   };
 
-  const onKeyDownHandle = (e, key: number) => {
+  const onKeyDownHandle = (e: React.KeyboardEvent<HTMLInputElement>, key: number) => {
     switch (e.code) {
       case "Enter":
-        if (e.target.value.length > 0) {
+        if ((e.target as HTMLInputElement).value.length > 0) {
           key = key + 1;
           const textList = "";
           dispatch(addListValue({ id, textList, key }));
@@ -33,7 +35,7 @@ const ListComponent = ({ id }: { id: string }) => {
         break;
 
       case "Backspace":
-        if (arrList.length > 1 && e.target.value.length === 0) dispatch(addListValue({ id, key }));
+        if (arrList.length > 1 && (e.target as HTMLInputElement).value.length === 0) dispatch(addListValue({ id, key }));
         break;
 
       default:
@@ -72,7 +74,7 @@ const ListComponent = ({ id }: { id: string }) => {
                   placeholder="Это новый пункт"
                   onChange={(e) => onChangeHandle(e, key)}
                   onKeyDown={(e) => onKeyDownHandle(e, key)}
-                  defaultValue={item || defItem[key]}
+                  defaultValue={item || (Array.isArray(defItem) ? defItem[key] : '')}
                 ></input>
               </li>
             );

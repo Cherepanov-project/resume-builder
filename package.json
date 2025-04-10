@@ -4,12 +4,13 @@
   "version": "0.0.0",
   "type": "module",
   "scripts": {
-    "dev": "vite",
-    "build": "tsc && vite build",
+    "dev": "cross-env SASS_QUIET=true vite",
+    "build": "tsc && cross-env SASS_QUIET=true vite build",
     "lint": "eslint ./src",
     "lint:fix": "eslint ./src --fix",
     "preview": "vite preview",
-    "prepare": "husky install"
+    "prepare": "husky install",
+    "build-check": "echo 'Build check script placeholder'"
   },
   "dependencies": {
     "@ant-design/icons": "^5.2.6",
@@ -51,7 +52,7 @@
     "react-swipeable-views": "^0.14.0",
     "react-to-print": "^2.14.15",
     "redux-persist": "^6.0.0",
-    "sass": "^1.66.1",
+    "sass": "^1.86.0",
     "swiper": "^11.1.4",
     "url": "^0.11.3",
     "yup": "^1.3.3"
@@ -69,6 +70,7 @@
     "@vitejs/plugin-react": "^4.0.3",
     "autoprefixer": "^10.4.20",
     "babel-eslint": "^10.1.0",
+    "cross-env": "^7.0.3",
     "eslint": "^8.45.0",
     "eslint-config-airbnb": "^19.0.4",
     "eslint-config-prettier": "^9.0.0",
@@ -83,6 +85,7 @@
     "postcss": "^8.4.49",
     "prettier": "^3.0.3",
     "sass": "^1.66.1",
+    "sass-loader": "^16.0.5",
     "tailwindcss": "^3.4.15",
     "typescript": "^5.0.2",
     "vite": "^5.2.11"

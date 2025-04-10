@@ -1,26 +1,28 @@
 import { T_BlockElement } from '@/types/landingBuilder';
-import Logo from '../Logo';
-import ButtonBlock from '../ButtonBlock';
-import Image from '../Image';
-import Paragraph from '../Paragraph';
-import Title from '../Title';
-import Anchor from '../Anchor';
-import RatingSystem from '../RatingSystem';
-import Avatars from '../Avatars';
-import Tooltip from '../Tooltip';
-import Checkboxes from '../Checkboxes';
-import RadioButtons from '../RadioButtons';
 import { nanoid } from 'nanoid';
-import SocialMediaIcon from '../SocialMediaIcon';
-import CardItem from '../CardItem';
-import Accordion from '../Accordion';
-import MultiToggle from '../MultiToggle';
-import HeaderTitle from '../HeaderTitle';
-import Gallery from '../Gallery';
-import VideoPlayer from '../VideoPlayer';
-import DropdownList from '../DropdownList';
-import ModalWindow from '../ModalWindow';
-import Slider from '../Slider';
+import React, { lazy, Suspense } from 'react';
+
+const Logo = lazy(() => import('../Logo'));
+const ButtonBlock = lazy(() => import('../ButtonBlock'));
+const Image = lazy(() => import('../Image'));
+const Paragraph = lazy(() => import('../Paragraph'));
+const Title = lazy(() => import('../Title'));
+const Anchor = lazy(() => import('../Anchor'));
+const RatingSystem = lazy(() => import('../RatingSystem'));
+const Avatars = lazy(() => import('../Avatars'));
+const Tooltip = lazy(() => import('../Tooltip'));
+const Checkboxes = lazy(() => import('../Checkboxes'));
+const RadioButtons = lazy(() => import('../RadioButtons'));
+const SocialMediaIcon = lazy(() => import('../SocialMediaIcon'));
+const CardItem = lazy(() => import('../CardItem'));
+const Accordion = lazy(() => import('../Accordion'));
+const MultiToggle = lazy(() => import('../MultiToggle'));
+const HeaderTitle = lazy(() => import('../HeaderTitle'));
+const Gallery = lazy(() => import('../Gallery'));
+const VideoPlayer = lazy(() => import('../VideoPlayer'));
+const DropdownList = lazy(() => import('../DropdownList'));
+const ModalWindow = lazy(() => import('../ModalWindow'));
+const Slider = lazy(() => import('../Slider'));
 
 interface SectionsConstructorBlockElementType {
   params: T_BlockElement;
@@ -56,7 +58,7 @@ const SectionsConstructorBlockElement: React.FC<SectionsConstructorBlockElementT
   const isCheckboxGroup = props.key === 'CheckboxGroup'
 
   return (
-    <>
+    <Suspense fallback={<div>Loading...</div>}>
       {isImg && <Image props={props} />}
       {isTitle && <Title props={props} />}
       {isBtn && <ButtonBlock props={props} />}
@@ -72,11 +74,28 @@ const SectionsConstructorBlockElement: React.FC<SectionsConstructorBlockElementT
       )}
       {isTooltip && <Tooltip props={props.size || 0} />}
       {isCheckBox && (
-        <Checkboxes layout={params.layout} props={{ Checkboxes: [{ id: nanoid(), value: props.text }] }}/>
+        <Checkboxes 
+          layout={params.layout} 
+          props={{ 
+            Checkboxes: [{ 
+              id: nanoid(), 
+              value: props.text || '' 
+            }] 
+          }}
+        />
       )}
       {isCheckboxGroup && (
         <Checkboxes 
-          props={props}
+          props={{
+            Checkboxes: [
+              {
+                id: nanoid(),
+                value: props.text || ''
+              }
+            ],
+            text: props.text,
+            onChange: undefined
+          }}
           layout={params.layout}
         />
       )}
@@ -96,7 +115,7 @@ const SectionsConstructorBlockElement: React.FC<SectionsConstructorBlockElementT
       {isSMIcon && <SocialMediaIcon props={props} />}
       {isCardItem && <CardItem props={props} />}
       {isAccordion && <Accordion props={props} />}
-    </>
+    </Suspense>
   );
 };
 

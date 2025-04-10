@@ -7,13 +7,17 @@ import { handleSettingsMenu, setLayoutDate } from '@/store/landingBuilder/sectio
 import { useDispatch } from 'react-redux';
 import { useTypedSelector } from '@/hooks/cvTemplateHooks';
 
-const SectionsToolsPanel = ({ setError, setSeverity }) => {
+interface Props {
+  setError: (message: string) => void;
+  setSeverity: (type:'success' | 'error' | 'warning') => void;
+}
+
+const SectionsToolsPanel: React.FC<Props> = ({ setError, setSeverity }) => {
   const [name, setName] = useState('');
   const [type, setType] = useState('Headers');
   const dispatch = useDispatch();
   const layoutDate = useTypedSelector((state) => state.sectionsManager.layoutDate);
   const rows = Object.keys(layoutDate).length;
-  // Сохранение необходимых параметров для отображения секции в конструкторе
   const submitSection = () => {
     const arr: T_BlockElement[] = [];
     const data = Object.values(layoutDate);
@@ -22,7 +26,6 @@ const SectionsToolsPanel = ({ setError, setSeverity }) => {
       arr.push(...data[i]);
     }
 
-    // сохранение только координат блоков, у которых выбраны элементы из Select options
     const filteredArr = arr.filter((el) => el.name);
     const elements = filteredArr.map((el) => {
       console.log(el, el.layout.i, el.layout.i.slice(0, 1));
@@ -41,13 +44,13 @@ const SectionsToolsPanel = ({ setError, setSeverity }) => {
     });
 
     const section: T_SectionElements = {
-      name: 'ContainerDIV', // указание имени элмента-обертки (molecules)
-      title: name, // имя секции из input
-      type, // вид секции
+      name: 'ContainerDIV', 
+      title: name, 
+      type, 
       columns: 6,
-      source: 'atoms', // ресурс обертки
-      children: elements, // массив из объектов с параметрами basic LayoutBlock elements
-      layout: { i: '', x: 0, y: 0, w: 6, h: calcSectionH() + 1 }, // разметка родительского ConteinerDIV элемента
+      source: 'atoms', 
+      children: elements,
+      layout: { i: '', x: 0, y: 0, w: 6, h: calcSectionH() + 1 }, 
     };
 
     if (name.trim()) {
@@ -81,7 +84,7 @@ const SectionsToolsPanel = ({ setError, setSeverity }) => {
       setError(`Section is missing a name`);
     }
   };
-  // добавление секции в localStorage
+  
   const postNewSection = (newSection: T_SectionElements) => {
     const ls = localStorage.getItem('sections');
     if (ls) {
@@ -114,7 +117,6 @@ const SectionsToolsPanel = ({ setError, setSeverity }) => {
     }
   };
 
-  // расчет координаты x элемента ( зависит от суммы w предыдущих в ряду )
   const calcX = (row: number, col: number) => {
     if (col !== 1) {
       let sum = 0;
@@ -127,7 +129,6 @@ const SectionsToolsPanel = ({ setError, setSeverity }) => {
     }
   };
 
-  // расчет координаты y элемента ( зависит от суммы max h предыдущих строк )
   const calcY = (row: number) => {
     if (row > 1) {
       let x = 1;
@@ -143,7 +144,6 @@ const SectionsToolsPanel = ({ setError, setSeverity }) => {
     }
   };
 
-  // расчет H родительского элемента
   const calcSectionH = () => {
     let h = 0;
     for (let i = 1; i <= rows; i++) {

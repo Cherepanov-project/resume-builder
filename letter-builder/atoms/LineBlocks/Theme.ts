@@ -17,9 +17,10 @@ const theme = createTheme({
             {
               props: { variant: 'letterBlockCell' },
               style: {
-                width: '100%', // One Big block
+                width: '100%',
+                height: '100%',
                 minHeight: 'min-content',
-                border: 'none',
+                border: '1px solid gray',
                 backgroundColor: 'background.paper',
                 boxSizing: 'border-box',
                 display: 'flex',
@@ -27,7 +28,7 @@ const theme = createTheme({
                 justifyContent: 'center',
                 borderRadius: '4px',
                 '&:hover': {
-                  border: '2px solid blue',
+                  border: '1px solid lightblue',
                   backgroundColor: '#e8faff',
                 }
               },

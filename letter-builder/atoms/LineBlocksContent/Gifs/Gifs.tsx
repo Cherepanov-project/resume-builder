@@ -1,6 +1,6 @@
 import { IconPngGIFS } from "@components/atoms/Icons/LetterCardIcons";
 import { GiphyFetch } from "@giphy/js-fetch-api";
-import { useEffect, useMemo, useState } from "react";
+import { useEffect, useMemo, useCallback, useState } from "react";
 
 const GifsComponent = () => {
   const [isPopOverVisible, setPopOverVisibility] = useState(false);
@@ -8,9 +8,10 @@ const GifsComponent = () => {
   const [currGif, setCurrGif] = useState<string>("");
   const [loading, setLoading] = useState<boolean>(false);
 
-  const gf = new GiphyFetch("PuZUD4zqFLkDgmrlnoZCLS0zRQGDwsV7");
+  // Оборачиваем создание GiphyFetch в useMemo
+  const gf = useMemo(() => new GiphyFetch("PuZUD4zqFLkDgmrlnoZCLS0zRQGDwsV7"), []);
 
-  const fetchGifs = async () => {
+  const fetchGifs = useCallback(async () => {
     try {
       setLoading(true);
       const { data } = await gf.trending({ limit: 9 });
@@ -20,9 +21,9 @@ const GifsComponent = () => {
     } finally {
       setLoading(false);
     }
-  };
+  }, [gf]);
 
-  const handleSearch = async (q: string) => {
+  const handleSearch = useCallback(async (q: string) => {
     setGifs([]);
     if (!q) {
       fetchGifs();
@@ -43,7 +44,7 @@ const GifsComponent = () => {
     } finally {
       setLoading(false);
     }
-  };
+  }, [gf, fetchGifs]);
 
   const handleChoose = (url: string) => {
     setPopOverVisibility(false);
@@ -60,7 +61,7 @@ const GifsComponent = () => {
       clearTimeout(timer);
       timer = setTimeout(() => handleSearch(query), 500);
     };
-  }, []);
+  }, [handleSearch]);
 
   const closePopOver = () => {
     setPopOverVisibility(false);
@@ -69,21 +70,21 @@ const GifsComponent = () => {
 
   useEffect(() => {
     if (isPopOverVisible) fetchGifs();
-  }, [isPopOverVisible]);
+  }, [isPopOverVisible, fetchGifs]);
 
   return (
     <>
       {isPopOverVisible && (
         <div
           style={{ zIndex: 1 }}
-          className="fixed inset-0 flex justify-center items-center bg-black/70"
+          className="flex fixed inset-0 justify-center items-center bg-black/70"
         >
           <div
             draggable="false"
             className="relative bg-white shadow-2xl w-[600px] max-h-[80vh] rounded-md p-4 overflow-hidden"
           >
             <div className="flex justify-between items-center mb-4">
-              <span className="text-gray-500 font-semibold">Powered by GIPHY</span>
+              <span className="font-semibold text-gray-500">Powered by GIPHY</span>
               <button className="text-white hover:text-red-500" onClick={closePopOver}>
                 X
               </button>
@@ -93,7 +94,7 @@ const GifsComponent = () => {
               onChange={(e) => debouncedSearch(e.target.value)}
               type="text"
               placeholder="Search all the GIFs"
-              className="w-full bg-white border border-gray-300 rounded-md px-4 py-2 mb-4 focus:outline-none focus:ring-2 focus:ring-blue-400"
+              className="px-4 py-2 mb-4 w-full bg-white rounded-md border border-gray-300 focus:outline-none focus:ring-2 focus:ring-blue-400"
             />
 
             {loading ? (
@@ -110,7 +111,7 @@ const GifsComponent = () => {
                     <img
                       src={gif}
                       alt={`GIF ${index}`}
-                      className="w-full h-40 object-cover rounded"
+                      className="object-cover w-full h-40 rounded"
                     />
                   </button>
                 ))}
@@ -122,24 +123,24 @@ const GifsComponent = () => {
 
       <div className="relative text-gray-600">
         {currGif ? (
-          <div className="relative group w-full h-40">
-            <img src={currGif} alt="Selected GIF" className="w-full h-full object-cover rounded" />
+          <div className="relative w-full h-40 group">
+            <img src={currGif} alt="Selected GIF" className="object-cover w-full h-full rounded" />
             <button
               onClick={handleResetGif}
-              className="absolute top-2 right-2 bg-white text-gray-600 p-2 rounded-full shadow-md opacity-0 group-hover:opacity-100 hover:bg-red-500 hover:text-white transition-all"
+              className="absolute top-2 right-2 p-2 text-gray-600 bg-white rounded-full shadow-md opacity-0 transition-all group-hover:opacity-100 hover:bg-red-500 hover:text-white"
             >
               X
             </button>
           </div>
         ) : (
           <>
-            <div className="flex items-center justify-center">
+            <div className="flex justify-center items-center">
               <IconPngGIFS scale={1.3} />
             </div>
             <br />
             <button
               onClick={() => setPopOverVisibility(!isPopOverVisible)}
-              className="bg-blue-500 text-white py-2 px-4 rounded hover:bg-blue-600"
+              className="px-4 py-2 text-white bg-blue-500 rounded hover:bg-blue-600"
             >
               Search for gifs with Giphy
             </button>

@@ -4,7 +4,7 @@ import { Auth0Provider } from '@auth0/auth0-react';
 const domain = import.meta.env["VITE_REACT_APP_AUTH0_DOMAIN"];
 const clientId = import.meta.env["VITE_REACT_APP_AUTH0_CLIENT_ID"];
 
-const Auth0ProviderWithRedirectCallback = ({ children, ...props }) => {
+const Auth0ProviderWithRedirectCallback = ({ children, ...props }: { children: React.ReactNode } & Record<string, unknown>) => {
     const navigate = useNavigate();
     const onRedirectCallback = () => {
       navigate(window.location.pathname);
