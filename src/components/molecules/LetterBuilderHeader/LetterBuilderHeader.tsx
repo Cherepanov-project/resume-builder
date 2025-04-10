@@ -1,6 +1,6 @@
 import { useState } from "react";
 import { Visibility, VisibilityOff } from "@mui/icons-material";
-import CustomizedMenus from "@components/molecules/CustomizedMenus";
+import CustomizedMenus from "../CustomizedMenus";
 
 const LetterBuilderHeader = () => {
   const [visibleStructure, setVisibleStructure] = useState<boolean>(true);
@@ -12,13 +12,13 @@ const LetterBuilderHeader = () => {
   };
 
   return (
-    <div className="flex items-center justify-between h-30 w-full bg-gray-700 text-xs text-white">
+    <div className="flex justify-between items-center w-full text-xs text-white bg-gray-700 h-30">
       {/* Left Section */}
-      <div className="flex items-center h-full divide-x divide-gray-500 ">
+      <div className="flex items-center h-full divide-x divide-gray-500">
         <CustomizedMenus />
         <button
           onClick={onClickHandler}
-          className="ml-5 items-center px-4 text-white transition bg-gray-700 "
+          className="items-center px-4 ml-5 text-white bg-gray-700 transition"
         >
           {visibleIcon}
           <span className="ml-2">{buttonVisibleText}</span>
@@ -26,11 +26,11 @@ const LetterBuilderHeader = () => {
       </div>
 
       {/* Right Section */}
-      <div className="flex items-center space-x-4 mr-4">
-        <button className="px-4 py-2 bg-gray-500 rounded hover:bg-gray-600 transition">
+      <div className="flex items-center mr-4 space-x-4">
+        <button className="px-4 py-2 bg-gray-500 rounded transition hover:bg-gray-600">
           Сохранить
         </button>
-        <button className="px-4 py-2 bg-teal-500 rounded hover:bg-teal-500 transition">
+        <button className="px-4 py-2 bg-teal-500 rounded transition hover:bg-teal-500">
           Продолжить
         </button>
       </div>
