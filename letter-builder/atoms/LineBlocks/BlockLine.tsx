@@ -1,20 +1,26 @@
 import { Table, TableBody, TableRow, TableCell, ThemeProvider } from "@mui/material";
-import { Suspense, lazy, memo } from "react";
+import React, { useEffect, Suspense, lazy, memo, useRef } from "react";
 import { useTypedSelector } from "../../hooks/cvTemplateHooks";
 import { useAppDispatch } from "../../hooks/cvTemplateHooks";
 import { addChildElement } from "../../../src/store/LetterBuilderStore/letterLayoutSlice";
-import ComponentPreloader from "../ComponentPreloader";
 import { ISettingsInputItem } from "../../types/landingBuilder";
+import ComponentPreloader from "../ComponentPreloader";
 import { nanoid } from "nanoid";
 import theme from "./Theme";
-import React from "react";
 
-interface LineCardProps {
+interface IChildElement {
+  id: string;
+  name: string;
+  children?: IChildElement[];
+}
+
+export interface LineCardProps {
   icon: JSX.Element;
   id: string;
   draggable: boolean;
   blockWidth: string[];
   props: {
+    blockWidth: string[];
     [key: string]:
       | string
       | string[]
@@ -26,6 +32,7 @@ interface LineCardProps {
   onDragStart: (e: React.DragEvent, id: string) => void;
   onDrop?: (e: React.DragEvent, id: string) => void;
   onDragOver?: (e: React.DragEvent) => void;
+  onDragEnd?: () => void;
 }
 
 interface DynamicChildComponentRendererProps {
@@ -34,114 +41,185 @@ interface DynamicChildComponentRendererProps {
   id: string;
 }
 
+const cellStyles = {
+  color: "#4cb9ea",
+  textAlign: "center",
+  display: "flex",
+  flexDirection: "column",
+  gap: "15px",
+  justifyContent: "center",
+  alignItems: "center",
+  borderRadius: "0",
+  transition: 'all 0.3s ease',
+};
+
 const DynamicChildComponentRenderer: React.FC<DynamicChildComponentRendererProps> = memo(
   ({ Component, id }) => {
-    if (typeof Component === "undefined") return null;
+    if (!Component) return null;
 
-    const DynamicComponent = lazy(() => import(`../LineBlocksContent/${Component}/index.ts`));
+    const DynamicComponent = lazy(() => 
+      import(`../LineBlocksContent/${Component}/index.ts`)
+        .catch(() => ({ default: () => <div>Компонент не найден</div> }))
+    );
 
     return (
       <Suspense fallback={<ComponentPreloader />}>
         <DynamicComponent key={id} id={id} />
       </Suspense>
     );
-  },
+  }
 );
 
 const BlockLine = ({ id, onDragStart, props }: LineCardProps) => {
   const gridContainers = useTypedSelector((state) => state.letterLayout.gridContainers);
   const currentDraggableItem = useTypedSelector((state) => state.letterLayout.currentDraggableItem);
   const dispatch = useAppDispatch();
+  
+  const cellRefs = useRef<(HTMLTableCellElement | null)[]>([]);
+  const isDraggingOverRef = useRef(false);
+  const hoverTimeoutRef = useRef<NodeJS.Timeout | null>(null);
 
   const handleDrop = (index: number) => {
-    if (currentDraggableItem && currentDraggableItem.props.isChild) {
-      console.log("Перетаскиваемый элемент:", currentDraggableItem);
-      console.log("Индекс родительского элемента:", id);
-      console.log("Индекс дочернего элемента:", index);
-      dispatch(
-        addChildElement({
-          draggableItem: currentDraggableItem,
-          idParentElement: id,
-          indexChild: index,
-        }),
-      );
+    if (currentDraggableItem?.props?.isChild) {      
+      dispatch(addChildElement({
+        draggableItem: currentDraggableItem,
+        idParentElement: id,
+        indexChild: index,
+      }));
     }
+    resetAllCellStyles();
+    isDraggingOverRef.current = false;
   };
 
-  const childrenElements: Array<Array<JSX.Element | null>> = [];
+  const handleDragOver = (e: React.DragEvent, index: number) => {
+    e.preventDefault();
+    if (!currentDraggableItem?.props.isChild) return;
 
-  let blockElements: Array<JSX.Element | null> = [];
+    resetAllCellStyles();
 
-  const index = gridContainers[0].elements.activeElements.findIndex((item) => item.id === id);
+    const currentCell = cellRefs.current[index];
+  if (currentCell) {
+    // Только для текущей ячейки применяем стили
+    currentCell.style.transform = 'scale(1.05)';
+    currentCell.style.zIndex = '1';
+    currentCell.style.boxShadow = '0 0 10px rgba(0,0,0,0.2)';
+    currentCell.style.backgroundColor = 'rgba(76, 185, 234, 0.1)';
+    currentCell.style.border = '1px dashed #4cb9ea';
+  }
+  
+  isDraggingOverRef.current = true;
+  };
 
-  if (typeof props.blockWidth === "object" && Array.isArray(props.blockWidth)) {
-    blockElements = props.blockWidth.map((width, indexBlock) => {
+  const handleDragLeave = () => {
+    if (hoverTimeoutRef.current) {
+      clearTimeout(hoverTimeoutRef.current);
+    }
+    
+    hoverTimeoutRef.current = setTimeout(() => {
+      if (isDraggingOverRef.current) {
+        resetAllCellStyles();
+        isDraggingOverRef.current = false;
+      }
+    }, 50);
+  };
+
+  const resetAllCellStyles = () => {
+    cellRefs.current.forEach(cell => {
+      if (cell) {
+        cell.style.position = '';
+        cell.style.zIndex = '';
+        cell.style.transform = '';
+        cell.style.boxShadow = '';
+        cell.style.backgroundColor = '';
+        cell.style.border = '';
+      }
+    });
+  };
+
+  useEffect(() => {
+    return () => {
+      if (hoverTimeoutRef.current) {
+        clearTimeout(hoverTimeoutRef.current);
+      }
+    };
+  }, []);
+
+  const renderCells = () => {
+    if (!gridContainers.length || !gridContainers[0]?.elements?.activeElements) {
+      return [null];
+    }
+  
+    const childrenElements: JSX.Element[][] = [];
+    const index = gridContainers[0].elements.activeElements.findIndex(
+      (item: { id: string }) => item.id === id
+    );
+  
+    if (!props.blockWidth || !Array.isArray(props.blockWidth)) {
+      return [null];
+    }
+  
+    return props.blockWidth.map((width: string, indexBlock: number) => {
       if (index > -1) {
-        const children = gridContainers[0]?.elements?.activeElements[index]?.children || [];
+        const children = (gridContainers[0]?.elements?.activeElements[index]?.children || []) as IChildElement[];
         const currentChild = children[indexBlock];
-
+  
         if (currentChild?.children) {
-          currentChild.children.forEach((child) => {
-            if (child) {
-              if (!Array.isArray(childrenElements[indexBlock])) {
-                childrenElements[indexBlock] = [];
-              }
-              childrenElements[indexBlock].push(
-                <DynamicChildComponentRenderer
-                  key={nanoid()}
-                  source={"atoms"}
-                  Component={child.name}
-                  id={child.id}
-                />,
-              );
-            }
-          });
+          childrenElements[indexBlock] = currentChild.children
+            .filter(Boolean)
+            .map((child) => (
+              <DynamicChildComponentRenderer
+                key={nanoid()}
+                Component={child.name}
+                id={child.id}
+              />
+            ));
         }
       }
-
+  
       return (
         <TableCell
-          key={nanoid()}
+          key={`${id}-${indexBlock}`}
           variant="letterBlockCell"
+          ref={(el: HTMLTableCellElement | null) => {
+            cellRefs.current[indexBlock] = el;
+          }}
           sx={{
             width: width,
-            color: childrenElements[indexBlock] ? "black" : "#4cb9ea",
-            textAlign: "center",
-            display: "flex",
-            flexDirection: "column",
-            gap: "15px",
-            justifyContent: "center",
-            alignItems: "center",
+            ...cellStyles,
+            color: childrenElements[indexBlock] ? "black" : cellStyles.color,
           }}
           onDrop={() => handleDrop(indexBlock)}
+          onDragOver={(e) => handleDragOver(e, indexBlock)}
+          onDragLeave={handleDragLeave}
         >
-          {childrenElements[indexBlock] ? childrenElements[indexBlock] : "блок"}
+          {childrenElements[indexBlock] || "блок"}
         </TableCell>
       );
     });
-  }
+  };
+  
 
   return (
     <ThemeProvider theme={theme}>
-      <Table key={nanoid()}>
-        <TableBody key={nanoid()}>
-        <TableRow
-          key={nanoid()}
-          id={id}
-          draggable
-          onDragStart={(e) => typeof onDragStart === 'function' ? onDragStart(e, id) : undefined}
-          sx={{
-            display: "flex",
-            flexDirection: "row",
-            flexWrap: "nowrap",
-          }}
-        >
-          {blockElements}
-        </TableRow>
+      <Table key={id} onDragLeave={handleDragLeave}>
+        <TableBody>
+          <TableRow
+            id={id}
+            draggable
+            onDragStart={(e) => onDragStart?.(e, id)}
+            sx={{
+              display: "flex",
+              justifyContent: "center",
+              flexDirection: "row",
+              flexWrap: "wrap",
+            }}
+          >
+            {renderCells()}
+          </TableRow>
         </TableBody>
       </Table>
     </ThemeProvider>
   );
 };
 
-export default BlockLine;
+export default memo(BlockLine);

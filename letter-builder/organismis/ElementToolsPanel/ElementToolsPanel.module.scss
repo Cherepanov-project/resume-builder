@@ -5,9 +5,9 @@
 
   & > button {
     padding: 5px;
-    border-radius: 0;
+    border-radius: 50%;
 
-    &:first-child {
+    &:hover {
       background-color: $bg-static-light;
     }
 
@@ -21,9 +21,9 @@
 
   & > button {
     padding: 5px;
-    border-radius: 0;
+    border-radius: 50%;
 
-    &:first-child {
+    &:hover {
       background-color: $bg-static-light;
     }
 
@@ -41,6 +41,5 @@
   height: auto;
   justify-content: space-between;
   flex-direction: row;
-  z-index: 1;
 }
 

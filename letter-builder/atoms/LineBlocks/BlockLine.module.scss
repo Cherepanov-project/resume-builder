@@ -1,0 +1,8 @@
+.cell-drag-over {
+    transform: scale(1.05) !important;
+    z-index: 1 !important;
+    box-shadow: 0 0 10px rgba(0,0,0,0.2) !important;
+    background-color: rgba(76, 185, 234, 0.1) !important;
+    border: 1px dashed #4cb9ea !important;
+    transition: transform 0.3s ease !important;
+  }
