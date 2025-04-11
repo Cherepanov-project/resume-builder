@@ -122,16 +122,33 @@ export const stylesImport = (content: string): string => {
   return importString;
 };
 
-const paramsFixer = (innerParams: { modules?: object; pagination?; navigation? }): object => {
+const paramsFixer = (innerParams: { 
+  modules?: object; 
+  pagination?: { 
+    el?: string;
+    clickable?: boolean;
+  }; 
+  navigation?: {
+    nextEl?: string;
+    prevEl?: string;
+    enabled?: boolean;
+  };
+}): object => {
   if (JSON.stringify(innerParams).includes('modules')) {
     innerParams.modules = [];
   }
   if (JSON.stringify(innerParams).includes('pagination')) {
-    innerParams.pagination.el = '.swiper-pagination';
+    if (innerParams.pagination) {
+      innerParams.pagination.el = '.swiper-pagination';
+    }
   }
   if (JSON.stringify(innerParams).includes('navigation')) {
-    innerParams.navigation.nextEl = '.swiper-button-next';
-    innerParams.navigation.prevEl = '.swiper-button-prev';
+    if (innerParams.navigation) {
+      innerParams.navigation.nextEl = '.swiper-button-next';
+    }
+    if (innerParams.navigation) {
+      innerParams.navigation.prevEl = '.swiper-button-prev';
+    }
   }
   return innerParams;
 };
@@ -141,7 +158,7 @@ export const logicImport = (content: string, swiperPreset: string) => {
   try {
     let importString: string = ``;
 
-  const innerParams = paramsFixer({ ...swiperPresets[swiperPreset].params });
+  const innerParams = paramsFixer({ ...(swiperPresets[swiperPreset as keyof T_SwiperPresetList]?.params || {}) });
   if (content.includes('swiper')) {
     importString += `
     <script type="module">
@@ -157,7 +174,6 @@ export const logicImport = (content: string, swiperPreset: string) => {
   }
 };
 
-//dfdfdfdddddddddddddddddddddddddddddddddd
 
 export const swiperPresets: T_SwiperPresetList = {
   default: {

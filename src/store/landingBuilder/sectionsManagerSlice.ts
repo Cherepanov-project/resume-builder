@@ -37,15 +37,13 @@ const sectionsManagerSlice = createSlice({
   name: 'sectionsManager',
   initialState,
   reducers: {
-    // изменение всей секции
     setLayoutDate(state, action) {
       state.layoutDate = action.payload;
     },
-    // изменение ряда
     editRowDate(state, action) {
       const { row, date } = action.payload;
       const [, curCol] = state.curId.split('');
-      const newDate = date.map((col, index) => {
+      const newDate = date.map((col: T_BlockElement, index: number) => {
         if (+curCol - 1 === index) {
           return {
             ...col,
@@ -59,7 +57,6 @@ const sectionsManagerSlice = createSlice({
       })
       state.layoutDate = { ...state.layoutDate, [row]: newDate};
     },
-    // состояние меню параметров
     handleSettingsMenu(state, action: PayloadAction<{ type: string; value: string }>) {
       switch (action.payload.type) {
         case 'UPDATE_ID': {

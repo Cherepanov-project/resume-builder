@@ -4,18 +4,35 @@ import { Provider, useSelector } from "react-redux";
 import store, { RootState } from "../../store/store";
 import emailjs from "emailjs-com";
 import ReactDOMServer from "react-dom/server";
-import { Modal, Button } from "antd";
+import { Modal, Box, Typography, Button } from "@mui/material";
 import * as componentMap from "../../../letter-builder/atoms/LineBlocksContent";
 
-const EmailPage = () => {
+interface ElementProps {
+  blockWidth?: string[];
+}
+
+interface ElementChild {
+  name?: string;
+  id?: string;
+}
+
+interface Element {
+  props?: ElementProps;
+  children?: Array<{ children?: ElementChild[] }>;
+}
+
+interface EmailParams extends Record<string, unknown> {
+  message: string;
+}
+
+const EmailPage: React.FC = () => {
+  const [isModalVisible, setIsModalVisible] = useState<boolean>(false);
+  const [tableHTML, setTableHTML] = useState<string>("");
   const numberOfColumns = 6;
+
   const elements = useSelector(
-    (state: RootState) => state.letterLayout.gridContainers[0].elements.activeElements,
+    (state: RootState) => state.letterLayout.gridContainers[0].elements.activeElements as Element[],
   );
-
-  const [isModalVisible, setIsModalVisible] = useState(false);
-  const [tableHTML, setTableHTML] = useState("");
-
   // Функция для вычисления colspan из блоков
   const extractPercent = (calcValue: string): number => {
     const match = calcValue.match(/calc\(([\d.]+)%\s*-\s*\d+px\)/);
@@ -29,29 +46,31 @@ const EmailPage = () => {
   };
 
   // Генерация структуры таблицы
-  const parseTreeToTable = (elements: any[], numberOfColumns: number) => {
+  const parseTreeToTable = (elements: Element[], numberOfColumns: number): JSX.Element[] => {
     if (!elements || elements.length === 0) {
-      return (
-        <tr>
+      return [
+        <tr key="no-elements">
           <td colSpan={numberOfColumns} style={{ textAlign: "center" }}>
             No elements to display
           </td>
-        </tr>
-      );
+        </tr>,
+      ];
     }
 
-    return elements.map((element: any, index: number) => {
-      const blockWidths = element.props?.blockWidth || Array(numberOfColumns).fill("auto");
+    return elements.map((element: Element, index: number) => {
+      const blockWidths: string[] =
+        element.props?.blockWidth || Array(numberOfColumns).fill("auto");
       return (
         <tr key={index}>
           {blockWidths.map((blockWidth: string, i: number) => {
             const colspan = extractPercent(blockWidth);
-            const elementInCell = element.children[i]?.children[0]?.name || "No Content";
-            const id = element.children[i]?.children[0]?.id || "";
+            const elementInCell = element.children?.[i]?.children?.[0]?.name || "No Content";
+            const id = element.children?.[i]?.children?.[0]?.id || "";
 
             // Рендер компонента из componentMap, если он существует
-            const RenderedComponent = componentMap[elementInCell];
-            
+            type ComponentMap = typeof componentMap;
+            const RenderedComponent = componentMap[elementInCell as keyof ComponentMap];
+
             return (
               <td
                 key={i}
@@ -77,8 +96,8 @@ const EmailPage = () => {
   };
 
   // Генерация HTML таблицы
-  const generateTableHTML = () => {
-    const tableContent = (
+  const generateTableHTML = (): string => {
+    const tableContent: JSX.Element = (
       <Provider store={store}>
         <table
           style={{
@@ -101,15 +120,15 @@ const EmailPage = () => {
   };
 
   // Показ модалки с таблицей
-  const showTableModal = () => {
+  const showTableModal = (): void => {
     const htmlContent = generateTableHTML();
     setTableHTML(htmlContent);
     setIsModalVisible(true);
   };
 
   // Отправка email
-  const sendEmail = (htmlContent: string) => {
-    const params = { message: htmlContent };
+  const sendEmail = (htmlContent: string): void => {
+    const params: EmailParams = { message: htmlContent };
     emailjs.send("service_6rybb4c", "template_c2fv928", params, "V_snah8XM2QtKOA1G").then(
       () => alert("Email sent successfully!"),
       (error) => alert(`Failed to send email: ${error.message}`),
@@ -130,27 +149,53 @@ const EmailPage = () => {
         <tbody>{parseTreeToTable(elements, numberOfColumns)}</tbody>
       </table>
       <Button
-        type="primary"
+        variant="contained"
         onClick={showTableModal}
         style={{ marginBottom: "20px", height: "40px" }}
       >
         Preview Table
       </Button>
       <Modal
-        title="Generated Table Preview"
-        visible={isModalVisible}
-        onOk={() => {
-          sendEmail(tableHTML);
-          setIsModalVisible(false);
-        }}
-        onCancel={() => setIsModalVisible(false)}
-        okText="Send Email"
-        cancelText="Close"
+        open={isModalVisible}
+        onClose={() => setIsModalVisible(false)}
+        aria-labelledby="modal-title"
+        aria-describedby="modal-description"
       >
-        <div
-          style={{ maxHeight: "400px", overflow: "auto", width: "100%" }}
-          dangerouslySetInnerHTML={{ __html: tableHTML }}
-        />
+        <Box
+          sx={{
+            position: "absolute",
+            top: "50%",
+            left: "50%",
+            transform: "translate(-50%, -50%)",
+            width: "80%",
+            maxWidth: "800px",
+            bgcolor: "background.paper",
+            boxShadow: 24,
+            p: 4,
+            maxHeight: "80vh",
+            overflow: "auto",
+          }}
+        >
+          <Typography id="modal-title" variant="h6" component="h2">
+            Generated Table Preview
+          </Typography>
+          <div dangerouslySetInnerHTML={{ __html: tableHTML }} />
+          <Box sx={{ display: "flex", justifyContent: "flex-end", mt: 2 }}>
+            <Button
+              variant="contained"
+              onClick={() => {
+                sendEmail(tableHTML);
+                setIsModalVisible(false);
+              }}
+              sx={{ mr: 2 }}
+            >
+              Send Email
+            </Button>
+            <Button variant="outlined" onClick={() => setIsModalVisible(false)}>
+              Close
+            </Button>
+          </Box>
+        </Box>
       </Modal>
     </div>
   );

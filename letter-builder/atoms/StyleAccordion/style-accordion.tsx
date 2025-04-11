@@ -97,7 +97,7 @@ export const StyleAccordion = ({ element }: Props) => {
             sx={{ width: "48%" }}
             label="Сверху и снизу"
             type="number"
-            value={parseInt(element?.styles.paddingTop || "")}
+            value={parseInt(element?.styles.paddingTop || "0") || 0}
             onChange={handlePaddingBlockChange}
             variant="outlined"
           />
@@ -106,7 +106,7 @@ export const StyleAccordion = ({ element }: Props) => {
             sx={{ width: "48%" }}
             label="Слева и справа"
             type="number"
-            value={parseInt(element?.styles.paddingRight || "")}
+            value={parseInt(element?.styles.paddingRight || "0") || 0}
             onChange={handlePaddingInlineChange}
             variant="outlined"
           />
@@ -221,7 +221,7 @@ export const StyleAccordion = ({ element }: Props) => {
             sx={{ width: "48%" }}
             label="Раземер текста"
             type="number"
-            value={parseInt(element?.styles.fontSize || "")}
+            value={parseInt(element?.styles.fontSize || "14") || 14}
             onChange={handleTextSizeChange}
             variant="outlined"
           />
@@ -230,7 +230,7 @@ export const StyleAccordion = ({ element }: Props) => {
             sx={{ width: "48%" }}
             label="Высота текста"
             type="number"
-            value={parseInt(element?.styles.lineHeight || "")}
+            value={parseInt(element?.styles.lineHeight || "20") || 20}
             onChange={handleLineHeightChange}
             variant="outlined"
           />
@@ -267,7 +267,7 @@ export const StyleAccordion = ({ element }: Props) => {
             sx={{ width: "48%" }}
             label="Скругление"
             type="number"
-            value={parseInt(element?.styles.borderRadius || "")}
+            value={parseInt(element?.styles.borderRadius || "0") || 0}
             onChange={handleBorderRadiusChange}
             variant="outlined"
           />

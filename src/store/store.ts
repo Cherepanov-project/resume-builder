@@ -25,7 +25,10 @@ import settingsPanelReducer from "./landingBuilder/settingsPanelSlice";
 import styleModuleSlice from "./LetterBuilderStore/styleModule";
 import swiperReducer from "./landingBuilder/swiperSlice";
 import userReducer from "./userSlice";
+import videoReducer, { videoMiddleware } from "../../letter-builder/reducers/videoSlice";
+import htmlReducer, { htmlMiddleware } from "../../letter-builder/reducers/htmlReducer";
 import { useSelector, TypedUseSelectorHook, useDispatch } from "react-redux";
+import iconsReducer from "../../letter-builder/reducers/iconsSlice";
 
 //конфиг для persist
 const persistConfig = {
@@ -49,6 +52,9 @@ const rootReducer = combineReducers({
   styleModule: styleModuleSlice,
   swiper: swiperReducer,
   user: userReducer,
+  video: videoReducer,
+  html: htmlReducer,
+  icons: iconsReducer,
 });
 
 //преобразование редьюсера для persist
@@ -62,7 +68,9 @@ const store = configureStore({
       serializableCheck: {
         ignoredActions: [FLUSH, REHYDRATE, PAUSE, PERSIST, PURGE, REGISTER],
       },
-    }),
+    })
+      .concat(htmlMiddleware)
+      .concat(videoMiddleware),
 });
 
 //обертка персиста над стором

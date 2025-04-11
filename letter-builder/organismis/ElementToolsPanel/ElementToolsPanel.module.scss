@@ -1,14 +1,15 @@
-@import "@assets/style/variables.scss";
+@use "@assets/style/variables.scss" as *;
 
 .tools-panel-left {
   z-index: 3;
 
   & > button {
     padding: 5px;
-    border-radius: 0;
+    // border-radius: 0;
 
-    &:first-child {
+    &:hover {
       background-color: $bg-static-light;
+      border-radius: 50%;
     }
 
     & > svg {
@@ -21,10 +22,11 @@
 
   & > button {
     padding: 5px;
-    border-radius: 0;
+    // border-radius: 50%;
 
-    &:first-child {
+    &:hover {
       background-color: $bg-static-light;
+      border-radius: 50%;
     }
 
     & > svg {
@@ -36,14 +38,11 @@
   display: flex;
   position: absolute;
   left: 1px;
-  top: 30%;
+  top: 50%;
+  transform: translateY(-50%);
   width: 100%;
   height: auto;
   justify-content: space-between;
   flex-direction: row;
 }
-//   &:hover .tools-panel {
-//     opacity: 1;
-//     pointer-events: auto;
-//   }
-// }
+

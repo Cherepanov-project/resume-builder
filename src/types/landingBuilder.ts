@@ -1,4 +1,10 @@
-import { Layout } from 'react-grid-layout';
+import { Layout } from "react-grid-layout";
+
+export interface CustomLayout extends Layout {
+  props: {
+    isChild?: boolean;
+  };
+}
 
 interface ElementsType {
   activeElements: T_BlockElement[];
@@ -65,6 +71,7 @@ export interface IStyleFormObj {
 
 // Гигачадовая типизация от Кенси
 export type T_BlockElement = {
+  id?: string;
   name: string;
   title?: string;
   url?: string;
@@ -73,8 +80,8 @@ export type T_BlockElement = {
   source: string;
   columns?: number;
   elementScript?: string;
-  interactiveType?: 'button' | 'slider';
-  props: T_SectionElementProps; //{[key: string]: string | {[key: string]: string}}
+  interactiveType?: "button" | "slider";
+  props: T_SectionElementProps;
   children?: T_BlockElement[];
   layout: Layout;
 };
@@ -90,14 +97,20 @@ export type T_ComponentProps = {
 
 // Типизация компонентов
 export type DynamicComponentRendererProps = {
+  id?: string;
   Component?: string;
   props?: {
-    [key: string]: string | number | { [key: string]: string | number } | ISettingsInputItem[] | [string, string][];
+    [key: string]:
+      | string
+      | number
+      | { [key: string]: string | number }
+      | ISettingsInputItem[]
+      | [string, string][];
   };
   columns?: number;
   source: string;
   elementScript?: string;
-  interactiveType?: 'button' | 'slider';
+  interactiveType?: "button" | "slider";
   children?: T_BlockElement[];
   layout: Layout;
   containerId?: string;
@@ -135,20 +148,20 @@ export type TitleH1Props = {
   props: {
     text: string;
     textStyle: {
-      textSize: string,
-      color: string,
-    }
+      textSize: string;
+      color: string;
+    };
   };
 };
 export type TextSettingsProps = {
-  index: string | undefined,
-  textStyle: React.CSSProperties | undefined,
-}
+  index: string | undefined;
+  textStyle: React.CSSProperties | undefined;
+};
 export type ITextSettingProps = {
-    textStyle: object,
-    setTextStyle: React.Dispatch<React.SetStateAction<object>>,
-}
-export type T_data = Pick<ISettingsInputItem, 'id'| 'value'>
+  textStyle: object;
+  setTextStyle: React.Dispatch<React.SetStateAction<object>>;
+};
+export type T_data = Pick<ISettingsInputItem, "id" | "value">;
 
 export interface ISettingsInputItem {
   id?: string | undefined;

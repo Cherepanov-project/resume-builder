@@ -34,7 +34,7 @@ const TemplateSingleResume: FC<IProps> = ({ nameResume, handleButtonClick }) => 
   return (
     <Box display="flex" flexDirection="column" alignItems="center">
       <img
-        src={objResume[nameResume]}
+        src={objResume[nameResume as keyof typeof objResume]}
         alt={nameResume}
         style={{ width: '500px', height: '707px' }}
       />

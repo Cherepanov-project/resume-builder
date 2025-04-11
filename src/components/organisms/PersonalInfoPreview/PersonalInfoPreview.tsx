@@ -9,10 +9,10 @@ import { uniqueKey } from '@/assets/lib';
 import { StyleOptionType } from '@/pages/CvTemplatePDF/const';
 import { AvatarDataType, PersonalDataType, SocialDataType, HobbyDataType } from '@/assets/const';
 
-const PersonalInfoPreview = ({styleName}) => {
+const PersonalInfoPreview = ({styleName}: {styleName: string}) => {
 
-  const style: StyleOptionType = templatePDFStyles[styleName].style;
-  const structure = templatePDFStyles[styleName].structure
+  const style: StyleOptionType = templatePDFStyles[styleName as keyof typeof templatePDFStyles].style;
+  const structure = templatePDFStyles[styleName as keyof typeof templatePDFStyles].structure
   const isWithHeader = structure.header.isPresented;
   const isWithSidebar = structure.sidebar.isPresented;
   const isShort = structure.isShort;
@@ -36,7 +36,7 @@ const PersonalInfoPreview = ({styleName}) => {
 
   const socialFormData = useWatch({name: 'socialData'})
   const socialData: SocialDataType[] = []
-  socialFormData.forEach((social) => {
+  socialFormData.forEach((social: { 'social-name': string, 'social-link': string }) => {
     const newSocial: SocialDataType = {
       name: social['social-name'],
       link: social['social-link']
@@ -45,7 +45,7 @@ const PersonalInfoPreview = ({styleName}) => {
   })
   const hobbyFormData = useWatch({name: 'hobbyData'})
   const hobbyData: HobbyDataType[] = []
-  hobbyFormData.forEach((hobbyForm) => {
+  hobbyFormData.forEach((hobbyForm: { label: string }) => {
     const newHobby: HobbyDataType = {
       hobby: hobbyForm.label
     }

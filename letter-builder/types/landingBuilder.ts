@@ -1,4 +1,4 @@
-import { Layout } from 'react-grid-layout';
+import { Layout } from "react-grid-layout";
 
 interface ElementsType {
   activeElements: T_BlockElement[];
@@ -73,7 +73,7 @@ export type T_BlockElement = {
   source: string;
   columns?: number;
   elementScript?: string;
-  interactiveType?: 'button' | 'slider';
+  interactiveType?: "button" | "slider";
   props: T_SectionElementProps; //{[key: string]: string | {[key: string]: string}}
   children?: T_BlockElement[];
   layout: Layout;
@@ -82,7 +82,7 @@ export type T_BlockElement = {
 export type LetterT_BlockElement = T_BlockElement & {
   id: string;
   //props: LetterT_SectionElementProps;
-}
+};
 
 export type T_SidebarMenuItem = {
   name: string | undefined;
@@ -100,7 +100,7 @@ export type DynamicComponentRendererProps = {
   columns?: number;
   source: string;
   elementScript?: string;
-  interactiveType?: 'button' | 'slider';
+  interactiveType?: "button" | "slider";
   children?: T_BlockElement[];
   layout: Layout;
   containerId?: string;
@@ -109,7 +109,7 @@ export type DynamicComponentRendererProps = {
 export type LetterDynamicComponentRendererProps = DynamicComponentRendererProps & {
   id: string;
   //blockWidth: string[];
-}
+};
 
 export type ContainerDIVProps = {
   children: T_BlockElement[];
@@ -143,20 +143,20 @@ export type TitleH1Props = {
   props: {
     text: string;
     textStyle: {
-      textSize: string,
-      color: string,
-    }
+      textSize: string;
+      color: string;
+    };
   };
 };
 export type TextSettingsProps = {
-  index: string | undefined,
-  textStyle: React.CSSProperties | undefined,
-}
+  index: string | undefined;
+  textStyle: React.CSSProperties | undefined;
+};
 export type ITextSettingProps = {
-    textStyle: object,
-    setTextStyle: React.Dispatch<React.SetStateAction<object>>,
-}
-export type T_data = Pick<ISettingsInputItem, 'id'| 'value'>
+  textStyle: object;
+  setTextStyle: React.Dispatch<React.SetStateAction<object>>;
+};
+export type T_data = Pick<ISettingsInputItem, "id" | "value">;
 
 export interface ISettingsInputItem {
   id?: string | undefined;
@@ -279,9 +279,9 @@ export type T_SectionElementProps = {
 };
 
 export type LetterT_SectionElementProps = T_SectionElementProps & {
-    blockWidth: string[];
-    isChild: boolean;
-}
+  blockWidth: string[];
+  isChild: boolean;
+};
 
 export interface ILayoutBlock {
   props: T_SectionElementProps;

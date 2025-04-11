@@ -6,15 +6,15 @@ interface EducationData {
   study: string;
   degree: string;
   school: string;
-  educationFromYear: number | undefined;
-  'education-to-year': number | undefined;
+  educationFromYear: Date;
+  'education-to-year': Date;
 }
 
 interface ExperienceData {
   'work-title': string;
   company: string;
-  'experience-from-year': number | undefined;
-  'experience-to-year': number | undefined;
+  'experience-from-year': string;
+  'experience-to-year': string;
   'company-info': string;
 }
 
@@ -43,13 +43,13 @@ interface DefaultValues {
 
 interface IMethodsObj {
   mode: 'onSubmit';
-  resolver: Resolver<any>;
+  resolver: Resolver<DefaultValues>;
   defaultValues: DefaultValues;
 }
 
 const methodsObj: IMethodsObj = {
   mode: 'onSubmit',
-  resolver: yupResolver(validationSchema), // Приведение к типу Resolver<any>
+  resolver: yupResolver(validationSchema) as Resolver<DefaultValues>,
   defaultValues: {
     fullName: 'Alex Ivanov',
     position: 'Team Lead',
@@ -64,8 +64,8 @@ const methodsObj: IMethodsObj = {
         study: 'qweqwe',
         degree: 'qweqwe',
         school: 'qweqwe',
-        educationFromYear: undefined,
-        'education-to-year': undefined,
+        educationFromYear: new Date(),
+        'education-to-year': new Date(),
       },
     ],
 
@@ -73,8 +73,8 @@ const methodsObj: IMethodsObj = {
       {
         'work-title': 'qweqwe',
         company: 'qweqwewqe',
-        'experience-from-year': undefined,
-        'experience-to-year': undefined,
+        'experience-from-year': '', 
+        'experience-to-year': '', 
         'company-info':
           'Conducted comprehensive job analyses to update job descriptions and salary benchmarks, resulting in improved job satisfaction and equity',
       },

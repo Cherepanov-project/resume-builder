@@ -1,4 +1,4 @@
-@import "../../atoms/BackgroundLayoutLight/BackgroundLayoutLight.scss";
+@use "../../atoms/BackgroundLayoutLight/BackgroundLayoutLight.scss" as *;
 
 .swiper-wrapper {
   cursor: grab;

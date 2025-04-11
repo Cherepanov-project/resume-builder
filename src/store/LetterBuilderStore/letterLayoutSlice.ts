@@ -2,8 +2,7 @@ import { createSlice } from "@reduxjs/toolkit";
 import { customAlphabet } from "nanoid";
 import { insertChild } from "@/utils";
 import { addBaseScript } from "@/utils/scriptAssigner";
-// import { Layout } from 'react-grid-layout';
-import { T_BlockElement, LetterT_BlockElement } from "@/types/landingBuilder";
+import { T_BlockElement } from "@/types/landingBuilder";
 import { replaceIdWithNanoid } from "@/utils/replaceIdWithId";
 
 const nanoid = customAlphabet("ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz", 15);
@@ -13,7 +12,7 @@ interface ElementsType {
 }
 
 interface LetterElementsType extends ElementsType {
-  activeElements: LetterT_BlockElement[];
+  activeElements: T_BlockElement[];
 }
 
 export interface IGridContainers {
@@ -31,7 +30,7 @@ export interface IGridContainers {
 
 interface LayoutState {
   gridContainers: IGridContainers[];
-  currentDraggableItem: LetterT_BlockElement | null;
+  currentDraggableItem: T_BlockElement | null;
   currentContainer: string;
   windowWidth: number;
 }
@@ -94,7 +93,7 @@ const letterLayoutSlice = createSlice({
           maxH: draggableItem.layout.maxH ?? 1000000,
         },
       };
-      let activeElements: LetterT_BlockElement[] = [];
+      let activeElements: T_BlockElement[] = [];
       state.gridContainers.forEach((container /*, index*/) => {
         if (container.id === containerId) {
           for (const el of container.elements.activeElements) {
@@ -105,14 +104,14 @@ const letterLayoutSlice = createSlice({
               newElement.layout.y += el.layout.h;
             }
           }
-          activeElements = container.elements.activeElements as LetterT_BlockElement[];
+          activeElements = container.elements.activeElements as T_BlockElement[];
           return activeElements;
         }
       });
       const renewElements = insertChild(activeElements, parentElement, newElement);
       state.gridContainers = state.gridContainers.map((container) => {
         if (container.id === containerId) {
-          container.elements.activeElements = [...(renewElements as LetterT_BlockElement[])];
+          container.elements.activeElements = [...(renewElements as T_BlockElement[])];
         }
         return container;
       });
@@ -130,11 +129,10 @@ const letterLayoutSlice = createSlice({
         );
 
         if (index > -1) {
-          if (container.elements.activeElements[index].children) {
-            if (
-              typeof container.elements.activeElements[index].children[indexChild] === "undefined"
-            ) {
-              container.elements.activeElements[index].children[indexChild] = {
+          const parentElement = container.elements.activeElements[index];
+          if (parentElement && parentElement.children) {
+            if (!parentElement.children[indexChild]) {
+              parentElement.children[indexChild] = {
                 name: `Cell${indexChild}`,
                 props: {
                   style: {},
@@ -151,7 +149,7 @@ const letterLayoutSlice = createSlice({
                 children: [] as T_BlockElement[],
               };
             }
-            container.elements.activeElements[index].children[indexChild].children?.push(item);
+            parentElement.children[indexChild].children?.push(item);
           }
         }
       });
@@ -163,34 +161,33 @@ const letterLayoutSlice = createSlice({
       state.gridContainers.forEach((container) => {
         if (container.id !== id) return;
 
-        const findElementIndex = (layoutId): number =>
-          container.elements.activeElements.findIndex((element) => element.layout.i === layoutId);
+        const findElementIndex = (layoutId: string | null): number =>          container.elements.activeElements.findIndex((element) => element.layout.i === layoutId);
 
         const parentIndex = findElementIndex(parentLayout?.i || layout.i);
 
         if (parentIndex === -1) return;
 
         if (elementId) {
-          // Дублируем элемент внутри children
           const parentElement = container.elements.activeElements[parentIndex];
           const childIndex = parentElement.children?.findIndex(
             (child) => child.layout.i === elementId,
           );
 
           if (childIndex !== undefined && childIndex !== -1) {
-            const originalChild = parentElement.children[childIndex];
-            const newChild = {
-              ...originalChild,
-              layout: {
-                ...originalChild.layout,
-                x: originalChild.layout.x + originalChild.layout.w, // Скопированный элемент справа
-                i: nanoid(),
-              },
-            };
-            parentElement.children?.splice(childIndex + 1, 0, newChild);
+            const originalChild = parentElement.children?.[childIndex];
+            if (originalChild) {
+              const newChild = {
+                ...originalChild,
+                layout: {
+                  ...originalChild.layout,
+                  x: originalChild.layout.x + originalChild.layout.w, 
+                  i: nanoid(),
+                },
+              };
+              parentElement.children?.splice(childIndex + 1, 0, newChild);
+            }
           }
         } else {
-          // Дублируем секцию
           const originalElement = container.elements.activeElements[parentIndex];
 
           const newElement = {
@@ -208,7 +205,6 @@ const letterLayoutSlice = createSlice({
         }
       });
     },
-    // Изменяем положение блока в рабочей области
     changeElement(state, action) {
       let indx: number;
       state.gridContainers.forEach((container, index) => {
@@ -226,14 +222,13 @@ const letterLayoutSlice = createSlice({
         }
       });
     },
-    // Удаляем блок из рабочей области
     deleteElement(state, action) {
       const { id, elementId, layout, parentLayout } = action.payload;
 
       state.gridContainers.forEach((container) => {
         if (container.id !== id) return;
 
-        const findElementIndex = (layoutId) =>
+        const findElementIndex = (layoutId: string | null) =>
           container.elements.activeElements.findIndex((element) => element.layout.i === layoutId);
 
         const parentIndex = findElementIndex(parentLayout?.i || layout.i);
@@ -241,17 +236,15 @@ const letterLayoutSlice = createSlice({
         if (parentIndex === -1) return;
 
         if (elementId) {
-          // Удаляем элемент внутри children
           const parentElement = container.elements.activeElements[parentIndex];
           const childIndex = parentElement.children?.findIndex(
             (child) => child.layout.i === elementId,
           );
 
           if (childIndex !== undefined && childIndex !== -1) {
-            parentElement.children.splice(childIndex, 1);
+            parentElement.children?.splice(childIndex, 1);
           }
         } else {
-          // Удаляем всю секцию
           container.elements.activeElements.splice(parentIndex, 1);
         }
       });
@@ -326,8 +319,7 @@ const letterLayoutSlice = createSlice({
     setCurrentContainer(state, action) {
       state.currentContainer = action.payload;
     },
-    // Увеличиваем количество колонок в блоке
-    increaseElementColumns(state, action) {
+   increaseElementColumns(state, action) {
       let indx: number;
       state.gridContainers.forEach((container) => {
         if (container.id === action.payload.id) {
@@ -340,7 +332,6 @@ const letterLayoutSlice = createSlice({
               (element) => element.layout.i === action.payload.layout.i,
             );
           }
-          // Находим индекс элемента внутри children, если elementId определен
           let elIndx: number | undefined;
 
           if (action.payload.elementId) {
@@ -352,19 +343,16 @@ const letterLayoutSlice = createSlice({
             }
           }
 
-          // Если нашли индекс элемента внутри children, уменьшаем его ширину
           if (elIndx !== undefined) {
             const element = container.elements.activeElements[indx];
             element.children![elIndx].layout.w += 1;
           } else {
-            // Иначе уменьшаем ширину самого элемента
             container.elements.activeElements[indx].layout.w += 1;
             container.elements.activeElements[indx].columns! += 1;
           }
         }
       });
     },
-    // Уменьшаем количество колонок в блоке
     decreaseElementColumns(state, action) {
       let indx: number;
       state.gridContainers.forEach((container) => {
@@ -378,7 +366,6 @@ const letterLayoutSlice = createSlice({
               (element) => element.layout.i === action.payload.layout.i,
             );
           }
-          // Находим индекс элемента внутри children, если elementId определен
           let elIndx: number | undefined;
 
           if (action.payload.elementId) {
@@ -389,12 +376,10 @@ const letterLayoutSlice = createSlice({
               );
             }
           }
-          // Если нашли индекс элемента внутри children, уменьшаем его ширину
           if (elIndx !== undefined) {
             const element = container.elements.activeElements[indx];
             element.children![elIndx].layout.w -= 1;
           } else {
-            // Иначе уменьшаем ширину самого элемента
             container.elements.activeElements[indx].layout.w -= 1;
             container.elements.activeElements[indx].columns! -= 1;
           }
@@ -402,7 +387,6 @@ const letterLayoutSlice = createSlice({
       });
     },
 
-    // Помещаем информацию о текущем перемещаемом блоке в стор
     setDraggableItem(state, action) {
       state.currentDraggableItem = action.payload.item;
     },

@@ -2,9 +2,29 @@ import { fileURLToPath, URL } from 'url';
 import { defineConfig } from 'vite';
 import react from '@vitejs/plugin-react';
 
-// https://vitejs.dev/config/
+process.env.SASS_QUIET = 'true';
+
 export default defineConfig({
   plugins: [react()],
+  build: {
+    rollupOptions: {
+      external: [
+        '@mui/material/DefaultPropsProvider'
+      ],
+      onwarn(warning, warn) {
+        if (warning.code === 'MIXED_EXPORTS') return;
+        if (warning.message && warning.message.includes('legacy-js-api')) return;
+        warn(warning);
+      }
+    }
+  },
+  css: {
+    preprocessorOptions: {
+      scss: {
+        quietDeps: true
+      }
+    }
+  },
   resolve: {
     alias: [
       { find: '@', replacement: fileURLToPath(new URL('./src', import.meta.url)) },

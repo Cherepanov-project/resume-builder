@@ -7,17 +7,26 @@ import { steps } from '@pages/CvTemplate/utils';
 import { templatePDFStyles } from '@/pages/CvTemplatePDF/const';
 import { StyleOptionType } from '@/pages/CvTemplatePDF/const';
 
-const CardForm = ({ handleChangeStep, onSubmit, activeStep, setShowElement, nameTemplate }) => {
+interface CardFormType {
+    handleChangeStep: (direction: 'plus' | 'minus') => void;
+    onSubmit: () => void;
+    activeStep: number;
+    setShowElement: (show: boolean) => void;
+    nameTemplate: string;
+  } 
+
+
+const CardForm: React.FC<CardFormType> = ({ handleChangeStep, onSubmit, activeStep, setShowElement, nameTemplate }) => {
   const currentCard = steps[activeStep];
   const preview = cloneElement(currentCard.preview, {styleName: nameTemplate})
-  const style: StyleOptionType = templatePDFStyles[nameTemplate].style;
-  const structure = templatePDFStyles[nameTemplate].structure;
+  const style: StyleOptionType = templatePDFStyles[nameTemplate as keyof typeof templatePDFStyles].style;
+  const structure = templatePDFStyles[nameTemplate as keyof typeof templatePDFStyles].structure;
   const isWithSidebar = structure.sidebar.isPresented;
 
   const [isBlurred, setIsBlurred] = useState(false)
 
   useEffect(() => {
-    const handlePrintScreenDown = (e) => {
+    const handlePrintScreenDown = (e: KeyboardEvent) => {
       if (e.key === 'PrintScreen' || e.key === 'Meta') {
         setIsBlurred(true)
       }
@@ -27,7 +36,7 @@ const CardForm = ({ handleChangeStep, onSubmit, activeStep, setShowElement, name
       }
     }
 
-    const handlePrintScreenUp = (e) => {
+    const handlePrintScreenUp = (e: KeyboardEvent) => {
       if (e.key === 'PrintScreen') {
         setIsBlurred(false)
       }

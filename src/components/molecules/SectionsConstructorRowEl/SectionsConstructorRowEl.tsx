@@ -31,14 +31,12 @@ const SectionsConstructorRowEl: React.FC<SectionsConstructorRowElType> = ({
     gridTemplateRows: '1fr',
   });
 
-  // задание grid-ряду свойства gridTemplateColumns при изменении количсетва блоков в ряду
   useEffect(() => {
     const v = layoutRow.map((v) => v.layout.w + 'fr').join(' ');
     const style = { display: 'grid', gridTemplateColumns: v, gridTemplateRows: '1fr' };
     setGridLayoutStyle(style);
   }, [layoutRow]);
 
-  // добавление блока в ряду
   const addColumn = () => {
     if (columns < 6 && calcNewRowW(columns, 1) <= 6) {
       const id = String(row) + (columns + 1);
@@ -57,7 +55,6 @@ const SectionsConstructorRowEl: React.FC<SectionsConstructorRowElType> = ({
     }
   };
 
-  // проверка ширины секции при добавлении блока или изменении ширины одного из блоков, что бы было меньше 6
   const calcNewRowW: (col: number, value: number) => number = (col, value) => {
     let prevColsSum = 0;
     for (let i = 0; i < col; i++) {
@@ -74,7 +71,6 @@ const SectionsConstructorRowEl: React.FC<SectionsConstructorRowElType> = ({
     return layoutRow.map((el, idx) => {
       const i = idx + 1;
 
-      // задание размеров для секции в зависимости от fr
       const style = {
         backgroundColor: '#fff',
         textAlign: 'center',
@@ -96,7 +92,6 @@ const SectionsConstructorRowEl: React.FC<SectionsConstructorRowElType> = ({
           onClick={() => dispatch(handleSettingsMenu({ type: 'UPDATE_ID', value: `${r}${i}` }))}
         >
           {`${r}${i}` === id ? renderControlOfSize() : null}
-          {/* Предпросмотр содержимого секции */}
           <SectionsConstructorBlockElement params={el} />
         </Box>
       );
@@ -173,7 +168,7 @@ const SectionsConstructorRowEl: React.FC<SectionsConstructorRowElType> = ({
       },
     ];
 
-    const handleActionSx = (sx) => (sx ? sx : {});
+    const handleActionSx = (sx: Record<string, unknown>) => (sx ? sx : {});
 
     return (
       <Box
@@ -203,7 +198,7 @@ const SectionsConstructorRowEl: React.FC<SectionsConstructorRowElType> = ({
                 icon={action.icon}
                 tooltipTitle={action.name}
                 onClick={() => action.onClick(action.type!, action.value!)}
-                sx={handleActionSx(action.sx)}
+                sx={handleActionSx(action.sx || {})}
               />
             );
           })}

@@ -46,12 +46,12 @@
 
 .grid::before {
   left: 0;
-  width: 20%; /* Ширина псевдоэлемента слева */
+  width: 10%; /* Ширина псевдоэлемента слева */
 }
 
 .grid::after {
   right: 0;
-  width: 20%; /* Ширина псевдоэлемента справа */
+  width: 10%; /* Ширина псевдоэлемента справа */
 }
 
 .react-resizable-handle {
@@ -70,12 +70,13 @@
 .item {
   position: relative !important;
   width: 100% !important;
-  padding: 0 30% 0 30%;
+  padding: 0 15% 0 15%;
   height: auto !important;
   transform: none !important;
   border-radius: 2px;
   box-sizing: border-box;
-  background-color: white;
+  background-color: transparent;
+  z-index: 10;
 }
 
 .add-button,
@@ -100,4 +101,9 @@
 
 .item.active {
   border: 1px solid #1976d2; /* Пример активного элемента */
+}
+
+
+:global .react-grid-item.react-grid-placeholder {
+  opacity: 0;
 }

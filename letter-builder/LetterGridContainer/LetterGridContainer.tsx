@@ -1,7 +1,13 @@
 import { IGridContainers, setCurrentContainer } from "@/store/LetterBuilderStore/letterLayoutSlice";
-import ResponsiveGridLayout, { Layout } from "react-grid-layout";
+import  { WidthProvider, Responsive, Layout } from "react-grid-layout";
+import "react-grid-layout/css/styles.css";
+import "react-resizable/css/styles.css";
 import { useAppDispatch, useTypedSelector } from "@/hooks/cvTemplateHooks";
-import { LetterDynamicComponentRendererProps, T_BlockElement } from "@/types/landingBuilder";
+import {
+  DynamicComponentRendererProps,
+  T_BlockElement,
+  CustomLayout,
+} from "@/types/landingBuilder";
 import {
   addElement,
   changeElement,
@@ -13,14 +19,18 @@ import ElementToolsPanel from "../organismis/ElementToolsPanel/ElementToolsPanel
 import { useNavigate } from "react-router-dom";
 import classes from "./LetterGridContainer.module.scss";
 
-// Отрисовываем динамический компонент
+const ResponsiveReactGridLayout = Responsive;
+const ResponsiveGridLayoutWithWidth = WidthProvider(ResponsiveReactGridLayout) as any;
+
+export type LetterDynamicComponentRendererProps = DynamicComponentRendererProps;
+
 const DynamicComponentRenderer: React.FC<LetterDynamicComponentRendererProps> = memo(
   ({ id, Component, props, columns, source, children, layout, containerId }) => {
     const DynamicComponent = lazy(() => import(`../${source}/LineBlocks/index.ts`));
 
     return (
       <Suspense fallback={<ComponentPreloader />}>
-        <div style={{ zIndex: 1, position: "relative" }}>
+        <div style={{ position: "relative" }}>
           <DynamicComponent
             id={id}
             key={Component}
@@ -41,13 +51,12 @@ export const LetterGridContainer = (container: IGridContainers) => {
   const dispatch = useAppDispatch();
   const currentDraggableItem = useTypedSelector((state) => state.layout.currentDraggableItem);
   const width = useTypedSelector((state) => state.layout.windowWidth);
-  const [isHover, setIsHover] = useState(false);
-  const [isDraggingInnerItem, setIsDraggingInnerItem] = useState(false);
+  const [isHover, setIsHover] = useState<boolean>(false);
+  const [isDraggingInnerItem, setIsDraggingInnerItem] = useState<boolean>(false);
   const [activeElement, setActiveElement] = useState<string | null>(null);
   const navigate = useNavigate();
 
-  //добавлен isHoverBtn для работы inline стиля hover на кнопке Email Us
-  const [isHoverBtn, setIsHoverBtn] = useState(false);
+  const [isHoverBtn, setIsHoverBtn] = useState<boolean>(false);
 
   const handleSetDraggingInnerItem = (isDragging: boolean) => {
     setIsDraggingInnerItem(isDragging);
@@ -89,7 +98,6 @@ export const LetterGridContainer = (container: IGridContainers) => {
     }));
     const layoutString = JSON.stringify(layoutData);
 
-    // Создание HTML-шаблона
     const htmlTemplate = `
       <div class="${classes["container"]}">
         <ResponsiveGridLayout
@@ -97,7 +105,7 @@ export const LetterGridContainer = (container: IGridContainers) => {
           layout="${JSON.stringify(workspaceLayout)}"
           cols="1"
           rowHeight="${container.height}"
-          width="${width - 76 - (width - 120) * 0.3}"
+          width="${String(width - 76 - (Number(width) - 120) * 0.3)}"
           margin="[8, 8]"
           isDraggable="false"
           isDroppable="false"
@@ -128,7 +136,6 @@ export const LetterGridContainer = (container: IGridContainers) => {
       </div>
     `;
 
-    // Переход на страницу email
     navigate("/email", {
       state: {
         layoutData: layoutString,
@@ -136,6 +143,8 @@ export const LetterGridContainer = (container: IGridContainers) => {
       },
     });
   };
+
+  const calculatedWidth = Number(width) - 76 - (Number(width) - 120) * 0.3;
 
   return (
     <div
@@ -179,18 +188,19 @@ export const LetterGridContainer = (container: IGridContainers) => {
         Email Us
       </button>
 
-      <ResponsiveGridLayout
+      <ResponsiveGridLayoutWithWidth
         className={classes["grid"]}
-        layout={workspaceLayout}
-        cols={1}
+        layouts={{ lg: workspaceLayout, md: workspaceLayout, sm: workspaceLayout, xs: workspaceLayout }}
+        cols={{ lg: 1, md: 1, sm: 1, xs: 1 }}
+        breakpoints={{ lg: 1200, md: 996, sm: 768, xs: 480 }}
         rowHeight={container.height}
-        width={width - 76 - (width - 120) * 0.3}
+        width={calculatedWidth}
         margin={[8, 8]}
         isDraggable={!isDraggingInnerItem}
-        isDroppable
+        isDroppable={true}
         isResizable={false}
         onDrop={(layout: Layout[], layoutItem: Layout) => {
-          const draggableItem = currentDraggableItem;
+          const draggableItem = currentDraggableItem as CustomLayout;
 
           if (draggableItem && draggableItem.props.isChild) return;
 
@@ -217,18 +227,26 @@ export const LetterGridContainer = (container: IGridContainers) => {
       >
         {container.elements.activeElements.map((el) => {
           const isActive = activeElement === el.id;
-          const idsElements = el.children.reduce((acc, item) => {
+          const idsElements = (el.children || []).reduce((acc: string[], item) => {
+            if (!item || !item.children) return acc;
+
             for (const child of item.children) {
-              acc.push(child.id);
+              if (child?.id) {
+                acc.push(child.id);
+              }
             }
             return acc;
-          }, []);
+          }, [] as string[]);
 
           return (
             <div
               key={el.layout.i}
               className={`${classes["item"]} ${isActive ? classes["active"] : ""}`}
-              onClick={() => handleElementClick(el.id)}
+              onClick={() => {
+                if (el.id) {
+                  handleElementClick(el.id);
+                }
+              }}
             >
               {isActive && (
                 <ElementToolsPanel
@@ -242,7 +260,7 @@ export const LetterGridContainer = (container: IGridContainers) => {
               <DynamicComponentRenderer
                 id={el.id}
                 Component={el.name}
-                source={el.source || "atoms"}
+                source={(el.source || "atoms") as string}
                 props={el.props}
                 columns={el.columns || 1}
                 layout={el.layout}
@@ -252,7 +270,7 @@ export const LetterGridContainer = (container: IGridContainers) => {
             </div>
           );
         })}
-      </ResponsiveGridLayout>
+      </ResponsiveGridLayoutWithWidth>
     </div>
   );
 };

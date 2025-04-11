@@ -1,8 +1,7 @@
 import { TextSettingsProps } from '@/types/landingBuilder';
 import { useAppDispatch} from '@/hooks/cvTemplateHooks';
 import { setSectionStyle } from '@/store/landingBuilder/layoutSlice';
-
-import { useEffect, useState } from "react"
+import { useEffect, useState, useCallback } from "react";
 import { HexColorPicker } from 'react-colorful';
 import classes from './LayoutBlockTextSettings.module.scss'
 
@@ -14,7 +13,7 @@ const LayoutBlockTextSettings: React.FC<TextSettingsProps> = ({index, textStyle}
     const [textAlign, setTextAlign] = useState(textStyle!.textAlign);
     const [letterSpace, setLetterSpace] = useState(textStyle!.letterSpacing);
   
-    const setTextStyle = (color, fontSize, textAlign, letterSpace) => {
+    const setTextStyle = useCallback((color: string, fontSize: number, textAlign: string, letterSpace: number) => {
         dispatch(
             setSectionStyle({
             i: index,
@@ -26,20 +25,20 @@ const LayoutBlockTextSettings: React.FC<TextSettingsProps> = ({index, textStyle}
             },
             }),
         );
-    }
+    }, [dispatch, index]);
     
     useEffect(() => {
-        setTextStyle(color, fontSize, textAlign, letterSpace);
-    }, [color, fontSize, textAlign, letterSpace])
+        setTextStyle(color || '', Number(fontSize) || 0, textAlign || 'left', Number(letterSpace) || 0);
+    }, [color, fontSize, textAlign, letterSpace, setTextStyle]);
 
-    const changeFontSize= (e) => {
+    const changeFontSize = (e: React.ChangeEvent<HTMLInputElement>) => {
         setFontSize(e.target.value);
     };
-    const changeLaterSpace= (e) => {
+    const changeLaterSpace= (e: React.ChangeEvent<HTMLInputElement>) => {
         setLetterSpace(e.target.value);
     };
-    const changeAlign= (e) => {
-        setTextAlign(e.target.value);
+    const changeAlign = (e: React.ChangeEvent<HTMLInputElement>) => {
+        setTextAlign(e.target.value as "-moz-initial" | "inherit" | "initial" | "revert" | "revert-layer" | "unset" | "center" | "end" | "justify" | "left" | "match-parent" | "right" | "start");
     };
 
     return (

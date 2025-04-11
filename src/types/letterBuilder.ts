@@ -14,7 +14,7 @@ export type ElementState = {
   type: TypeElement;
   href?: Href;
   text?: Text;
-  valueList?: {};
+  valueList?: object;
   timerList?: {
     color?: string;
     background?: string;

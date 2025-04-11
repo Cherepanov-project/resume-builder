@@ -7,7 +7,12 @@ import { getButtonStyles } from '@pages/CvTemplate/utils';
 
 import classes from '@pages/CvTemplate/CvTemplate.module.scss';
 
-const SideBarItem = ({ activeStep, setActiveStep }) => {
+interface Props {
+  activeStep: number;
+  setActiveStep: (step: number) => void;
+}
+
+const SideBarItem: React.FC<Props> = ({ activeStep, setActiveStep }) => {
   return (
     <Box className={classes.cvTemlpate__step}>
       {steps.map((step: Step, index: number) => (
