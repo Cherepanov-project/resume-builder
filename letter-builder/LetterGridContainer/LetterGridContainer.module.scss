@@ -30,7 +30,7 @@
   flex-direction: column;
   flex-wrap: wrap;
   align-content: center;
-  position: relative; /* Обеспечивает правильное позиционирование псевдоэлементов */
+  position: relative;
 }
 
 .grid::before,
@@ -41,17 +41,16 @@
   height: 100%;
   background-color: rgba(0, 0, 0, 0.1);
   pointer-events: none;
-  z-index: 1;
 }
 
 .grid::before {
   left: 0;
-  width: 10%; /* Ширина псевдоэлемента слева */
+  width: 10%;
 }
 
 .grid::after {
   right: 0;
-  width: 10%; /* Ширина псевдоэлемента справа */
+  width: 10%;
 }
 
 .react-resizable-handle {
@@ -76,7 +75,6 @@
   border-radius: 2px;
   box-sizing: border-box;
   background-color: transparent;
-  z-index: 10;
 }
 
 .add-button,
@@ -100,10 +98,10 @@
 }
 
 .item.active {
-  border: 1px solid #1976d2; /* Пример активного элемента */
+  border: 1px solid #1976d2;
 }
-
 
 :global .react-grid-item.react-grid-placeholder {
   opacity: 0;
+  z-index: -10;
 }

@@ -18,6 +18,7 @@ const theme = createTheme({
               props: { variant: 'letterBlockCell' },
               style: {
                 width: '100%',
+                minWidth: 'min-content',
                 height: '100%',
                 minHeight: 'min-content',
                 border: '1px solid gray',

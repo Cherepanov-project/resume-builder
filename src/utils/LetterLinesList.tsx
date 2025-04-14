@@ -66,7 +66,7 @@ const LetterLinesList = [
   {
     name: "BlockLine",
     icon: <IconLinesSeven scale={1} />,
-    blockWidth: ["calc(33.4% - 0px)", "calc(33.4% - 0px)", "calc(33.4% - 0px)"],
+    blockWidth: ["calc(33.33% - 0px)", "calc(33.33% - 0px)", "calc(33.33% - 0px)"],
     id: 6,
     text: "Пример текста",
     children: [] as T_BlockElement[],

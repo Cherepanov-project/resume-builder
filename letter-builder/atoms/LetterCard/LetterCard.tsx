@@ -35,11 +35,17 @@ const LetterCard = ({ id, icon, text, name }: LetterCardProps) => {
   const handleDragOver = (e: React.DragEvent) => {
     e.preventDefault();
   };
+
+  const handleDragEnd = (e: React.DragEvent) => {
+    e.preventDefault();
+    dispatch(setDraggableItem({item: null}))
+  }
   return (
     <Box
       draggable
       onDragStart={(e) => handleDragStart(e, id)}
       onDragOver={(e) => handleDragOver(e)}
+      onDragEnd={(e) => handleDragEnd(e)}
       sx={{
         boxSizing: "border-box",
         width: "calc(33.3% - 15px)",

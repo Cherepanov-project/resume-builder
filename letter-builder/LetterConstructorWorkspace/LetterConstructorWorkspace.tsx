@@ -8,7 +8,6 @@ import { LetterGridContainer } from "../LetterGridContainer/LetterGridContainer"
 // import { GridContainer } from '@organisms/GridContainer';
 import { Box } from "@mui/material";
 import "../molecules/FullWidthTabs/ScrollBar.scss";
-// ========================================================================== \\
 
 const LetterConstructorWorkspace: React.FC = () => {
   const gridContainers = useTypedSelector((state) => state.letterLayout.gridContainers);
