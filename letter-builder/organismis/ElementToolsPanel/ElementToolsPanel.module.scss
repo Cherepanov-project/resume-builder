@@ -9,6 +9,7 @@
 
     &:hover {
       background-color: $bg-static-light;
+      border-radius: 50%;
     }
 
     & > svg {
@@ -25,6 +26,7 @@
 
     &:hover {
       background-color: $bg-static-light;
+      border-radius: 50%;
     }
 
     & > svg {
@@ -36,7 +38,8 @@
   display: flex;
   position: absolute;
   left: 1px;
-  top: 30%;
+  top: 50%;
+  transform: translateY(-50%);
   width: 100%;
   height: auto;
   justify-content: space-between;
