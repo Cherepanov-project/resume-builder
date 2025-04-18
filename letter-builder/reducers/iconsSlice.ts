@@ -31,7 +31,7 @@ export const iconsSlice = createSlice({
       state,
       action: PayloadAction<{
         id: string;
-        url?: string;
+        url: string;
         text?: string;
         altText?: string;
         link?: string;
@@ -40,6 +40,13 @@ export const iconsSlice = createSlice({
       const icon = state.icons.find((i) => i.id === action.payload.id);
       if (icon) {
         Object.assign(icon, action.payload);
+        if (action.payload.link) {
+          icon.url = action.payload.link;
+        }
+        if (!action.payload.link) {
+          icon.url =
+            "https://app-rsrc.getbee.io/public/resources/placeholders/custom-icon-placeholder.png";
+        }
       }
     },
     deleteIcon: (state, action: PayloadAction<string>) => {
