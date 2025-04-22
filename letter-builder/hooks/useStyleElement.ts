@@ -1,6 +1,5 @@
-import { useAppDispatch } from "@store/store";
+import { useAppDispatch, useAppSelector } from "@store/store";
 import { addElement, initPanel, updateText } from "@/store/LetterBuilderStore/styleModule";
-import { useAppSelector } from "@/store/store";
 import { useEffect } from "react";
 import type { Style, TypeElement } from "@/types/letterBuilder";
 

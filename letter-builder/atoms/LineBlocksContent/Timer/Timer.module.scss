@@ -1,0 +1,74 @@
+.modal {
+  position: fixed;
+  z-index: 100;
+  left: 0;
+  top: 0;
+  width: 100%;
+  height: 100%;
+  overflow: auto;
+  background-color: rgb(108, 122, 137);
+}
+.modalNone {
+  display: none;
+}
+
+.modalContent {
+  background-color: #fff;
+  margin: 15% auto;
+  padding: 20px;
+  border: 1px solid #888;
+  border-radius: 20px;
+  width: 40%;
+  height: 500px;
+}
+
+.modalTitle {
+  display: flex;
+  justify-content: space-between;
+  margin: 15px 0 15px 50px;
+}
+
+.modalTitle span {
+  font-size: 24px;
+}
+
+.close {
+  background-color: #fff;
+  float: right;
+}
+.closeImg {
+  width: 24px;
+  height: 24px;
+}
+
+.dateSelect {
+  display: flex;
+  gap: 10px;
+}
+
+.modalMain {
+  display: flex;
+  justify-content: space-between;
+  gap: 50px;
+  .modalMainForm {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 13px;
+  }
+}
+
+.counter {
+  align-self: center;
+  font-size: 18px;
+  margin-right: 20px;
+}
+td {
+  padding: 0 10px;
+}
+.modalButton {
+  margin-top: 45px;
+  display: flex;
+  justify-content: flex-end;
+  gap: 10px;
+}
