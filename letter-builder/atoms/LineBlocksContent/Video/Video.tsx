@@ -5,10 +5,18 @@ import { MdEdit, MdDelete, MdSave, MdClose } from "react-icons/md";
 import styles from "./Video.module.scss";
 import { changeElement } from "@/store/LetterBuilderStore/letterLayoutSlice";
 
+interface VideoProps {
+  videoUrl?: string;
+  [key: string]: unknown;
+}
+
+interface LayoutProps {
+  [key:string]: unknown;
+}
 interface VideoComponentProps {
   id: string;
-  props?: Record<string, any>;
-  layout?: Record<string, any>;
+  props?: VideoProps;
+  layout?: LayoutProps;
   containerId?: string;
   type?: string;
 }
@@ -45,13 +53,13 @@ const VideoComponent: React.FC<VideoComponentProps> = ({
     }
   }, [id, videoUrl]);
 
-  const isValidYouTubeUrl = (url: string) => {
+  const isValidYouTubeUrl = (url: string): boolean => {
     if (!url) return false;
     const youtubeRegex = /^(https?:\/\/)?(www\.)?(youtube\.com|youtu\.be)\/.+$/;
     return youtubeRegex.test(url);
   };
 
-  const getYouTubeEmbedUrl = (url?: string | any) => {
+  const getYouTubeEmbedUrl = (url?: string | undefined): string => {
     if (!url || typeof url !== 'string') return "";
     const videoIdMatch = url.match(
       /(?:https?:\/\/)?(www\.)?(?:youtube\.com\/(?:watch\?v=|embed\/)|youtu\.be\/)([\w-]+)/
@@ -131,7 +139,7 @@ const VideoComponent: React.FC<VideoComponentProps> = ({
   return (
     <div className={styles.videoComponent}>
       {!hasVideoUrl && !isSidebarOpen && (
-        <div onClick={activateThisVideo} className={styles.videoIcon}>
+        <div onClick={activateThisVideo} className={styles.videoIcon} >
           <div className={styles.videoIconText}>
             <div className="flex justify-center items-center">
               <IconPngVideo {...iconStyle} />

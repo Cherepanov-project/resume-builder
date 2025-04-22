@@ -167,11 +167,7 @@ const settingsPanelSlice = createSlice({
         (state.elements[id].valueList as any)[key] = textList;
       }
     },
-    addTimer: (
-      state,
-      {
-        payload,
-      }: PayloadAction<{
+    addTimer: (state, { payload }: PayloadAction<{
         id: string;
         installDate?: number;
         installTime?: number;
@@ -182,56 +178,23 @@ const settingsPanelSlice = createSlice({
         counter?: number;
       }>,
     ) => {
-      const { id, installDate, installTime, background, color, save, size, counter } = payload;
-      if (!state.elements[id].timerList)
+      const { id, ...rest } = payload;
+      
+      // Инициализация timerList если его нет
+      if (!state.elements[id].timerList) {
         state.elements[id].timerList = {
           color: "#FF0000",
           background: "#2400ff",
           installTime: 0,
           installDate: 0,
         };
-      if (installDate) {
-        state.elements[id].timerList = {
-          ...state.elements[id].timerList,
-          installDate,
-        };
       }
-      if (installTime) {
-        state.elements[id].timerList = {
-          ...state.elements[id].timerList,
-          installTime,
-        };
-      }
-      if (background) {
-        state.elements[id].timerList = {
-          ...state.elements[id].timerList,
-          background,
-        };
-      }
-      if (color) {
-        state.elements[id].timerList = {
-          ...state.elements[id].timerList,
-          color,
-        };
-      }
-      if (save) {
-        state.elements[id].timerList = {
-          ...state.elements[id].timerList,
-          save,
-        };
-      }
-      if (size) {
-        state.elements[id].timerList = {
-          ...state.elements[id].timerList,
-          size,
-        };
-      }
-      if (counter) {
-        state.elements[id].timerList = {
-          ...state.elements[id].timerList,
-          counter,
-        };
-      }
+    
+      // Обновляем только переданные поля
+      state.elements[id].timerList = {
+        ...state.elements[id].timerList,
+        ...rest
+      };
     },
   },
 });

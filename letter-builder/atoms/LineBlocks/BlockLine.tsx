@@ -103,7 +103,7 @@ const BlockLine = ({ id, onDragStart, props }: LineCardProps) => {
   
     resetAllCellStyles();
     isDraggingOverRef.current = false;
-  };
+  }
 }
 
   const handleDragOver = (e: React.DragEvent, index: number) => {

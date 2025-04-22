@@ -3,9 +3,17 @@ import classes from "./Timer.module.scss";
 import { CloseOutlined } from "@mui/icons-material";
 import { useEffect, useState } from "react";
 import { Form, ColorPicker, Cascader, DatePicker, TimePicker, Button } from "antd";
+import type { Color } from "antd/es/color-picker";
+import dayjs from 'dayjs';
 import { useStyleElement } from "../../../hooks/useStyleElement";
 import { useAppDispatch } from "@/store/store";
 import { addTimer } from "@/store/LetterBuilderStore/styleModule";
+
+interface InstallDateTime {
+  $y: number;
+  $M: number;
+  $D: number;
+}
 
 const TimerComponent = ({ id }: { id: string }) => {
   const { parameters } = useStyleElement(id, {
@@ -43,22 +51,34 @@ const TimerComponent = ({ id }: { id: string }) => {
     dispatch(addTimer({ id, save: true }));
     noneViewModalHendle();
   };
-  const onChangeColor = (e: any) => {
-    const color = `rgba(${e.metaColor.r},${e.metaColor.g}, ${e.metaColor.b}, ${e.metaColor.a})`;
-    dispatch(addTimer({ id, color }));
+
+  const onChangeColor = (color: Color) => {
+    const rgba = color.toRgb();
+    const colorStr = `rgba(${rgba.r}, ${rgba.g}, ${rgba.b}, ${rgba.a})`;
+    dispatch(addTimer({ id, color: colorStr }));
   };
-  const onChangeBackgroundColor = (e: any) => {
-    const background = `rgba(${e.metaColor.r},${e.metaColor.g}, ${e.metaColor.b}, ${e.metaColor.a})`;
+
+  const onChangeBackgroundColor = (color: Color) => {
+    const rgba = color.toRgb();
+    const background = `rgba(${rgba.r},${rgba.g}, ${rgba.b}, ${rgba.a})`;
     dispatch(addTimer({ id, background }));
   };
 
-  const onChangeData = (e: any) =>
+  const onChangeData = (e: InstallDateTime) =>
     dispatch(addTimer({ id, installDate: new Date(`${e.$y}-${e.$M + 1}-${e.$D}`).getTime() }));
 
-  const onChangeTime = (e: any) =>
-    dispatch(addTimer({ id, installTime: e.$H * 3600000 + e.$m * 60000 + e.$s * 1000 }));
-
-  const onSizeHandle = (e: any) => dispatch(addTimer({ id, size: e.join() }));
+  const onChangeTime = (time: dayjs.Dayjs | null) => {
+    if (time) {
+        const hours = time.hour();
+        const minutes = time.minute();
+        const seconds = time.second();
+        
+        const installTime = (hours * 3600000) + (minutes * 60000) + (seconds * 1000);
+        dispatch(addTimer({ id, installTime }));
+    }
+  };
+  
+  const onSizeHandle = (e: string[]) => dispatch(addTimer({ id, size: e.join() }));
 
   const Timer = ({ size }: { size: string }) => {
     return (
@@ -112,17 +132,17 @@ const TimerComponent = ({ id }: { id: string }) => {
               <div className={classes.dateSelect}>
                 <div>
                   <div>Дата события</div>
-                  <DatePicker onChange={(e) => onChangeData(e)} />
+                  <DatePicker onChange={(e: InstallDateTime) => onChangeData(e)} />
                 </div>
                 <div>
                   <div>Время</div>
-                  <TimePicker onChange={(e) => onChangeTime(e)} />
+                  <TimePicker onChange={onChangeTime} />
                 </div>
               </div>
               <div>Цвет текста</div>
-              <ColorPicker defaultValue={color} onChange={(e) => onChangeColor(e)} />
+              <ColorPicker defaultValue={color} onChange={onChangeColor} />
               <div>Цвет фона</div>
-              <ColorPicker defaultValue={background} onChange={(e) => onChangeBackgroundColor(e)} />
+              <ColorPicker defaultValue={background} onChange={onChangeBackgroundColor} />
               <div>Размер</div>
               <Cascader
                 options={[
@@ -131,7 +151,7 @@ const TimerComponent = ({ id }: { id: string }) => {
                   { value: "1.2", label: "Большой" },
                 ]}
                 defaultValue={["Средний"]}
-                onChange={(e) => onSizeHandle(e)}
+                onChange={(e: string[]) => onSizeHandle(e)}
               />
             </Form>
             <Timer size={parameters?.timerList?.size || "1"} />
