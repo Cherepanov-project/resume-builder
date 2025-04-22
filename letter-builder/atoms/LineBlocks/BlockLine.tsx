@@ -74,22 +74,37 @@ const BlockLine = ({ id, onDragStart, props }: LineCardProps) => {
   const gridContainers = useTypedSelector((state) => state.letterLayout.gridContainers);
   const currentDraggableItem = useTypedSelector((state) => state.letterLayout.currentDraggableItem);
   const dispatch = useAppDispatch();
+
+  const resetAllCellStyles = () => {
+    cellRefs.current.forEach(cell => {
+      if (cell) {
+        cell.style.position = '';
+        cell.style.zIndex = '';
+        cell.style.transform = '';
+        cell.style.boxShadow = '';
+        cell.style.backgroundColor = '';
+        cell.style.border = '';
+      }
+    });
+  };
   
   const cellRefs = useRef<(HTMLTableCellElement | null)[]>([]);
   const isDraggingOverRef = useRef(false);
   const hoverTimeoutRef = useRef<NodeJS.Timeout | null>(null);
 
   const handleDrop = (index: number) => {
-    if (currentDraggableItem?.props?.isChild) {      
+    if (currentDraggableItem?.props?.isChild) {     
+
       dispatch(addChildElement({
         draggableItem: currentDraggableItem,
         idParentElement: id,
         indexChild: index,
       }));
-    }
+  
     resetAllCellStyles();
     isDraggingOverRef.current = false;
-  };
+  }
+}
 
   const handleDragOver = (e: React.DragEvent, index: number) => {
     e.preventDefault();
@@ -121,19 +136,6 @@ const BlockLine = ({ id, onDragStart, props }: LineCardProps) => {
         isDraggingOverRef.current = false;
       }
     }, 50);
-  };
-
-  const resetAllCellStyles = () => {
-    cellRefs.current.forEach(cell => {
-      if (cell) {
-        cell.style.position = '';
-        cell.style.zIndex = '';
-        cell.style.transform = '';
-        cell.style.boxShadow = '';
-        cell.style.backgroundColor = '';
-        cell.style.border = '';
-      }
-    });
   };
 
   useEffect(() => {

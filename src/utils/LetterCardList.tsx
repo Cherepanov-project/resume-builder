@@ -107,6 +107,7 @@ const LetterCardList = [
     name: "Video",
     children: [],
     blockWidth: ["100%"],
+    type: "Video",
   },
   {
     text: "Иконки",
