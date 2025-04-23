@@ -15,7 +15,7 @@ const Image = () => {
       ? images.map((img) => {
           return (
             <div className={s.image}>
-              <img key={img.id} src={img.url}></img>
+              <img key={img.id} src={img.url} alt="Your picture should have been here"></img>
               <button
                 className={s.deleteBtn}
                 onClick={() => {
@@ -45,6 +45,7 @@ const Image = () => {
           className={s.button}
           onClick={() => {
             dispatch(addImage({ url: value }));
+            setValue("");
           }}
         >
           {" "}
