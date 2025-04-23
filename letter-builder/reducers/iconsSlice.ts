@@ -31,7 +31,7 @@ export const iconsSlice = createSlice({
       state,
       action: PayloadAction<{
         id: string;
-        url: string;
+        url?: string;
         text?: string;
         altText?: string;
         link?: string;
