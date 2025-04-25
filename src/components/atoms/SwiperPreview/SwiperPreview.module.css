@@ -1,0 +1,35 @@
+.swiper-preview {
+  display: grid;
+  grid-template-areas: "checkbox title title" "swiper swiper swiper";
+}
+.swiper-preview__title-container {
+  display: flex;
+  margin: 5px 0;
+}
+.swiper-preview__checkbox {
+  grid-area: checkbox;
+  margin: 0 auto;
+  margin-right: 0;
+}
+.swiper-preview__title {
+  color: #2dc08d;
+  margin: 0 auto;
+  margin-left: 10px;
+  grid-area: title;
+  text-transform: uppercase;
+  font-weight: 900;
+}
+.swiper-preview__swiper {
+  padding-right: 5px;
+  grid-area: swiper;
+  width: 75%;
+  height: 60px;
+  border-radius: 5px;
+}
+.swiper-preview__swiper-slide {
+  color: aliceblue;
+  font-size: 26px;
+  text-align: center;
+  display: flex;
+  background-color: #a0e4cc;
+}/*# sourceMappingURL=SwiperPreview.module.css.map */

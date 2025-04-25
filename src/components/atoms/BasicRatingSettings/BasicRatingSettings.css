@@ -1,0 +1,49 @@
+.form {
+  display: flex;
+  flex-direction: column;
+  padding: 5px 20px;
+  gap: 5px;
+}
+
+.pic {
+  height: 150px;
+  border-radius: 10px;
+}
+
+div .settings-panel__bgcolor,
+.rating {
+  flex-direction: column;
+  margin-left: 10px;
+  margin-right: 0;
+}
+
+.bg-form__number,
+#rating-input {
+  height: 40px;
+  border: none;
+  background-color: grey;
+  display: flex;
+  border-radius: 5px;
+  background-color: #fff;
+  color: #000;
+}
+
+.number-input__subtitle {
+  margin-top: 15px;
+  display: block;
+}
+
+.hidden {
+  display: none;
+}
+
+span .number-input__subtitle .text {
+  text-align: center;
+  height: 40px;
+  border: none;
+}
+
+.count-digit {
+  font-weight: bold;
+  text-decoration: underline;
+}/*# sourceMappingURL=BasicRatingSettings.css.map */

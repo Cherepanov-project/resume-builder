@@ -58,7 +58,7 @@ const FullWidthTabs = ({ TabList, ElementCard, LineCard }: FullWidthTabsProps) =
             <button
               key={tab.id}
               onClick={() => handleTabClick(idx)}
-              className={`tab-${tab.id} flex items-center text-xs px-1 py-3 min-h-[45px] rounded-none ${
+              className={`flex items-center text-xs px-1 py-3 min-h-[45px] rounded-none ${
                 value === idx
                   ? "bg-[#f9f9f9] text-[#516167] border-r-0"
                   : "bg-[#d6d9dc] text-[#93989a] border-r-0"

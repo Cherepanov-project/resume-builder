@@ -1,0 +1,16 @@
+.list {
+  padding: 0 !important;
+}
+.list > div {
+  padding: 4px 0 !important;
+}
+
+.icon__circle {
+  margin-left: 12px;
+}
+.icon__dotcircle {
+  margin-left: 24px;
+}
+.icon__expand {
+  margin-right: 15px;
+}/*# sourceMappingURL=NestedList.module.css.map */

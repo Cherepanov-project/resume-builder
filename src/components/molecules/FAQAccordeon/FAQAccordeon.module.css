@@ -1,0 +1,18 @@
+.container {
+  width: 1200px;
+  margin: 0 auto;
+}
+
+.default-title {
+  font-weight: 500;
+  font-size: 38px;
+  line-height: 46px;
+}
+
+.accordeon-container {
+  background-color: #eaf9f4;
+  color: #384347;
+  padding-bottom: 60px;
+  padding-top: 10px;
+  border-top: 1px solid #000;
+}/*# sourceMappingURL=FAQAccordeon.module.css.map */

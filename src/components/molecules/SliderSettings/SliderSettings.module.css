@@ -1,0 +1,20 @@
+.form {
+  display: flex;
+  flex-direction: column;
+  padding: 5px 20px;
+  gap: 5px;
+}
+.form::after {
+  content: "";
+  width: 70%;
+  align-self: center;
+  height: 1px;
+  margin-top: 20px;
+  border-radius: 50px;
+  background-color: rgb(214, 214, 214);
+}
+
+.pic {
+  height: 150px;
+  border-radius: 10px;
+}/*# sourceMappingURL=SliderSettings.module.css.map */

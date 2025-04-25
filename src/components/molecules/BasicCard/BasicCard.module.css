@@ -1,0 +1,21 @@
+.Card {
+  position: relative;
+}
+.Card__media {
+  position: relative;
+}
+.Card__media__avatar {
+  position: absolute;
+  bottom: -30px;
+  left: 20px;
+  border-radius: 50%;
+  width: 60px;
+  height: 60px;
+}
+.Card__content {
+  display: flex;
+  flex-direction: column;
+}
+.Card__content__title {
+  padding-bottom: 20px;
+}/*# sourceMappingURL=BasicCard.module.css.map */

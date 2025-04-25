@@ -1,0 +1,30 @@
+.slide-image {
+  width: 400px;
+  border-radius: 20px;
+  opacity: 1;
+}
+.slide-container {
+  cursor: pointer;
+  position: relative;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 400px;
+  padding: 15px;
+  background: rgba(0, 0, 0, 0.3);
+  border-radius: 20px;
+}
+.slide-container:hover {
+  background: #57cda4;
+}
+.slide-container:hover::after {
+  content: "Choose This Template";
+  opacity: 1;
+  text-wrap: none;
+  position: absolute;
+  bottom: 30px;
+  left: 1px;
+  padding: 4px 8px;
+  border-radius: 5px;
+  background: #57cda4;
+}/*# sourceMappingURL=Slide.module.css.map */
