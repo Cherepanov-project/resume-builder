@@ -30,6 +30,7 @@ test('User can log in and access the letter builder page', async ({ page }) => {
     // 1. Вариант с точным test-id
     // const stringsButton = page.locator('[data-testid="tab-строки"]');
     // await expect(stringsButton).toBeVisible({ timeout: 10000 });
+
     // const stringsButton = page.getByTestId('tab-1');
     // await stringsButton.click();
 });
