@@ -29,10 +29,9 @@ import videoReducer, { videoMiddleware } from "../../letter-builder/reducers/vid
 import htmlReducer, { htmlMiddleware } from "../../letter-builder/reducers/htmlReducer";
 import { useSelector, TypedUseSelectorHook, useDispatch } from "react-redux";
 import iconsReducer from "../../letter-builder/reducers/iconsSlice";
-
 //конфиг для persist
 const persistConfig = {
-  key: "root",
+  key: "root2",
   storage,
 };
 
@@ -71,6 +70,7 @@ const store = configureStore({
     })
       .concat(htmlMiddleware)
       .concat(videoMiddleware),
+  devTools: true
 });
 
 //обертка персиста над стором

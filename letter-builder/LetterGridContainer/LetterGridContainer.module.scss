@@ -66,15 +66,22 @@
   align-content: center;
 }
 
+.element-tool-visibility {
+  display: none;
+}
+
 .item {
-  position: relative !important;
-  width: 100% !important;
   padding: 0 15% 0 15%;
   height: auto !important;
-  transform: none !important;
   border-radius: 2px;
   box-sizing: border-box;
   background-color: transparent;
+
+  &:hover {
+    .element-tool-visibility {
+      display: block;
+    }
+  }
 }
 
 .add-button,
@@ -104,4 +111,8 @@
 :global .react-grid-item.react-grid-placeholder {
   opacity: 0;
   z-index: -10;
+}
+
+:global .react-draggable-dragging {
+  z-index: 30;
 }
