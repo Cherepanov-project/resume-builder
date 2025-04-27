@@ -19,18 +19,53 @@ test('User can log in and access the letter builder page', async ({ page }) => {
     await page.waitForSelector('#username', { state: 'visible', timeout: 15000 });
     await page.fill('#username', 'test123@gmail.com');
     await page.fill('#password', 'test123@gmail.com');
-
     await page.click('button[type="submit"]')
 
-    // Проверка целевой страницы
-    await page.goto('http://localhost:5173/intro');
+    // Отправка формы входа и ожидание редиректа
+    await Promise.all([
+        page.waitForURL('http://localhost:5173/intro', { timeout: 15000 }),
+    ]);
+
+    await page.waitForSelector('h5:has-text("EMAIL CONSTUCTION")', { state: 'visible', timeout: 15000 }),
+    await page.locator('h5:has-text("EMAIL CONSTUCTION")').click()
+
+    await page.waitForSelector('button:has-text("Create")', { state: 'visible', timeout: 15000 }),
+    await page.locator('button:has-text("Create")').click()
 
     // Ожидание и взаимодействие с кнопкой
-    // const stringsButton = page.locator('button[type="button"]');
-    // 1. Вариант с точным test-id
-    // const stringsButton = page.locator('[data-testid="tab-строки"]');
-    // await expect(stringsButton).toBeVisible({ timeout: 10000 });
+    await page.locator('button.tab-1').click();
 
-    // const stringsButton = page.getByTestId('tab-1');
-    // await stringsButton.click();
+
+    const targetContainer = page.locator('.react-grid-layout');
+    const targetLine = page.locator('[data-testid="line"]').first();
+
+    await targetLine.hover();
+        
+    // Перетаскивание блок в контейнер
+    await targetLine.dragTo(targetContainer, {
+        targetPosition: { x: 100, y: 100 },
+        sourcePosition: { x: 10, y: 10 }
+    });
+
+    await targetContainer.dispatchEvent('mouseup');
+
+    // Работа с содержимым
+    await page.locator('button.tab-0').click();
+
+    const targetCell = page.locator('.MuiTableCell-root');
+    const targetElement = page.locator('[data-testid="video-icon"]');
+
+    const parentElement = targetElement.locator('..');
+    await parentElement.hover();
+    
+    // Перетаскивание элемента
+    await parentElement.dragTo(targetCell, {
+        targetPosition: { x: 100, y: 100 },
+        sourcePosition: { x: 10, y: 10 },
+        force: true,
+        timeout: 60000,
+    });
+
+    await targetCell.dispatchEvent('mouseup');
+    
 });

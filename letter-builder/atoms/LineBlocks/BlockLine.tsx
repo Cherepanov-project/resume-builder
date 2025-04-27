@@ -206,6 +206,7 @@ const BlockLine = ({ id, onDragStart, props }: LineCardProps) => {
       <Table key={id} onDragLeave={handleDragLeave}>
         <TableBody>
           <TableRow
+            data-testid='0'
             id={id}
             draggable
             onDragStart={(e) => onDragStart?.(e, id)}
