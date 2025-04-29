@@ -5,7 +5,7 @@ export const useCurrentDraggableItem = (takeOnlyChild: boolean = true): T_BlockE
     const currentDraggableItem = useTypedSelector((state) => state.letterLayout.currentDraggableItem);
 
     if (!currentDraggableItem) return null;
-    const isChild = (currentDraggableItem as CustomLayout).props.isChild;
+    const isChild = (currentDraggableItem as unknown as CustomLayout).props.isChild;
 
     return takeOnlyChild === isChild ? currentDraggableItem as T_BlockElement : null;
 } 
