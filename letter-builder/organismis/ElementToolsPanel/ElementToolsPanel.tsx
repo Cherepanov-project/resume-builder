@@ -62,34 +62,6 @@ const ElementToolsPanel: React.FC<ElementToolsPanelProps> = ({
         >
           <OpenWith />
         </IconButton>
-        {/* <IconButton
-          aria-label="Decrease Item Width"
-          title="Убрать колонку"
-          color="primary"
-          onClick={() => {
-            if (elementId) {
-              dispatch(decreaseElementColumns({ layout, id, elementId, parentLayout }))
-            } else {
-              dispatch(decreaseElementColumns({ layout, id }))
-            }
-          }}
-        >
-          <RemoveCircleOutline />
-        </IconButton>
-        <IconButton
-          aria-label="Increase Item Width"
-          title="Добавить колонку"
-          color="primary"
-          onClick={() => {
-            if (elementId) {
-              dispatch(increaseElementColumns({ layout, id, elementId, parentLayout }))
-            } else {
-              dispatch(increaseElementColumns({ layout, id }))
-            }
-          }}
-        >
-          <AddCircleOutline />
-        </IconButton> */}
       </div>
       <div className={classes["tools-panel-right"]}>
         <IconButton

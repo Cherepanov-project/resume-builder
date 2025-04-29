@@ -197,6 +197,7 @@ export const IconPngVideo = ({ width, scale }: IconProps) => {
       width={width ? width : 36}
       style={{ transform: `scale(${scale ? scale : 1})`, aspectRatio: 1, objectFit: "contain" }}
       alt="icon-video"
+      data-testid="video-icon"
     />
   );
 };

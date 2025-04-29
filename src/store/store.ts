@@ -31,7 +31,7 @@ import { useSelector, TypedUseSelectorHook, useDispatch } from "react-redux";
 import iconsReducer from "../../letter-builder/reducers/iconsSlice";
 //конфиг для persist
 const persistConfig = {
-  key: "root2",
+  key: "root",
   storage,
 };
 
@@ -70,7 +70,6 @@ const store = configureStore({
     })
       .concat(htmlMiddleware)
       .concat(videoMiddleware),
-  devTools: true
 });
 
 //обертка персиста над стором

@@ -15,6 +15,15 @@ export type ElementState = {
   href?: Href;
   text?: Text;
   valueList?: object;
+  timerList?: {
+    color?: string;
+    background?: string;
+    installTime?: number;
+    installDate?: number;
+    save?: boolean;
+    size?: string;
+    counter?: number;
+  };
 };
 
 export type HistoryState = {
