@@ -73,7 +73,7 @@ const LetterBuilderLeftSide = () => {
 
   const LineCardElementArray = LetterLinesList.map((item) => {
     return (
-      <Box key={item.id} sx={{ margin: "0", maxWidth: "400px" }}>
+      <Box key={item.id} sx={{ margin: "0", maxWidth: "400px" }} data-testid="line">
         <LineCard
           id={item.id.toString()}
           icon={item.icon}

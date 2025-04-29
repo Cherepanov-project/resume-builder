@@ -1,0 +1,29 @@
+.dream-dots {
+  width: 100px;
+  display: flex;
+  gap: 5px;
+}
+.dream-dots span {
+  width: 8px;
+  height: 8px;
+  border-radius: 50%;
+  background-color: #00a8ff;
+}
+.dream-dots span:nth-child(2) {
+  background-color: #9c88ff;
+}
+.dream-dots span:nth-child(3) {
+  background-color: #fbc531;
+}
+.dream-dots span:nth-child(4) {
+  background-color: #4cd137;
+}
+.dream-dots span:nth-child(5) {
+  background-color: #487eb0;
+}
+.dream-dots span:nth-child(6) {
+  background-color: #e84118;
+}
+.dream-dots span:nth-child(7) {
+  background-color: #8c7ae6;
+}/*# sourceMappingURL=DotsColor.module.css.map */

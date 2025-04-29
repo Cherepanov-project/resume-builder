@@ -1,0 +1,23 @@
+.settings__wrapper {
+  display: flex;
+  justify-content: space-between;
+  margin-bottom: 7px;
+}
+.settings__wrapperContent {
+  display: flex;
+  flex-direction: column;
+  margin-bottom: 10px;
+}
+.settings__wrapperRadio {
+  display: flex;
+  justify-content: space-between;
+}
+.settings__wrapperRadio input {
+  display: none;
+}
+.settings__wrapperRadio label:hover {
+  cursor: pointer;
+}
+.settings__container {
+  margin-bottom: 10px;
+}/*# sourceMappingURL=BasicCardMenu.module.css.map */

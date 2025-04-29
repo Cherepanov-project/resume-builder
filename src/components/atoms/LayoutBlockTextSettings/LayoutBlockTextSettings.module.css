@@ -1,0 +1,45 @@
+.title {
+  font-size: 23px;
+  text-align: center;
+}
+
+.text-settings {
+  display: flex;
+  flex-direction: column;
+  padding: 30px 15px;
+}
+
+.wrapper {
+  display: flex;
+  flex-direction: column;
+  margin-top: 10px;
+}
+
+.wrapper > span {
+  margin-left: 10px;
+  margin-bottom: 5px;
+}
+
+.wrapper > input {
+  width: 70%;
+  align-self: center;
+  border: none;
+  height: 25px;
+  border-radius: 5px;
+  font-size: 18px;
+}
+
+.divider {
+  content: "";
+  width: 90%;
+  align-self: center;
+  height: 1px;
+  margin-top: 30px;
+  border-radius: 50px;
+  background-color: rgb(137, 119, 119);
+}
+
+.react-colorful {
+  width: 130px !important;
+  height: 130px;
+}/*# sourceMappingURL=LayoutBlockTextSettings.module.css.map */

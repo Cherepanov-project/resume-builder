@@ -1,0 +1,39 @@
+.default-button {
+  display: inline-flex;
+  flex-direction: row;
+  gap: 5px;
+  align-items: center;
+  justify-content: center;
+  color: #2dc08d;
+  background-color: transparent;
+  border: 1px solid #2dc08d;
+  font-size: 16px;
+  line-height: 18px;
+  font-weight: 700;
+  padding: 9px 14px;
+  max-height: 40px;
+  border-radius: 3px;
+  transition: all 0.3s ease-in-out;
+}
+.default-button:hover {
+  background-color: #57cda4;
+  color: white;
+  border-color: #57cda4;
+  transition: all 0.3s ease-in-out;
+  opacity: 1;
+}
+.default-button:focus, .default-button:active {
+  outline-color: #2dc08d;
+}
+.default-button--primary {
+  color: white;
+  background-color: #2dc08d;
+}
+.default-button--float {
+  position: fixed;
+  height: 40px;
+  top: 50px;
+  right: 50px;
+  border-radius: 50%;
+  opacity: 0.4;
+}/*# sourceMappingURL=DefaultButton.module.css.map */

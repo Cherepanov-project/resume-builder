@@ -1,0 +1,18 @@
+.education {
+  padding: 20px;
+  background-color: #ffffff;
+  margin-bottom: 20px;
+  text-align: right;
+}
+
+.education__inputGroup {
+  margin-bottom: 20px;
+}
+.education__inputGroup:last-child {
+  margin-bottom: 0;
+}
+
+.AccordionSummary__content {
+  display: flex;
+  align-items: center;
+}/*# sourceMappingURL=Education.module.css.map */

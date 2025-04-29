@@ -1,0 +1,20 @@
+div .settings-panel__bgcolor .rating {
+  flex-direction: column;
+}
+
+.text-form {
+  height: 40px;
+  border: none;
+  display: flex;
+  border-radius: 5px;
+  margin-right: 15px;
+}
+
+.text-form > input {
+  padding-left: 10px;
+  border-radius: 5px;
+  border: 1px solid rgba(72, 169, 72, 0.6);
+}
+.text-form > input:hover {
+  border: 2px solid rgba(17, 69, 17, 0.6);
+}/*# sourceMappingURL=LayoutBlockButtonSettings.css.map */

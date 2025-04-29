@@ -1,0 +1,10 @@
+.demoCv {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-end;
+  max-width: 500px;
+}
+.demoCv__image {
+  max-width: 500px;
+  height: auto;
+}/*# sourceMappingURL=DemoCv.module.css.map */

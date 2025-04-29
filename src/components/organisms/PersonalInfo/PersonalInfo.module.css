@@ -1,0 +1,12 @@
+.personalInfo {
+  padding: 20px;
+  background-color: #ffffff;
+  margin-bottom: 20px;
+}
+
+.personalInfo__inputGroup {
+  margin-bottom: 20px;
+}
+.personalInfo__inputGroup:last-child {
+  margin-bottom: 0;
+}/*# sourceMappingURL=PersonalInfo.module.css.map */

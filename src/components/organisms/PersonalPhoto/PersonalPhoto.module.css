@@ -1,0 +1,8 @@
+.PersonalPhoto {
+  display: flex;
+  flex-direction: column;
+}
+
+.PersonalPhoto img {
+  margin: auto;
+}/*# sourceMappingURL=PersonalPhoto.module.css.map */

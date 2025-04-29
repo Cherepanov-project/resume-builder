@@ -44,7 +44,7 @@ const AuthPanel: React.FC<IAuthPanelProps> = ({ authType }) => {
     console.log(authData);
     navigate('/intro');
   };
-
+  
   const authDataBase = {
     in: { prompt: "Don't have an account? ", authText: 'Create now', linkTo: '/sign-up' },
     up: { prompt: 'Already have an account? ', authText: 'Sign in', linkTo: '/sign-in' },
@@ -74,11 +74,18 @@ const AuthPanel: React.FC<IAuthPanelProps> = ({ authType }) => {
             >
               {authType}
             </Typography>
-            <Typography>
+            {/* Выдает ошибку вложенность <a> */}
+            {/* <Typography>
               {prompt}
               <Link to={linkTo}>
                 <MuiLink> {authText} </MuiLink>
               </Link>
+            </Typography> */}
+            <Typography>
+              {prompt}
+              <MuiLink component={Link} to={linkTo}>
+                {authText}
+              </MuiLink>
             </Typography>
           </Box>
           <FormControl sx={{ display: 'flex', gap: '10px', marginBottom: '20px' }}>

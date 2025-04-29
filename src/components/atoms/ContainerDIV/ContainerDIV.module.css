@@ -1,0 +1,18 @@
+.item {
+  background-color: white;
+  border-radius: 2px;
+}
+.item > span {
+  bottom: -3px !important;
+}
+.item > span:after {
+  right: 0;
+  bottom: 0;
+  border-color: #1976d2 !important;
+}
+.item > span:first-of-type {
+  left: -3px !important;
+}
+.item > span:last-of-type {
+  right: -3px !important;
+}/*# sourceMappingURL=ContainerDIV.module.css.map */

@@ -16,6 +16,7 @@ const BlockLine: FC<BlockLineProps> = ({ id, widths, children }) => {
       <Table key={id}>
         <TableBody>
           <TableRow
+            data-testid='0'
             id={id}
             draggable
             sx={{

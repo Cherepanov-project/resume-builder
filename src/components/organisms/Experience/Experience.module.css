@@ -1,0 +1,13 @@
+.experience {
+  padding: 20px;
+  background-color: #ffffff;
+  margin-bottom: 20px;
+  text-align: right;
+}
+
+.experience__inputGroup {
+  margin-bottom: 20px;
+}
+.experience__inputGroup:last-child {
+  margin-bottom: 0;
+}/*# sourceMappingURL=Experience.module.css.map */
