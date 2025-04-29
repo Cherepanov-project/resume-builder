@@ -1,0 +1,15 @@
+.background-layout--light {
+  width: 100%;
+  height: 100%;
+  position: absolute;
+  top: 0;
+  z-index: -1;
+  background: #57cda4;
+  background: radial-gradient(circle, #57cda4 0%, white 90%);
+}
+
+.swiper-wrapper {
+  cursor: grab;
+  padding: 40px 40px;
+  width: calc(100vw - 80px);
+}/*# sourceMappingURL=Slider.module.css.map */

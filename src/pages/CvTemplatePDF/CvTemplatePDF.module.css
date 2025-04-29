@@ -1,0 +1,20 @@
+.CvTemplatePDF {
+  position: relative;
+  height: 100%;
+}
+.CvTemplatePDF__title {
+  margin: 0;
+  font-weight: 400;
+  font-size: 1.5rem;
+  line-height: 1.334;
+  letter-spacing: 0em;
+  color: black;
+}
+.CvTemplatePDF__imgBtn {
+  width: 100px;
+  height: 180px;
+}
+.CvTemplatePDF__cards {
+  display: flex;
+  flex-direction: column;
+}/*# sourceMappingURL=CvTemplatePDF.module.css.map */

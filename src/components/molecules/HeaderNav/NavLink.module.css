@@ -1,0 +1,12 @@
+.header-nav {
+  display: flex;
+  align-items: center;
+  padding-left: 40px;
+}
+.header-nav-list {
+  display: flex;
+  align-items: center;
+}
+.header-nav-list li {
+  padding-right: 40px;
+}/*# sourceMappingURL=NavLink.module.css.map */

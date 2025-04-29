@@ -1,0 +1,56 @@
+.bg-wrapper {
+  padding: 100px 0;
+  width: 100%;
+  display: flex;
+  justify-content: center;
+  background-image: url("https://geeko.netlify.app/img/svg/benefits-bg.svg");
+  background-repeat: no-repeat;
+}
+
+.advantages {
+  width: 100%;
+  margin-top: 50px;
+  display: flex;
+  gap: 40px;
+  position: relative;
+}
+.advantages .advantages-list {
+  margin-top: 100px;
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+.advantages .advantages-list .advantages-item {
+  width: 540px;
+  height: 130px;
+  display: flex;
+  background-color: rgb(255, 255, 255);
+  border: 1px solid rgb(238, 238, 238);
+}
+.advantages .advantages-list .advantages-item .advantages-text {
+  margin: 0 0 20px 15px;
+}
+.advantages .advantages-list .advantages-item h3 {
+  margin-bottom: 5px;
+  color: #13287e;
+  font-size: 18px;
+}
+.advantages .advantages-wrapper__text {
+  display: flex;
+  flex-direction: column;
+  align-items: start;
+  justify-content: center;
+  gap: 30px;
+}
+.advantages .advantages-wrapper__text button {
+  padding: 0 20px;
+  min-width: 160px;
+  height: 48px;
+  line-height: 48px;
+  font-size: 12px;
+  font-weight: 600;
+  letter-spacing: 1px;
+  display: inline-block;
+  text-align: center;
+  text-transform: uppercase;
+}/*# sourceMappingURL=Advantages.module.css.map */

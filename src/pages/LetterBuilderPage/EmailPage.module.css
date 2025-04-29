@@ -1,0 +1,46 @@
+.container {
+  width: 40%;
+  height: 100vh;
+  position: relative;
+  margin: 0 30%;
+}
+
+.table {
+  border-spacing: 10px;
+  width: 100%;
+  border: 1px solid red;
+}
+
+.cell {
+  width: 100%;
+  border: 1px solid transparent;
+  height: 50px;
+  box-sizing: border-box;
+  text-align: center;
+  justify-content: center;
+}
+
+.tableWrapper {
+  padding: 0 30%;
+  background-color: #f5f5f5;
+}
+
+.tableContent {
+  border-spacing: 10px;
+  width: 100%;
+  background-color: white;
+  font-family: Arial, sans-serif;
+  font-size: 16px;
+}
+
+.centeredDiv {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.sendButton {
+  margin-top: 20px;
+  padding: 10px 20px;
+  font-size: 16px;
+}/*# sourceMappingURL=EmailPage.module.css.map */

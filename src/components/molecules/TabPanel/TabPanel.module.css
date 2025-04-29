@@ -1,0 +1,26 @@
+.list__wrap {
+  position: fixed;
+  margin-left: 56px;
+  width: 250px;
+  height: 100vh;
+  background-color: #e5f3ee;
+  z-index: 2;
+}
+.list__title {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin: 0;
+  padding: 0 6px;
+  height: 48px;
+  width: 95%;
+  background: #b8e3d2;
+}
+.list__close-btn {
+  padding: 0 !important;
+  margin-right: 4px !important;
+}
+
+.tab {
+  min-width: 30px !important;
+}/*# sourceMappingURL=TabPanel.module.css.map */

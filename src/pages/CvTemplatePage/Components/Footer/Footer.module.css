@@ -1,0 +1,61 @@
+.footer {
+  padding: 50px;
+  width: 100%;
+  height: 350px;
+  display: flex;
+  gap: 70px;
+  justify-content: center;
+  align-items: start;
+  background-image: url("../../../../assets/images/templatesPageImage/footer-bg1.png");
+  background-size: cover;
+  background-position: top;
+  background-repeat: no-repeat;
+}
+.footer .social-text {
+  color: #fff;
+  font-size: 16px;
+  line-height: 2;
+  font-weight: 400;
+}
+.footer .social {
+  max-width: 350px;
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+.footer .social .socialIcons {
+  display: flex;
+  gap: 30px;
+}
+.footer .social .socialIcons a:hover {
+  color: rgb(0, 86, 179);
+  transition: all 0.2s ease-in-out;
+}
+.footer .privacy {
+  display: flex;
+  flex-direction: column;
+  gap: 5px;
+}
+.footer .navigate {
+  display: flex;
+  flex-direction: column;
+  gap: 5px;
+}
+.footer .contact {
+  display: flex;
+  flex-direction: column;
+  gap: 5px;
+}
+.footer .footer-title {
+  color: #fff;
+  font-size: 16px;
+  font-weight: 600;
+  line-height: 19.6px;
+}
+.footer a {
+  color: white;
+}
+.footer a:hover {
+  color: rgba(255, 255, 255, 0.65);
+  transition: all 0.2s ease-in-out;
+}/*# sourceMappingURL=Footer.module.css.map */

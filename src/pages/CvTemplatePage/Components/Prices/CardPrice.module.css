@@ -1,0 +1,32 @@
+.card-price {
+  display: flex;
+  flex-direction: column;
+  width: 350px;
+  gap: 20px;
+  align-items: start;
+  box-shadow: rgba(175, 175, 175, 0.3) 0 10px 10px;
+  border-radius: 15px;
+  text-align: center;
+}
+.card-price .price-wrapper {
+  width: 350px;
+  height: 172px;
+  padding: 40px;
+  color: white;
+  font-size: 40px;
+  line-height: 40px;
+  background-image: url("../../../../assets/images/templatesPageImage/price.png");
+  background-repeat: no-repeat;
+  background-position: right;
+  text-align: right;
+  border-radius: 15px;
+}
+.card-price .price-wrapper .custom-cv__button {
+  margin-top: 100px;
+}
+.card-price .price-wrapper span {
+  font-size: 16px;
+  font-weight: 700;
+  line-height: 22.4px;
+  color: rgb(0, 255, 255);
+}/*# sourceMappingURL=CardPrice.module.css.map */

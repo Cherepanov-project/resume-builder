@@ -1,0 +1,30 @@
+.colorInput {
+  width: 220px;
+  height: 50px;
+  border-radius: 5px;
+}
+.colorInput:focus {
+  border: none;
+  outline: 2px solid #0066cc;
+}
+
+.rangeInput {
+  width: 210px;
+  height: 50px;
+}
+
+.textInput {
+  width: 210px;
+  height: 50px;
+  padding-left: 5px;
+  border-radius: 5px;
+}
+.textInput:focus {
+  border: none;
+  outline: 2px solid #0066cc;
+}
+
+.inputLabel {
+  font-size: 16px;
+  text-align: left;
+}/*# sourceMappingURL=ElementSpecificStylesForm.module.css.map */

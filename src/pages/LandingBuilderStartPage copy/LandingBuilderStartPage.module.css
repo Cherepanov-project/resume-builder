@@ -1,0 +1,30 @@
+.start-page {
+  height: 100vh;
+  display: flex;
+  gap: 40px;
+  align-items: center;
+  justify-content: center;
+  background: #dcf2ed;
+}
+
+.button {
+  border: 4px solid #20484f;
+  background-color: #f1fffc;
+  width: 200px;
+  height: 200px;
+  color: black;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 10px;
+  cursor: pointer;
+}
+.button:hover {
+  color: #fff;
+  background-color: #20484f;
+}
+
+span {
+  font-size: 1.2rem;
+}/*# sourceMappingURL=LandingBuilderStartPage.module.css.map */

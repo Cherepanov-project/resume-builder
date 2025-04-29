@@ -1,0 +1,55 @@
+@charset "UTF-8";
+.cardItem {
+  border: 1px solid grey;
+  border-radius: 10px;
+  padding: 10px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: start;
+  text-align: center;
+  max-width: 200px;
+  height: calc(100% - 50px);
+  word-break: break-all;
+}
+
+.cardItem__img {
+  width: 50%;
+}
+
+.cardItem__title {
+  font-size: 1.5rem;
+  font-weight: 700;
+  margin-top: 10px;
+  margin-bottom: 5px;
+  overflow-wrap: break-word;
+}
+
+.cardItem__description {
+  font-size: 0.9rem;
+  font-weight: 500;
+  margin-top: 5px;
+  margin-bottom: 5px;
+  overflow-wrap: break-word;
+}
+
+.cardItem__text {
+  font-size: 0.7rem;
+  font-weight: 400;
+  overflow-wrap: break-word;
+}
+
+.cardItem__button {
+  background-color: transparent;
+  border: 1px solid black;
+  margin-top: 10px;
+  max-width: 100%;
+  text-align: center;
+  white-space: normal;
+  word-break: break-all;
+}
+
+.cardItem__buttonText {
+  font-size: 14px; /* Установите нужный размер шрифта */
+  display: inline-block;
+}/*# sourceMappingURL=CardItem.module.css.map */

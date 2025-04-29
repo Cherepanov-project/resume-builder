@@ -1,0 +1,20 @@
+.prices {
+  margin-top: 100px;
+  margin-bottom: 100px;
+  display: flex;
+  gap: 20px;
+}
+.prices .text-wrapper {
+  width: 350px;
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+}
+.prices .b-wrapper {
+  padding: 15px;
+  background-color: white;
+  text-align: center;
+  color: #1d88ed;
+  font-weight: 400;
+  border: 1px solid #1d88ed;
+}/*# sourceMappingURL=Prices.module.css.map */
