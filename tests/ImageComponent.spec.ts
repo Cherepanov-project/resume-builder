@@ -37,5 +37,19 @@ test("User can log in and access the letter builder page", async ({ page }) => {
   await page.mouse.down();
   await page.getByRole("cell", { name: "блок" }).hover();
   await page.mouse.up();
-  await page.getByTestId("0").locator("div").nth(1).click();
+
+  await page
+    .getByRole("textbox", { name: "Enter image URL" })
+    .fill(
+      "https://avatars.mds.yandex.net/i?id=523de3e3dd9906381dd22d6af3d083a9_l-5277189-images-thumbs&n=13",
+    );
+
+  await page.getByRole("button", { name: "add image" }).click();
+  await page
+    .getByRole("textbox", { name: "Enter image URL" })
+    .fill(
+      "https://avatars.mds.yandex.net/i?id=523de3e3dd9906381dd22d6af3d083a9_l-5277189-images-thumbs&n=13",
+    );
+
+  await page.getByRole("button", { name: "add image" }).click();
 });
