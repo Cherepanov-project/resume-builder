@@ -5,6 +5,7 @@
     "esModuleInterop": true,
     "resolveJsonModule": true,
     "moduleResolution": "bundler", // Set module resolution to 'bundler'
+
     "allowImportingTsExtensions": true,
     "isolatedModules": true,
     "noUnusedLocals": true,

@@ -1,0 +1,55 @@
+{
+  "cookies": [
+    {
+      "name": "did",
+      "value": "s%3Av0%3A202d089c-a820-4535-a4eb-f8e590705145%3Abb51b5a05c9b8f228af354861ec6caedf24425ec8bdd2e858c32d42c405d47dd.oPmaUT2VYGszudbtSIo4C0E%2BhvylB1KsZZhJ9UQ4Zv8",
+      "domain": "dev-rhxiq2iof085iyzj.us.auth0.com",
+      "path": "/",
+      "expires": 1777564318.559028,
+      "httpOnly": true,
+      "secure": true,
+      "sameSite": "None"
+    },
+    {
+      "name": "did_compat",
+      "value": "s%3Av0%3A202d089c-a820-4535-a4eb-f8e590705145%3Abb51b5a05c9b8f228af354861ec6caedf24425ec8bdd2e858c32d42c405d47dd.oPmaUT2VYGszudbtSIo4C0E%2BhvylB1KsZZhJ9UQ4Zv8",
+      "domain": "dev-rhxiq2iof085iyzj.us.auth0.com",
+      "path": "/",
+      "expires": 1777564318.55916,
+      "httpOnly": true,
+      "secure": true,
+      "sameSite": "Lax"
+    },
+    {
+      "name": "auth0",
+      "value": "s%3A7S7vwBK_y70RhCxXquS03jSA4KiCs9f2.baJCa%2BDfbWDOekEIIzbKGJVSI7K3K7iy9KkXAulDQzU",
+      "domain": "dev-rhxiq2iof085iyzj.us.auth0.com",
+      "path": "/",
+      "expires": 1746265918.886842,
+      "httpOnly": true,
+      "secure": true,
+      "sameSite": "None"
+    },
+    {
+      "name": "auth0_compat",
+      "value": "s%3A7S7vwBK_y70RhCxXquS03jSA4KiCs9f2.baJCa%2BDfbWDOekEIIzbKGJVSI7K3K7iy9KkXAulDQzU",
+      "domain": "dev-rhxiq2iof085iyzj.us.auth0.com",
+      "path": "/",
+      "expires": 1746265918.88693,
+      "httpOnly": true,
+      "secure": true,
+      "sameSite": "Lax"
+    }
+  ],
+  "origins": [
+    {
+      "origin": "http://localhost:5173",
+      "localStorage": [
+        {
+          "name": "persist:root",
+          "value": "{\"personalInfo\":\"{\\\"personalData\\\":{\\\"fullName\\\":\\\"\\\",\\\"address\\\":\\\"\\\",\\\"bio\\\":\\\"\\\",\\\"position\\\":\\\"\\\",\\\"phone\\\":\\\"\\\",\\\"website\\\":\\\"\\\",\\\"email\\\":\\\"\\\"},\\\"educationData\\\":[{\\\"description\\\":\\\"\\\",\\\"position\\\":\\\"\\\",\\\"fromYear\\\":\\\"\\\",\\\"toYear\\\":\\\"\\\",\\\"name\\\":\\\"\\\"}],\\\"experienceData\\\":[{\\\"position\\\":\\\"\\\",\\\"fromYear\\\":\\\"\\\",\\\"toYear\\\":\\\"\\\",\\\"name\\\":\\\"\\\",\\\"description\\\":\\\"\\\"}],\\\"socialData\\\":[{\\\"link\\\":\\\"\\\",\\\"name\\\":\\\"\\\"}],\\\"hobbyData\\\":[{\\\"hobby\\\":\\\"\\\"}],\\\"photoData\\\":{\\\"avatar\\\":\\\"/src/components/organisms/PersonalPhoto/placeholder.jpg\\\"}}\",\"education\":\"{\\\"indexOfEducations\\\":[],\\\"countOfEducations\\\":0}\",\"experience\":\"{\\\"numOfExperience\\\":[{\\\"work-title\\\":\\\"\\\",\\\"company\\\":\\\"\\\",\\\"experience-from-year\\\":\\\"\\\",\\\"experience-to-year\\\":\\\"\\\",\\\"company-info\\\":\\\"\\\"}]}\",\"social\":\"{\\\"numOfSocials\\\":[{\\\"social-name\\\":\\\"\\\",\\\"social-link\\\":\\\"\\\"}]}\",\"hobbies\":\"{\\\"numOfHobbies\\\":[{\\\"label\\\":\\\"\\\"}]}\",\"layout\":\"{\\\"gridContainers\\\":[{\\\"id\\\":\\\"tJPChbcrEzVMbBA\\\",\\\"height\\\":30,\\\"elements\\\":{\\\"activeElements\\\":[]},\\\"layout\\\":{\\\"i\\\":null,\\\"w\\\":6,\\\"h\\\":2,\\\"x\\\":0,\\\"y\\\":0}}],\\\"currentDraggableItem\\\":null,\\\"currentContainer\\\":\\\"\\\",\\\"windowWidth\\\":1280}\",\"letterLayout\":\"{\\\"gridContainers\\\":[{\\\"id\\\":\\\"GLIvIyhDpIaBSNs\\\",\\\"height\\\":30,\\\"elements\\\":{\\\"activeElements\\\":[]},\\\"layout\\\":{\\\"i\\\":null,\\\"w\\\":6,\\\"h\\\":2,\\\"x\\\":0,\\\"y\\\":0}}],\\\"currentDraggableItem\\\":null,\\\"currentContainer\\\":\\\"\\\",\\\"windowWidth\\\":1280}\",\"utility\":\"{\\\"isDraggable\\\":false,\\\"previewOpened\\\":\\\"\\\"}\",\"card\":\"{\\\"style\\\":{\\\"alignment\\\":\\\"left\\\",\\\"avatarUrl\\\":null,\\\"backgroundColor\\\":\\\"\\\",\\\"heightImg\\\":\\\"\\\",\\\"imageUrl\\\":null,\\\"textColor\\\":\\\"\\\",\\\"textContent\\\":\\\"\\\",\\\"textSize\\\":14,\\\"textWeight\\\":300,\\\"titleColor\\\":\\\"\\\",\\\"titleContent\\\":\\\"\\\",\\\"titleSize\\\":22,\\\"titleWeight\\\":600,\\\"avatar\\\":false,\\\"btnReadMore\\\":false}}\",\"sectionsManager\":\"{\\\"layoutDate\\\":{\\\"1\\\":[{\\\"name\\\":\\\"\\\",\\\"type\\\":\\\"\\\",\\\"source\\\":\\\"atoms\\\",\\\"props\\\":{\\\"text\\\":\\\"\\\",\\\"key\\\":\\\"\\\",\\\"wrapperStyle\\\":{\\\"display\\\":\\\"block\\\"},\\\"textStyle\\\":{\\\"display\\\":\\\"block\\\"},\\\"style\\\":{\\\"backgroundColor\\\":\\\"\\\",\\\"color\\\":\\\"\\\",\\\"text\\\":\\\"\\\",\\\"border\\\":\\\"\\\"}},\\\"layout\\\":{\\\"i\\\":\\\"11\\\",\\\"x\\\":0,\\\"y\\\":0,\\\"w\\\":1,\\\"h\\\":1}}]},\\\"curId\\\":\\\"\\\",\\\"text\\\":\\\"\\\",\\\"url\\\":\\\"\\\"}\",\"settingsPanel\":\"{\\\"shown\\\":false,\\\"imageMenu\\\":false,\\\"type\\\":\\\"\\\",\\\"sectionID\\\":\\\"\\\",\\\"moduleID\\\":\\\"\\\"}\",\"styleModule\":\"{\\\"shown\\\":false,\\\"elements\\\":{},\\\"history\\\":[],\\\"currentHistoryIndex\\\":-1}\",\"swiper\":\"{\\\"presetName\\\":\\\"default\\\"}\",\"user\":\"{\\\"user\\\":{\\\"email\\\":\\\"\\\",\\\"verified\\\":false,\\\"name\\\":\\\"\\\",\\\"nickname\\\":\\\"\\\",\\\"picture\\\":\\\"\\\",\\\"sub\\\":\\\"\\\",\\\"updated_at\\\":\\\"\\\"}}\",\"video\":\"{\\\"activeVideoId\\\":null,\\\"isSidebarOpen\\\":false,\\\"videos\\\":{}}\",\"html\":\"{\\\"htmlCode\\\":\\\"\\\",\\\"previewHtml\\\":\\\"\\\"}\",\"icons\":\"{\\\"icons\\\":[]}\",\"_persist\":\"{\\\"version\\\":-1,\\\"rehydrated\\\":true}\"}"
+        }
+      ]
+    }
+  ]
+}
