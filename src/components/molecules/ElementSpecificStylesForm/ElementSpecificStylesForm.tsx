@@ -1,68 +1,69 @@
-import { useState } from 'react';
-import {
-  Stack,
-  FormControl
-} from '@mui/material';
-import styles from './ElementSpecificStylesForm.module.scss'
-import Item from '@atoms/StyledPaperItem';
+import { useState } from "react";
+import { Stack, FormControl } from "@mui/material";
+import styles from "./ElementSpecificStylesForm.module.scss";
+import Item from "@atoms/StyledPaperItem";
+import { useInput } from "@/hooks/useSpecificStylesFormHook";
+import { nanoid } from "nanoid";
 
-const ElementSpecificStylesForm = ({
-  handleUpdate,
-  col
-}: {
-  handleUpdate: (type: string, value: Record<string, string>, colIndex: number) => void,
-  col: number
-}) => {
+const ElementSpecificStylesForm = () => {
+  const newImp = useInput("");
   const [borderOn, setBorderOn] = useState<number>(0);
   const styleInputs = [
     {
-      label: 'Text size:',
-      styleSetting: 'fontSize',
-      type:'number',
+      label: "Text size:",
+      styleSetting: "fontSize",
+      type: "number",
     },
     {
-      label: 'Text color:',
-      styleSetting: 'color',
-      type:'color',
+      label: "Text color:",
+      styleSetting: "color",
+      type: "color",
     },
     {
-      label: 'Background color:',
-      styleSetting: 'backgroundColor',
-      type:'color',
+      label: "Background color:",
+      styleSetting: "backgroundColor",
+      type: "color",
     },
     {
-      label: 'Background image url:',
-      styleSetting: 'backgroundImage',
-      type: 'text',
+      label: "Background image url:",
+      styleSetting: "backgroundImage",
+      type: "text",
     },
     {
-      label: 'Border:',
-      styleSetting: 'border',
-      type:'range',
+      label: "Border:",
+      styleSetting: "border",
+      type: "range",
     },
-  ]
+  ];
 
-  
   return (
     <form>
       <Stack>
-        {styleInputs.map((elem)=>{
-          let valueStart = '';
-          let valueEnd = elem.styleSetting === 'fontSize' ? 'px': elem.styleSetting === 'border' ? 'px solid' : '';
-          const minNum = elem.styleSetting === 'fontSize' ? 8 : 0;
+        {styleInputs.map((elem) => {
+          let valueStart = "";
+          let valueEnd =
+            elem.styleSetting === "fontSize"
+              ? "px"
+              : elem.styleSetting === "border"
+                ? "px solid"
+                : "";
+          const minNum = elem.styleSetting === "fontSize" ? 8 : 0;
 
-          if (elem.styleSetting === 'backgroundImage') {
-            valueEnd = ')';
-            valueStart = 'url('
+          if (elem.styleSetting === "backgroundImage") {
+            valueEnd = ")";
+            valueStart = "url(";
           }
 
           const onChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-            if(elem.styleSetting === 'border') setBorderOn(+e.target.value);
-            handleUpdate('style', {[elem.styleSetting]: `${valueStart}${e.target.value}${valueEnd}`}, col - 1);
-          }
-          
+            if (elem.styleSetting === "border") setBorderOn(+e.target.value);
+
+            newImp.onChangeStyle(e, {
+              [elem.styleSetting]: `${valueStart}${e.target.value}${valueEnd}`,
+            });
+          };
+
           return (
-            <Item>
+            <Item key={nanoid()}>
               <FormControl>
                 <label>
                   <span className={styles.inputLabel}>{elem.label}</span>
@@ -77,42 +78,43 @@ const ElementSpecificStylesForm = ({
                 </label>
               </FormControl>
             </Item>
-          )
+          );
         })}
-        {borderOn > 0 &&
-        <>
-          <Item>
-            <FormControl>
-              <label>
-                <span className={styles.inputLabel}>Border color:</span>
-                <input
-                  className={styles.colorInput}
-                  type='color'
-                  onChange={(e: React.ChangeEvent<HTMLInputElement>) => {
-                    handleUpdate('style', {borderColor: e.target.value}, col - 1);
-                  }}
-              ></input>
-              </label>
-            </FormControl>
-          </Item>
-          <Item>
-            <FormControl>
-              <label>
-                <span className={styles.inputLabel}>Border radius:</span>
-                <input
-                  className={styles.textInput}
-                  placeholder='0'
-                  type='number'
-                  min={0}
-                  max={50}
-                  onChange={(e: React.ChangeEvent<HTMLInputElement>) => {
-                    handleUpdate('style', {borderRadius: `${e.target.value}px`}, col - 1);
-                  }}
-                ></input>
-              </label>
-            </FormControl>
-          </Item>
-        </>}
+        {borderOn > 0 && (
+          <>
+            <Item>
+              <FormControl>
+                <label>
+                  <span className={styles.inputLabel}>Border color:</span>
+                  <input
+                    className={styles.colorInput}
+                    type="color"
+                    onChange={(e: React.ChangeEvent<HTMLInputElement>) => {
+                      newImp.onChangeStyle(e, { borderColor: e.target.value });
+                    }}
+                  ></input>
+                </label>
+              </FormControl>
+            </Item>
+            <Item>
+              <FormControl>
+                <label>
+                  <span className={styles.inputLabel}>Border radius:</span>
+                  <input
+                    className={styles.textInput}
+                    placeholder="0"
+                    type="number"
+                    min={0}
+                    max={50}
+                    onChange={(e: React.ChangeEvent<HTMLInputElement>) => {
+                      newImp.onChangeStyle(e, { borderRadius: `${e.target.value}px` });
+                    }}
+                  ></input>
+                </label>
+              </FormControl>
+            </Item>
+          </>
+        )}
       </Stack>
     </form>
   );

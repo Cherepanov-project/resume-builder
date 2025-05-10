@@ -1,31 +1,30 @@
-import { useEffect, useState } from 'react';
-import { useNavigate } from 'react-router-dom';
-import { Tab, Tabs } from '@mui/material';
-import DashboardIcon from '@mui/icons-material/Dashboard';
-import ExtensionIcon from '@mui/icons-material/Extension';
-import ViewCarouselIcon from '@mui/icons-material/ViewCarousel';
-import Settings from '@mui/icons-material/Settings';
+import { useEffect, useState } from "react";
+import { useNavigate } from "react-router-dom";
+import { Tab, Tabs } from "@mui/material";
+import DashboardIcon from "@mui/icons-material/Dashboard";
+import ExtensionIcon from "@mui/icons-material/Extension";
+import ViewCarouselIcon from "@mui/icons-material/ViewCarousel";
+import Settings from "@mui/icons-material/Settings";
 
-import { importFiles } from '@/utils';
-import { T_SidebarMenuItem } from '@/types/landingBuilder';
-import TabPanel from '@molecules/TabPanel';
-import NestedList from '@molecules/NestedList';
-import ManagerButton from '@atoms/ManagerButton';
+import { importFiles } from "@/utils";
+import { T_SidebarMenuItem } from "@/types/landingBuilder";
+import TabPanel from "@molecules/TabPanel";
+import NestedList from "@molecules/NestedList";
+import ManagerButton from "@atoms/ManagerButton";
 
-import classes from './SideBar.module.scss';
+import classes from "./SideBar.module.scss";
 
 const SideBar: React.FC = () => {
   const [currentTab, setCurrentTab] = useState(0);
   const [isActiveTab, setSctiveTab] = useState(true);
   const [sidebarMenuList, setSidebarMenuList] = useState({});
-  const sideMenuTabs = ['Sections', 'Elements', 'Templates', 'Manage'];
+  const sideMenuTabs = ["Sections", "Elements", "Templates", "Manage"];
   const tabsIcons = [<DashboardIcon />, <ExtensionIcon />, <ViewCarouselIcon />, <Settings />];
 
   useEffect(() => {
     importFiles().then((data) => {
       setSidebarMenuList({ ...sidebarMenuList, ...data });
     });
-    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [sidebarMenuList]);
 
   const handleChangeTab = (_event: React.SyntheticEvent, indxBtn: number) => {
@@ -44,7 +43,7 @@ const SideBar: React.FC = () => {
   return (
     <>
       <Tabs
-        className={classes['sidebar']}
+        className={classes["sidebar"]}
         value={currentTab}
         orientation="vertical"
         aria-label="sidebar"
@@ -52,9 +51,9 @@ const SideBar: React.FC = () => {
       >
         {sideMenuTabs.map((item, indx) => {
           return (
-            <Tab 
+            <Tab
               key={item}
-              className={classes['tab']}
+              className={classes["tab"]}
               icon={tabsIcons[indx]}
               aria-label={item}
               onClick={openPanel}
@@ -66,19 +65,19 @@ const SideBar: React.FC = () => {
         return (
           isActiveTab && (
             <TabPanel key={key} value={currentTab} index={indx} label={key} closePanel={closePanel}>
-              {key === 'Manage' && (
+              {key === "Manage" && (
                 <>
                   <ManagerButton
                     onClick={() => {
                       closePanel();
-                      navigate('sections-creator');
+                      navigate("sections-creator");
                     }}
                     name="Section Creator"
                   />
                   <ManagerButton
                     onClick={() => {
                       closePanel();
-                      navigate('template-creator');
+                      navigate("template-creator");
                     }}
                     name="Template Creator"
                   />

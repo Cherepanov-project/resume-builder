@@ -1,13 +1,14 @@
-import { Box, Stack } from '@mui/material';
-import BasicInput from '@atoms/BasicInput';
-import BasicDatePicker from '@atoms/BasicDatePicker';
-import classes from './EducationForm.module.scss';
+import { Box, Stack } from "@mui/material";
+import BasicInput from "@atoms/BasicInput";
+import BasicDatePicker from "@atoms/BasicDatePicker";
+import classes from "./EducationForm.module.scss";
 
 type EducationFormProps = {
   fieldName?: string;
 };
 
 const EducationForm = ({ fieldName }: EducationFormProps) => {
+  console.log(1);
   return (
     <Box>
       <BasicInput id={`${fieldName}.study`} label="Field of study" />
