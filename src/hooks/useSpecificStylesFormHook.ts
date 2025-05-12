@@ -162,7 +162,7 @@ export const useInput = (initialValue = "") => {
     [accordion, layoutRow],
   );
   const onChangeStyle = useCallback(
-    (e: React.ChangeEvent<HTMLInputElement>, value: Record<string, string>) => {
+    (value: Record<string, string>) => {
       const newValue = JSON.parse(JSON.stringify(layoutRow));
       newValue[col - 1].props.style = Object.assign(newValue[col - 1].props.style, value);
       dispatch(editRowDate({ row, date: newValue }));

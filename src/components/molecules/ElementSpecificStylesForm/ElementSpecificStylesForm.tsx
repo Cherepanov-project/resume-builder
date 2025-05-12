@@ -57,7 +57,7 @@ const ElementSpecificStylesForm = () => {
           const onChange = (e: React.ChangeEvent<HTMLInputElement>) => {
             if (elem.styleSetting === "border") setBorderOn(+e.target.value);
 
-            newImp.onChangeStyle(e, {
+            newImp.onChangeStyle({
               [elem.styleSetting]: `${valueStart}${e.target.value}${valueEnd}`,
             });
           };
@@ -90,7 +90,7 @@ const ElementSpecificStylesForm = () => {
                     className={styles.colorInput}
                     type="color"
                     onChange={(e: React.ChangeEvent<HTMLInputElement>) => {
-                      newImp.onChangeStyle(e, { borderColor: e.target.value });
+                      newImp.onChangeStyle({ borderColor: e.target.value });
                     }}
                   ></input>
                 </label>
@@ -107,7 +107,7 @@ const ElementSpecificStylesForm = () => {
                     min={0}
                     max={50}
                     onChange={(e: React.ChangeEvent<HTMLInputElement>) => {
-                      newImp.onChangeStyle(e, { borderRadius: `${e.target.value}px` });
+                      newImp.onChangeStyle({ borderRadius: `${e.target.value}px` });
                     }}
                   ></input>
                 </label>
