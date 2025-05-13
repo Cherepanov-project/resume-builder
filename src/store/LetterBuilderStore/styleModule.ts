@@ -183,8 +183,8 @@ const settingsPanelSlice = createSlice({
       // Инициализация timerList если его нет
       if (!state.elements[id].timerList) {
         state.elements[id].timerList = {
-          color: "#FF0000",
-          background: "#2400ff",
+          color: "#fff",
+          background: "#457670",
           installTime: 0,
           installDate: 0,
         };

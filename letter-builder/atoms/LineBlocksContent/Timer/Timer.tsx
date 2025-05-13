@@ -1,13 +1,13 @@
 import { IconPngTimer } from "@components/atoms/Icons/LetterCardIcons";
-import classes from "./Timer.module.scss";
 import { CloseOutlined } from "@mui/icons-material";
-import { useEffect, useState } from "react";
-import { Form, ColorPicker, Cascader, DatePicker, TimePicker, Button } from "antd";
+import { useCallback, useEffect, useState } from "react";
+import { Form, ColorPicker, Cascader, DatePicker, TimePicker, Button, Card, Row, Col } from "antd";
 import type { Color } from "antd/es/color-picker";
-import dayjs from 'dayjs';
+import dayjs from "dayjs";
 import { useStyleElement } from "../../../hooks/useStyleElement";
 import { useAppDispatch } from "@/store/store";
 import { addTimer } from "@/store/LetterBuilderStore/styleModule";
+import classes from "./Timer.module.scss";
 
 interface InstallDateTime {
   $y: number;
@@ -15,157 +15,210 @@ interface InstallDateTime {
   $D: number;
 }
 
+const SIZE_OPTIONS = [
+  { value: "0.6", label: "Маленький" },
+  { value: "0.8", label: "Средний" },
+  { value: "1.0", label: "Большой" },
+];
+
 const TimerComponent = ({ id }: { id: string }) => {
   const { parameters } = useStyleElement(id, {
-    color: "#000",
+    color: "#fff",
     fontSize: "14px",
     lineHeight: "20px",
     fontFamily: "Roboto, sans-serif",
   });
   const dispatch = useAppDispatch();
-  const [viewModal, setViewModal] = useState<boolean>(false);
-  const [counter, setCounter] = useState<number>(0);
-  const color: string = parameters?.timerList?.color || "#FF0000";
-  const background: string = parameters?.timerList?.background || "#2400ff";
-  const installTime: number = parameters?.timerList?.installTime || 0;
-  const installDate: number = parameters?.timerList?.installDate || 0;
+  const [viewModal, setViewModal] = useState(false);
+  const [counter, setCounter] = useState(0);
+  const [loading, setLoading] = useState(false);
 
+  const {
+    color = "#fff",
+    background = "#457670",
+    installTime = 0,
+    installDate = 0,
+    size = "0.8",
+    save = false
+  } = parameters?.timerList || {};
+
+  // таймер
   useEffect(() => {
     if (counter > 0) {
-      const timer = setInterval(() => setCounter(counter - 1000), 1000);
-      return () => clearInterval(Number(timer));
+      const timer = setInterval(() => setCounter(prev => prev - 1000), 1000);
+      return () => clearInterval(timer);
     }
   }, [counter]);
 
   useEffect(() => {
     if (installDate > 0 && installTime > 0) {
-      const counter = installDate + installTime - Date.now();
-      setCounter(installDate + installTime - Date.now());
-      dispatch(addTimer({ id, counter }));
+      const newCounter = installDate + installTime - Date.now();
+      setCounter(newCounter);
+      dispatch(addTimer({ id, counter: newCounter }));
     }
-  }, [parameters?.timerList?.installTime, parameters?.timerList?.installDate]);
+  }, [installDate, installTime, dispatch, id]);
 
-  const viewModalHendle: () => void = () => setViewModal(true);
-  const noneViewModalHendle: () => void = () => setViewModal(false);
-  const onSave: () => void = () => {
-    dispatch(addTimer({ id, save: true }));
-    noneViewModalHendle();
-  };
+  // модальное окно
+  const openModal = useCallback(() => setViewModal(true), []);
+  const closeModal = useCallback(() => setViewModal(false), []);
 
-  const onChangeColor = (color: Color) => {
-    const rgba = color.toRgb();
-    const colorStr = `rgba(${rgba.r}, ${rgba.g}, ${rgba.b}, ${rgba.a})`;
-    dispatch(addTimer({ id, color: colorStr }));
-  };
+  const handleSave = useCallback(() => {
+    setLoading(true);
+    try {
+      dispatch(addTimer({ id, save: true }));
+      closeModal();
+    } finally {
+      setLoading(false);
+    }
+  }, [dispatch, id, closeModal]);
 
-  const onChangeBackgroundColor = (color: Color) => {
-    const rgba = color.toRgb();
-    const background = `rgba(${rgba.r},${rgba.g}, ${rgba.b}, ${rgba.a})`;
-    dispatch(addTimer({ id, background }));
-  };
+  const handleColorChange = useCallback((color: Color) => {
+    const { r, g, b, a } = color.toRgb();
+    dispatch(addTimer({ id, color: `rgba(${r},${g},${b},${a})` }));
+  }, [dispatch, id]);
 
-  const onChangeData = (e: InstallDateTime) =>
-    dispatch(addTimer({ id, installDate: new Date(`${e.$y}-${e.$M + 1}-${e.$D}`).getTime() }));
+  const handleBackgroundChange = useCallback((color: Color) => {
+    const { r, g, b, a } = color.toRgb();
+    dispatch(addTimer({ id, background: `rgba(${r},${g},${b},${a})` }));
+  }, [dispatch, id]);
 
-  const onChangeTime = (time: dayjs.Dayjs | null) => {
+  const handleDateChange = useCallback((e: InstallDateTime) => {
+    dispatch(addTimer({ 
+      id, 
+      installDate: new Date(`${e.$y}-${e.$M + 1}-${e.$D}`).getTime() 
+    }));
+  }, [dispatch, id]);
+
+  const handleTimeChange = useCallback((time: dayjs.Dayjs | null) => {
     if (time) {
-        const hours = time.hour();
-        const minutes = time.minute();
-        const seconds = time.second();
-        
-        const installTime = (hours * 3600000) + (minutes * 60000) + (seconds * 1000);
-        dispatch(addTimer({ id, installTime }));
+      const installTime = time.hour() * 3600000 + time.minute() * 60000 + time.second() * 1000;
+      dispatch(addTimer({ id, installTime }));
     }
-  };
-  
-  const onSizeHandle = (e: string[]) => dispatch(addTimer({ id, size: e.join() }));
+  }, [dispatch, id]);
 
-  const Timer = ({ size }: { size: string }) => {
+  const handleSizeChange = useCallback((e: string[]) => {
+    dispatch(addTimer({ id, size: e.join() }));
+  }, [dispatch, id]);
+
+  const handleKeyDown = useCallback((e: KeyboardEvent) => {
+    if (e.key === "Escape") closeModal();
+    if (e.key === "Enter") handleSave();
+  }, [closeModal, handleSave]);
+
+  useEffect(() => {
+    if (!viewModal) return;
+    window.addEventListener("keydown", handleKeyDown);
+    return () => window.removeEventListener("keydown", handleKeyDown);
+  }, [viewModal, handleKeyDown]);
+
+  // Компонент таймера
+  const ModernTimer = useCallback(() => {
+    const time = {
+      days: Math.floor((counter / (1000 * 60 * 60 * 24)) % 30),
+      hours: Math.floor((counter / (1000 * 60 * 60)) % 24),
+      minutes: Math.floor((counter / (1000 * 60)) % 60),
+      seconds: Math.floor((counter / 1000) % 60),
+    };
+
     return (
-      <table
-        className={classes.counter}
-        style={{ color: color, backgroundColor: background, scale: size }}
-      >
-        <tbody>
-          <tr style={{ fontSize: "40px" }}>
-            <td>{Math.floor((counter / (1000 * 60 * 60 * 24)) % 30)}</td>
-            <td>{Math.floor((counter / (1000 * 60 * 60)) % 24)}</td>
-            <td>{Math.floor((counter / (1000 * 60)) % 60)}</td>
-            <td>{Math.floor((counter / 1000) % 60)}</td>
-          </tr>
-          <tr>
-            <td>Дни</td>
-            <td>Часы</td>
-            <td>Минуты</td>
-            <td>Секунды</td>
-          </tr>
-        </tbody>
-      </table>
+      <div style={{ transform: `scale(${size})`, cursor: "pointer" }} onClick={openModal}>
+        <Card style={{ backgroundColor: background }}>
+          <Row gutter={16}>
+            {Object.entries(time).map(([key, value]) => (
+              <Col key={key} span={6}>
+                <div style={{ color }} className={classes.int}>{value}</div>
+                <div style={{ fontSize: 16, color }}>
+                  {key === 'days' && 'Дней'}
+                  {key === 'hours' && 'Часов'}
+                  {key === 'minutes' && 'Минут'}
+                  {key === 'seconds' && 'Секунд'}
+                </div>
+              </Col>
+            ))}
+          </Row>
+        </Card>
+      </div>
     );
-  };
+  }, [counter, size, background, color, openModal]);
 
   return (
     <>
-      {parameters?.timerList?.save ? (
-        <Timer size={parameters?.timerList?.size || "1"} />
+      {save ? (
+        <ModernTimer />
       ) : (
         <>
           <div className="flex items-center justify-center">
             <IconPngTimer scale={1.7} />
           </div>
-          <Button size="large" onClick={viewModalHendle}>
+          <Button size="large" onClick={openModal}>
             Edit timer
           </Button>
         </>
       )}
-      <div className={viewModal ? classes.modal : classes.modalNone}>
-        <div className={classes.modalContent}>
-          <div className={classes.modalTitle}>
-            <span>Настройка таймера</span>
 
-            <button type="button" className={classes.close} onClick={noneViewModalHendle}>
-              <CloseOutlined style={{ scale: "1.5" }} />
-            </button>
-          </div>
-          <div className={classes.modalMain}>
-            <Form className={classes.modalMainForm}>
-              <div className={classes.dateSelect}>
-                <div>
-                  <div>Дата события</div>
-                  <DatePicker onChange={(e: InstallDateTime) => onChangeData(e)} />
+      {viewModal && (
+        <div className={classes.modal} onClick={(e) => e.target === e.currentTarget && closeModal()}>
+          <div className={classes.modalContent} onClick={(e) => e.stopPropagation()}>
+            <div className={classes.modalTitle}>
+              <span>Настройка таймера</span>
+              <button 
+                type="button" 
+                className={classes.close} 
+                onClick={closeModal}
+                aria-label="Закрыть"
+              >
+                <CloseOutlined style={{ scale: "1.5" }} />
+              </button>
+            </div>
+
+            <div className={classes.modalMain}>
+              <Form className={classes.modalMainForm}>
+                <div className={classes.dateSelect}>
+                  <div>
+                    <div>Дата события:</div>
+                    <DatePicker onChange={handleDateChange} />
+                  </div>
+                  <div>
+                    <div>Время:</div>
+                    <TimePicker onChange={handleTimeChange} />
+                  </div>
                 </div>
-                <div>
-                  <div>Время</div>
-                  <TimePicker onChange={onChangeTime} />
+
+                <div className={classes.row}>
+                  <div>Цвет текста:</div>
+                  <ColorPicker defaultValue={color} onChange={handleColorChange} />
                 </div>
-              </div>
-              <div>Цвет текста</div>
-              <ColorPicker defaultValue={color} onChange={onChangeColor} />
-              <div>Цвет фона</div>
-              <ColorPicker defaultValue={background} onChange={onChangeBackgroundColor} />
-              <div>Размер</div>
-              <Cascader
-                options={[
-                  { value: "0.7", label: "Маленький" },
-                  { value: "1", label: "Средний" },
-                  { value: "1.2", label: "Большой" },
-                ]}
-                defaultValue={["Средний"]}
-                onChange={(e: string[]) => onSizeHandle(e)}
-              />
-            </Form>
-            <Timer size={parameters?.timerList?.size || "1"} />
-          </div>
-          <div className={classes.modalButton}>
-            <Button type="primary" size="large" onClick={noneViewModalHendle}>
-              Отменить
-            </Button>
-            <Button size="large" onClick={onSave}>
-              Сохранить
-            </Button>
+
+                <div className={classes.row}>
+                  <div>Цвет фона:</div>
+                  <ColorPicker defaultValue={background} onChange={handleBackgroundChange} />
+                </div>
+
+                <div className={classes.row}>
+                  <div>Размер:</div>
+                  <Cascader
+                    options={SIZE_OPTIONS}
+                    defaultValue={["0.8"]}
+                    onChange={handleSizeChange}
+                    allowClear={false}
+                  />
+                </div>
+              </Form>
+
+              <ModernTimer />
+            </div>
+
+            <div className={classes.modalButton}>
+              <Button type="primary" size="large" onClick={closeModal}>
+                Отменить
+              </Button>
+              <Button size="large" onClick={handleSave} loading={loading}>
+                Сохранить
+              </Button>
+            </div>
           </div>
         </div>
-      </div>
+      )}
     </>
   );
 };
