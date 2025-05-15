@@ -6,53 +6,15 @@ import {
   MenuItem,
   OutlinedInput,
   TextField,
-  SelectChangeEvent,
 } from "@mui/material";
 import Item from "@atoms/StyledPaperItem";
 import { nanoid } from "nanoid";
-
+import { useInput } from "@/hooks/useSpecificStylesFormHook";
 type AccordionData = Array<[string, string]>;
+const ElementSpecificSettingsForm = () => {
+  const newImp = useInput("");
+  const type = newImp.type;
 
-interface SelectListItem {
-  id: string;
-  value: string;
-}
-
-type FormValue = string | AccordionData | SelectListItem[];
-
-interface IProps {
-  type: string;
-  text: string;
-  title: string;
-  description: string;
-  url: string;
-  imgUrl: string;
-  buttonText: string;
-  accordion: AccordionData;
-  settingsOptionsValues: string[];
-  setAccordion: (accordion: AccordionData) => void;
-  handleUpdate: (field: string, value: FormValue, colIndex: number) => void;
-  col: number;
-  SelectList: SelectListItem[];
-  setSelectList: (list: SelectListItem[]) => void;
-}
-
-const ElementSpecificSettingsForm: React.FC<IProps> = ({
-  type,
-  text,
-  title,
-  description,
-  url,
-  imgUrl,
-  buttonText,
-  accordion,
-  settingsOptionsValues,
-  setAccordion,
-  handleUpdate,
-  col,
-  SelectList,
-  setSelectList,
-}) => {
   return (
     <form>
       <Stack>
@@ -62,14 +24,11 @@ const ElementSpecificSettingsForm: React.FC<IProps> = ({
             <Select
               labelId="type-label"
               sx={{ width: "220px" }}
-              value={type}
-              // Change the type assignment in onChange
-              onChange={(e: SelectChangeEvent) => {
-                handleUpdate("type", e.target.value, col - 1);
-              }}
+              value={newImp.value}
+              onChange={newImp.hendlerType}
               input={<OutlinedInput label="Choose element type" />}
             >
-              {settingsOptionsValues.map((name) => (
+              {newImp.settingsOptionsValues.map((name) => (
                 <MenuItem key={name} value={name}>
                   {name}
                 </MenuItem>
@@ -77,39 +36,34 @@ const ElementSpecificSettingsForm: React.FC<IProps> = ({
             </Select>
           </FormControl>
         </Item>
-        {type !== "LayoutBlockImage" &&
-          type !== "LayoutBlockVideoPlayer" &&
-          type !== "LayoutBlockSlider" &&
-          type !== "Accordion" &&
-          type !== "CheckboxGroup" &&
-          type !== "DropdownList" &&
-          type !== "Slider" && (
-            <Item>
-              <FormControl>
-                <TextField
-                  label="Enter target text:"
-                  value={text}
-                  onChange={(e: React.ChangeEvent<HTMLTextAreaElement>) => {
-                    handleUpdate("text", e.target.value, col - 1);
-                  }}
-                />
-              </FormControl>
-            </Item>
-          )}
+        {newImp.simpleForme.includes(type) ? (
+          <Item>
+            <FormControl>
+              <TextField
+                label="Enter target text:"
+                value={newImp.text}
+                onChange={(e: React.ChangeEvent<HTMLTextAreaElement>) => {
+                  newImp.onChangeAreaText("text", e);
+                }}
+              />
+            </FormControl>
+          </Item>
+        ) : null}
         {type === "Accordion" ? (
           <Item>
             <FormControl>
-              {accordion.map((item: string[], index: number) => (
+              {newImp.accordion.map((item: string[], index: number) => (
                 <div key={index}>
                   <TextField
                     style={{ marginBottom: "15px" }}
                     label={`Enter target accordion ${index + 1} title:`}
                     value={item[0]}
                     onChange={(e: React.ChangeEvent<HTMLInputElement>) => {
-                      const updatedAccordion = [...accordion];
+                      const updatedAccordion = [...newImp.accordion];
                       updatedAccordion[index] = [e.target.value, updatedAccordion[index][1]];
-                      setAccordion(updatedAccordion);
-                      handleUpdate("accordion", updatedAccordion, col - 1);
+                      newImp.setAccordion(updatedAccordion);
+
+                      newImp.onChangeaccordion(updatedAccordion);
                     }}
                   />
                   <TextField
@@ -117,10 +71,11 @@ const ElementSpecificSettingsForm: React.FC<IProps> = ({
                     label={`Enter target accordion ${index + 1} description:`}
                     value={item[1]}
                     onChange={(e: React.ChangeEvent<HTMLInputElement>) => {
-                      const updatedAccordion = [...accordion];
+                      const updatedAccordion = [...newImp.accordion];
                       updatedAccordion[index] = [updatedAccordion[index][0], e.target.value];
-                      setAccordion(updatedAccordion);
-                      handleUpdate("accordion", updatedAccordion, col - 1);
+                      newImp.setAccordion(updatedAccordion);
+
+                      newImp.onChangeaccordion(updatedAccordion);
                     }}
                   />
                 </div>
@@ -128,9 +83,9 @@ const ElementSpecificSettingsForm: React.FC<IProps> = ({
               <button
                 onClick={(e: { preventDefault: () => void }) => {
                   e.preventDefault();
-                  const updatedAccordion: AccordionData = [...accordion, ["", ""]];
-                  setAccordion(updatedAccordion);
-                  handleUpdate("accordion", updatedAccordion, col - 1);
+                  const updatedAccordion: AccordionData = [...newImp.accordion, ["", ""]];
+                  newImp.setAccordion(updatedAccordion);
+                  newImp.onChangeaccordion(updatedAccordion);
                 }}
               >
                 Add Item
@@ -138,20 +93,21 @@ const ElementSpecificSettingsForm: React.FC<IProps> = ({
             </FormControl>
           </Item>
         ) : null}
-        {type === "DropdownList" || type === "Slider" || type === "CheckboxGroup" ? (
+        {newImp.sliderForme.includes(type) ? (
           <Item>
             <FormControl>
-              {SelectList.map((item, index: number) => (
+              {newImp.selectList.map((item, index: number) => (
                 <div key={index}>
                   <TextField
                     style={{ marginBottom: "15px" }}
                     label={`Enter ${type.toLowerCase()} ${type === "Slider" ? "image url" : "item"} ${index + 1}:`}
                     value={item.value}
                     onChange={(e: React.ChangeEvent<HTMLInputElement>) => {
-                      const updatedList = [...SelectList];
+                      const updatedList = [...newImp.selectList];
                       updatedList[index] = { id: nanoid(), value: e.target.value };
-                      setSelectList(updatedList);
-                      handleUpdate(type, updatedList, col - 1);
+                      newImp.setSelectList(updatedList);
+
+                      newImp.onChangeSelectList(type, updatedList);
                     }}
                   />
                 </div>
@@ -160,9 +116,9 @@ const ElementSpecificSettingsForm: React.FC<IProps> = ({
                 <button
                   onClick={(e: { preventDefault: () => void }) => {
                     e.preventDefault();
-                    const updatedList = [...SelectList, { id: nanoid(), value: "Text" }];
-                    setSelectList(updatedList);
-                    handleUpdate(type, updatedList, col - 1);
+                    const updatedList = [...newImp.selectList, { id: nanoid(), value: "Text" }];
+                    newImp.setSelectList(updatedList);
+                    newImp.onChangeSelectList(type, updatedList);
                   }}
                 >
                   Add Item
@@ -170,12 +126,12 @@ const ElementSpecificSettingsForm: React.FC<IProps> = ({
                 <button
                   onClick={(e: { preventDefault: () => void }) => {
                     e.preventDefault();
-                    const updatedList = [...SelectList];
+                    const updatedList = [...newImp.selectList];
                     if (updatedList.length > 1) {
                       updatedList.pop();
                     }
-                    setSelectList(updatedList);
-                    handleUpdate(type, updatedList, col - 1);
+                    newImp.setSelectList(updatedList);
+                    newImp.onChangeSelectList(type, updatedList);
                   }}
                 >
                   Delete Item
@@ -189,9 +145,9 @@ const ElementSpecificSettingsForm: React.FC<IProps> = ({
             <FormControl>
               <TextField
                 label="Enter target title:"
-                value={title}
+                value={newImp.title}
                 onChange={(e: React.ChangeEvent<HTMLTextAreaElement>) => {
-                  handleUpdate("title", e.target.value, col - 1);
+                  newImp.onChangeAreaText("title", e);
                 }}
               />
             </FormControl>
@@ -202,44 +158,35 @@ const ElementSpecificSettingsForm: React.FC<IProps> = ({
             <FormControl>
               <TextField
                 label="Enter target description:"
-                value={description}
+                value={newImp.description}
                 onChange={(e: React.ChangeEvent<HTMLTextAreaElement>) => {
-                  handleUpdate("description", e.target.value, col - 1);
+                  newImp.onChangeAreaText("description", e);
                 }}
               />
             </FormControl>
           </Item>
         ) : null}
-        {type === "Anchor" ||
-        type === "Avatars" ||
-        type === "Image" ||
-        type === "Gallery" ||
-        type === "VideoPlayer" ||
-        type === "SocialMediaIcon" ||
-        type === "CardItem" ||
-        type === "Logo" ? (
+        {newImp.complixForme.includes(type) ? (
           <Item>
             <FormControl>
               <TextField
                 label="Enter target URL:"
-                value={url}
+                value={newImp.url}
                 onChange={(e: React.ChangeEvent<HTMLTextAreaElement>) => {
-                  handleUpdate("url", e.target.value, col - 1);
+                  newImp.onChangeAreaText("url", e);
                 }}
               />
             </FormControl>
           </Item>
         ) : null}
-        {(type !== "Image" && type !== "VideoPlayer" && type !== "Slider" && type === "Logo") ||
-        type === "SocialMediaIcon" ||
-        type === "CardItem" ? (
+        {newImp.moreUrl.includes(type) ? (
           <Item>
             <FormControl>
               <TextField
                 label="Enter target image URL:"
-                value={imgUrl}
+                value={newImp.imgUrl}
                 onChange={(e: React.ChangeEvent<HTMLTextAreaElement>) => {
-                  handleUpdate("imgUrl", e.target.value, col - 1);
+                  newImp.onChangeAreaText("imgUrl", e);
                 }}
               />
             </FormControl>
@@ -250,9 +197,9 @@ const ElementSpecificSettingsForm: React.FC<IProps> = ({
             <FormControl>
               <TextField
                 label="Enter target button text:"
-                value={buttonText}
+                value={newImp.buttonText}
                 onChange={(e: React.ChangeEvent<HTMLTextAreaElement>) => {
-                  handleUpdate("buttonText", e.target.value, col - 1);
+                  newImp.onChangeAreaText("buttonText", e);
                 }}
               />
             </FormControl>
