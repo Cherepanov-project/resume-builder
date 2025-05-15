@@ -4,6 +4,7 @@ import { insertChild } from "@/utils";
 import { addBaseScript } from "@/utils/scriptAssigner";
 import { T_BlockElement } from "@/types/landingBuilder";
 import { replaceIdWithNanoid } from "@/utils/replaceIdWithId";
+import { Layout } from "react-grid-layout";
 
 const nanoid = customAlphabet("ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz", 15);
 
@@ -63,6 +64,43 @@ const letterLayoutSlice = createSlice({
   reducers: {
     setWindowWidth(state, action) {
       state.windowWidth = action.payload;
+    },
+    addBlockLine(state, action) {
+      const { draggableItem, layoutList, layoutItem, containerId } = action.payload;
+      const elemId = nanoid();
+
+      const newElement = {
+        ...draggableItem,
+        elementScript: addBaseScript(elemId, draggableItem),
+        layout: {
+          ...layoutItem,
+          i: elemId,
+          x: layoutItem.x,
+          y: layoutItem.y,
+          w: draggableItem.layout.w,
+          h: draggableItem.layout.h,
+          minW: draggableItem.layout.minW || 0,
+          maxW: draggableItem.layout.maxW ?? 6,
+          minH: draggableItem.layout.minW || 0,
+          maxH: draggableItem.layout.maxH ?? 1000000,
+        },
+      };
+
+      state.gridContainers.map(container => {
+        if (container.id === containerId) {
+
+          const activeElements: T_BlockElement[] = [];
+
+          container.elements.activeElements.forEach(element => {
+            const layout = layoutList.find((layout: Layout) => layout.i === element.layout.i);
+            activeElements.push({ ...element, layout })
+          })
+
+          container.elements.activeElements = [...activeElements, newElement];
+        }
+      });
+
+      state.currentDraggableItem = null;
     },
     // Добавляем блок в рабочую область
     addElement(state, action) {
@@ -161,7 +199,7 @@ const letterLayoutSlice = createSlice({
       state.gridContainers.forEach((container) => {
         if (container.id !== id) return;
 
-        const findElementIndex = (layoutId: string | null): number =>          container.elements.activeElements.findIndex((element) => element.layout.i === layoutId);
+        const findElementIndex = (layoutId: string | null): number => container.elements.activeElements.findIndex((element) => element.layout.i === layoutId);
 
         const parentIndex = findElementIndex(parentLayout?.i || layout.i);
 
@@ -180,7 +218,7 @@ const letterLayoutSlice = createSlice({
                 ...originalChild,
                 layout: {
                   ...originalChild.layout,
-                  x: originalChild.layout.x + originalChild.layout.w, 
+                  x: originalChild.layout.x + originalChild.layout.w,
                   i: nanoid(),
                 },
               };
@@ -319,7 +357,7 @@ const letterLayoutSlice = createSlice({
     setCurrentContainer(state, action) {
       state.currentContainer = action.payload;
     },
-   increaseElementColumns(state, action) {
+    increaseElementColumns(state, action) {
       let indx: number;
       state.gridContainers.forEach((container) => {
         if (container.id === action.payload.id) {
@@ -466,6 +504,7 @@ const letterLayoutSlice = createSlice({
 export const {
   setWindowWidth,
   addElement,
+  addBlockLine,
   addChildElement,
   addGridContainer,
   deleteGridContainer,
