@@ -4,7 +4,7 @@ import { Provider, useSelector } from "react-redux";
 import store, { RootState } from "../../store/store";
 import emailjs from "emailjs-com";
 import ReactDOMServer from "react-dom/server";
-import { Modal, Box, Typography, Button } from "@mui/material";
+import { Modal, Box, Typography, Button, TextField } from "@mui/material";
 import * as componentMap from "../../../letter-builder/atoms/LineBlocksContent";
 
 interface ElementProps {
@@ -23,11 +23,14 @@ interface Element {
 
 interface EmailParams extends Record<string, unknown> {
   message: string;
+  to_email: string; // поле для email получателя
 }
 
 const EmailPage: React.FC = () => {
   const [isModalVisible, setIsModalVisible] = useState<boolean>(false);
   const [tableHTML, setTableHTML] = useState<string>("");
+  const [email, setEmail] = useState<string>(""); // для хранения email получателя
+  const [emailError, setEmailError] = useState<string>(""); // для ошибки валидации email
   const numberOfColumns = 6;
 
   const elements = useSelector(
@@ -126,11 +129,34 @@ const EmailPage: React.FC = () => {
     setIsModalVisible(true);
   };
 
+  // Валидация email
+  const validateEmail = (email: string): boolean => {
+    const re = /^[^\s@]+@[^\s@]+\.[^\s@]+$/; 
+    return re.test(email); 
+  };
+
   // Отправка email
   const sendEmail = (htmlContent: string): void => {
-    const params: EmailParams = { message: htmlContent };
-    emailjs.send("service_6rybb4c", "template_c2fv928", params, "V_snah8XM2QtKOA1G").then(
-      () => alert("Email sent successfully!"),
+    if (!validateEmail(email)) {
+      setEmailError("Please enter a valid email address");
+      return;
+    }
+    setEmailError("");
+
+    const params: EmailParams = {
+      message: htmlContent,
+      to_email: email, // добавляем email получателя в параметры
+    };
+
+    // Отправка email с помощью emailjs
+    //service_gaoh9qn - ID сервиса
+    //template_perpqbc - ID шаблона
+    //xwjuZPWB5H7zlXnr5 - публичный ключ
+    emailjs.send("service_gaoh9qn", "template_perpqbc", params, "xwjuZPWB5H7zlXnr5").then(
+      () => {
+        alert("Email sent successfully!");
+        setEmail(""); 
+      },
       (error) => alert(`Failed to send email: ${error.message}`),
     );
   };
@@ -148,6 +174,18 @@ const EmailPage: React.FC = () => {
       >
         <tbody>{parseTreeToTable(elements, numberOfColumns)}</tbody>
       </table>
+
+      <TextField
+        label="Enter your email"
+        variant="outlined"
+        fullWidth
+        value={email}
+        onChange={(e) => setEmail(e.target.value)}
+        error={!!emailError}
+        helperText={emailError}
+        style={{ marginBottom: "20px" }}
+      />
+
       <Button
         variant="contained"
         onClick={showTableModal}
