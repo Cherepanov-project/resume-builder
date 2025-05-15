@@ -30,6 +30,7 @@ import htmlReducer, { htmlMiddleware } from "../../letter-builder/reducers/htmlR
 import { useSelector, TypedUseSelectorHook, useDispatch } from "react-redux";
 import iconsReducer from "../../letter-builder/reducers/iconsSlice";
 import imageReducer from "../../letter-builder/reducers/imageSlice";
+import carouselReducer from "./LetterBuilderStore/carouselSlice";
 
 //конфиг для persist
 const persistConfig = {
@@ -57,6 +58,7 @@ const rootReducer = combineReducers({
   html: htmlReducer,
   icons: iconsReducer,
   images: imageReducer,
+  carousel: carouselReducer,
 });
 
 //преобразование редьюсера для persist

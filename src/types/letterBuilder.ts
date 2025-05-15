@@ -6,7 +6,7 @@ export type Href = string;
 
 export type Text = string;
 
-export type TypeElement = "button" | "text" | "table";
+export type TypeElement = "button" | "text" | "table" | "carousel"; 
 
 export type ElementState = {
   id: string;

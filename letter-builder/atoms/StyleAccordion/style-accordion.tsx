@@ -27,6 +27,7 @@ const elementConfig = {
   button: ["link", "text", "padding", "background", "border"],
   text: ["text"],
   table: ["text", "background"],
+  carousel: ["link"],
 };
 
 export const StyleAccordion = ({ element }: Props) => {
@@ -278,7 +279,7 @@ export const StyleAccordion = ({ element }: Props) => {
 
   return (
     <>
-      {applicableAccordions.map((accordionKey) => {
+      {applicableAccordions.map((accordionKey: string) => {
         const config = accordionConfig[accordionKey];
         if (!config) return null;
 
