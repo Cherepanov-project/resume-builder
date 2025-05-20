@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useState, memo } from "react";
 import { Stack, FormControl } from "@mui/material";
 import styles from "./ElementSpecificStylesForm.module.scss";
 import Item from "@atoms/StyledPaperItem";
@@ -7,13 +7,9 @@ import { nanoid } from "nanoid";
 
 const ElementSpecificStylesForm = () => {
   const newImp = useInput("");
-  const [borderOn, setBorderOn] = useState<number>(0);
+  const [borderOn, setBorderOn] = useState("");
+  const [size, setSize] = useState("");
   const styleInputs = [
-    {
-      label: "Text size:",
-      styleSetting: "fontSize",
-      type: "number",
-    },
     {
       label: "Text color:",
       styleSetting: "color",
@@ -29,15 +25,48 @@ const ElementSpecificStylesForm = () => {
       styleSetting: "backgroundImage",
       type: "text",
     },
-    {
-      label: "Border:",
-      styleSetting: "border",
-      type: "range",
-    },
   ];
 
   return (
     <form>
+      <label>
+        <div className={styles.inputLabel}>Размер шрифта</div>
+        <input
+          className={styles.textInput}
+          onChange={(e: React.ChangeEvent<HTMLInputElement>) => {
+            setSize(e.target.value);
+          }}
+          onKeyDown={(e: React.KeyboardEvent<HTMLInputElement>) => {
+            if (e.key === "Enter") {
+              newImp.onChangeStyle({
+                fontSize: `${size}px`,
+              });
+              setSize("");
+            }
+          }}
+          placeholder="Font Size"
+          value={size}
+        ></input>
+      </label>
+      <label>
+        <div className={styles.inputLabel}>Размер рамки</div>
+        <input
+          className={styles.textInput}
+          onChange={(e: React.ChangeEvent<HTMLInputElement>) => {
+            setBorderOn(e.target.value);
+          }}
+          onKeyDown={(e: React.KeyboardEvent<HTMLInputElement>) => {
+            if (e.key === "Enter") {
+              newImp.onChangeStyle({
+                border: `${borderOn}px solid`,
+              });
+              setBorderOn("");
+            }
+          }}
+          placeholder="Border Size"
+          value={borderOn}
+        ></input>
+      </label>
       <Stack>
         {styleInputs.map((elem) => {
           let valueStart = "";
@@ -55,8 +84,6 @@ const ElementSpecificStylesForm = () => {
           }
 
           const onChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-            if (elem.styleSetting === "border") setBorderOn(+e.target.value);
-
             newImp.onChangeStyle({
               [elem.styleSetting]: `${valueStart}${e.target.value}${valueEnd}`,
             });
@@ -80,7 +107,7 @@ const ElementSpecificStylesForm = () => {
             </Item>
           );
         })}
-        {borderOn > 0 && (
+        {Number(borderOn) > 0 && (
           <>
             <Item>
               <FormControl>
@@ -120,4 +147,4 @@ const ElementSpecificStylesForm = () => {
   );
 };
 
-export default ElementSpecificStylesForm;
+export default memo(ElementSpecificStylesForm);
