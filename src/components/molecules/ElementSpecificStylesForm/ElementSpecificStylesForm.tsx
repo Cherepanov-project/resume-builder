@@ -84,8 +84,6 @@ const ElementSpecificStylesForm = () => {
           }
 
           const onChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-            if (elem.styleSetting === "border") setBorderOn(+e.target.value);
-
             newImp.onChangeStyle({
               [elem.styleSetting]: `${valueStart}${e.target.value}${valueEnd}`,
             });
@@ -109,7 +107,7 @@ const ElementSpecificStylesForm = () => {
             </Item>
           );
         })}
-        {borderOn > 0 && (
+        {Number(borderOn) > 0 && (
           <>
             <Item>
               <FormControl>
