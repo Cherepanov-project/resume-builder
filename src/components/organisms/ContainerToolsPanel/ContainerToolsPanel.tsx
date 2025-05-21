@@ -1,20 +1,15 @@
-import { IconButton } from '@mui/material';
-import {
-  ContentCopy,
-  Delete,
-  ArrowUpward,
-  ArrowDownward,
-} from '@mui/icons-material';
+import { IconButton } from "@mui/material";
+import { ContentCopy, Delete, ArrowUpward, ArrowDownward } from "@mui/icons-material";
 
 import {
   copyGridContainer,
   deleteGridContainer,
   moveDownGridContainer,
   moveUpGridContainer,
-} from '@store/landingBuilder/layoutSlice';
-import { useAppDispatch } from '@hooks/cvTemplateHooks';
+} from "@store/landingBuilder/layoutSlice";
+import { useAppDispatch } from "@hooks/cvTemplateHooks";
 
-import classes from './ContainerToolsPanel.module.scss';
+import classes from "./ContainerToolsPanel.module.scss";
 
 type ContainerToolsPanelProps = {
   id: string;
@@ -24,7 +19,7 @@ const ContainerToolsPanel: React.FC<ContainerToolsPanelProps> = (id: ContainerTo
   const dispatch = useAppDispatch();
 
   return (
-    <div className={classes['tools-panel']}>
+    <div className={classes["tools-panel"]}>
       <IconButton
         aria-label="Move Up Container"
         title="Сдвинуть вверх"

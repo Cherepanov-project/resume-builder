@@ -121,7 +121,7 @@ export const useInput = (initialValue = "") => {
 
       const value = e.target.value;
       setValue(value);
-      console.log("newValhendler", newValue2);
+
       const label =
         typeof value === "string"
           ? getLabel(value, url, title, description, text, imgUrl, buttonText, accordion)
@@ -140,11 +140,10 @@ export const useInput = (initialValue = "") => {
       }
 
       if (label.url) newValue2[col - 1].url = label.url;
-      console.log("newValue2", newValue2);
 
       dispatch(editRowDate({ row, date: newValue2 }));
     },
-    [value, valueText],
+    [title, description, url, layoutRow, text, imgUrl, buttonText, accordion, row, dispatch, col],
   );
 
   const onChangeaccordion = useCallback(
@@ -159,37 +158,38 @@ export const useInput = (initialValue = "") => {
 
       dispatch(editRowDate({ row, date: newValue }));
     },
-    [accordion, layoutRow],
+    [accordion, col, dispatch, row, layoutRow],
   );
   const onChangeStyle = useCallback(
-    (value: Record<string, string>) => {
+    (value: Record<string, string | undefined>) => {
       const newValue = JSON.parse(JSON.stringify(layoutRow));
-      newValue[col - 1].props.style = Object.assign(newValue[col - 1].props.style, value);
+
+      newValue[col - 1].props.style = { ...newValue[col - 1].props.style, ...value };
+
       dispatch(editRowDate({ row, date: newValue }));
     },
-    [layoutRow],
+    [layoutRow, col, dispatch, row],
   );
 
   const onChangeAreaText = useCallback(
     (text: string, e: React.ChangeEvent<HTMLTextAreaElement>) => {
-      console.log("newValue4", layoutRow);
       const newValue1 = JSON.parse(JSON.stringify(layoutRow));
 
       const newVal = e.target.value;
-      console.log(8, "text:", text, "value", newVal);
+
       setValueText(newVal);
       newValue1[col - 1].props[text] = newVal;
-      console.log("newValue3", newValue1);
+
       dispatch(editRowDate({ row, date: newValue1 }));
     },
-    [valueText, layoutRow],
+    [col, dispatch, row, layoutRow],
   );
   const onChangeSelectList = useCallback(
     (type: string, updatedList: ISettingsInputItem[]) => {
       const newValue = JSON.parse(JSON.stringify(layoutRow));
 
       const value = updatedList;
-      console.log(5, value);
+
       if (type === "DropdownList") {
         newValue[col - 1].props.SelectList = value;
         newValue[col - 1].props.key = "DropdownList";
@@ -211,7 +211,7 @@ export const useInput = (initialValue = "") => {
 
       dispatch(editRowDate({ row, date: newValue }));
     },
-    [selectList, layoutRow],
+    [selectList, col, dispatch, row, layoutRow],
   );
   return {
     value,

@@ -1,11 +1,11 @@
-import { useEffect } from 'react';
-import { useDispatch } from 'react-redux';
-import { nanoid } from 'nanoid';
-import Avatar from '@mui/material/Avatar';
-import Stack from '@mui/material/Stack';
-import classes from './Avatars.module.scss';
-import { IElementsProps } from '@/types/landingBuilder';
-import { setProps } from '@/store/landingBuilder/layoutSlice';
+import { useEffect } from "react";
+import { useDispatch } from "react-redux";
+import { nanoid } from "nanoid";
+import Avatar from "@mui/material/Avatar";
+import Stack from "@mui/material/Stack";
+import classes from "./Avatars.module.scss";
+import { IElementsProps } from "@/types/landingBuilder";
+import { setProps } from "@/store/landingBuilder/layoutSlice";
 
 interface AvatarItem {
   id: string;
@@ -31,43 +31,44 @@ const Avatars = ({ props, layout }: AvatarsProps) => {
         values: [
           {
             id: nanoid(),
-            img: '',
-            title: '',
+            img: "",
+            title: "",
           },
         ],
         size: 1,
       };
-      console.log('ava', secondItem)
+      console.log("ava", secondItem);
       dispatch(setProps(secondItem));
     }
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [currentList.length, layout.i, dispatch]);
 
   return (
-    <Stack key={nanoid()} direction="row" spacing={2} className={classes.wrapper} sx={{ flexDirection: 'column' }}>
+    <Stack
+      key={nanoid()}
+      direction="row"
+      spacing={2}
+      className={classes.wrapper}
+      sx={{ flexDirection: "column" }}
+    >
       {currentList ? (
         currentList.map((item) => (
-          <div key={item.id}  className={classes.wrap}>
+          <div key={item.id} className={classes.wrap}>
             <Avatar
               className={classes.avatar}
               src={item.img}
               alt={String(item.title)}
-              sx={{ objectFit: 'cover' }}
+              sx={{ objectFit: "cover" }}
             />
-            <div className={classes.nick}>
-              {item.title || 'Enter name'}
-            </div>
+            <div className={classes.nick}>{item.title || "Enter name"}</div>
           </div>
         ))
       ) : (
         <>
-          <Avatar
-            className={classes.avatar}
-            alt="avatar"
-            src={'url'}
-            sx={{ objectFit: 'cover' }}
-          />
-          <div key={nanoid()} className={classes.nick}>Enter name</div>
+          <Avatar className={classes.avatar} alt="avatar" src={"url"} sx={{ objectFit: "cover" }} />
+          <div key={nanoid()} className={classes.nick}>
+            Enter name
+          </div>
         </>
       )}
     </Stack>

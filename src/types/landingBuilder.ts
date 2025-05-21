@@ -260,6 +260,7 @@ export type T_SectionElementProps = {
     text?: string;
     color?: string;
     border?: string;
+    fontSize?: string;
   };
   props?: {
     [key: string]: string & object;

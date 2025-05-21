@@ -56,6 +56,7 @@ const sectionsManagerSlice = createSlice({
         }
         return col;
       });
+
       state.layoutDate = { ...state.layoutDate, [row]: newDate };
     },
     handleSettingsMenu(state, action: PayloadAction<{ type: string; value: string }>) {
