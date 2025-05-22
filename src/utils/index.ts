@@ -69,12 +69,12 @@ export const importFiles = async () => {
   let lsSections: T_SidebarMenuItem[] = [];
 
   try {
-    const data = JSON.parse(localStorage.getItem('sections') || '');
-    if (data) {
-      lsSections = data;
+    const raw = localStorage.getItem('sections');
+    if (raw) {
+      lsSections = JSON.parse(raw);
     }
   } catch (err) {
-    console.log(err);
+    console.error('Ошибка при разборе JSON из localStorage:', err);
   }
 
   const elements = await processFiles(import.meta.glob('@atoms/**/index.ts'));
