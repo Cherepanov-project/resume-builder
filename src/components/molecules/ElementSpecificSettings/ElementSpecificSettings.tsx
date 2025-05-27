@@ -14,16 +14,16 @@ const ElementSpecificSettings = () => {
 
   return (
     <Box>
-      <Item>
+      <Item sx={{background: '#444', color: '#999'}}>
         Current element: <br /> {`Row ${r}`} {`Column ${w}`}
       </Item>
-      <Accordion>
+      <Accordion sx={{background: '#444', color: '#999'}}>
         <AccordionSummary expandIcon={<ExpandMore />}>Configuration Settings</AccordionSummary>
         <AccordionDetails>
           <ElementSpecificSettingsForm />
         </AccordionDetails>
       </Accordion>
-      <Accordion>
+      <Accordion sx={{background: '#444', color: '#999'}}>
         <AccordionSummary expandIcon={<ExpandMore />}>Style Settings</AccordionSummary>
         <AccordionDetails>
           <ElementSpecificStylesForm></ElementSpecificStylesForm>
