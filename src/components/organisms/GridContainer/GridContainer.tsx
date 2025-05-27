@@ -92,7 +92,6 @@ export const GridContainer = (container: IGridContainers) => {
       }}
     >
       <ContainerToolsPanel id={container.id} />
-      {/* @ts-expect-error - Несоответствие типов в React Grid Layout */}
       <ResponsiveGridLayout
         className={classes['grid']}
         layouts={{ lg: workspaceLayout }}
