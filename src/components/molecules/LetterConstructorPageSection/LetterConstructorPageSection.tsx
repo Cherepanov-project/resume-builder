@@ -1,5 +1,6 @@
-import { ThemeProvider, Typography, Container, Button, useMediaQuery, Grid } from '@mui/material';
-import theme from '@components/molecules/LetterConstructorPageSection/LetterConstructorTheme';
+import { useNavigate } from "react-router-dom";
+import { ThemeProvider, Typography, Container, Button, useMediaQuery, Grid } from "@mui/material";
+import theme from "@components/molecules/LetterConstructorPageSection/LetterConstructorTheme";
 
 interface LetterConstructorPageSectionProps {
   title?: string;
@@ -20,37 +21,46 @@ const LetterConstructorPageSection: React.FC<LetterConstructorPageSectionProps> 
   image,
   imageAlt,
 }) => {
-  const md = useMediaQuery('(min-width: 992px)')
+  const md = useMediaQuery("(min-width: 992px)");
 
-  const buttonElement = buttonText && href ? <Button href={href}>{buttonText}</Button> : null
+  const navigate = useNavigate();
+  const handleClick = () => {
+    if (href) {
+      navigate(href);
+    }
+  };
+
+  const buttonElement = buttonText && href ? <Button onClick={handleClick}>{buttonText}</Button> : null;
   const titleElement = title && (
-      <Typography variant='h2' textAlign={'center'} mb={{xs: '40px', md: '90px'}}>
-        {title}
-      </Typography>
-  )
+    <Typography variant="h2" textAlign={"center"} mb={{ xs: "40px", md: "90px" }}>
+      {title}
+    </Typography>
+  );
 
   const imageElement = (
-    <Grid item md={6} width={{sm: '80%'}} sx={{p: 3, m: 'auto'}}>
-      <img style={{maxWidth: '100%', height: 'auto'}} src={image} alt={imageAlt} />
+    <Grid item md={6} width={{ sm: "80%" }} sx={{ p: 3, m: "auto" }}>
+      <img style={{ maxWidth: "100%", height: "auto" }} src={image} alt={imageAlt} />
     </Grid>
-  )
+  );
 
   return (
     <ThemeProvider theme={theme}>
-      <Container sx={{pt: '40px', mt: 15, mb: 10}}>
+      <Container sx={{ pt: "40px", mt: 15, mb: 10 }}>
         {titleElement}
-        <Grid container direction={{xs: 'column', md: 'row'}}>
+        <Grid container direction={{ xs: "column", md: "row" }}>
           {!md && imageElement}
-          <Grid md={6} item sx={{p: 3}}>
-            <Typography variant='h4' mb={3}>{subTitle}</Typography>
-            <Typography variant='body1'>{content}</Typography>
+          <Grid md={6} item sx={{ p: 3 }}>
+            <Typography variant="h4" mb={3}>
+              {subTitle}
+            </Typography>
+            <Typography variant="body1">{content}</Typography>
             {buttonElement}
           </Grid>
           {md && imageElement}
         </Grid>
       </Container>
     </ThemeProvider>
-  )
-}
+  );
+};
 
-export default LetterConstructorPageSection
+export default LetterConstructorPageSection;
