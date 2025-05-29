@@ -26,9 +26,15 @@ const IntroPageSection: React.FC<IIntroPageSectionProps> = ({
 
   const navigate = useNavigate();
   const onClickNavigate = () => {
-    title === 'Use the resume builder'
-      ? navigate('/resume-builder')
-      : navigate('/landing-builder-start-page');
+    if (title === 'Use the styles') {
+      navigate('/landing-builder-start-page')
+    }
+    if (title === 'Use the resume builder') {
+      navigate('/resume-builder')
+    }
+    if (title === 'Use the content blocks') {
+      navigate('/landing-letter-constructor-page')
+    }
   };
   return (
     <Box
