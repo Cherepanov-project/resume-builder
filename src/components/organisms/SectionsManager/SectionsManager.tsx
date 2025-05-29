@@ -89,6 +89,7 @@ const SectionsManager: FC = () => {
         p: '0 30px 0 56px',
         minHeight: '100vh',
         minWidth: '1520px',
+        background: '#222'
       }}
     >
       {error ? <ErrorPopup message={error} severity={severity} /> : null}
@@ -98,12 +99,12 @@ const SectionsManager: FC = () => {
           minHeight: '100%',
         }}
       >
-        <Item sx={{ height: '100%', mx: '10px' }}>
+        <Item sx={{ height: '100%', mx: '10px',background: '#222' }}>
           <SectionsToolsPanel setError={setError} setSeverity={setSeverity} />
         </Item>
-        <Item sx={{ height: '100vh', width: '70%', backgroundColor: '#eaf9f4', px: '35px' }}>
+        <Item sx={{ height: '100vh', width: '70%', backgroundColor: '#333', px: '35px' }}>
           <div>
-            <h2>WORKSPACE</h2>
+            <h2 style={{color: '#999'}}>WORKSPACE</h2>
           </div>
           <MemoizedSectionsConstructor setError={setError} setSeverity={setSeverity} />
           <Box

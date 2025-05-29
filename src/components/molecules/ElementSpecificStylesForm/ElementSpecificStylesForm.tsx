@@ -90,7 +90,7 @@ const ElementSpecificStylesForm = () => {
           };
 
           return (
-            <Item key={nanoid()}>
+            <Item sx={{background: '#444'}} key={nanoid()}>
               <FormControl>
                 <label>
                   <span className={styles.inputLabel}>{elem.label}</span>
