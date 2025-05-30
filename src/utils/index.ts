@@ -6,6 +6,7 @@ import {
   T_SwiperPresetList,
 } from '@/types/landingBuilder.ts';
 
+
 import { Navigation, Pagination } from 'swiper/modules';
 
 export const insertChild = (
@@ -54,6 +55,7 @@ const processFiles = async (moduleFiles: TProcessFiles) => {
     const { props } = module as T_ComponentProps;
 
     if (props) {
+      console.log(props,'props')
       const isExist = elements.find((element) => element.name === props.type);
       if (isExist) {
         isExist.list.push(props);
@@ -61,7 +63,9 @@ const processFiles = async (moduleFiles: TProcessFiles) => {
         elements.push({ name: props.type, list: [props] });
       }
     }
+
   }
+  console.log(elements,'elements')
   return elements;
 };
 
@@ -102,9 +106,6 @@ export const importFiles = async () => {
   })
 
   allSections.push(...sections);
-  console.log(sections, 'sections')
-  console.log(elements, 'el')
-  console.log(templates, 'temp')
   return {
     Sections: allSections,
     Elements: elements,

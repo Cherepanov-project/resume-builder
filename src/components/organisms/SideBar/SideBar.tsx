@@ -26,7 +26,7 @@ const SideBar: React.FC = () => {
       setSidebarMenuList({ ...sidebarMenuList, ...data });
       console.log(data, 'data')
     });
-  }, [sidebarMenuList]);
+  }, [sidebarMenuList, currentTab]);
 
   const handleChangeTab = (_event: React.SyntheticEvent, indxBtn: number) => {
     setCurrentTab(indxBtn);
