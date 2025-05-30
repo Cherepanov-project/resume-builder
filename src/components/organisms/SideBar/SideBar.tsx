@@ -40,8 +40,7 @@ const SideBar: React.FC = () => {
     setSctiveTab(false);
   };
 
-  console.log(sidebarMenuList);
-  console.log(sideMenuTabs);
+
 
   const navigate = useNavigate();
   return (

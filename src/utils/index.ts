@@ -50,7 +50,6 @@ export const insertChild = (
 const processFiles = async (moduleFiles: TProcessFiles) => {
   const elements: T_SidebarMenuItem[] = [];
   console.log(moduleFiles, 'modulefiles')
-  try {
   for await (const file of Object.values(moduleFiles)) {
     const module = await file();
     const { props } = module as T_ComponentProps;
@@ -67,12 +66,7 @@ const processFiles = async (moduleFiles: TProcessFiles) => {
 
   }
   console.log(elements,'elements')
-  
-} catch(e) {
-  console.log(e,'MAIN')
-}
-return elements;
-
+  return elements;
 };
 
 export const importFiles = async () => {
@@ -112,6 +106,7 @@ export const importFiles = async () => {
   })
 
   allSections.push(...sections);
+
   return {
     Sections: allSections,
     Elements: elements,
