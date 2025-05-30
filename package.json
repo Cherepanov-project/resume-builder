@@ -114,10 +114,5 @@
       "prettier --write",
       "npm run lint:fix"
     ]
-  },
-  "resolutions": {
-    "csstype": "3.1.2",
-    "@mui/material": "5.15.2",
-    "@mui/base": "5.0.0-beta.28"
   }
 }
