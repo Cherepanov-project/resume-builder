@@ -39,6 +39,9 @@ const SideBar: React.FC = () => {
     setSctiveTab(false);
   };
 
+  console.log(sidebarMenuList);
+  console.log(sideMenuTabs);
+
   const navigate = useNavigate();
   return (
     <>
@@ -65,6 +68,7 @@ const SideBar: React.FC = () => {
         return (
           isActiveTab && (
             <TabPanel key={key} value={currentTab} index={indx} label={key} closePanel={closePanel}>
+          
               {key === "Manage" && (
                 <>
                   <ManagerButton
