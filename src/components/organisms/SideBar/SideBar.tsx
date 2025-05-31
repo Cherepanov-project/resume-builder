@@ -24,7 +24,6 @@ const SideBar: React.FC = () => {
   useEffect(() => {
     importFiles().then((data) => {
       setSidebarMenuList({ ...sidebarMenuList, ...data });
-      console.log(data, 'data')
     });
   }, [sidebarMenuList]);
 
