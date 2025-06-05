@@ -1,0 +1,59 @@
+.itemBackground {
+    background-color: #444 !important;
+     /* пример отступов */
+    color: #999;
+  }
+  
+  .textFieldRoot {
+    color: #999;
+  
+    .MuiOutlinedInput-root {
+      background-color: #333;
+      color: #999;
+  
+      fieldset {
+        border-color: #999;
+      }
+      &:hover fieldset {
+        border-color: #aaa;
+      }
+      &.Mui-focused fieldset {
+        border-color: #999;
+      }
+    }
+  
+    .MuiInputLabel-root {
+      color: #999;
+    }
+  
+    .Mui-focused.MuiInputLabel-root {
+      color: #aaa;
+    }
+  }
+  
+  .selectRoot {
+    width: 220px;
+  
+    .MuiOutlinedInput-root {
+      background-color: #333;
+      color: #999;
+  
+      fieldset {
+        border-color: #999;
+      }
+      &:hover fieldset {
+        border-color: #aaa;
+      }
+      &.Mui-focused fieldset {
+        border-color: #999;
+      }
+    }
+  
+    .MuiInputLabel-root {
+      color: #999;
+    }
+  
+    .Mui-focused.MuiInputLabel-root {
+      color: #aaa;
+    }
+  }

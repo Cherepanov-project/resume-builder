@@ -102,7 +102,7 @@ export const importFiles = async () => {
   })
 
   allSections.push(...sections);
-  
+
   return {
     Sections: allSections,
     Elements: elements,
