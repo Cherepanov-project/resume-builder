@@ -12,7 +12,10 @@ import { PlusCircleFilled, PlusCircleOutlined } from '@ant-design/icons';
 import classes from './GridContainer.module.scss';
 
 import { Responsive, WidthProvider } from 'react-grid-layout';
-const ResponsiveGridLayout = WidthProvider(Responsive);
+
+const ResponsiveGridLayout = WidthProvider(Responsive) as React.ComponentType<
+  ReactGridLayout.WidthProviderProps & ReactGridLayout.ResponsiveProps
+>;
 
 const DynamicComponentRenderer: React.FC<DynamicComponentRendererProps> = memo(
   ({ Component, props, columns, source, children, layout, containerId }) => {

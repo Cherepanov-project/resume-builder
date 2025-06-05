@@ -23,19 +23,20 @@ interface Element {
 
 interface EmailParams extends Record<string, unknown> {
   message: string;
-  to_email: string; // поле для email получателя
+  to_email: string;
 }
 
 const EmailPage: React.FC = () => {
   const [isModalVisible, setIsModalVisible] = useState<boolean>(false);
   const [tableHTML, setTableHTML] = useState<string>("");
-  const [email, setEmail] = useState<string>(""); // для хранения email получателя
-  const [emailError, setEmailError] = useState<string>(""); // для ошибки валидации email
+  const [email, setEmail] = useState<string>("");
+  const [emailError, setEmailError] = useState<string>("");
   const numberOfColumns = 6;
 
   const elements = useSelector(
     (state: RootState) => state.letterLayout.gridContainers[0].elements.activeElements as Element[],
   );
+
   // Функция для вычисления colspan из блоков
   const extractPercent = (calcValue: string): number => {
     const match = calcValue.match(/calc\(([\d.]+)%\s*-\s*\d+px\)/);
@@ -113,7 +114,7 @@ const EmailPage: React.FC = () => {
             borderCollapse: "collapse",
           }}
         >
-          <h1>Письмо</h1>
+          <h1>Your letter</h1>
           <tbody>{parseTreeToTable(elements, numberOfColumns)}</tbody>
         </table>
       </Provider>
@@ -131,8 +132,8 @@ const EmailPage: React.FC = () => {
 
   // Валидация email
   const validateEmail = (email: string): boolean => {
-    const re = /^[^\s@]+@[^\s@]+\.[^\s@]+$/; 
-    return re.test(email); 
+    const re = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+    return re.test(email);
   };
 
   // Отправка email
@@ -155,7 +156,7 @@ const EmailPage: React.FC = () => {
     emailjs.send("service_gaoh9qn", "template_perpqbc", params, "xwjuZPWB5H7zlXnr5").then(
       () => {
         alert("Email sent successfully!");
-        setEmail(""); 
+        setEmail("");
       },
       (error) => alert(`Failed to send email: ${error.message}`),
     );
