@@ -110,8 +110,8 @@ const ContainerDIV: React.FC<ContainerDIVProps> = ({ children, layout, columns =
     style={style}
     >
       <ResponsiveGridLayoutWithWidth
-        layouts={{ lg: workspaceLayout, md: workspaceLayout, sm: workspaceLayout }}
-        cols={{ lg: columns, md: columns, sm: columns }}
+        layouts={{ lg: workspaceLayout, md: workspaceLayout, sm: workspaceLayout,xs: workspaceLayout, xxs: workspaceLayout }}
+        cols={{ lg: columns, md: columns, sm: columns, xs: columns, xxs: columns }}
         width={width}
         rowHeight={30}
         margin={[10, 0]} 
