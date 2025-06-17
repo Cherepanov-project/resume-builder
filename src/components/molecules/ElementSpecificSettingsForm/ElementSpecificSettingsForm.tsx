@@ -6,6 +6,7 @@ import {
   MenuItem,
   OutlinedInput,
   TextField,
+  Button,
 } from "@mui/material";
 import Item from "@atoms/StyledPaperItem";
 import { nanoid } from "nanoid";
@@ -43,13 +44,12 @@ const ElementSpecificSettingsForm = () => {
     <form>
       <Stack>
         <Item sx={{ backgroundColor: "#444" }}>
-          <FormControl>
+          <FormControl sx={{ width: "220px", ...commonFieldSx }}>
             <InputLabel id="type-label" sx={commonFieldSx["& .MuiInputLabel-root"]}>
               Choose element type
             </InputLabel>
             <Select
               labelId="type-label"
-              sx={{ width: "220px", ...commonFieldSx }}
               value={newImp.value}
               onChange={newImp.hendlerType}
               input={<OutlinedInput label="Choose element type" />}
@@ -90,7 +90,7 @@ const ElementSpecificSettingsForm = () => {
           <Item sx={{ backgroundColor: "#444" }}>
             <FormControl>
               {newImp.accordion.map((item: string[], index: number) => (
-                <div key={index}>
+                <div key={index} style={{ marginBottom: "20px" }}>
                   <TextField
                     sx={commonFieldSx}
                     style={{ marginBottom: "15px" }}
@@ -117,9 +117,23 @@ const ElementSpecificSettingsForm = () => {
                       newImp.onChangeaccordion(updatedAccordion);
                     }}
                   />
+                  <Button
+                    variant="contained"
+                    size="small"
+                    sx={{ textTransform: "none" }}
+                    onClick={() => {
+                      const updatedAccordion = newImp.accordion.filter((_, i) => i !== index);
+                      newImp.setAccordion(updatedAccordion);
+                      newImp.onChangeaccordion(updatedAccordion);
+                    }}
+                  >
+                    Delete
+                  </Button>
                 </div>
               ))}
-              <button
+              <Button
+                style={{ background: "#222", color: "#999" }}
+                sx={{ textTransform: "none" }}
                 onClick={(e: { preventDefault: () => void }) => {
                   e.preventDefault();
                   const updatedAccordion: AccordionData = [...newImp.accordion, ["", ""]];
@@ -128,7 +142,7 @@ const ElementSpecificSettingsForm = () => {
                 }}
               >
                 Add Item
-              </button>
+              </Button>
             </FormControl>
           </Item>
         ) : null}
@@ -156,7 +170,8 @@ const ElementSpecificSettingsForm = () => {
                 </div>
               ))}
               <div>
-                <button style={{background: '#222', color: '#999'}}
+                <button
+                  style={{ background: "#222", color: "#999" }}
                   onClick={(e: { preventDefault: () => void }) => {
                     e.preventDefault();
                     const updatedList = [...newImp.selectList, { id: nanoid(), value: "Text" }];
@@ -166,7 +181,8 @@ const ElementSpecificSettingsForm = () => {
                 >
                   Add Item
                 </button>
-                <button style={{background: '#222', color: '#999'}}
+                <button
+                  style={{ background: "#222", color: "#999" }}
                   onClick={(e: { preventDefault: () => void }) => {
                     e.preventDefault();
                     const updatedList = [...newImp.selectList];
