@@ -5,7 +5,11 @@ interface CheckboxGroupProps {
   props: {
     name: string;
     label: string;
-    options: Array<{
+    options?: Array<{
+      value: string;
+      label: string;
+    }>;
+    CheckboxGroup?: Array<{
       value: string;
       label: string;
     }>;
@@ -18,10 +22,13 @@ interface CheckboxGroupProps {
 }
 
 const CheckboxGroup = ({ props, layout }: CheckboxGroupProps) => {
+  console.log('CheckboxGroup props:', props);
+  const checkboxList = props.options || props.CheckboxGroup || [];
   const checkboxProps = {
-    Checkboxes: props.options.map(option => ({
+    Checkboxes: checkboxList.map(option => ({
       id: nanoid(),
-      value: option.label,
+      value: option.value,
+      label: option.label,
       checked: false,
     })),
     text: props.label,
