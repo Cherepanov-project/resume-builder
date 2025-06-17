@@ -1,5 +1,5 @@
 import { IGridContainers, setCurrentContainer } from "@/store/LetterBuilderStore/letterLayoutSlice";
-import  { WidthProvider, Responsive, Layout } from "react-grid-layout";
+import { WidthProvider, Responsive, Layout } from "react-grid-layout";
 import "react-grid-layout/css/styles.css";
 import "react-resizable/css/styles.css";
 import { useAppDispatch, useTypedSelector } from "@/hooks/cvTemplateHooks";
@@ -190,9 +190,15 @@ export const LetterGridContainer = (container: IGridContainers) => {
 
       <ResponsiveGridLayoutWithWidth
         className={classes["grid"]}
-        layouts={{ lg: workspaceLayout, md: workspaceLayout, sm: workspaceLayout, xs: workspaceLayout }}
-        cols={{ lg: 1, md: 1, sm: 1, xs: 1 }}
-        breakpoints={{ lg: 1200, md: 996, sm: 768, xs: 480 }}
+        layouts={{
+          lg: workspaceLayout,
+          md: workspaceLayout,
+          sm: workspaceLayout,
+          xs: workspaceLayout,
+          xxs: workspaceLayout,
+        }}
+        cols={{ xxs: 1, xs: 1, sm: 1, md: 1, lg: 1 }}
+        breakpoints={{ xxs: 0, xs: 480, sm: 768, md: 996, lg: 1200 }}
         rowHeight={container.height}
         width={calculatedWidth}
         margin={[8, 8]}
