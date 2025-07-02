@@ -1,9 +1,12 @@
-import { createSlice } from "@reduxjs/toolkit";
+import { createSlice, PayloadAction } from "@reduxjs/toolkit";
 import { customAlphabet } from "nanoid";
 import { insertChild } from "@/utils";
 import { addBaseScript } from "@/utils/scriptAssigner";
-import { T_BlockElement } from "@/types/landingBuilder";
+import { T_BlockElement, T_SectionElements } from "@/types/landingBuilder";
+
 import { replaceIdWithNanoid } from "@/utils/replaceIdWithId";
+import { convertSectionToGridContainer } from "@/utils/sectionConverters";
+// import { postNewSection, deleteSection } from "../sectionSlice";
 
 const nanoid = customAlphabet("ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz", 15);
 
@@ -11,6 +14,10 @@ interface ElementsType {
   activeElements: T_BlockElement[];
 }
 
+interface SectionModule {
+  name: string;
+  list: T_SectionElements[];
+}
 interface LetterElementsType extends ElementsType {
   activeElements: T_BlockElement[];
 }
@@ -89,11 +96,11 @@ const letterLayoutSlice = createSlice({
           minW: draggableItem.layout.minW || 0,
           maxW: draggableItem.layout.maxW ?? 6,
           minH: draggableItem.layout.minW || 0,
-          //значение Infinity
           maxH: draggableItem.layout.maxH ?? 1000000,
         },
       };
       let activeElements: T_BlockElement[] = [];
+
       state.gridContainers.forEach((container /*, index*/) => {
         if (container.id === containerId) {
           for (const el of container.elements.activeElements) {
@@ -117,6 +124,31 @@ const letterLayoutSlice = createSlice({
       });
 
       state.currentDraggableItem = null;
+    },
+    syncSections: (state, action: PayloadAction<SectionModule[]>) => {
+      try {
+        state.gridContainers = action.payload
+          .filter((section) => section?.name) // Фильтруем невалидные секции
+          .map((section) => {
+            try {
+              return convertSectionToGridContainer({
+                name: section.name,
+                ...section.list[0],
+              });
+            } catch (error) {
+              console.error("Error converting section:", section.name, error);
+              return {
+                id: section.name,
+                height: 30,
+                elements: { activeElements: [] },
+                layout: { i: null, w: 6, h: 2, x: 0, y: 0 },
+              };
+            }
+          });
+      } catch (error) {
+        console.error("Critical error in syncSections:", error);
+        state.gridContainers = [];
+      }
     },
     addChildElement(state, action) {
       const { draggableItem, idParentElement, indexChild } = action.payload;
@@ -161,7 +193,8 @@ const letterLayoutSlice = createSlice({
       state.gridContainers.forEach((container) => {
         if (container.id !== id) return;
 
-        const findElementIndex = (layoutId: string | null): number =>          container.elements.activeElements.findIndex((element) => element.layout.i === layoutId);
+        const findElementIndex = (layoutId: string | null): number =>
+          container.elements.activeElements.findIndex((element) => element.layout.i === layoutId);
 
         const parentIndex = findElementIndex(parentLayout?.i || layout.i);
 
@@ -180,7 +213,7 @@ const letterLayoutSlice = createSlice({
                 ...originalChild,
                 layout: {
                   ...originalChild.layout,
-                  x: originalChild.layout.x + originalChild.layout.w, 
+                  x: originalChild.layout.x + originalChild.layout.w,
                   i: nanoid(),
                 },
               };
@@ -319,7 +352,7 @@ const letterLayoutSlice = createSlice({
     setCurrentContainer(state, action) {
       state.currentContainer = action.payload;
     },
-   increaseElementColumns(state, action) {
+    increaseElementColumns(state, action) {
       let indx: number;
       state.gridContainers.forEach((container) => {
         if (container.id === action.payload.id) {
@@ -482,6 +515,7 @@ export const {
   setSectionStyle,
   setProps,
   clearStore,
+  syncSections,
 } = letterLayoutSlice.actions;
 
 export default letterLayoutSlice.reducer;

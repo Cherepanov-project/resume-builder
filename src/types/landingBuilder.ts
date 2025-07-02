@@ -95,6 +95,10 @@ export type T_ComponentProps = {
   props: T_BlockElement;
 };
 
+export interface SidebarMenuData {
+  [key: string]: T_SidebarMenuItem[];
+}
+
 // Типизация компонентов
 export type DynamicComponentRendererProps = {
   id?: string;
@@ -129,6 +133,9 @@ export type ContainerDIVProps = {
 export type NestedListProps = {
   name: string | undefined;
   items: T_BlockElement[];
+  handleDeleteSection: (arg1: T_BlockElement) => void;
+  handleEditSection: (arg1: T_BlockElement) => void;
+  parentKey?: string;
 };
 
 export type DynamicBlockProps = {

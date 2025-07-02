@@ -76,7 +76,7 @@ export type T_BlockElement = {
   interactiveType?: "button" | "slider";
   props: T_SectionElementProps; //{[key: string]: string | {[key: string]: string}}
   children?: T_BlockElement[];
-  layout: Layout;
+  layout: ILayout;
 };
 
 export type LetterT_BlockElement = T_BlockElement & {
@@ -229,6 +229,18 @@ export interface StateSelectList {
 // Типизация вспомогательных функций -> utils/index.ts
 export type TProcessFiles = Record<string, () => Promise<unknown>>;
 
+export interface ILayout {
+  i: string;
+  w: number;
+  h: number;
+  x: number;
+  y: number;
+  minW?: number;
+  maxW?: number;
+  minH?: number;
+  maxH?: number;
+}
+
 export type T_SectionElements = {
   name: string; // указание имени элмента-обертки (molecules)
   title: string; // имя секции из input
@@ -236,7 +248,8 @@ export type T_SectionElements = {
   columns: number;
   source: string; // ресурс обертки
   children: T_BlockElement[]; // массив из объектов с параметрами basic LayoutBlock elements
-  layout: Layout;
+  layout: ILayout;
+  props?: T_SectionElementProps;
 };
 
 export type T_SectionElementProps = {
@@ -258,9 +271,7 @@ export type T_SectionElementProps = {
     color?: string;
     border?: string;
   };
-  props?: {
-    [key: string]: string & object;
-  };
+  componentProps?: Record<string, unknown>;
   imgUrl?: string;
   buttonText?: string;
   accordion?: Array<[string, string]>;
