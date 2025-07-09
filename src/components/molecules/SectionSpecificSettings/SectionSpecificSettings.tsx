@@ -9,6 +9,7 @@ import {
   SelectChangeEvent,
   Stack,
   TextField,
+  Tooltip,
 } from "@mui/material";
 
 interface SectionSpecificSettingsType {
@@ -16,6 +17,7 @@ interface SectionSpecificSettingsType {
   setType: (value: string) => void;
   name: string;
   setName: (value: string) => void;
+  isEditing?: boolean;
 }
 
 const SectionSpecificSettings: React.FC<SectionSpecificSettingsType> = ({
@@ -23,6 +25,7 @@ const SectionSpecificSettings: React.FC<SectionSpecificSettingsType> = ({
   setType,
   name,
   setName,
+  isEditing = false,
 }) => {
   return (
     <Box sx={{ m: "15px" }}>
@@ -41,42 +44,48 @@ const SectionSpecificSettings: React.FC<SectionSpecificSettingsType> = ({
             >
               Choose section type:
             </InputLabel>
-            <Select
-              labelId="section-label"
-              value={type}
-              onChange={(e: SelectChangeEvent) => {
-                setType(e.target.value);
-              }}
-              sx={{
-                width: "220px",
-                color: "#999",
-                "& .MuiOutlinedInput-notchedOutline": {
-                  borderColor: "#999",
-                },
-                "&:hover .MuiOutlinedInput-notchedOutline": {
-                  borderColor: "#aaa",
-                },
-                "&.Mui-focused .MuiOutlinedInput-notchedOutline": {
-                  borderColor: "#999",
-                },
-              }}
-              input={<OutlinedInput label="Choose section type" />}
-              MenuProps={{
-                PaperProps: {
-                  sx: {
-                    backgroundColor: "#444",
-                    color: "#999",
-                  },
-                },
-              }}
+            <Tooltip
+              title={isEditing ? "Section type cannot be changed after creation" : ""}
+              placement="top"
             >
-              <MenuItem value="Headers">Headers</MenuItem>
-              <MenuItem value="Intro">Intro</MenuItem>
-              <MenuItem value="Articles">Articles</MenuItem>
-              <MenuItem value="Contents">Contents</MenuItem>
-              <MenuItem value="Features">Features</MenuItem>
-              <MenuItem value="Footers">Footers</MenuItem>
-            </Select>
+              <Select
+                labelId="section-label"
+                value={type}
+                onChange={(e: SelectChangeEvent) => {
+                  if (!isEditing) setType(e.target.value);
+                }}
+                disabled={isEditing}
+                sx={{
+                  width: "220px",
+                  color: "#999",
+                  "& .MuiOutlinedInput-notchedOutline": {
+                    borderColor: "#999",
+                  },
+                  "&:hover .MuiOutlinedInput-notchedOutline": {
+                    borderColor: "#aaa",
+                  },
+                  "&.Mui-focused .MuiOutlinedInput-notchedOutline": {
+                    borderColor: "#999",
+                  },
+                }}
+                input={<OutlinedInput label="Choose section type" />}
+                MenuProps={{
+                  PaperProps: {
+                    sx: {
+                      backgroundColor: "#444",
+                      color: "#999",
+                    },
+                  },
+                }}
+              >
+                <MenuItem value="Headers">Headers</MenuItem>
+                <MenuItem value="Intro">Intro</MenuItem>
+                <MenuItem value="Articles">Articles</MenuItem>
+                <MenuItem value="Contents">Contents</MenuItem>
+                <MenuItem value="Features">Features</MenuItem>
+                <MenuItem value="Footers">Footers</MenuItem>
+              </Select>
+            </Tooltip>
           </FormControl>
         </Item>
         <Item sx={{ background: "#333" }}>

@@ -129,6 +129,9 @@ export type ContainerDIVProps = {
 export type NestedListProps = {
   name: string | undefined;
   items: T_BlockElement[];
+  handleEditSection: (arg: T_BlockElement) => void;
+  handleDeleteSection: (arg: T_BlockElement) => void;
+  parentKey?: string;
 };
 
 export type DynamicBlockProps = {
