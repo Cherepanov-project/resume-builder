@@ -3,8 +3,6 @@ import { Stack, FormControl } from "@mui/material";
 import styles from "./ElementSpecificStylesForm.module.scss";
 import Item from "@atoms/StyledPaperItem";
 import { useInput } from "@/hooks/useSpecificStylesFormHook";
-import { nanoid } from "nanoid";
-
 interface StyleInput {
   label: string;
   styleSetting: string;
@@ -23,6 +21,11 @@ const ElementSpecificStylesForm = () => {
   const [inputValue, setInputValue] = useState({
     fontSize: "",
     borderSize: "",
+  });
+  const [colors, setColors] = useState({
+    color: "#000000",
+    backgroundColor: "#ffffff",
+    borderColor: "#000000",
   });
 
   const styleInputs: StyleInput[] = [
@@ -43,16 +46,20 @@ const ElementSpecificStylesForm = () => {
     },
     {
       label: "Border Size:",
-      styleSetting: "border",
+      styleSetting: "borderWidth",
       type: "number",
       min: 0,
       max: 50,
-      suffix: "px solid",
+      suffix: "px",
       value: inputValue.borderSize,
       onChange: (e: ChangeEvent<HTMLInputElement>) => {
         const value = e.target.value;
         setInputValue({ ...inputValue, borderSize: value });
-        newImp.onChangeStyle({ border: value ? `${value}px solid` : "" });
+        newImp.onChangeStyle({
+          borderWidth: value ? `${value}px` : "",
+          borderStyle: value ? "solid" : "none",
+          borderColor: value ? colors.borderColor : "transparent",
+        });
       },
       placeholder: "0",
     },
@@ -60,7 +67,10 @@ const ElementSpecificStylesForm = () => {
       label: "Text color:",
       styleSetting: "color",
       type: "color",
+      value: colors.color,
       onChange: (e: ChangeEvent<HTMLInputElement>) => {
+        const value = e.target.value;
+        setColors({ ...colors, color: value });
         newImp.onChangeStyle({ color: e.target.value });
       },
     },
@@ -68,7 +78,10 @@ const ElementSpecificStylesForm = () => {
       label: "Background color:",
       styleSetting: "backgroundColor",
       type: "color",
+      value: colors.backgroundColor,
       onChange: (e: ChangeEvent<HTMLInputElement>) => {
+        const value = e.target.value;
+        setColors({ ...colors, backgroundColor: value });
         newImp.onChangeStyle({ backgroundColor: e.target.value });
       },
     },
@@ -102,7 +115,7 @@ const ElementSpecificStylesForm = () => {
           };
 
           return (
-            <Item sx={{ background: "#333" }} key={nanoid()}>
+            <Item sx={{ background: "#333" }} key={`style-input-${elem.styleSetting}`}>
               <FormControl>
                 <label>
                   <span className={styles.inputLabel}>{elem.label}</span>
@@ -122,8 +135,14 @@ const ElementSpecificStylesForm = () => {
                   <input
                     className={styles.colorInput}
                     type="color"
+                    value={colors.borderColor}
                     onChange={(e: ChangeEvent<HTMLInputElement>) => {
-                      newImp.onChangeStyle({ borderColor: e.target.value });
+                      const value = e.target.value;
+                      setColors({ ...colors, borderColor: value });
+                      newImp.onChangeStyle({
+                        borderColor: value,
+                        borderStyle: "solid",
+                      });
                     }}
                   />
                 </label>
