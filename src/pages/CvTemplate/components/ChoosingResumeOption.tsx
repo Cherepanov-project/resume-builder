@@ -1,5 +1,5 @@
 import { FC } from 'react';
-import { Box, Typography } from '@mui/material';
+import { Box, Typography, useTheme } from '@mui/material';
 import { Swiper, SwiperSlide } from 'swiper/react';
 import { Navigation } from 'swiper/modules';
 
@@ -25,6 +25,7 @@ const arrResume: StylesNameKeys[] = [
 ];
 
 const ChoosingResumeOption: FC<IProps> = ({ handleButtonClick }) => {
+  const theme = useTheme()
   return (
     <>
       <Box display="flex" flexDirection="column" alignItems="center">
@@ -33,7 +34,7 @@ const ChoosingResumeOption: FC<IProps> = ({ handleButtonClick }) => {
             mt: 2,
             mb: 2,
             fontSize: 30,
-            fontWeight: 700,
+            fontWeight: theme.custom.fontWeightBig,
             textAlign: 'center',
             width: 600,
           }}

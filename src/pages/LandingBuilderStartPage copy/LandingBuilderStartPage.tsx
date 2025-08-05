@@ -4,8 +4,11 @@ import classes from "./LandingBuilderStartPage.module.scss";
 import { persistor } from "@/store/store";
 import { useAppDispatch } from "@/hooks/cvTemplateHooks";
 import { clearStore } from "@/store/landingBuilder/layoutSlice";
+import { useTheme } from "@mui/material";
+
 
 export const LandingBuilderStartPage: React.FC = () => {
+  const theme = useTheme()
   const dispatch = useAppDispatch();
   const navigate = useNavigate();
   return (
@@ -18,7 +21,7 @@ export const LandingBuilderStartPage: React.FC = () => {
           navigate("/letter-builder-page");
         }}
       >
-        <LibraryAdd style={{ fontSize: 60 }} />
+        <LibraryAdd style={theme.custom.fontSize60} />
         <span>Create</span>
       </button>
       <button
@@ -29,11 +32,11 @@ export const LandingBuilderStartPage: React.FC = () => {
           navigate("/landing-builder/templates");
         }}
       >
-        <ViewCarousel style={{ fontSize: 60 }} />
+        <ViewCarousel style={theme.custom.fontSize60} />
         <span>Templates</span>
       </button>
       <button className={classes["button"]} onClick={() => navigate("/landing-builder")}>
-        <ViewQuilt style={{ fontSize: 60 }} />
+        <ViewQuilt style={theme.custom.fontSize60} />
         <span>Restore</span>
       </button>
     </div>

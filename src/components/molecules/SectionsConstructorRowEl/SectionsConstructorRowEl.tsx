@@ -19,14 +19,12 @@ type SectionsConstructorRowElType = {
   row: number;
   setError: React.Dispatch<React.SetStateAction<string>>;
   setSeverity: React.Dispatch<React.SetStateAction<string>>;
-  isPreviewMode?: boolean; // Добавляем prop для режима превью
 };
 
 const SectionsConstructorRowEl: React.FC<SectionsConstructorRowElType> = ({
   row,
   setError,
   setSeverity,
-  isPreviewMode = false,
 }) => {
   const dispatch = useDispatch();
 
@@ -84,53 +82,42 @@ const SectionsConstructorRowEl: React.FC<SectionsConstructorRowElType> = ({
         textAlign: "center",
         height: `${el.layout.h * 30}px`,
         width: `${el.layout.w * 191}px`,
-        cursor: isPreviewMode ? "default" : "pointer", // Убираем курсор-указатель в превью
-        "&:hover": isPreviewMode
-          ? {}
-          : {
-              border: "1px dotted dimgrey",
-              height: `${el.layout.h * 30 - 2}px`,
-              width: `${el.layout.w * 191 - 2}px`,
-              borderRadius: "10px",
-              opacity: "0.8",
-            },
+        cursor: "pointer",
+        "&:hover": {
+          border: "1px dotted dimgrey",
+          height: `${el.layout.h * 30 - 2}px`,
+          width: `${el.layout.w * 191 - 2}px`,
+          borderRadius: "10px",
+          opacity: "0.8",
+        },
       };
       return (
         <Box
           key={i}
           sx={style}
-          onClick={
-            isPreviewMode
-              ? undefined
-              : () => dispatch(handleSettingsMenu({ type: "UPDATE_ID", value: `${r}${i}` }))
-          }
+          onClick={() => dispatch(handleSettingsMenu({ type: "UPDATE_ID", value: `${r}${i}` }))}
         >
-          {/* Элементы управления отображаются только в режиме редактирования */}
-          {!isPreviewMode && (
-            <>
-              <ArrowCircleUp
-                onClick={() => {
-                  handleSize("layoutY", "-1");
-                }}
-              />
-              <ArrowCircleDown
-                onClick={() => {
-                  handleSize("layoutY", "+1");
-                }}
-              />
-              <ArrowCircleLeftSharp
-                onClick={() => {
-                  handleSize("layoutX", "-1");
-                }}
-              />
-              <ArrowCircleRightSharp
-                onClick={() => {
-                  handleSize("layoutX", "+1");
-                }}
-              />
-              <Delete onClick={() => deleteElement()} />
-            </>
-          )}
+          <ArrowCircleUp
+            onClick={() => {
+              handleSize("layoutY", "-1");
+            }}
+          />
+          <ArrowCircleDown
+            onClick={() => {
+              handleSize("layoutY", "+1");
+            }}
+          />
+          <ArrowCircleLeftSharp
+            onClick={() => {
+              handleSize("layoutX", "-1");
+            }}
+          />
+          <ArrowCircleRightSharp
+            onClick={() => {
+              handleSize("layoutX", "+1");
+            }}
+          />
+          <Delete onClick={() => deleteElement()} />
           <SectionsConstructorBlockElement params={el} />
         </Box>
       );
@@ -138,9 +125,6 @@ const SectionsConstructorRowEl: React.FC<SectionsConstructorRowElType> = ({
   };
 
   const renderControlOfCols = () => {
-    // Кнопка добавления колонки показывается только в режиме редактирования
-    if (isPreviewMode) return null;
-
     return (
       <AddCircleSharp
         color="primary"
@@ -207,7 +191,7 @@ const SectionsConstructorRowEl: React.FC<SectionsConstructorRowElType> = ({
         width: " 100%",
         minHeight: "55px",
         alignItems: "center",
-        borderBottom: isPreviewMode ? "none" : "1px dotted dimgrey", // Убираем границу в превью
+        borderBottom: "1px dotted dimgrey",
       }}
     >
       <Box sx={gridLayoutStyle}>{renderColumns()}</Box>

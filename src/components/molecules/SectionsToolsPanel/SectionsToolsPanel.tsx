@@ -1,14 +1,11 @@
-import { Box, ToggleButtonGroup, ToggleButton, Divider, Button } from "@mui/material";
+import { Box, ToggleButtonGroup, ToggleButton, Divider, Button, useTheme } from "@mui/material";
 import MemoizedElementSettings from "../ElementSpecificSettings";
 import SectionSpecificSettings from "../SectionSpecificSettings";
-import { useEffect, useState } from "react";
+import { useState } from "react";
 import { T_BlockElement, T_SectionElements } from "@/types/landingBuilder";
 import { handleSettingsMenu, setLayoutDate } from "@/store/landingBuilder/sectionsManagerSlice";
 import { useDispatch } from "react-redux";
 import { useTypedSelector } from "@/hooks/cvTemplateHooks";
-
-import { editSection, postNewSection } from "@/store/sectionCreator/sectionSlice";
-import { useLocation } from "react-router-dom";
 
 interface Props {
   setError: (message: string) => void;
@@ -16,55 +13,24 @@ interface Props {
 }
 
 const SectionsToolsPanel: React.FC<Props> = ({ setError, setSeverity }) => {
+  const theme = useTheme()
+
   const [name, setName] = useState("");
   const [type, setType] = useState("Headers");
-
-  const location = useLocation();
   const dispatch = useDispatch();
-
-  const editItem = location.state?.editItem as T_BlockElement | undefined;
   const layoutDate = useTypedSelector((state) => state.sectionsManager.layoutDate);
   const rows = Object.keys(layoutDate).length;
-
-  useEffect(() => {
-    if (editItem) {
-      setName(editItem.title?.toString() || "");
-      setType(editItem.type || "Headers");
-      const initialLayoutData: Record<number, T_BlockElement[]> = {};
-
-      if (editItem.children) {
-        editItem.children.forEach((child, index) => {
-          const block: T_BlockElement = {
-            name: child.name || "",
-            type: child.type || "",
-            source: child.source || "atoms",
-            props: child.props || {},
-            layout: {
-              i: child.layout?.i || `block-${child.name}-${Date.now()}`,
-              x: child.layout?.x || 0,
-              y: child.layout?.y || 0,
-              w: child.layout?.w || 1,
-              h: child.layout?.h || 1,
-            },
-          };
-
-          const row = index + 1;
-          if (!initialLayoutData[row]) {
-            initialLayoutData[row] = [];
-          }
-          initialLayoutData[row].push(block);
-        });
-      }
-      dispatch(setLayoutDate(initialLayoutData));
-    }
-  }, [editItem, dispatch]);
-
   const submitSection = () => {
-    const data: T_BlockElement[] = Object.values(layoutDate).flat();
+    const arr: T_BlockElement[] = [];
+    const data = Object.values(layoutDate);
 
-    const filteredArr = data.filter((el) => el.name);
+    for (let i = 0; i < data.length; i++) {
+      arr.push(...data[i]);
+    }
+
+    const filteredArr = arr.filter((el) => el.name);
     const elements = filteredArr.map((el) => {
-      // console.log(el, el.layout.i, el.layout.i.slice(0, 1));
+      console.log(el, el.layout.i, el.layout.i.slice(0, 1));
       return {
         name: el.name,
         source: "atoms",
@@ -89,52 +55,67 @@ const SectionsToolsPanel: React.FC<Props> = ({ setError, setSeverity }) => {
       layout: { i: "", x: 0, y: 0, w: 6, h: calcSectionH() + 1 },
     };
 
-    if (!name.trim()) {
+    if (name.trim()) {
+      if (postNewSection(section)) {
+        setSeverity("success");
+        setError(`Section ${name} was added to ${type}`);
+        dispatch(
+          setLayoutDate({
+            1: [
+              {
+                name: "",
+                type: "",
+                source: "atoms",
+                props: {
+                  text: "",
+                  key: "",
+                  wrapperStyle: { display: "block" },
+                  textStyle: { display: "block" },
+                  style: { "": "" },
+                },
+                layout: { i: "11", x: 0, y: 0, w: 1, h: 1 },
+              },
+            ],
+          }),
+        );
+        setName("");
+        dispatch(handleSettingsMenu({ type: "UPDATE_ID", value: "11" }));
+      }
+    } else {
       setSeverity("error");
       setError(`Section is missing a name`);
-      return;
     }
+  };
 
-    if (editItem) {
-      dispatch(
-        editSection({
-          oldItem: editItem,
-          newItem: section,
-        }),
-      );
-      setSeverity("success");
-      setError(`Section ${name} was updated  to ${type}`);
+  const postNewSection = (newSection: T_SectionElements) => {
+    const ls = localStorage.getItem("sections");
+    if (ls) {
+      const prevLs: Storage = JSON.parse(ls);
+      const newStore = JSON.parse(JSON.stringify(prevLs));
+      for (const module of Object.values(prevLs)) {
+        if (module.name === type) {
+          for (let i = 0; i < module.list.length; i++) {
+            if (module.list[i].title === newSection.title) {
+              setSeverity("warning");
+              setError(`Section named ${name} is already present in ${type}`);
+              return false;
+            }
+          }
+          const lastList = module.list;
+          const newList = [...lastList, newSection];
+          const idx = newStore.findIndex((el: { name: string }) => el.name === type);
+          newStore[idx].list = newList;
+          localStorage.setItem("sections", JSON.stringify(newStore));
+          return true;
+        }
+      }
+      newStore.push({ name: type, list: [newSection] });
+      localStorage.setItem("sections", JSON.stringify(newStore));
+      return true;
     } else {
-      dispatch(
-        postNewSection({
-          moduleName: type,
-          section,
-        }),
-      );
-      setSeverity("success");
-      setError(`Section ${name} was added to ${type}`);
-
-      dispatch(
-        setLayoutDate({
-          1: [
-            {
-              name: "",
-              type: "",
-              source: "atoms",
-              props: {
-                text: "",
-                key: "",
-                wrapperStyle: { display: "block" },
-                textStyle: { display: "block" },
-                style: { "": "" },
-              },
-              layout: { i: "11", x: 0, y: 0, w: 1, h: 1 },
-            },
-          ],
-        }),
-      );
-      setName("");
-      dispatch(handleSettingsMenu({ type: "UPDATE_ID", value: "11" }));
+      const newStore = [{ name: type, list: [newSection] }];
+      localStorage.setItem("sections", JSON.stringify(newStore));
+      return true;
     }
   };
 
@@ -166,6 +147,7 @@ const SectionsToolsPanel: React.FC<Props> = ({ setError, setSeverity }) => {
   };
 
   const calcSectionH = () => {
+
     let h = 0;
     for (let i = 1; i <= rows; i++) {
       let max = 1;
@@ -181,6 +163,7 @@ const SectionsToolsPanel: React.FC<Props> = ({ setError, setSeverity }) => {
   const [toggleMenu, setToggleMenu] = useState<unknown>("SECTION_SETTINGS");
 
   const handleToggleMenu = (e: React.MouseEvent<HTMLElement>) => {
+
     const target = e.target as HTMLButtonElement;
     switch (target.innerText) {
       case "ELEMENTS SETTINGS":
@@ -190,21 +173,21 @@ const SectionsToolsPanel: React.FC<Props> = ({ setError, setSeverity }) => {
     }
   };
   return (
-    <Box sx={{ width: "300px", background: "#222", color: "#aaa" }}>
-      <h2>{editItem ? "Edit Section" : "Create Section"}</h2>
+    <Box sx={{ width: "300px", background: theme.custom.colorMetalGray, color: "#aaa" }}>
+      <h2>Create Section</h2>
 
       <ToggleButtonGroup
-        color="primary"
+        color={theme.custom.defaultColor}
         size="small"
         exclusive
         aria-label="settings-category"
         sx={{
           "& .MuiToggleButton-root": {
-            backgroundColor: "#333",
-            color: "#999",
+            backgroundColor: theme.custom.colorMetalGray,
+            color: theme.custom.colorWhiteGray,
             border: "1px solid #ccc",
             "&:hover": {
-              backgroundColor: "#444",
+              backgroundColor: theme.custom.colorGray,
             },
           },
         }}
@@ -221,13 +204,7 @@ const SectionsToolsPanel: React.FC<Props> = ({ setError, setSeverity }) => {
         </ToggleButton>
       </ToggleButtonGroup>
       {toggleMenu === "SECTION_SETTINGS" ? (
-        <SectionSpecificSettings
-          type={type}
-          setType={setType}
-          name={name}
-          setName={setName}
-          isEditing={!!editItem}
-        />
+        <SectionSpecificSettings type={type} setType={setType} name={name} setName={setName} />
       ) : null}
       {toggleMenu === "ELEMENTS_SETTINGS" ? <MemoizedElementSettings /> : null}
 
@@ -238,15 +215,15 @@ const SectionsToolsPanel: React.FC<Props> = ({ setError, setSeverity }) => {
         sx={{
           width: "70%",
           mt: "10px",
-          color: "#999",
-          borderColor: "#333",
-          backgroundColor: "#444",
-          "&:hover": {
-            borderColor: "#222",
-            backgroundColor: "#555",
+          color: theme.custom.colorWhiteGray, 
+          borderColor: theme.custom.colorMetalGray,
+          backgroundColor: theme.custom.colorGray,
+          '&:hover': {
+            borderColor: theme.custom.colorAlmostBlack, 
+            backgroundColor: "#555", 
           },
-          "&.Mui-focused": {
-            borderColor: "#333",
+          '&.Mui-focused': {
+            borderColor: theme.custom.colorMetalGray,
           },
         }}
         onClick={() => submitSection()}

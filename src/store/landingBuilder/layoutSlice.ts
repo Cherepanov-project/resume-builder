@@ -80,7 +80,7 @@ const layoutSlice = createSlice({
           h: draggableItem.layout.h,
           minW: draggableItem.layout.minW || 0,
           maxW: draggableItem.layout.maxW ?? 6,
-          minH: draggableItem.layout.minH || 0,
+          minH: draggableItem.layout.minW || 0,
           //значение Infinity
           maxH: draggableItem.layout.maxH ?? 1000000,
         },
@@ -323,52 +323,42 @@ const layoutSlice = createSlice({
     },
     // Уменьшаем количество колонок в блоке
     decreaseElementColumns(state, action) {
-  let indx: number;
-  state.gridContainers.forEach((container) => {
-    if (container.id === action.payload.id) {
-      if (action.payload.elementId) {
-        indx = container.elements.activeElements.findIndex(
-          (element) => element.layout.i === action.payload.parentLayout.i,
-        );
-      } else {
-        indx = container.elements.activeElements.findIndex(
-          (element) => element.layout.i === action.payload.layout.i,
-        );
-      }
+      let indx: number;
+      state.gridContainers.forEach((container) => {
+        if (container.id === action.payload.id) {
+          if (action.payload.elementId) {
+            indx = container.elements.activeElements.findIndex(
+              (element) => element.layout.i === action.payload.parentLayout.i,
+            );
+          } else {
+            indx = container.elements.activeElements.findIndex(
+              (element) => element.layout.i === action.payload.layout.i,
+            );
+          }
+          // Находим индекс элемента внутри children, если elementId определен
+          let elIndx: number | undefined;
 
-      // Находим индекс элемента внутри children, если elementId определен
-      let elIndx: number | undefined;
-
-      if (action.payload.elementId) {
-        const element = container.elements.activeElements[indx];
-        if (element && element.children) {
-          elIndx = element.children.findIndex(
-            (child) => child.layout.i === action.payload.elementId
-          );
+          if (action.payload.elementId) {
+            const element = container.elements.activeElements[indx];
+            if (element && element.children) {
+              elIndx = element.children.findIndex(
+                (child) => child.layout.i === action.payload.elementId
+              );
+            }
+          }
+          // Если нашли индекс элемента внутри children, уменьшаем его ширину
+          if (elIndx !== undefined) {
+            const element = container.elements.activeElements[indx];
+            element.children![elIndx].layout.w -= 1;
+          } else {
+            // Иначе уменьшаем ширину самого элемента
+            container.elements.activeElements[indx].layout.w -= 1;
+            container.elements.activeElements[indx].columns! -= 1;
+          }
         }
-      }
+      });
 
-      // Если нашли индекс элемента внутри children, уменьшаем его ширину
-      if (elIndx !== undefined) {
-        const element = container.elements.activeElements[indx];
-        const child = element.children![elIndx];
-
-        const minW = child.layout.minW ?? 1;
-        if (child.layout.w > minW) {
-          child.layout.w -= 1;
-        }
-      } else {
-        // Иначе уменьшаем ширину самого элемента
-        const element = container.elements.activeElements[indx];
-        const minW = element.layout.minW ?? 1;
-        if (element.layout.w > minW) {
-          element.layout.w -= 1;
-          element.columns! -= 1;
-        }
-      }
-    }
-  });
-},
+    },
 
     // Помещаем информацию о текущем перемещаемом блоке в стор
     setDraggableItem(state, action) {

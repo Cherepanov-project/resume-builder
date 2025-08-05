@@ -9,7 +9,7 @@ import {
   SelectChangeEvent,
   Stack,
   TextField,
-  Tooltip,
+  useTheme,
 } from "@mui/material";
 
 interface SectionSpecificSettingsType {
@@ -17,7 +17,6 @@ interface SectionSpecificSettingsType {
   setType: (value: string) => void;
   name: string;
   setName: (value: string) => void;
-  isEditing?: boolean;
 }
 
 const SectionSpecificSettings: React.FC<SectionSpecificSettingsType> = ({
@@ -25,8 +24,8 @@ const SectionSpecificSettings: React.FC<SectionSpecificSettingsType> = ({
   setType,
   name,
   setName,
-  isEditing = false,
 }) => {
+  const theme = useTheme()
   return (
     <Box sx={{ m: "15px" }}>
       <Stack>
@@ -44,48 +43,42 @@ const SectionSpecificSettings: React.FC<SectionSpecificSettingsType> = ({
             >
               Choose section type:
             </InputLabel>
-            <Tooltip
-              title={isEditing ? "Section type cannot be changed after creation" : ""}
-              placement="top"
+            <Select
+              labelId="section-label"
+              value={type}
+              onChange={(e: SelectChangeEvent) => {
+                setType(e.target.value);
+              }}
+              sx={{
+                width: "220px",
+                color: "#999",
+                "& .MuiOutlinedInput-notchedOutline": {
+                  borderColor: theme.custom.colorWhiteGray,
+                },
+                "&:hover .MuiOutlinedInput-notchedOutline": {
+                  borderColor: "#aaa",
+                },
+                "&.Mui-focused .MuiOutlinedInput-notchedOutline": {
+                  borderColor: theme.custom.colorWhiteGray,
+                },
+              }}
+              input={<OutlinedInput label="Choose section type" />}
+              MenuProps={{
+                PaperProps: {
+                  sx: {
+                    backgroundColor: theme.custom.colorWhiteGray,
+                    color: theme.custom.colorWhiteGray,
+                  },
+                },
+              }}
             >
-              <Select
-                labelId="section-label"
-                value={type}
-                onChange={(e: SelectChangeEvent) => {
-                  if (!isEditing) setType(e.target.value);
-                }}
-                disabled={isEditing}
-                sx={{
-                  width: "220px",
-                  color: "#999",
-                  "& .MuiOutlinedInput-notchedOutline": {
-                    borderColor: "#999",
-                  },
-                  "&:hover .MuiOutlinedInput-notchedOutline": {
-                    borderColor: "#aaa",
-                  },
-                  "&.Mui-focused .MuiOutlinedInput-notchedOutline": {
-                    borderColor: "#999",
-                  },
-                }}
-                input={<OutlinedInput label="Choose section type" />}
-                MenuProps={{
-                  PaperProps: {
-                    sx: {
-                      backgroundColor: "#444",
-                      color: "#999",
-                    },
-                  },
-                }}
-              >
-                <MenuItem value="Headers">Headers</MenuItem>
-                <MenuItem value="Intro">Intro</MenuItem>
-                <MenuItem value="Articles">Articles</MenuItem>
-                <MenuItem value="Contents">Contents</MenuItem>
-                <MenuItem value="Features">Features</MenuItem>
-                <MenuItem value="Footers">Footers</MenuItem>
-              </Select>
-            </Tooltip>
+              <MenuItem value="Headers">Headers</MenuItem>
+              <MenuItem value="Intro">Intro</MenuItem>
+              <MenuItem value="Articles">Articles</MenuItem>
+              <MenuItem value="Contents">Contents</MenuItem>
+              <MenuItem value="Features">Features</MenuItem>
+              <MenuItem value="Footers">Footers</MenuItem>
+            </Select>
           </FormControl>
         </Item>
         <Item sx={{ background: "#333" }}>
@@ -93,18 +86,18 @@ const SectionSpecificSettings: React.FC<SectionSpecificSettingsType> = ({
             <TextField
               sx={{
                 zIndex: "0",
-                input: { color: "#999" },
-                "& label": { color: "#999" },
-                "& label.Mui-focused": { color: "#999" },
+                input: { color: theme.custom.colorWhiteGray },
+                "& label": { color: theme.custom.colorWhiteGray },
+                "& label.Mui-focused": { color: theme.custom.colorWhiteGray },
                 "& .MuiOutlinedInput-root": {
                   "& fieldset": {
-                    borderColor: "#999",
+                    borderColor: theme.custom.colorWhiteGray,
                   },
                   "&:hover fieldset": {
                     borderColor: "#aaa",
                   },
                   "&.Mui-focused fieldset": {
-                    borderColor: "#999",
+                    borderColor: theme.custom.colorWhiteGray,
                   },
                 },
               }}
