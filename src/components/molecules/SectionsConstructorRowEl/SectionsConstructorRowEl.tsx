@@ -76,12 +76,17 @@ const SectionsConstructorRowEl: React.FC<SectionsConstructorRowElType> = ({
     const r: string = String(row);
     return layoutRow.map((el, idx) => {
       const i = idx + 1;
+      const elementId = `${r}${i}`;
+      const isSelected = id === elementId;
 
       const style = {
         backgroundColor: "#fff",
         textAlign: "center",
         height: `${el.layout.h * 30}px`,
         width: `${el.layout.w * 191}px`,
+        border: isSelected ? "2px solid #c3c6c8ff" : "none",
+        borderRadius: "5px",
+
         cursor: "pointer",
         "&:hover": {
           border: "1px dotted dimgrey",
@@ -95,29 +100,38 @@ const SectionsConstructorRowEl: React.FC<SectionsConstructorRowElType> = ({
         <Box
           key={i}
           sx={style}
-          onClick={() => dispatch(handleSettingsMenu({ type: "UPDATE_ID", value: `${r}${i}` }))}
+          onClick={() => dispatch(handleSettingsMenu({ type: "UPDATE_ID", value: elementId }))}
         >
           <ArrowCircleUp
-            onClick={() => {
+            onClick={(e) => {
+              e.stopPropagation();
               handleSize("layoutY", "-1");
             }}
           />
           <ArrowCircleDown
-            onClick={() => {
+            onClick={(e) => {
+              e.stopPropagation();
               handleSize("layoutY", "+1");
             }}
           />
           <ArrowCircleLeftSharp
-            onClick={() => {
+            onClick={(e) => {
+              e.stopPropagation();
               handleSize("layoutX", "-1");
             }}
           />
           <ArrowCircleRightSharp
-            onClick={() => {
+            onClick={(e) => {
+              e.stopPropagation();
               handleSize("layoutX", "+1");
             }}
           />
-          <Delete onClick={() => deleteElement()} />
+          <Delete
+            onClick={(e) => {
+              e.stopPropagation();
+              deleteElement();
+            }}
+          />
           <SectionsConstructorBlockElement params={el} />
         </Box>
       );

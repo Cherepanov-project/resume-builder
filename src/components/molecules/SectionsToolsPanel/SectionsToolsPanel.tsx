@@ -18,6 +18,7 @@ interface Props {
 const SectionsToolsPanel: React.FC<Props> = ({ setError, setSeverity }) => {
   const [name, setName] = useState("");
   const [type, setType] = useState("Headers");
+  const [isEditing, setIsEditing] = useState(false);
 
   const location = useLocation();
   const dispatch = useDispatch();
@@ -26,15 +27,47 @@ const SectionsToolsPanel: React.FC<Props> = ({ setError, setSeverity }) => {
   const layoutDate = useTypedSelector((state) => state.sectionsManager.layoutDate);
   const rows = Object.keys(layoutDate).length;
 
+  const resetForm = () => {
+    setName("");
+    setType("Headers");
+    setToggleMenu("SECTION_SETTINGS");
+    dispatch(
+      setLayoutDate({
+        1: [
+          {
+            name: "",
+            type: "",
+            source: "atoms",
+            props: {
+              text: "",
+              key: "",
+              wrapperStyle: { display: "block" },
+              textStyle: { display: "block" },
+              style: { "": "" },
+            },
+            layout: { i: "11", x: 0, y: 0, w: 1, h: 1 },
+          },
+        ],
+      }),
+    );
+  };
   useEffect(() => {
     if (editItem) {
+      setIsEditing(true);
       setName(editItem.title?.toString() || "");
       setType(editItem.type || "Headers");
-      const initialLayoutData: Record<number, T_BlockElement[]> = {};
 
       if (editItem.children) {
-        editItem.children.forEach((child, index) => {
-          const block: T_BlockElement = {
+        const initialLayoutData: Record<number, T_BlockElement[]> = {};
+
+        editItem.children.forEach((child) => {
+          const row = child.layout?.y + 1 || 1;
+
+          if (!initialLayoutData[row]) {
+            initialLayoutData[row] = [];
+          }
+
+          initialLayoutData[row].push({
             name: child.name || "",
             type: child.type || "",
             source: child.source || "atoms",
@@ -46,32 +79,42 @@ const SectionsToolsPanel: React.FC<Props> = ({ setError, setSeverity }) => {
               w: child.layout?.w || 1,
               h: child.layout?.h || 1,
             },
-          };
-
-          const row = index + 1;
-          if (!initialLayoutData[row]) {
-            initialLayoutData[row] = [];
-          }
-          initialLayoutData[row].push(block);
+          });
         });
+        dispatch(setLayoutDate(initialLayoutData));
       }
-      dispatch(setLayoutDate(initialLayoutData));
+    } else {
+      setIsEditing(false);
     }
+    return () => resetForm();
   }, [editItem, dispatch]);
 
   const submitSection = () => {
     const data: T_BlockElement[] = Object.values(layoutDate).flat();
 
-    const filteredArr = data.filter((el) => el.name);
-    const elements = filteredArr.map((el) => {
-      // console.log(el, el.layout.i, el.layout.i.slice(0, 1));
+    const elements = data.map((el) => {
+      if (isEditing) {
+        return {
+          name: el.name,
+          source: "atoms",
+          layout: {
+            i: el.layout.i,
+            x: el.layout.x,
+            y: el.layout.y,
+            w: el.layout.w,
+            h: el.layout.h,
+          },
+          props: el.props,
+        };
+      }
+
       return {
         name: el.name,
         source: "atoms",
         layout: {
           i: String(el.layout.i),
           x: calcX(Number(String(el.layout.i).slice(0, 1)), Number(String(el.layout.i).slice(1))),
-          y: calcY(Number(String(el.layout.i).slice(0, 1))), // el.y,
+          y: calcY(Number(String(el.layout.i).slice(0, 1))),
           w: el.layout.w,
           h: el.layout.h,
         },
@@ -86,7 +129,13 @@ const SectionsToolsPanel: React.FC<Props> = ({ setError, setSeverity }) => {
       columns: 6,
       source: "atoms",
       children: elements,
-      layout: { i: "", x: 0, y: 0, w: 6, h: calcSectionH() + 1 },
+      layout: {
+        i: editItem?.layout?.i || "",
+        x: editItem?.layout?.x || 0,
+        y: editItem?.layout?.y || 0,
+        w: 6,
+        h: isEditing ? editItem?.layout?.h || calcSectionH() + 1 : calcSectionH() + 1,
+      },
     };
 
     if (!name.trim()) {
@@ -95,7 +144,7 @@ const SectionsToolsPanel: React.FC<Props> = ({ setError, setSeverity }) => {
       return;
     }
 
-    if (editItem) {
+    if (isEditing && editItem) {
       dispatch(
         editSection({
           oldItem: editItem,
@@ -103,7 +152,7 @@ const SectionsToolsPanel: React.FC<Props> = ({ setError, setSeverity }) => {
         }),
       );
       setSeverity("success");
-      setError(`Section ${name} was updated  to ${type}`);
+      setError(`Section ${name} was updated`);
     } else {
       dispatch(
         postNewSection({
@@ -164,13 +213,13 @@ const SectionsToolsPanel: React.FC<Props> = ({ setError, setSeverity }) => {
       return 0;
     }
   };
-
   const calcSectionH = () => {
     let h = 0;
     for (let i = 1; i <= rows; i++) {
+      if (!layoutDate[i]) continue;
       let max = 1;
       for (let n = 0; n < layoutDate[i].length; n++) {
-        if (layoutDate[i][n].layout.h > max) {
+        if (layoutDate[i][n]?.layout?.h > max) {
           max = layoutDate[i][n].layout.h;
         }
       }
@@ -191,7 +240,7 @@ const SectionsToolsPanel: React.FC<Props> = ({ setError, setSeverity }) => {
   };
   return (
     <Box sx={{ width: "300px", background: "#222", color: "#aaa" }}>
-      <h2>{editItem ? "Edit Section" : "Create Section"}</h2>
+      <h2>{isEditing ? "Edit Section" : "Create Section"}</h2>
 
       <ToggleButtonGroup
         color="primary"
@@ -226,7 +275,7 @@ const SectionsToolsPanel: React.FC<Props> = ({ setError, setSeverity }) => {
           setType={setType}
           name={name}
           setName={setName}
-          isEditing={!!editItem}
+          isEditing={isEditing}
         />
       ) : null}
       {toggleMenu === "ELEMENTS_SETTINGS" ? <MemoizedElementSettings /> : null}
@@ -251,7 +300,7 @@ const SectionsToolsPanel: React.FC<Props> = ({ setError, setSeverity }) => {
         }}
         onClick={() => submitSection()}
       >
-        Save section
+        {isEditing ? "Update section" : "Save section"}
       </Button>
     </Box>
   );
