@@ -1,4 +1,4 @@
-import { memo } from "react";
+import { memo, useState } from "react";
 
 import { Accordion, AccordionDetails, AccordionSummary, Box } from "@mui/material";
 import { ExpandMore } from "@mui/icons-material";
@@ -11,19 +11,33 @@ const ElementSpecificSettings = () => {
   const newImp = useInput("");
   const r = newImp.r;
   const w = newImp.w;
+  const [expanded, setExpanded] = useState<string | false>(false);
+
+  const handleAccordionChange =
+    (panel: string) => (event: React.SyntheticEvent, isExpanded: boolean) => {
+      setExpanded(isExpanded ? panel : false);
+    };
 
   return (
     <Box>
       <Item sx={{background: '#444', color: '#999'}}>
         Current element: <br /> {`Row ${r}`} {`Column ${w}`}
       </Item>
-      <Accordion sx={{background: '#444', color: '#999'}}>
+        <Accordion
+        expanded={expanded === "config"}
+        onChange={handleAccordionChange("config")}
+        sx={{ background: "#444", color: "#999" }}
+      >
         <AccordionSummary expandIcon={<ExpandMore />}>Configuration Settings</AccordionSummary>
         <AccordionDetails>
           <ElementSpecificSettingsForm />
         </AccordionDetails>
       </Accordion>
-      <Accordion sx={{background: '#444', color: '#999'}}>
+        <Accordion
+        expanded={expanded === "style"}
+        onChange={handleAccordionChange("style")}
+        sx={{ background: "#444", color: "#999" }}
+      >
         <AccordionSummary expandIcon={<ExpandMore />}>Style Settings</AccordionSummary>
         <AccordionDetails>
           <ElementSpecificStylesForm></ElementSpecificStylesForm>
