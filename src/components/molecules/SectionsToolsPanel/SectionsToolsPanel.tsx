@@ -88,7 +88,7 @@ const SectionsToolsPanel: React.FC<Props> = ({ setError, setSeverity }) => {
       setIsEditing(false);
     }
     return () => resetForm();
-  }, [editItem, dispatch]);
+  }, [editItem, dispatch, resetForm]);
 
   const submitSection = () => {
     const data: T_BlockElement[] = Object.values(layoutDate).flat();
