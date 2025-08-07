@@ -205,8 +205,6 @@ export const LetterGridContainer = (container: IGridContainers) => {
         isDraggable={!isDraggingInnerItem}
         isDroppable={true}
         isResizable={false}
-        compactType={null}
-        preventCollision={true}
         onDrop={(layout: Layout[], layoutItem: Layout) => {
           const draggableItem = currentDraggableItem as CustomLayout;
 
@@ -248,7 +246,7 @@ export const LetterGridContainer = (container: IGridContainers) => {
 
           return (
             <div
-              key={el.layout.i}
+              key={`${container.id}-${el.id}`}
               className={`${classes["item"]} ${isActive ? classes["active"] : ""}`}
               onClick={() => {
                 if (el.id) {

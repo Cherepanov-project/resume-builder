@@ -9,6 +9,7 @@ import { useTypedSelector } from "@/hooks/cvTemplateHooks";
 
 import { editSection, postNewSection } from "@/store/sectionCreator/sectionSlice";
 import { useLocation } from "react-router-dom";
+import { nanoid } from "nanoid";
 
 interface Props {
   setError: (message: string) => void;
@@ -45,7 +46,7 @@ const SectionsToolsPanel: React.FC<Props> = ({ setError, setSeverity }) => {
               textStyle: { display: "block" },
               style: { "": "" },
             },
-            layout: { i: "11", x: 0, y: 0, w: 1, h: 1 },
+            layout: { i: nanoid(), x: 0, y: 0, w: 1, h: 1 },
           },
         ],
       }),
@@ -177,7 +178,7 @@ const SectionsToolsPanel: React.FC<Props> = ({ setError, setSeverity }) => {
                 textStyle: { display: "block" },
                 style: { "": "" },
               },
-              layout: { i: "11", x: 0, y: 0, w: 1, h: 1 },
+              layout: { i: nanoid(), x: 0, y: 0, w: 1, h: 1 },
             },
           ],
         }),
