@@ -1,4 +1,4 @@
-import { Box, Button, Container, Typography } from '@mui/material';
+import { Box, Button, Container, Typography, useTheme } from '@mui/material';
 import { useState } from 'react';
 import ArrowDownwardIcon from '@mui/icons-material/ArrowDownward';
 import { useNavigate } from 'react-router-dom';
@@ -6,7 +6,7 @@ import { useNavigate } from 'react-router-dom';
 const NotFoundPage = () => {
   const [auth] = useState(true);
   const navigate = useNavigate();
-
+  const theme = useTheme()
   const getRandomColor = () => {
     const r = Math.floor(Math.random() * 256);
     const g = Math.floor(Math.random() * 256);
@@ -35,12 +35,10 @@ const NotFoundPage = () => {
         <Typography
           variant="h1"
           sx={{
-            fontWeight: '700',
+            fontWeight: theme.custom.fontWeightBig,
             animation: 'colorChange 1.5s ease-in-out infinite',
             '@keyframes colorChange': {
-              '100%,0%': {
-                color: 'red',
-              },
+              '100%,0%': theme.custom.colorRed,
               '33%': {
                 color: getRandomColor(),
               },

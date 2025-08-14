@@ -5,6 +5,7 @@ import Menu, { MenuProps } from '@mui/material/Menu';
 import MenuItem from '@mui/material/MenuItem';
 import KeyboardArrowDownIcon from '@mui/icons-material/KeyboardArrowDown';
 import KeyboardArrowUpIcon from '@mui/icons-material/KeyboardArrowUp';
+import { useTheme } from '@mui/material';
 
 const StyledMenu = styled((props: MenuProps) => (
   <Menu
@@ -43,6 +44,7 @@ const StyledMenu = styled((props: MenuProps) => (
 }));
 
 const CustomizedMenus = () => {
+  const theme = useTheme()
   const [anchorEl, setAnchorEl] = React.useState<null | HTMLElement>(null);
   const [arrowDirection, setArrowDirection] = React.useState<boolean>(false);
   const open = Boolean(anchorEl);
@@ -80,22 +82,22 @@ const CustomizedMenus = () => {
           borderRadius: '0',
           color: 'white',
           fontSize: '12px',
-          backgroundColor: '#505659',
+          backgroundColor: theme.custom.colorLightGray,
           height: '100%',
           textTransform: 'none',
           outline: 'none',
           '&:hover': {
             color: 'white',
             fontSize: '12px',
-            backgroundColor: '#505659',
+            backgroundColor: theme.custom.colorLightGray,
             outline: 'none',
           },
           '&:active': {
-            backgroundColor: '#33373a',
+            backgroundColor: theme.custom.colorDarkGray,
             outline: 'none',
           },
           '&:focus': {
-            backgroundColor: '#33373a',
+            backgroundColor: theme.custom.colorDarkGray,
             outline: 'none',
           },
         }}

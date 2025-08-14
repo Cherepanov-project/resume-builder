@@ -23,7 +23,7 @@ import {
 } from "@pages/CvTemplatePDF/components/molecules";
 import { ImagePDF, SubtitlePDF, TextPDF, TitlePDF } from "@pages/CvTemplatePDF/components/atoms";
 import { EducationPDF } from "@pages/CvTemplatePDF/components/molecules/EducationPDF";
-import StyleEditor_v2 from "@/pages/CvTemplate/components/StyleEditor/components/StyleEditor";
+import StyleEditor_v2 from "@pages/CvTemplate/components/StyleEditor.tsx";
 
 interface IProps {
   setChooseTemplate: React.Dispatch<React.SetStateAction<number>>;
@@ -241,9 +241,7 @@ const EditWithHeader: FC<IProps> = ({ setChooseTemplate }) => {
         propName: "text",
       },
       Experience: {
-        component: ExperiencePDF as unknown as (
-          props: Record<string, unknown>,
-        ) => React.ReactElement,
+        component: ExperiencePDF as unknown as (props: Record<string, unknown>) => React.ReactElement,
         title: "Опыт",
         data: { ...propsExperience },
         complex: true,
@@ -264,9 +262,7 @@ const EditWithHeader: FC<IProps> = ({ setChooseTemplate }) => {
         propName: "hobbies",
       },
       Education: {
-        component: EducationPDF as unknown as (
-          props: Record<string, unknown>,
-        ) => React.ReactElement,
+        component: EducationPDF as unknown as (props: Record<string, unknown>) => React.ReactElement,
         title: "Образование",
         data: { ...propsEducation },
         complex: true,
@@ -281,34 +277,10 @@ const EditWithHeader: FC<IProps> = ({ setChooseTemplate }) => {
     };
   }, [
     userTemporaryCvDataSlice,
-    Img,
-    TextSpecial,
-    SubtitleNone,
-    Contact,
-    ContactLink,
-    ContactIcon,
-    Text,
-    ContactWrapper,
-    Subtitle,
-    SubtitleSpecial,
-    Educations,
-    Education,
-    EducationTitle,
-    EducationTime,
-    EducationPosition,
-    Experiences,
-    Experience,
-    ExperienceTitle,
-    ExperienceTime,
-    ExperiencePosition,
-    Socials,
-    Social,
-    SocialTitle,
-    Hobbies,
-    Hobbie,
-    HobbieBullets,
-    Title,
-    fullNameTitiles,
+    Img, TextSpecial, SubtitleNone, Contact, ContactLink, ContactIcon, Text, ContactWrapper,
+    Subtitle, SubtitleSpecial, Educations, Education, EducationTitle, EducationTime, EducationPosition,
+    Experiences, Experience, ExperienceTitle, ExperienceTime, ExperiencePosition,
+    Socials, Social, SocialTitle, Hobbies, Hobbie, HobbieBullets, Title, fullNameTitiles
   ]);
 
   const [, setFlag] = useState(false);
@@ -316,7 +288,7 @@ const EditWithHeader: FC<IProps> = ({ setChooseTemplate }) => {
     setFlag((flag) => !flag);
   };
 
-  const mainComponents: string[] = [];
+  const mainComponents: string[] = []; 
   templatePDFStyles.custom.structure.header.isPresented && mainComponents.push("Header");
   mainComponents.push("Main");
   templatePDFStyles.custom.structure.sidebar.isPresented && mainComponents.push("SideBar");
@@ -325,7 +297,7 @@ const EditWithHeader: FC<IProps> = ({ setChooseTemplate }) => {
     Header: [],
     Main: [],
     SideBar: [],
-  };
+  }; 
 
   if (templatePDFStyles.custom.style.Header) {
     if (templatePDFStyles.custom.style.Header.name == "toronto")
@@ -366,26 +338,23 @@ const EditWithHeader: FC<IProps> = ({ setChooseTemplate }) => {
     return null;
   }, [currentSubComponent, pdfComponents]);
 
-  const setNewStyleValue = React.useCallback(
-    (place: string, type: string, value: string | number) => {
-      if (templatePDFStyles.custom.style) {
-        const currentPlaceStyle = templatePDFStyles.custom.style[place] || {};
-
-        if (currentPlaceStyle) {
-          const newStyles = JSON.parse(JSON.stringify(templatePDFStyles.custom.style));
-
-          if (!newStyles[place]) {
-            newStyles[place] = {};
-          }
-
-          newStyles[place][type] = value;
-
-          templatePDFStyles.custom.style = newStyles;
+  const setNewStyleValue = React.useCallback((place: string, type: string, value: string | number) => {
+    if (templatePDFStyles.custom.style) {
+      const currentPlaceStyle = templatePDFStyles.custom.style[place] || {};
+      
+      if (currentPlaceStyle) {
+        const newStyles = JSON.parse(JSON.stringify(templatePDFStyles.custom.style));
+        
+        if (!newStyles[place]) {
+          newStyles[place] = {};
         }
+        
+        newStyles[place][type] = value;
+        
+        templatePDFStyles.custom.style = newStyles;
       }
-    },
-    [],
-  );
+    }
+  }, []);
 
   const componentRef = useRef<HTMLDivElement>(null);
   const handlePrint = useReactToPrint({
@@ -443,7 +412,10 @@ const EditWithHeader: FC<IProps> = ({ setChooseTemplate }) => {
                   ))}
                 </Select>
               </FormControl>
-              <Button sx={{ ...buttonStyle, ml: 5 }} onClick={handlePrint}>
+              <Button 
+                sx={{ ...buttonStyle, ml: 5 }} 
+                onClick={handlePrint}
+              >
                 Print
               </Button>
             </Box>
@@ -462,10 +434,7 @@ const EditWithHeader: FC<IProps> = ({ setChooseTemplate }) => {
                   <StyleEditor_v2
                     updateParent={updateFlag}
                     Component={PDFSubComponent}
-                    componentProps={{
-                      ...pdfComponents[currentSubComponent].data,
-                      style: templatePDFStyles.custom.style,
-                    }}
+                    componentProps={{ ...pdfComponents[currentSubComponent].data, style: templatePDFStyles.custom.style }}
                     isComplex={pdfComponents[currentSubComponent].complex}
                     setNewStyleValue={setNewStyleValue}
                     propName={pdfComponents[currentSubComponent].propName}
