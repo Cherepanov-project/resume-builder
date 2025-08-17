@@ -17,6 +17,7 @@ interface SectionSpecificSettingsType {
   setType: (value: string) => void;
   name: string;
   setName: (value: string) => void;
+  isEditing?: boolean;
 }
 
 const SectionSpecificSettings: React.FC<SectionSpecificSettingsType> = ({
@@ -25,7 +26,7 @@ const SectionSpecificSettings: React.FC<SectionSpecificSettingsType> = ({
   name,
   setName,
 }) => {
-  const theme = useTheme()
+  const theme = useTheme();
   return (
     <Box sx={{ m: "15px" }}>
       <Stack>

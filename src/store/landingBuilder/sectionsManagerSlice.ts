@@ -1,4 +1,4 @@
-import { T_BlockElement } from "@/types/landingBuilder";
+import { T_BlockElement, T_SectionElements } from "@/types/landingBuilder";
 import { createSlice, PayloadAction } from "@reduxjs/toolkit";
 
 type LayoutDateType = { [key: number]: T_BlockElement[] };
@@ -8,6 +8,7 @@ interface InitialState {
   curId: string;
   text: string;
   url: string;
+  editItem: T_SectionElements | null;
 }
 
 const initialState: InitialState = {
@@ -31,12 +32,17 @@ const initialState: InitialState = {
   curId: "",
   text: "",
   url: "",
+  editItem: null,
 };
 
 const sectionsManagerSlice = createSlice({
   name: "sectionsManager",
   initialState,
   reducers: {
+    setEidtItem(state, action: PayloadAction<T_SectionElements | null>) {
+      state.editItem = action.payload;
+    },
+
     setLayoutDate(state, action) {
       state.layoutDate = action.payload;
     },
@@ -86,6 +92,7 @@ const sectionsManagerSlice = createSlice({
   },
 });
 
-export const { setLayoutDate, handleSettingsMenu, editRowDate } = sectionsManagerSlice.actions;
+export const { setLayoutDate, handleSettingsMenu, editRowDate, setEidtItem } =
+  sectionsManagerSlice.actions;
 
 export default sectionsManagerSlice.reducer;
