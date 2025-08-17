@@ -12,6 +12,7 @@ import { PlusCircleFilled, PlusCircleOutlined } from '@ant-design/icons';
 import classes from './GridContainer.module.scss';
 
 import { Responsive, WidthProvider } from 'react-grid-layout';
+import { useTheme } from '@mui/material';
 const ResponsiveGridLayout = WidthProvider(Responsive);
 
 const DynamicComponentRenderer: React.FC<DynamicComponentRendererProps> = memo(
@@ -34,6 +35,7 @@ const DynamicComponentRenderer: React.FC<DynamicComponentRendererProps> = memo(
 );
 
 export const GridContainer = (container: IGridContainers) => {
+  const theme = useTheme()
   const dispatch = useAppDispatch();
   const currentDraggableItem = useTypedSelector((state) => state.layout.currentDraggableItem);
   const width = useTypedSelector((state) => state.layout.windowWidth);
@@ -148,9 +150,9 @@ export const GridContainer = (container: IGridContainers) => {
           }}
         >
           {!isButtonHover ? (
-            <PlusCircleOutlined style={{ color: '#2dc08d', fontSize: 30 }} />
+            <PlusCircleOutlined style={theme.custom.plusCircleOutlined} />
           ) : (
-            <PlusCircleFilled style={{ color: '#2dc08d', fontSize: 30 }} />
+            <PlusCircleFilled style={theme.custom.plusCircleOutlined} />
           )}
         </button>
       )}

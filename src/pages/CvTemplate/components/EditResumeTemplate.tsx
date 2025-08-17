@@ -1,4 +1,4 @@
-import { Box, Button, Typography } from '@mui/material';
+import { Box, Button, Typography, useTheme } from '@mui/material';
 import { FC, MouseEventHandler, useState } from 'react';
 import { buttonStyle } from '@assets/style/buttonStyle.ts';
 import EditColor from './EditColor.tsx';
@@ -13,7 +13,7 @@ interface IProps {
 
 const EditResumeTemplate: FC<IProps> = ({ handleButtonClick }) => {
   const [chooseTemplate, setChooseTemplate] = useState(0);
-
+  const theme = useTheme()
   return (
     <>
       {chooseTemplate != 0 ? (
@@ -26,7 +26,7 @@ const EditResumeTemplate: FC<IProps> = ({ handleButtonClick }) => {
               ml: 10,
               mb: 2,
               fontSize: 30,
-              fontWeight: 700,
+              fontWeight: theme.custom.fontWeightBig,
             }}
           >
             step 1 choose right way of info position

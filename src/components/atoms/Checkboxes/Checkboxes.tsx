@@ -9,7 +9,6 @@ import { Checkbox, FormControlLabel, Typography } from '@mui/material';
 interface CheckboxItem extends ISettingsInputItem {
   id: string;
   value: string;
-  label?: string;
 }
 
 interface CheckboxesProps {
@@ -79,7 +78,7 @@ const Checkboxes = ({ props, layout }: CheckboxesProps) => {
         }
         label={
           <Typography className={classes.label}>
-            {item.label || item.value || 'Text'}
+            {item.value || 'Text'}
           </Typography>
         }
       />

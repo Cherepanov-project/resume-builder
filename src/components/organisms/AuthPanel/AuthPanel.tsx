@@ -10,6 +10,7 @@ import {
   FormHelperText,
   Typography,
   Box,
+  useTheme,
 } from '@mui/material';
 import MuiLink from '@mui/material/Link';
 
@@ -20,6 +21,7 @@ interface IAuthPanelProps {
   authType: string;
 }
 const AuthPanel: React.FC<IAuthPanelProps> = ({ authType }) => {
+  const theme = useTheme()
   const [authData, setAuthData] = useState({
     email: '',
     password: '',
@@ -69,7 +71,7 @@ const AuthPanel: React.FC<IAuthPanelProps> = ({ authType }) => {
             <Typography
               variant="h3"
               component="h2"
-              sx={{ color: 'text.primary', fontWeight: '700' }}
+              sx={{ color: 'text.primary', fontWeight: theme.custom.fontWeightBig }}
               my={2}
             >
               {authType}
@@ -101,7 +103,7 @@ const AuthPanel: React.FC<IAuthPanelProps> = ({ authType }) => {
                 onChange={handleChange}
               />
               {inputError && (
-                <FormHelperText id="my-helper-text" sx={{ color: 'red' }}>
+                <FormHelperText id="my-helper-text" sx={theme.custom.colorRed}>
                   We'll never share your email.
                 </FormHelperText>
               )}
@@ -109,7 +111,7 @@ const AuthPanel: React.FC<IAuthPanelProps> = ({ authType }) => {
             <>
               <PasswordInput authData={authData} handleChange={handleChange} authType={authType} />
               {inputError && (
-                <FormHelperText id="my-helper-text" sx={{ color: 'red' }}>
+                <FormHelperText id="my-helper-text" sx={theme.custom.colorRed}>
                   Something is incorrect
                 </FormHelperText>
               )}

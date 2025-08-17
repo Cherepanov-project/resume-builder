@@ -31,8 +31,7 @@ const CheckboxGroup = ({ props, layout }: CheckboxGroupProps) => {
   const checkboxProps = {
     Checkboxes: checkboxList.map((option) => ({
       id: nanoid(),
-      value: option.value,
-      label: option.label,
+      value: option.label,
       checked: false,
     })),
     text: props.label,

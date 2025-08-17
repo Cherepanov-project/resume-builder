@@ -6,7 +6,7 @@ import {
   MenuItem,
   OutlinedInput,
   TextField,
-  Button,
+  useTheme,
 } from "@mui/material";
 import Item from "@atoms/StyledPaperItem";
 import { nanoid } from "nanoid";
@@ -39,25 +39,27 @@ type AccordionData = Array<[string, string]>;
 const ElementSpecificSettingsForm = () => {
   const newImp = useInput("");
   const type = newImp.type;
+  const theme = useTheme()
 
   return (
     <form>
       <Stack>
-        <Item sx={{ backgroundColor: "#444" }}>
-          <FormControl sx={{ width: "220px", ...commonFieldSx }}>
+        <Item sx={{ backgroundColor: theme.custom.colorGray }}>
+          <FormControl>
             <InputLabel id="type-label" sx={commonFieldSx["& .MuiInputLabel-root"]}>
               Choose element type
             </InputLabel>
             <Select
               labelId="type-label"
+              sx={{ width: "220px", ...commonFieldSx }}
               value={newImp.value}
               onChange={newImp.hendlerType}
               input={<OutlinedInput label="Choose element type" />}
               MenuProps={{
                 PaperProps: {
                   sx: {
-                    backgroundColor: "#444",
-                    color: "#999",
+                    backgroundColor: theme.custom.colorGray,
+                    color: theme.custom.colorWhiteGray,
                   },
                 },
               }}
@@ -72,7 +74,7 @@ const ElementSpecificSettingsForm = () => {
         </Item>
 
         {newImp.simpleForme.includes(type) ? (
-          <Item sx={{ backgroundColor: "#444" }}>
+          <Item sx={{ backgroundColor: theme.custom.colorGray }}>
             <FormControl>
               <TextField
                 sx={commonFieldSx}
@@ -87,10 +89,10 @@ const ElementSpecificSettingsForm = () => {
         ) : null}
 
         {type === "Accordion" ? (
-          <Item sx={{ backgroundColor: "#444" }}>
+          <Item sx={{ backgroundColor: theme.custom.colorGray }}>
             <FormControl>
               {newImp.accordion.map((item: string[], index: number) => (
-                <div key={index} style={{ marginBottom: "20px" }}>
+                <div key={index}>
                   <TextField
                     sx={commonFieldSx}
                     style={{ marginBottom: "15px" }}
@@ -117,23 +119,9 @@ const ElementSpecificSettingsForm = () => {
                       newImp.onChangeaccordion(updatedAccordion);
                     }}
                   />
-                  <Button
-                    variant="contained"
-                    size="small"
-                    sx={{ textTransform: "none" }}
-                    onClick={() => {
-                      const updatedAccordion = newImp.accordion.filter((_, i) => i !== index);
-                      newImp.setAccordion(updatedAccordion);
-                      newImp.onChangeaccordion(updatedAccordion);
-                    }}
-                  >
-                    Delete
-                  </Button>
                 </div>
               ))}
-              <Button
-                style={{ background: "#222", color: "#999" }}
-                sx={{ textTransform: "none" }}
+              <button
                 onClick={(e: { preventDefault: () => void }) => {
                   e.preventDefault();
                   const updatedAccordion: AccordionData = [...newImp.accordion, ["", ""]];
@@ -142,13 +130,13 @@ const ElementSpecificSettingsForm = () => {
                 }}
               >
                 Add Item
-              </Button>
+              </button>
             </FormControl>
           </Item>
         ) : null}
 
         {newImp.sliderForme.includes(type) ? (
-          <Item sx={{ backgroundColor: "#444" }}>
+          <Item sx={{ backgroundColor: theme.custom.colorGray }}>
             <FormControl>
               {newImp.selectList.map((item, index: number) => (
                 <div key={index}>
@@ -170,8 +158,7 @@ const ElementSpecificSettingsForm = () => {
                 </div>
               ))}
               <div>
-                <button
-                  style={{ background: "#222", color: "#999" }}
+                <button style={{background: theme.custom.colorAlmostBlack, color: theme.custom.colorWhiteGray}}
                   onClick={(e: { preventDefault: () => void }) => {
                     e.preventDefault();
                     const updatedList = [...newImp.selectList, { id: nanoid(), value: "Text" }];
@@ -181,8 +168,7 @@ const ElementSpecificSettingsForm = () => {
                 >
                   Add Item
                 </button>
-                <button
-                  style={{ background: "#222", color: "#999" }}
+                <button style={{background: theme.custom.colorAlmostBlack, color: theme.custom.colorWhiteGray}}
                   onClick={(e: { preventDefault: () => void }) => {
                     e.preventDefault();
                     const updatedList = [...newImp.selectList];
@@ -202,7 +188,7 @@ const ElementSpecificSettingsForm = () => {
 
         {type === "CardItem" ? (
           <>
-            <Item sx={{ backgroundColor: "#444" }}>
+            <Item sx={{ backgroundColor: theme.custom.colorGray }}>
               <FormControl>
                 <TextField
                   sx={commonFieldSx}
@@ -214,7 +200,7 @@ const ElementSpecificSettingsForm = () => {
                 />
               </FormControl>
             </Item>
-            <Item sx={{ backgroundColor: "#444" }}>
+            <Item sx={{ backgroundColor: theme.custom.colorGray }}>
               <FormControl>
                 <TextField
                   sx={commonFieldSx}
@@ -226,7 +212,7 @@ const ElementSpecificSettingsForm = () => {
                 />
               </FormControl>
             </Item>
-            <Item sx={{ backgroundColor: "#444" }}>
+            <Item sx={{ backgroundColor: theme.custom.colorGray }}>
               <FormControl>
                 <TextField
                   sx={commonFieldSx}
@@ -242,7 +228,7 @@ const ElementSpecificSettingsForm = () => {
         ) : null}
 
         {newImp.complixForme.includes(type) ? (
-          <Item sx={{ backgroundColor: "#444" }}>
+          <Item sx={{ backgroundColor: theme.custom.colorGray }}>
             <FormControl>
               <TextField
                 sx={commonFieldSx}
@@ -257,7 +243,7 @@ const ElementSpecificSettingsForm = () => {
         ) : null}
 
         {newImp.moreUrl.includes(type) ? (
-          <Item sx={{ backgroundColor: "#444" }}>
+          <Item sx={{ backgroundColor: theme.custom.colorGray }}>
             <FormControl>
               <TextField
                 sx={commonFieldSx}

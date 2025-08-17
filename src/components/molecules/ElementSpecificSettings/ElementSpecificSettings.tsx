@@ -1,6 +1,6 @@
 import { memo, useState } from "react";
 
-import { Accordion, AccordionDetails, AccordionSummary, Box } from "@mui/material";
+import { Accordion, AccordionDetails, AccordionSummary, Box, useTheme } from "@mui/material";
 import { ExpandMore } from "@mui/icons-material";
 import Item from "@atoms/StyledPaperItem";
 import ElementSpecificSettingsForm from "@molecules/ElementSpecificSettingsForm";
@@ -11,6 +11,8 @@ const ElementSpecificSettings = () => {
   const newImp = useInput("");
   const r = newImp.r;
   const w = newImp.w;
+  const theme = useTheme();
+
   const [expanded, setExpanded] = useState<string | false>(false);
 
   const handleAccordionChange =
@@ -20,23 +22,25 @@ const ElementSpecificSettings = () => {
 
   return (
     <Box>
-      <Item sx={{background: '#444', color: '#999'}}>
+      <Item sx={{ background: theme.custom.colorGray, color: theme.custom.colorWhiteGray }}>
         Current element: <br /> {`Row ${r}`} {`Column ${w}`}
       </Item>
-        <Accordion
+
+      <Accordion
         expanded={expanded === "config"}
         onChange={handleAccordionChange("config")}
-        sx={{ background: "#444", color: "#999" }}
+        sx={{ background: theme.custom.colorGray, color: theme.custom.colorWhiteGray }}
       >
         <AccordionSummary expandIcon={<ExpandMore />}>Configuration Settings</AccordionSummary>
         <AccordionDetails>
           <ElementSpecificSettingsForm />
         </AccordionDetails>
       </Accordion>
-        <Accordion
+
+      <Accordion
         expanded={expanded === "style"}
         onChange={handleAccordionChange("style")}
-        sx={{ background: "#444", color: "#999" }}
+        sx={{ background: theme.custom.colorGray, color: theme.custom.colorWhiteGray }}
       >
         <AccordionSummary expandIcon={<ExpandMore />}>Style Settings</AccordionSummary>
         <AccordionDetails>

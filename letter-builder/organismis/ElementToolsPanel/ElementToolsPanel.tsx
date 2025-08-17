@@ -1,4 +1,4 @@
-import { IconButton } from "@mui/material";
+import { IconButton, useTheme } from "@mui/material";
 import {
   OpenWith,
   Settings,
@@ -38,6 +38,7 @@ const ElementToolsPanel: React.FC<ElementToolsPanelProps> = ({
   elementsIds,
   elClass,
 }) => {
+  const theme = useTheme()
   const dispatch = useAppDispatch();
 
   const handleSettings = () => {};
@@ -55,7 +56,7 @@ const ElementToolsPanel: React.FC<ElementToolsPanelProps> = ({
       <div className={classes["tools-panel-left"]}>
         <IconButton
           aria-label="Move Item"
-          color="primary"
+          color={theme.custom.defaultColor}
           className={elClass}
           onMouseDown={handleInnerItemDragStart}
           onMouseUp={handleInnerItemDragEnd}
@@ -67,7 +68,7 @@ const ElementToolsPanel: React.FC<ElementToolsPanelProps> = ({
         <IconButton
           aria-label="Configure Item"
           title="Дополнительные настройки"
-          color="primary"
+          color={theme.custom.defaultColor}
           onClick={handleSettings}
         >
           <Settings />
@@ -75,7 +76,7 @@ const ElementToolsPanel: React.FC<ElementToolsPanelProps> = ({
         <IconButton
           aria-label="Copy Item"
           title="Скопировать блок"
-          color="primary"
+          color={theme.custom.defaultColor}
           onClick={() => {
             if (elementId) {
               dispatch(copyElement({ layout, id, elementId, parentLayout }));
@@ -89,7 +90,7 @@ const ElementToolsPanel: React.FC<ElementToolsPanelProps> = ({
         <IconButton
           aria-label="Remove Item"
           title="Удалить блок"
-          color="primary"
+          color={theme.custom.defaultColor}
           onClick={() => {
             if (elementId) {
               dispatch(deleteElement({ layout, id, elementId, parentLayout }));

@@ -1,4 +1,4 @@
-import { Box, ToggleButtonGroup, ToggleButton, Divider, Button } from "@mui/material";
+import { Box, ToggleButtonGroup, ToggleButton, Divider, Button, useTheme } from "@mui/material";
 import MemoizedElementSettings from "../ElementSpecificSettings";
 import SectionSpecificSettings from "../SectionSpecificSettings";
 import { useEffect, useState, useCallback } from "react";
@@ -6,9 +6,7 @@ import { T_BlockElement, T_SectionElements } from "@/types/landingBuilder";
 import { handleSettingsMenu, setLayoutDate } from "@/store/landingBuilder/sectionsManagerSlice";
 import { useDispatch } from "react-redux";
 import { useTypedSelector } from "@/hooks/cvTemplateHooks";
-
 import { editSection, postNewSection } from "@/store/sectionCreator/sectionSlice";
-import { useLocation } from "react-router-dom";
 import { nanoid } from "nanoid";
 
 interface Props {
@@ -17,41 +15,43 @@ interface Props {
 }
 
 const SectionsToolsPanel: React.FC<Props> = ({ setError, setSeverity }) => {
+  const theme = useTheme();
+
   const [name, setName] = useState("");
   const [type, setType] = useState("Headers");
   const [isEditing, setIsEditing] = useState(false);
+  const [toggleMenu, setToggleMenu] = useState<unknown>("SECTION_SETTINGS");
 
-  const location = useLocation();
   const dispatch = useDispatch();
-
-  const editItem = location.state?.editItem as T_BlockElement | undefined;
   const layoutDate = useTypedSelector((state) => state.sectionsManager.layoutDate);
+  const editItem = useTypedSelector((state) => state.sectionsManager.editItem);
   const rows = Object.keys(layoutDate).length;
 
-const resetForm = useCallback(() => {
-  setName("");
-  setType("Headers");
-  setToggleMenu("SECTION_SETTINGS");
-  dispatch(
-    setLayoutDate({
-      1: [
-        {
-          name: "",
-          type: "",
-          source: "atoms",
-          props: {
-            text: "",
-            key: "",
-            wrapperStyle: { display: "block" },
-            textStyle: { display: "block" },
-            style: { "": "" },
+  const resetForm = useCallback(() => {
+    setName("");
+    setType("Headers");
+    setToggleMenu("SECTION_SETTINGS");
+    dispatch(
+      setLayoutDate({
+        1: [
+          {
+            name: "",
+            type: "",
+            source: "atoms",
+            props: {
+              text: "",
+              key: "",
+              wrapperStyle: { display: "block" },
+              textStyle: { display: "block" },
+              style: { "": "" },
+            },
+            layout: { i: nanoid(), x: 0, y: 0, w: 1, h: 1 },
           },
-          layout: { i: nanoid(), x: 0, y: 0, w: 1, h: 1 },
-        },
-      ],
-    }),
-  );
-}, [dispatch]);
+        ],
+      }),
+    );
+  }, [dispatch]);
+
   useEffect(() => {
     if (editItem) {
       setIsEditing(true);
@@ -91,24 +91,15 @@ const resetForm = useCallback(() => {
   }, [editItem, dispatch, resetForm]);
 
   const submitSection = () => {
-    const data: T_BlockElement[] = Object.values(layoutDate).flat();
+    const arr: T_BlockElement[] = [];
+    const data = Object.values(layoutDate);
+    for (let i = 0; i < data.length; i++) {
+      arr.push(...data[i]);
+    }
 
-    const elements = data.map((el) => {
-      if (isEditing) {
-        return {
-          name: el.name,
-          source: "atoms",
-          layout: {
-            i: el.layout.i,
-            x: el.layout.x,
-            y: el.layout.y,
-            w: el.layout.w,
-            h: el.layout.h,
-          },
-          props: el.props,
-        };
-      }
+    const filteredArr = arr.filter((el) => el.name);
 
+    const elements = filteredArr.map((el) => {
       return {
         name: el.name,
         source: "atoms",
@@ -139,52 +130,51 @@ const resetForm = useCallback(() => {
       },
     };
 
-    if (!name.trim()) {
+    if (name.trim()) {
+      if (isEditing && editItem) {
+        dispatch(
+          editSection({
+            oldItem: editItem,
+            newItem: section,
+          }),
+        );
+        setSeverity("success");
+        setError(`Section ${name} was updated`);
+      } else {
+        dispatch(
+          postNewSection({
+            moduleName: type,
+            section,
+          }),
+        );
+        setSeverity("success");
+        setError(`Section ${name} was added to ${type}`);
+
+        dispatch(
+          setLayoutDate({
+            1: [
+              {
+                name: "",
+                type: "",
+                source: "atoms",
+                props: {
+                  text: "",
+                  key: "",
+                  wrapperStyle: { display: "block" },
+                  textStyle: { display: "block" },
+                  style: { "": "" },
+                },
+                layout: { i: nanoid(), x: 0, y: 0, w: 1, h: 1 },
+              },
+            ],
+          }),
+        );
+        setName("");
+        dispatch(handleSettingsMenu({ type: "UPDATE_ID", value: "11" }));
+      }
+    } else {
       setSeverity("error");
       setError(`Section is missing a name`);
-      return;
-    }
-
-    if (isEditing && editItem) {
-      dispatch(
-        editSection({
-          oldItem: editItem,
-          newItem: section,
-        }),
-      );
-      setSeverity("success");
-      setError(`Section ${name} was updated`);
-    } else {
-      dispatch(
-        postNewSection({
-          moduleName: type,
-          section,
-        }),
-      );
-      setSeverity("success");
-      setError(`Section ${name} was added to ${type}`);
-
-      dispatch(
-        setLayoutDate({
-          1: [
-            {
-              name: "",
-              type: "",
-              source: "atoms",
-              props: {
-                text: "",
-                key: "",
-                wrapperStyle: { display: "block" },
-                textStyle: { display: "block" },
-                style: { "": "" },
-              },
-              layout: { i: nanoid(), x: 0, y: 0, w: 1, h: 1 },
-            },
-          ],
-        }),
-      );
-      setName("");
-      dispatch(handleSettingsMenu({ type: "UPDATE_ID", value: "11" }));
     }
   };
 
@@ -228,7 +218,6 @@ const resetForm = useCallback(() => {
     }
     return h;
   };
-  const [toggleMenu, setToggleMenu] = useState<unknown>("SECTION_SETTINGS");
 
   const handleToggleMenu = (e: React.MouseEvent<HTMLElement>) => {
     const target = e.target as HTMLButtonElement;
@@ -240,21 +229,21 @@ const resetForm = useCallback(() => {
     }
   };
   return (
-    <Box sx={{ width: "300px", background: "#222", color: "#aaa" }}>
+    <Box sx={{ width: "300px", background: theme.custom.colorMetalGray, color: "#aaa" }}>
       <h2>{isEditing ? "Edit Section" : "Create Section"}</h2>
 
       <ToggleButtonGroup
-        color="primary"
+        color={theme.custom.defaultColor}
         size="small"
         exclusive
         aria-label="settings-category"
         sx={{
           "& .MuiToggleButton-root": {
-            backgroundColor: "#333",
-            color: "#999",
+            backgroundColor: theme.custom.colorMetalGray,
+            color: theme.custom.colorWhiteGray,
             border: "1px solid #ccc",
             "&:hover": {
-              backgroundColor: "#444",
+              backgroundColor: theme.custom.colorGray,
             },
           },
         }}
@@ -288,15 +277,15 @@ const resetForm = useCallback(() => {
         sx={{
           width: "70%",
           mt: "10px",
-          color: "#999",
-          borderColor: "#333",
-          backgroundColor: "#444",
+          color: theme.custom.colorWhiteGray,
+          borderColor: theme.custom.colorMetalGray,
+          backgroundColor: theme.custom.colorGray,
           "&:hover": {
-            borderColor: "#222",
+            borderColor: theme.custom.colorAlmostBlack,
             backgroundColor: "#555",
           },
           "&.Mui-focused": {
-            borderColor: "#333",
+            borderColor: theme.custom.colorMetalGray,
           },
         }}
         onClick={() => submitSection()}
