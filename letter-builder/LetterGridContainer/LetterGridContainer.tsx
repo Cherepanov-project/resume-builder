@@ -199,6 +199,8 @@ export const LetterGridContainer = (container: IGridContainers) => {
         isDraggable={!isDraggingInnerItem}
         isDroppable={true}
         isResizable={false}
+        compactType={null}
+        preventCollision={true}
         onDrop={(layout: Layout[], layoutItem: Layout) => {
           const draggableItem = currentDraggableItem as CustomLayout;
 

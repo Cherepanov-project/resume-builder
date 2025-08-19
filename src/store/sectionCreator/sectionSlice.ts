@@ -57,7 +57,7 @@ export const sectionSlice = createSlice({
     },
     editSection: (
       state,
-      action: PayloadAction<{ oldItem: T_BlockElement; newItem: T_SectionElements }>,
+      action: PayloadAction<{ oldItem: T_SectionElements; newItem: T_SectionElements }>,
     ) => {
       const { oldItem, newItem } = action.payload;
       const { type, title } = oldItem;
