@@ -1,5 +1,5 @@
 import { IGridContainers, setCurrentContainer } from "@/store/LetterBuilderStore/letterLayoutSlice";
-import  { WidthProvider, Responsive, Layout } from "react-grid-layout";
+import { WidthProvider, Responsive, Layout } from "react-grid-layout";
 import "react-grid-layout/css/styles.css";
 import "react-resizable/css/styles.css";
 import { useAppDispatch, useTypedSelector } from "@/hooks/cvTemplateHooks";
@@ -8,11 +8,8 @@ import {
   T_BlockElement,
   CustomLayout,
 } from "@/types/landingBuilder";
-import {
-  addElement,
-  changeElement,
-  setWindowWidth,
-} from "@store/LetterBuilderStore/letterLayoutSlice";
+import { addElement, changeElement, setWindowWidth } from "@/store/landingBuilder/layoutSlice";
+import { setSelectedGif } from "@/store/landingBuilder/layoutSlice";
 import React, { Suspense, lazy, memo, useEffect, useState } from "react";
 import ComponentPreloader from "@/components/atoms/ComponentPreloader";
 import ElementToolsPanel from "../organismis/ElementToolsPanel/ElementToolsPanel";
@@ -22,10 +19,24 @@ import classes from "./LetterGridContainer.module.scss";
 const ResponsiveReactGridLayout = Responsive;
 const ResponsiveGridLayoutWithWidth = WidthProvider(ResponsiveReactGridLayout) as any;
 
-export type LetterDynamicComponentRendererProps = DynamicComponentRendererProps;
+export type LetterDynamicComponentRendererProps = DynamicComponentRendererProps & {
+  onGifSelect?: (url: string) => void;
+  selectedGif?: string;
+};
 
 const DynamicComponentRenderer: React.FC<LetterDynamicComponentRendererProps> = memo(
-  ({ id, Component, props, columns, source, children, layout, containerId }) => {
+  ({
+    id,
+    Component,
+    props,
+    columns,
+    source,
+    children,
+    layout,
+    containerId,
+    onGifSelect,
+    selectedGif,
+  }) => {
     const DynamicComponent = lazy(() => import(`../${source}/LineBlocks/index.ts`));
 
     return (
@@ -40,6 +51,8 @@ const DynamicComponentRenderer: React.FC<LetterDynamicComponentRendererProps> = 
             children={children}
             layout={layout}
             containerId={containerId}
+            onGifSelect={onGifSelect}
+            selectedGif={selectedGif}
           />
         </div>
       </Suspense>
@@ -50,6 +63,7 @@ const DynamicComponentRenderer: React.FC<LetterDynamicComponentRendererProps> = 
 export const LetterGridContainer = (container: IGridContainers) => {
   const dispatch = useAppDispatch();
   const currentDraggableItem = useTypedSelector((state) => state.layout.currentDraggableItem);
+  const selectedGifs = useTypedSelector((state) => state.layout.selectedGifs) || {};
   const width = useTypedSelector((state) => state.layout.windowWidth);
   const [isHover, setIsHover] = useState<boolean>(false);
   const [isDraggingInnerItem, setIsDraggingInnerItem] = useState<boolean>(false);
@@ -57,6 +71,7 @@ export const LetterGridContainer = (container: IGridContainers) => {
   const navigate = useNavigate();
 
   const [isHoverBtn, setIsHoverBtn] = useState<boolean>(false);
+  const gridContainers = useTypedSelector((state) => state.layout.gridContainers);
 
   const handleSetDraggingInnerItem = (isDragging: boolean) => {
     setIsDraggingInnerItem(isDragging);
@@ -65,7 +80,6 @@ export const LetterGridContainer = (container: IGridContainers) => {
   const handleElementClick = (id: string) => {
     setActiveElement(id);
   };
-
   useEffect(() => {
     const handleResize = () => {
       dispatch(setWindowWidth(window.innerWidth));
@@ -77,7 +91,7 @@ export const LetterGridContainer = (container: IGridContainers) => {
     };
   }, [dispatch]);
 
-  const workspaceLayout = container.elements.activeElements.reduce(
+  const workspaceLayout = gridContainers[0]?.elements.activeElements.reduce(
     (acc: Layout[], el: T_BlockElement) => {
       return [...acc, el.layout];
     },
@@ -140,6 +154,8 @@ export const LetterGridContainer = (container: IGridContainers) => {
       state: {
         layoutData: layoutString,
         htmlTemplate: htmlTemplate,
+        selectedGifs: selectedGifs,
+        elements: container.elements.activeElements,
       },
     });
   };
@@ -190,7 +206,12 @@ export const LetterGridContainer = (container: IGridContainers) => {
 
       <ResponsiveGridLayoutWithWidth
         className={classes["grid"]}
-        layouts={{ lg: workspaceLayout, md: workspaceLayout, sm: workspaceLayout, xs: workspaceLayout }}
+        layouts={{
+          lg: workspaceLayout,
+          md: workspaceLayout,
+          sm: workspaceLayout,
+          xs: workspaceLayout,
+        }}
         cols={{ lg: 1, md: 1, sm: 1, xs: 1 }}
         breakpoints={{ lg: 1200, md: 996, sm: 768, xs: 480 }}
         rowHeight={container.height}
@@ -215,12 +236,7 @@ export const LetterGridContainer = (container: IGridContainers) => {
             x: layoutItem.x || 0,
             y: layoutItem.y || 0,
           };
-          console.log("Добавленный элемент:", {
-            draggableItem,
-            layoutItem: newLayoutItem,
-            layout,
-            containerId: id,
-          });
+
           dispatch(addElement({ draggableItem, layoutItem: newLayoutItem, layout, id }));
         }}
         draggableHandle=".drag-area"
@@ -239,6 +255,41 @@ export const LetterGridContainer = (container: IGridContainers) => {
             }
             return acc;
           }, [] as string[]);
+
+          let gifComponentId = null;
+          if (
+            el.children &&
+            el.children.length > 0 &&
+            el.children[0].children &&
+            el.children[0].children.length > 0
+          ) {
+            const potentialGifComponent = el.children[0].children[0];
+
+            if (
+              potentialGifComponent.name === "Gifs" ||
+              potentialGifComponent.name === "GifsComponent"
+            ) {
+              gifComponentId = potentialGifComponent.id;
+            } else {
+              for (const cell of el.children) {
+                if (cell.children) {
+                  for (const grandChild of cell.children) {
+                    if (
+                      (grandChild.name === "Gifs" || grandChild.name === "GifsComponent") &&
+                      grandChild.id
+                    ) {
+                      gifComponentId = grandChild.id;
+                      break;
+                    }
+                  }
+                  if (gifComponentId) break;
+                }
+              }
+            }
+          }
+
+          // Используем найденный ID компонента Gifs, если он есть, иначе fallback на ID BlockLine
+          const idToUseForGif = gifComponentId || el.id;
 
           return (
             <div
@@ -268,6 +319,12 @@ export const LetterGridContainer = (container: IGridContainers) => {
                 layout={el.layout}
                 children={el.children}
                 containerId={container.id}
+                onGifSelect={(url: string) => {
+                  if (idToUseForGif) {
+                    dispatch(setSelectedGif({ elementId: idToUseForGif, url }));
+                  }
+                }}
+                selectedGif={idToUseForGif ? selectedGifs[idToUseForGif] || "" : ""}
               />
             </div>
           );

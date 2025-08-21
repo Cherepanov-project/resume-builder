@@ -1,13 +1,15 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
 import { useState } from "react";
-import { Provider, useSelector } from "react-redux";
-import store, { RootState } from "../../store/store";
+import { Provider } from "react-redux";
+import store from "../../store/store";
 import emailjs from "emailjs-com";
 import ReactDOMServer from "react-dom/server";
 import { Modal, Box, Typography, Button, TextField } from "@mui/material";
 import * as componentMap from "../../../letter-builder/atoms/LineBlocksContent";
 import GifsComponent from "../../../letter-builder/atoms/LineBlocksContent/Gifs/Gifs";
-
+import { useAppDispatch } from "@/hooks/cvTemplateHooks";
+import { setSelectedGif } from "@/store/landingBuilder/layoutSlice";
+import { useLocation } from "react-router-dom";
 interface ElementProps {
   blockWidth?: string[];
 }
@@ -32,11 +34,14 @@ const EmailPage: React.FC = () => {
   const [email, setEmail] = useState<string>(""); // для хранения email получателя
   const [emailError, setEmailError] = useState<string>(""); // для ошибки валидации email
   const numberOfColumns = 6;
-  const [selectedGifs, setSelectedGifs] = useState<Record<string, string>>({});
+  // const [selectedGifs, setSelectedGifs] = useState<Record<string, string>>({});
+  const dispatch = useAppDispatch();
+  const location = useLocation();
+  const navigatedSelectedGifs = location.state?.selectedGifs || {};
+  const navigatedElements = (location.state?.elements as Element[]) || [];
+  const selectedGifs = navigatedSelectedGifs;
+  const elements = navigatedElements;
 
-  const elements = useSelector(
-    (state: RootState) => state.letterLayout.gridContainers[0].elements.activeElements as Element[],
-  );
   // Функция для вычисления colspan из блоков
   const extractPercent = (calcValue: string): number => {
     const match = calcValue.match(/calc\(([\d.]+)%\s*-\s*\d+px\)/);
@@ -70,7 +75,6 @@ const EmailPage: React.FC = () => {
             const colspan = extractPercent(blockWidth);
             const elementInCell = element.children?.[i]?.children?.[0]?.name || "No Content";
             const id = element.children?.[i]?.children?.[0]?.id || "";
-
             if (elementInCell === "GifsComponent") {
               const selectedGif = selectedGifs[id];
               return (
@@ -87,9 +91,7 @@ const EmailPage: React.FC = () => {
                   <GifsComponent
                     id={id}
                     selectedGif={selectedGif}
-                    onGifSelect={(url: string) =>
-                      setSelectedGifs((prev) => ({ ...prev, [id]: url }))
-                    }
+                    onGifSelect={(url: string) => dispatch(setSelectedGif({ elementId: id, url }))}
                   />
                 </td>
               );
@@ -115,9 +117,7 @@ const EmailPage: React.FC = () => {
                     selectedGif={selectedGifs[id]}
                     key={`${elementInCell}-${index}`}
                     id={id}
-                    onGifSelect={(url: string) =>
-                      setSelectedGifs((prev) => ({ ...prev, [id]: url }))
-                    }
+                    onGifSelect={(url: string) => dispatch(setSelectedGif({ elementId: id, url }))}
                   />
                 ) : (
                   elementInCell

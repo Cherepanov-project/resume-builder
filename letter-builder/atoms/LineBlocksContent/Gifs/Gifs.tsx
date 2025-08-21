@@ -5,7 +5,7 @@ import { useEffect, useMemo, useCallback, useState } from "react";
 type GifsComponentProps = {
   id: string;
   selectedGif?: string;
-  onGifSelect: (url: string) => void;
+  onGifSelect?: (url: string) => void;
 };
 
 const GifsComponent: React.FC<GifsComponentProps> = ({ selectedGif, onGifSelect }) => {
@@ -55,12 +55,16 @@ const GifsComponent: React.FC<GifsComponentProps> = ({ selectedGif, onGifSelect 
   );
 
   const handleChoose = (url: string) => {
-    onGifSelect(url);
+    if (onGifSelect) {
+      onGifSelect(url);
+    }
     setPopOverVisibility(false);
   };
 
   const handleResetGif = () => {
-    onGifSelect("");
+    if (onGifSelect) {
+      onGifSelect("");
+    }
   };
 
   const debouncedSearch = useMemo(() => {
