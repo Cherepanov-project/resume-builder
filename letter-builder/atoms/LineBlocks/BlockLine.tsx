@@ -33,12 +33,16 @@ export interface LineCardProps {
   onDrop?: (e: React.DragEvent, id: string) => void;
   onDragOver?: (e: React.DragEvent) => void;
   onDragEnd?: () => void;
+  onGifSelect?: (url: string) => void;
+  selectedGif?: string;
 }
 
 interface DynamicChildComponentRendererProps {
   source?: string;
   Component: string;
   id: string;
+  onGifSelect?: (url: string) => void;
+  selectedGif?: string;
 }
 
 const cellStyles = {
@@ -50,61 +54,63 @@ const cellStyles = {
   justifyContent: "center",
   alignItems: "center",
   borderRadius: "0",
-  transition: 'all 0.3s ease',
+  transition: "all 0.3s ease",
 };
 
 const DynamicChildComponentRenderer: React.FC<DynamicChildComponentRendererProps> = memo(
-  ({ Component, id }) => {
+  ({ Component, id, onGifSelect, selectedGif }) => {
     if (!Component) return null;
 
-    const DynamicComponent = lazy(() => 
-      import(`../LineBlocksContent/${Component}/index.ts`)
-        .catch(() => ({ default: () => <div>Компонент не найден</div> }))
+    const DynamicComponent = lazy(() =>
+      import(`../LineBlocksContent/${Component}/index.ts`).catch(() => ({
+        default: () => <div>Компонент не найден</div>,
+      })),
     );
 
     return (
       <Suspense fallback={<ComponentPreloader />}>
-        <DynamicComponent key={id} id={id} />
+        <DynamicComponent key={id} id={id} onGifSelect={onGifSelect} selectedGif={selectedGif} />
       </Suspense>
     );
-  }
+  },
 );
 
-const BlockLine = ({ id, onDragStart, props }: LineCardProps) => {
+const BlockLine = ({ id, onDragStart, props, onGifSelect, selectedGif }: LineCardProps) => {
   const gridContainers = useTypedSelector((state) => state.letterLayout.gridContainers);
   const currentDraggableItem = useTypedSelector((state) => state.letterLayout.currentDraggableItem);
   const dispatch = useAppDispatch();
 
   const resetAllCellStyles = () => {
-    cellRefs.current.forEach(cell => {
+    cellRefs.current.forEach((cell) => {
       if (cell) {
-        cell.style.position = '';
-        cell.style.zIndex = '';
-        cell.style.transform = '';
-        cell.style.boxShadow = '';
-        cell.style.backgroundColor = '';
-        cell.style.border = '';
+        cell.style.position = "";
+        cell.style.zIndex = "";
+        cell.style.transform = "";
+        cell.style.boxShadow = "";
+        cell.style.backgroundColor = "";
+        cell.style.border = "";
       }
     });
   };
-  
+
   const cellRefs = useRef<(HTMLTableCellElement | null)[]>([]);
   const isDraggingOverRef = useRef(false);
   const hoverTimeoutRef = useRef<NodeJS.Timeout | null>(null);
 
   const handleDrop = (index: number) => {
-    if (currentDraggableItem?.props?.isChild) {     
+    if (currentDraggableItem?.props?.isChild) {
+      dispatch(
+        addChildElement({
+          draggableItem: currentDraggableItem,
+          idParentElement: id,
+          indexChild: index,
+        }),
+      );
 
-      dispatch(addChildElement({
-        draggableItem: currentDraggableItem,
-        idParentElement: id,
-        indexChild: index,
-      }));
-  
-    resetAllCellStyles();
-    isDraggingOverRef.current = false;
-  }
-}
+      resetAllCellStyles();
+      isDraggingOverRef.current = false;
+    }
+  };
 
   const handleDragOver = (e: React.DragEvent, index: number) => {
     e.preventDefault();
@@ -113,23 +119,23 @@ const BlockLine = ({ id, onDragStart, props }: LineCardProps) => {
     resetAllCellStyles();
 
     const currentCell = cellRefs.current[index];
-  if (currentCell) {
-    // Только для текущей ячейки применяем стили
-    currentCell.style.transform = 'scale(1.05)';
-    currentCell.style.zIndex = '1';
-    currentCell.style.boxShadow = '0 0 10px rgba(0,0,0,0.2)';
-    currentCell.style.backgroundColor = 'rgba(76, 185, 234, 0.1)';
-    currentCell.style.border = '1px dashed #4cb9ea';
-  }
-  
-  isDraggingOverRef.current = true;
+    if (currentCell) {
+      // Только для текущей ячейки применяем стили
+      currentCell.style.transform = "scale(1.05)";
+      currentCell.style.zIndex = "1";
+      currentCell.style.boxShadow = "0 0 10px rgba(0,0,0,0.2)";
+      currentCell.style.backgroundColor = "rgba(76, 185, 234, 0.1)";
+      currentCell.style.border = "1px dashed #4cb9ea";
+    }
+
+    isDraggingOverRef.current = true;
   };
 
   const handleDragLeave = () => {
     if (hoverTimeoutRef.current) {
       clearTimeout(hoverTimeoutRef.current);
     }
-    
+
     hoverTimeoutRef.current = setTimeout(() => {
       if (isDraggingOverRef.current) {
         resetAllCellStyles();
@@ -150,21 +156,22 @@ const BlockLine = ({ id, onDragStart, props }: LineCardProps) => {
     if (!gridContainers.length || !gridContainers[0]?.elements?.activeElements) {
       return [null];
     }
-  
+
     const childrenElements: JSX.Element[][] = [];
     const index = gridContainers[0].elements.activeElements.findIndex(
-      (item: { id: string }) => item.id === id
+      (item: { id: string }) => item.id === id,
     );
-  
+
     if (!props.blockWidth || !Array.isArray(props.blockWidth)) {
       return [null];
     }
-  
+
     return props.blockWidth.map((width: string, indexBlock: number) => {
       if (index > -1) {
-        const children = (gridContainers[0]?.elements?.activeElements[index]?.children || []) as IChildElement[];
+        const children = (gridContainers[0]?.elements?.activeElements[index]?.children ||
+          []) as IChildElement[];
         const currentChild = children[indexBlock];
-  
+
         if (currentChild?.children) {
           childrenElements[indexBlock] = currentChild.children
             .filter(Boolean)
@@ -173,11 +180,13 @@ const BlockLine = ({ id, onDragStart, props }: LineCardProps) => {
                 key={nanoid()}
                 Component={child.name}
                 id={child.id}
+                onGifSelect={onGifSelect}
+                selectedGif={selectedGif}
               />
             ));
         }
       }
-  
+
       return (
         <TableCell
           key={`${id}-${indexBlock}`}
@@ -199,14 +208,13 @@ const BlockLine = ({ id, onDragStart, props }: LineCardProps) => {
       );
     });
   };
-  
 
   return (
     <ThemeProvider theme={theme}>
       <Table key={id} onDragLeave={handleDragLeave}>
         <TableBody>
           <TableRow
-            data-testid='0'
+            data-testid="0"
             id={id}
             draggable
             onDragStart={(e) => onDragStart?.(e, id)}

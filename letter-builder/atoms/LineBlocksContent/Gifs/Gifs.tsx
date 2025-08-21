@@ -2,10 +2,15 @@ import { IconPngGIFS } from "@components/atoms/Icons/LetterCardIcons";
 import { GiphyFetch } from "@giphy/js-fetch-api";
 import { useEffect, useMemo, useCallback, useState } from "react";
 
-const GifsComponent = () => {
+type GifsComponentProps = {
+  id: string;
+  selectedGif?: string;
+  onGifSelect?: (url: string) => void;
+};
+
+const GifsComponent: React.FC<GifsComponentProps> = ({ selectedGif, onGifSelect }) => {
   const [isPopOverVisible, setPopOverVisibility] = useState(false);
   const [gifs, setGifs] = useState<string[]>([]);
-  const [currGif, setCurrGif] = useState<string>("");
   const [loading, setLoading] = useState<boolean>(false);
 
   // Оборачиваем создание GiphyFetch в useMemo
@@ -23,36 +28,43 @@ const GifsComponent = () => {
     }
   }, [gf]);
 
-  const handleSearch = useCallback(async (q: string) => {
-    setGifs([]);
-    if (!q) {
-      fetchGifs();
-      return;
-    }
+  const handleSearch = useCallback(
+    async (q: string) => {
+      setGifs([]);
+      if (!q) {
+        fetchGifs();
+        return;
+      }
 
-    try {
-      setLoading(true);
-      const { data } = await gf.search(q, {
-        sort: "relevant",
-        lang: "en",
-        limit: 15,
-        type: "gifs",
-      });
-      setGifs(data.map((item) => item.images.fixed_height.url));
-    } catch (err) {
-      console.error("Error while searching: ", err);
-    } finally {
-      setLoading(false);
-    }
-  }, [gf, fetchGifs]);
+      try {
+        setLoading(true);
+        const { data } = await gf.search(q, {
+          sort: "relevant",
+          lang: "en",
+          limit: 15,
+          type: "gifs",
+        });
+        setGifs(data.map((item) => item.images.fixed_height.url));
+      } catch (err) {
+        console.error("Error while searching: ", err);
+      } finally {
+        setLoading(false);
+      }
+    },
+    [gf, fetchGifs],
+  );
 
   const handleChoose = (url: string) => {
+    if (onGifSelect) {
+      onGifSelect(url);
+    }
     setPopOverVisibility(false);
-    setCurrGif(url);
   };
 
   const handleResetGif = () => {
-    setCurrGif("");
+    if (onGifSelect) {
+      onGifSelect("");
+    }
   };
 
   const debouncedSearch = useMemo(() => {
@@ -122,9 +134,13 @@ const GifsComponent = () => {
       )}
 
       <div className="relative text-gray-600">
-        {currGif ? (
+        {selectedGif ? (
           <div className="relative w-full h-40 group">
-            <img src={currGif} alt="Selected GIF" className="object-cover w-full h-full rounded" />
+            <img
+              src={selectedGif}
+              alt="Selected GIF"
+              className="object-cover w-full h-full rounded"
+            />
             <button
               onClick={handleResetGif}
               className="absolute top-2 right-2 p-2 text-gray-600 bg-white rounded-full shadow-md opacity-0 transition-all group-hover:opacity-100 hover:bg-red-500 hover:text-white"
