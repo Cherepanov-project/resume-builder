@@ -9,12 +9,12 @@ import {
   CustomLayout,
 } from "@/types/landingBuilder";
 import { addElement, changeElement, setWindowWidth } from "@/store/landingBuilder/layoutSlice";
-import { setSelectedGif } from "@/store/landingBuilder/layoutSlice";
 import React, { Suspense, lazy, memo, useEffect, useState } from "react";
 import ComponentPreloader from "@/components/atoms/ComponentPreloader";
 import ElementToolsPanel from "../organismis/ElementToolsPanel/ElementToolsPanel";
 import { useNavigate } from "react-router-dom";
 import classes from "./LetterGridContainer.module.scss";
+import { setSelectedGif } from "@/store/LetterBuilderStore/gifSelectionSlice";
 
 const ResponsiveReactGridLayout = Responsive;
 const ResponsiveGridLayoutWithWidth = WidthProvider(ResponsiveReactGridLayout) as any;
@@ -63,7 +63,6 @@ const DynamicComponentRenderer: React.FC<LetterDynamicComponentRendererProps> = 
 export const LetterGridContainer = (container: IGridContainers) => {
   const dispatch = useAppDispatch();
   const currentDraggableItem = useTypedSelector((state) => state.layout.currentDraggableItem);
-  const selectedGifs = useTypedSelector((state) => state.layout.selectedGifs) || {};
   const width = useTypedSelector((state) => state.layout.windowWidth);
   const [isHover, setIsHover] = useState<boolean>(false);
   const [isDraggingInnerItem, setIsDraggingInnerItem] = useState<boolean>(false);
@@ -72,6 +71,7 @@ export const LetterGridContainer = (container: IGridContainers) => {
 
   const [isHoverBtn, setIsHoverBtn] = useState<boolean>(false);
   const gridContainers = useTypedSelector((state) => state.layout.gridContainers);
+  const selectedGifs = useTypedSelector((state) => state.gifSelection.selectedGifs) || {};
 
   const handleSetDraggingInnerItem = (isDragging: boolean) => {
     setIsDraggingInnerItem(isDragging);
@@ -154,7 +154,6 @@ export const LetterGridContainer = (container: IGridContainers) => {
       state: {
         layoutData: layoutString,
         htmlTemplate: htmlTemplate,
-        selectedGifs: selectedGifs,
         elements: container.elements.activeElements,
       },
     });

@@ -7,9 +7,9 @@ import ReactDOMServer from "react-dom/server";
 import { Modal, Box, Typography, Button, TextField } from "@mui/material";
 import * as componentMap from "../../../letter-builder/atoms/LineBlocksContent";
 import GifsComponent from "../../../letter-builder/atoms/LineBlocksContent/Gifs/Gifs";
-import { useAppDispatch } from "@/hooks/cvTemplateHooks";
-import { setSelectedGif } from "@/store/landingBuilder/layoutSlice";
+import { useAppDispatch, useTypedSelector } from "@/hooks/cvTemplateHooks";
 import { useLocation } from "react-router-dom";
+import { setSelectedGif } from "@/store/LetterBuilderStore/gifSelectionSlice";
 interface ElementProps {
   blockWidth?: string[];
 }
@@ -34,12 +34,10 @@ const EmailPage: React.FC = () => {
   const [email, setEmail] = useState<string>(""); // для хранения email получателя
   const [emailError, setEmailError] = useState<string>(""); // для ошибки валидации email
   const numberOfColumns = 6;
-  // const [selectedGifs, setSelectedGifs] = useState<Record<string, string>>({});
   const dispatch = useAppDispatch();
   const location = useLocation();
-  const navigatedSelectedGifs = location.state?.selectedGifs || {};
   const navigatedElements = (location.state?.elements as Element[]) || [];
-  const selectedGifs = navigatedSelectedGifs;
+  const selectedGifs = useTypedSelector((state) => state.gifSelection.selectedGifs) || {};
   const elements = navigatedElements;
 
   // Функция для вычисления colspan из блоков
