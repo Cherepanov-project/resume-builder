@@ -35,6 +35,8 @@ export interface LineCardProps {
   onDragEnd?: () => void;
   onGifSelect?: (url: string) => void;
   selectedGif?: string;
+  onStickerSelect?: (url: string) => void;
+  selectedSticker?: string;
 }
 
 interface DynamicChildComponentRendererProps {
@@ -43,6 +45,8 @@ interface DynamicChildComponentRendererProps {
   id: string;
   onGifSelect?: (url: string) => void;
   selectedGif?: string;
+  onStickerSelect?: (url: string) => void;
+  selectedSticker?: string;
 }
 
 const cellStyles = {
@@ -58,7 +62,7 @@ const cellStyles = {
 };
 
 const DynamicChildComponentRenderer: React.FC<DynamicChildComponentRendererProps> = memo(
-  ({ Component, id, onGifSelect, selectedGif }) => {
+  ({ Component, id, onGifSelect, selectedGif, onStickerSelect, selectedSticker }) => {
     if (!Component) return null;
 
     const DynamicComponent = lazy(() =>
@@ -69,13 +73,28 @@ const DynamicChildComponentRenderer: React.FC<DynamicChildComponentRendererProps
 
     return (
       <Suspense fallback={<ComponentPreloader />}>
-        <DynamicComponent key={id} id={id} onGifSelect={onGifSelect} selectedGif={selectedGif} />
+        <DynamicComponent
+          key={id}
+          id={id}
+          onGifSelect={onGifSelect}
+          selectedGif={selectedGif}
+          onStickerSelect={onStickerSelect}
+          selectedSticker={selectedSticker}
+        />
       </Suspense>
     );
   },
 );
 
-const BlockLine = ({ id, onDragStart, props, onGifSelect, selectedGif }: LineCardProps) => {
+const BlockLine = ({
+  id,
+  onDragStart,
+  props,
+  onGifSelect,
+  selectedGif,
+  onStickerSelect,
+  selectedSticker,
+}: LineCardProps) => {
   const gridContainers = useTypedSelector((state) => state.letterLayout.gridContainers);
   const currentDraggableItem = useTypedSelector((state) => state.letterLayout.currentDraggableItem);
   const dispatch = useAppDispatch();
@@ -182,6 +201,8 @@ const BlockLine = ({ id, onDragStart, props, onGifSelect, selectedGif }: LineCar
                 id={child.id}
                 onGifSelect={onGifSelect}
                 selectedGif={selectedGif}
+                onStickerSelect={onStickerSelect}
+                selectedSticker={selectedSticker}
               />
             ));
         }

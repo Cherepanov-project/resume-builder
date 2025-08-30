@@ -32,6 +32,7 @@ import iconsReducer from "../../letter-builder/reducers/iconsSlice";
 import imageReducer from "../../letter-builder/reducers/imageSlice";
 import carouselReducer from "./LetterBuilderStore/carouselSlice";
 import gifSelectionReducer from "./LetterBuilderStore/gifSelectionSlice";
+import stickerSelectionReducer from "./LetterBuilderStore/stickerSelectionSlice";
 
 //конфиг для persist
 const persistConfig = {
@@ -61,6 +62,7 @@ const rootReducer = combineReducers({
   images: imageReducer,
   carousel: carouselReducer,
   gifSelection: gifSelectionReducer,
+  stickerSelection: stickerSelectionReducer,
 });
 
 //преобразование редьюсера для persist
