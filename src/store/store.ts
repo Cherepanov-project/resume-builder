@@ -31,6 +31,7 @@ import { useSelector, TypedUseSelectorHook, useDispatch } from "react-redux";
 import iconsReducer from "../../letter-builder/reducers/iconsSlice";
 import imageReducer from "../../letter-builder/reducers/imageSlice";
 import carouselReducer from "./LetterBuilderStore/carouselSlice";
+import gifSelectionReducer from "./LetterBuilderStore/gifSelectionSlice";
 
 //конфиг для persist
 const persistConfig = {
@@ -59,6 +60,7 @@ const rootReducer = combineReducers({
   icons: iconsReducer,
   images: imageReducer,
   carousel: carouselReducer,
+  gifSelection: gifSelectionReducer,
 });
 
 //преобразование редьюсера для persist

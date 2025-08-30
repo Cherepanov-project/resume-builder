@@ -1,12 +1,15 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
 import { useState } from "react";
-import { Provider, useSelector } from "react-redux";
-import store, { RootState } from "../../store/store";
+import { Provider } from "react-redux";
+import store from "../../store/store";
 import emailjs from "emailjs-com";
 import ReactDOMServer from "react-dom/server";
 import { Modal, Box, Typography, Button, TextField } from "@mui/material";
 import * as componentMap from "../../../letter-builder/atoms/LineBlocksContent";
-
+import GifsComponent from "../../../letter-builder/atoms/LineBlocksContent/Gifs/Gifs";
+import { useAppDispatch, useTypedSelector } from "@/hooks/cvTemplateHooks";
+import { useLocation } from "react-router-dom";
+import { setSelectedGif } from "@/store/LetterBuilderStore/gifSelectionSlice";
 interface ElementProps {
   blockWidth?: string[];
 }
@@ -28,14 +31,15 @@ interface EmailParams extends Record<string, unknown> {
 
 const EmailPage: React.FC = () => {
   const [isModalVisible, setIsModalVisible] = useState<boolean>(false);
-  const [tableHTML, setTableHTML] = useState<string>("");
   const [email, setEmail] = useState<string>(""); // для хранения email получателя
   const [emailError, setEmailError] = useState<string>(""); // для ошибки валидации email
   const numberOfColumns = 6;
+  const dispatch = useAppDispatch();
+  const location = useLocation();
+  const navigatedElements = (location.state?.elements as Element[]) || [];
+  const selectedGifs = useTypedSelector((state) => state.gifSelection.selectedGifs) || {};
+  const elements = navigatedElements;
 
-  const elements = useSelector(
-    (state: RootState) => state.letterLayout.gridContainers[0].elements.activeElements as Element[],
-  );
   // Функция для вычисления colspan из блоков
   const extractPercent = (calcValue: string): number => {
     const match = calcValue.match(/calc\(([\d.]+)%\s*-\s*\d+px\)/);
@@ -69,6 +73,27 @@ const EmailPage: React.FC = () => {
             const colspan = extractPercent(blockWidth);
             const elementInCell = element.children?.[i]?.children?.[0]?.name || "No Content";
             const id = element.children?.[i]?.children?.[0]?.id || "";
+            if (elementInCell === "GifsComponent") {
+              const selectedGif = selectedGifs[id];
+              return (
+                <td
+                  key={i}
+                  colSpan={colspan}
+                  style={{
+                    width: `${colspan}%`,
+                    padding: "10px",
+                    border: "1px solid #ddd",
+                    textAlign: "center",
+                  }}
+                >
+                  <GifsComponent
+                    id={id}
+                    selectedGif={selectedGif}
+                    onGifSelect={(url: string) => dispatch(setSelectedGif({ elementId: id, url }))}
+                  />
+                </td>
+              );
+            }
 
             // Рендер компонента из componentMap, если он существует
             type ComponentMap = typeof componentMap;
@@ -86,7 +111,12 @@ const EmailPage: React.FC = () => {
                 }}
               >
                 {RenderedComponent ? (
-                  <RenderedComponent key={`${elementInCell}-${index}`} id={id} />
+                  <RenderedComponent
+                    selectedGif={selectedGifs[id]}
+                    key={`${elementInCell}-${index}`}
+                    id={id}
+                    onGifSelect={(url: string) => dispatch(setSelectedGif({ elementId: id, url }))}
+                  />
                 ) : (
                   elementInCell
                 )}
@@ -98,9 +128,8 @@ const EmailPage: React.FC = () => {
     });
   };
 
-  // Генерация HTML таблицы
-  const generateTableHTML = (): string => {
-    const tableContent: JSX.Element = (
+  const generatedHTMLForEmail = (): string => {
+    return ReactDOMServer.renderToString(
       <Provider store={store}>
         <table
           style={{
@@ -113,36 +142,26 @@ const EmailPage: React.FC = () => {
             borderCollapse: "collapse",
           }}
         >
-          <h1>Письмо</h1>
           <tbody>{parseTreeToTable(elements, numberOfColumns)}</tbody>
         </table>
-      </Provider>
+      </Provider>,
     );
-
-    return ReactDOMServer.renderToString(tableContent);
-  };
-
-  // Показ модалки с таблицей
-  const showTableModal = (): void => {
-    const htmlContent = generateTableHTML();
-    setTableHTML(htmlContent);
-    setIsModalVisible(true);
   };
 
   // Валидация email
   const validateEmail = (email: string): boolean => {
-    const re = /^[^\s@]+@[^\s@]+\.[^\s@]+$/; 
-    return re.test(email); 
+    const re = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+    return re.test(email);
   };
 
   // Отправка email
-  const sendEmail = (htmlContent: string): void => {
+  const sendEmail = (): void => {
     if (!validateEmail(email)) {
       setEmailError("Please enter a valid email address");
       return;
     }
     setEmailError("");
-
+    const htmlContent = generatedHTMLForEmail();
     const params: EmailParams = {
       message: htmlContent,
       to_email: email, // добавляем email получателя в параметры
@@ -155,7 +174,7 @@ const EmailPage: React.FC = () => {
     emailjs.send("service_gaoh9qn", "template_perpqbc", params, "xwjuZPWB5H7zlXnr5").then(
       () => {
         alert("Email sent successfully!");
-        setEmail(""); 
+        setEmail("");
       },
       (error) => alert(`Failed to send email: ${error.message}`),
     );
@@ -188,7 +207,7 @@ const EmailPage: React.FC = () => {
 
       <Button
         variant="contained"
-        onClick={showTableModal}
+        onClick={() => setIsModalVisible(true)}
         style={{ marginBottom: "20px", height: "40px" }}
       >
         Preview Table
@@ -217,12 +236,24 @@ const EmailPage: React.FC = () => {
           <Typography id="modal-title" variant="h6" component="h2">
             Generated Table Preview
           </Typography>
-          <div dangerouslySetInnerHTML={{ __html: tableHTML }} />
+          <table
+            style={{
+              borderSpacing: "10px",
+              backgroundColor: "#ffffff",
+              color: "#000000",
+              fontFamily: "Arial, sans-serif",
+              fontSize: "16px",
+              width: "100%",
+              borderCollapse: "collapse",
+            }}
+          >
+            <tbody>{parseTreeToTable(elements, numberOfColumns)}</tbody>
+          </table>
           <Box sx={{ display: "flex", justifyContent: "flex-end", mt: 2 }}>
             <Button
               variant="contained"
               onClick={() => {
-                sendEmail(tableHTML);
+                sendEmail();
                 setIsModalVisible(false);
               }}
               sx={{ mr: 2 }}

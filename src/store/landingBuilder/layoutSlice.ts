@@ -1,12 +1,12 @@
-import { createSlice } from '@reduxjs/toolkit';
-import { customAlphabet } from 'nanoid';
+import { createSlice } from "@reduxjs/toolkit";
+import { customAlphabet } from "nanoid";
 
-import { insertChild } from '@/utils';
-import { addBaseScript } from '@/utils/scriptAssigner';
-import { Layout } from 'react-grid-layout';
-import { T_BlockElement } from '@/types/landingBuilder';
+import { insertChild } from "@/utils";
+import { addBaseScript } from "@/utils/scriptAssigner";
+import { Layout } from "react-grid-layout";
+import { T_BlockElement } from "@/types/landingBuilder";
 
-const nanoid = customAlphabet('ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz', 15);
+const nanoid = customAlphabet("ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz", 15);
 
 interface ElementsType {
   activeElements: T_BlockElement[];
@@ -50,12 +50,12 @@ const initialState: LayoutState = {
     },
   ],
   currentDraggableItem: null,
-  currentContainer: '',
+  currentContainer: "",
   windowWidth: window.innerWidth,
 };
 
 const layoutSlice = createSlice({
-  name: 'layout',
+  name: "layout",
   initialState,
   reducers: {
     setWindowWidth(state, action) {
@@ -127,7 +127,7 @@ const layoutSlice = createSlice({
             // Находим индекс элемента внутри children
             const element = container.elements.activeElements[indx];
             const elIndx = element.children!.findIndex(
-              (child) => child.layout.i === action.payload.elementId
+              (child) => child.layout.i === action.payload.elementId,
             );
 
             // Если нашли индекс элемента внутри children, дублируем его внутри секции
@@ -141,7 +141,11 @@ const layoutSlice = createSlice({
                 },
               };
               // Вставляем новый элемент внутри children
-              state.gridContainers[index].elements.activeElements[indx].children?.splice(elIndx + 1, 0, newElement);
+              state.gridContainers[index].elements.activeElements[indx].children?.splice(
+                elIndx + 1,
+                0,
+                newElement,
+              );
             }
           } else {
             // Иначе, дублируем саму секцию
@@ -149,7 +153,9 @@ const layoutSlice = createSlice({
               ...container.elements.activeElements[indx],
               layout: {
                 ...container.elements.activeElements[indx].layout,
-                y: container.elements.activeElements[indx].layout.y + container.elements.activeElements[indx].layout.h,
+                y:
+                  container.elements.activeElements[indx].layout.y +
+                  container.elements.activeElements[indx].layout.h,
                 i: nanoid(),
               },
             };
@@ -197,7 +203,7 @@ const layoutSlice = createSlice({
             // Находим индекс элемента внутри children
             const element = container.elements.activeElements[indx];
             const elIndx = element.children!.findIndex(
-              (child) => child.layout.i === action.payload.elementId
+              (child) => child.layout.i === action.payload.elementId,
             );
 
             // Если нашли индекс элемента внутри children, удаляем его
@@ -303,7 +309,7 @@ const layoutSlice = createSlice({
             const element = container.elements.activeElements[indx];
             if (element && element.children) {
               elIndx = element.children.findIndex(
-                (child) => child.layout.i === action.payload.elementId
+                (child) => child.layout.i === action.payload.elementId,
               );
             }
           }
@@ -319,7 +325,6 @@ const layoutSlice = createSlice({
           }
         }
       });
-
     },
     // Уменьшаем количество колонок в блоке
     decreaseElementColumns(state, action) {
@@ -342,7 +347,7 @@ const layoutSlice = createSlice({
             const element = container.elements.activeElements[indx];
             if (element && element.children) {
               elIndx = element.children.findIndex(
-                (child) => child.layout.i === action.payload.elementId
+                (child) => child.layout.i === action.payload.elementId,
               );
             }
           }
@@ -357,7 +362,6 @@ const layoutSlice = createSlice({
           }
         }
       });
-
     },
 
     // Помещаем информацию о текущем перемещаемом блоке в стор
@@ -378,7 +382,7 @@ const layoutSlice = createSlice({
                     ...el.props.style,
                   },
                   text: el.props.text,
-                  wrapperStyle: { ...el.props.wrapperStyle, ...action.payload.wrapperStyle},
+                  wrapperStyle: { ...el.props.wrapperStyle, ...action.payload.wrapperStyle },
                   textStyle: { ...action.payload.textStyle },
                 },
               };
@@ -400,31 +404,30 @@ const layoutSlice = createSlice({
                   ...el.props,
                   [el.name]: [...action.payload.values],
                   size: action.payload.size === 0 ? 1 : action.payload.size,
-                  style:{
+                  style: {
                     ...el.props.style,
-                    ...action.payload.style
+                    ...action.payload.style,
                   },
                   textStyle: {
                     ...el.props.textStyle,
-                    ...action.payload.textStyle
+                    ...action.payload.textStyle,
                   },
                 },
               };
             } else if (el.children && el.children.length > 0) {
-              el.children.forEach((child, indx) =>  {
+              el.children.forEach((child, indx) => {
                 if (child.layout.i === action.payload.id) {
-
                   state.gridContainers[i].elements.activeElements[index].children![indx] = {
                     ...child,
                     props: {
                       [child.name]: [...action.payload.values],
-                      text: '',
+                      text: "",
                       size: action.payload.size === 0 ? 1 : action.payload.size,
                       style: action.payload.style,
-                    }
-                  }
+                    },
+                  };
                 }
-              })
+              });
             }
           });
         }
@@ -433,7 +436,7 @@ const layoutSlice = createSlice({
     clearStore(state) {
       state.gridContainers = initialState.gridContainers;
       state.currentDraggableItem = null;
-      state.currentContainer = '';
+      state.currentContainer = "";
     },
   },
 });
