@@ -30,7 +30,6 @@ interface LayoutState {
   currentDraggableItem: Layout | null;
   currentContainer: string;
   windowWidth: number;
-  selectedGifs: Record<string, string>;
 }
 
 const initialState: LayoutState = {
@@ -53,20 +52,12 @@ const initialState: LayoutState = {
   currentDraggableItem: null,
   currentContainer: "",
   windowWidth: window.innerWidth,
-  selectedGifs: {},
 };
 
 const layoutSlice = createSlice({
   name: "layout",
   initialState,
   reducers: {
-    setSelectedGif(state, action) {
-      const { elementId, url } = action.payload;
-      if (!state.selectedGifs) {
-        state.selectedGifs = {};
-      }
-      state.selectedGifs[elementId] = url;
-    },
     setWindowWidth(state, action) {
       state.windowWidth = action.payload;
     },
@@ -468,7 +459,6 @@ export const {
   setSectionStyle,
   setProps,
   clearStore,
-  setSelectedGif,
 } = layoutSlice.actions;
 
 export default layoutSlice.reducer;
