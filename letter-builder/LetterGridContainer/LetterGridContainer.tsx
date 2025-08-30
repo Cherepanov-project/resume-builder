@@ -1,5 +1,5 @@
 import { IGridContainers, setCurrentContainer } from "@/store/LetterBuilderStore/letterLayoutSlice";
-import  { WidthProvider, Responsive, Layout } from "react-grid-layout";
+import { WidthProvider, Responsive, Layout } from "react-grid-layout";
 import "react-grid-layout/css/styles.css";
 import "react-resizable/css/styles.css";
 import { useAppDispatch, useTypedSelector } from "@/hooks/cvTemplateHooks";
@@ -8,16 +8,14 @@ import {
   T_BlockElement,
   CustomLayout,
 } from "@/types/landingBuilder";
-import {
-  addElement,
-  changeElement,
-  setWindowWidth,
-} from "@store/LetterBuilderStore/letterLayoutSlice";
+import { addElement, changeElement, setWindowWidth } from "@/store/landingBuilder/layoutSlice";
 import React, { Suspense, lazy, memo, useEffect, useState } from "react";
 import ComponentPreloader from "@/components/atoms/ComponentPreloader";
 import ElementToolsPanel from "../organismis/ElementToolsPanel/ElementToolsPanel";
 import { useNavigate } from "react-router-dom";
 import classes from "./LetterGridContainer.module.scss";
+import { setSelectedGif } from "@/store/LetterBuilderStore/gifSelectionSlice";
+import { setSelectedSticker } from "@/store/LetterBuilderStore/stickerSelectionSlice";
 
 const ResponsiveReactGridLayout = Responsive;
 const ResponsiveGridLayoutWithWidth = WidthProvider(ResponsiveReactGridLayout) as any;
@@ -25,7 +23,20 @@ const ResponsiveGridLayoutWithWidth = WidthProvider(ResponsiveReactGridLayout) a
 export type LetterDynamicComponentRendererProps = DynamicComponentRendererProps;
 
 const DynamicComponentRenderer: React.FC<LetterDynamicComponentRendererProps> = memo(
-  ({ id, Component, props, columns, source, children, layout, containerId }) => {
+  ({
+    id,
+    Component,
+    props,
+    columns,
+    source,
+    children,
+    layout,
+    containerId,
+    onGifSelect,
+    selectedGif,
+    onStickerSelect,
+    selectedSticker,
+  }) => {
     const DynamicComponent = lazy(() => import(`../${source}/LineBlocks/index.ts`));
 
     return (
@@ -40,6 +51,10 @@ const DynamicComponentRenderer: React.FC<LetterDynamicComponentRendererProps> = 
             children={children}
             layout={layout}
             containerId={containerId}
+            onGifSelect={onGifSelect}
+            selectedGif={selectedGif}
+            onStickerSelect={onStickerSelect}
+            selectedSticker={selectedSticker}
           />
         </div>
       </Suspense>
@@ -57,6 +72,10 @@ export const LetterGridContainer = (container: IGridContainers) => {
   const navigate = useNavigate();
 
   const [isHoverBtn, setIsHoverBtn] = useState<boolean>(false);
+  const gridContainers = useTypedSelector((state) => state.layout.gridContainers);
+  const selectedGifs = useTypedSelector((state) => state.gifSelection.selectedGifs) || {};
+  const selectedStickers =
+    useTypedSelector((state) => state.stickerSelection.selectedStickers) || {};
 
   const handleSetDraggingInnerItem = (isDragging: boolean) => {
     setIsDraggingInnerItem(isDragging);
@@ -65,7 +84,6 @@ export const LetterGridContainer = (container: IGridContainers) => {
   const handleElementClick = (id: string) => {
     setActiveElement(id);
   };
-
   useEffect(() => {
     const handleResize = () => {
       dispatch(setWindowWidth(window.innerWidth));
@@ -77,7 +95,7 @@ export const LetterGridContainer = (container: IGridContainers) => {
     };
   }, [dispatch]);
 
-  const workspaceLayout = container.elements.activeElements.reduce(
+  const workspaceLayout = gridContainers[0]?.elements.activeElements.reduce(
     (acc: Layout[], el: T_BlockElement) => {
       return [...acc, el.layout];
     },
@@ -140,6 +158,7 @@ export const LetterGridContainer = (container: IGridContainers) => {
       state: {
         layoutData: layoutString,
         htmlTemplate: htmlTemplate,
+        elements: container.elements.activeElements,
       },
     });
   };
@@ -190,7 +209,12 @@ export const LetterGridContainer = (container: IGridContainers) => {
 
       <ResponsiveGridLayoutWithWidth
         className={classes["grid"]}
-        layouts={{ lg: workspaceLayout, md: workspaceLayout, sm: workspaceLayout, xs: workspaceLayout }}
+        layouts={{
+          lg: workspaceLayout,
+          md: workspaceLayout,
+          sm: workspaceLayout,
+          xs: workspaceLayout,
+        }}
         cols={{ lg: 1, md: 1, sm: 1, xs: 1 }}
         breakpoints={{ lg: 1200, md: 996, sm: 768, xs: 480 }}
         rowHeight={container.height}
@@ -215,12 +239,7 @@ export const LetterGridContainer = (container: IGridContainers) => {
             x: layoutItem.x || 0,
             y: layoutItem.y || 0,
           };
-          console.log("Добавленный элемент:", {
-            draggableItem,
-            layoutItem: newLayoutItem,
-            layout,
-            containerId: id,
-          });
+
           dispatch(addElement({ draggableItem, layoutItem: newLayoutItem, layout, id }));
         }}
         draggableHandle=".drag-area"
@@ -239,6 +258,73 @@ export const LetterGridContainer = (container: IGridContainers) => {
             }
             return acc;
           }, [] as string[]);
+
+          let gifComponentId = null;
+          let stickerComponentId = null;
+          if (
+            el.children &&
+            el.children.length > 0 &&
+            el.children[0].children &&
+            el.children[0].children.length > 0
+          ) {
+            const potentialGifComponent = el.children[0].children[0];
+
+            if (
+              potentialGifComponent.name === "Gifs" ||
+              potentialGifComponent.name === "GifsComponent"
+            ) {
+              gifComponentId = potentialGifComponent.id;
+            } else {
+              for (const cell of el.children) {
+                if (cell.children) {
+                  for (const grandChild of cell.children) {
+                    if (
+                      (grandChild.name === "Gifs" || grandChild.name === "GifsComponent") &&
+                      grandChild.id
+                    ) {
+                      gifComponentId = grandChild.id;
+                      break;
+                    }
+                  }
+                  if (gifComponentId) break;
+                }
+              }
+            }
+          }
+          if (
+            el.children &&
+            el.children.length > 0 &&
+            el.children[0].children &&
+            el.children[0].children.length > 0
+          ) {
+            const potentialStickerComponent = el.children[0].children[0];
+
+            if (
+              potentialStickerComponent.name === "Stickers" ||
+              potentialStickerComponent.name === "StickersComponent"
+            ) {
+              stickerComponentId = potentialStickerComponent.id;
+            } else {
+              for (const cell of el.children) {
+                if (cell.children) {
+                  for (const grandChild of cell.children) {
+                    if (
+                      potentialStickerComponent.name === "Stickers" ||
+                      (grandChild.name === "StickersComponent" && grandChild.id)
+                    ) {
+                      stickerComponentId = grandChild.id;
+                      break;
+                    }
+                  }
+                  if (stickerComponentId) break;
+                }
+              }
+            }
+          }
+
+          // Используем найденный ID компонента Gifs, если он есть, иначе fallback на ID BlockLine
+          const idToUseForGif = gifComponentId || el.id;
+          const idToUseForSticker = stickerComponentId || el.id;
 
           return (
             <div
@@ -268,6 +354,18 @@ export const LetterGridContainer = (container: IGridContainers) => {
                 layout={el.layout}
                 children={el.children}
                 containerId={container.id}
+                onGifSelect={(url: string) => {
+                  if (idToUseForGif) {
+                    dispatch(setSelectedGif({ elementId: idToUseForGif, url }));
+                  }
+                }}
+                selectedGif={idToUseForGif ? selectedGifs[idToUseForGif] || "" : ""}
+                onStickerSelect={(url: string) => {
+                  if (idToUseForSticker) {
+                    dispatch(setSelectedSticker({ elementId: idToUseForSticker, url }));
+                  }
+                }}
+                selectedSticker={idToUseForSticker ? selectedStickers[idToUseForSticker] || "" : ""}
               />
             </div>
           );
