@@ -33,6 +33,7 @@ import imageReducer from "../../letter-builder/reducers/imageSlice";
 import carouselReducer from "./LetterBuilderStore/carouselSlice";
 import gifSelectionReducer from "./LetterBuilderStore/gifSelectionSlice";
 import stickerSelectionReducer from "./LetterBuilderStore/stickerSelectionSlice";
+import videoSelectionReducer from "./LetterBuilderStore/videoSelectionSlice";
 
 //конфиг для persist
 const persistConfig = {
@@ -63,6 +64,7 @@ const rootReducer = combineReducers({
   carousel: carouselReducer,
   gifSelection: gifSelectionReducer,
   stickerSelection: stickerSelectionReducer,
+  videoSelection: videoSelectionReducer,
 });
 
 //преобразование редьюсера для persist

@@ -9,10 +9,12 @@ import * as componentMap from "../../../letter-builder/atoms/LineBlocksContent";
 import GifsComponent from "../../../letter-builder/atoms/LineBlocksContent/Gifs/Gifs";
 import StickersComponent from "../../../letter-builder/atoms/LineBlocksContent/Stickers";
 import TimerComponent from "../../../letter-builder/atoms/LineBlocksContent/Timer";
+import VideoComponent from "../../../letter-builder/atoms/LineBlocksContent/Video";
 import { useAppDispatch, useTypedSelector } from "@/hooks/cvTemplateHooks";
 import { useLocation } from "react-router-dom";
 import { setSelectedGif } from "@/store/LetterBuilderStore/gifSelectionSlice";
 import { setSelectedSticker } from "@/store/LetterBuilderStore/stickerSelectionSlice";
+import { setSelectedVideo } from "@/store/LetterBuilderStore/videoSelectionSlice";
 interface ElementProps {
   blockWidth?: string[];
 }
@@ -43,6 +45,7 @@ const EmailPage: React.FC = () => {
   const selectedGifs = useTypedSelector((state) => state.gifSelection.selectedGifs) || {};
   const selectedStickers =
     useTypedSelector((state) => state.stickerSelection.selectedStickers) || {};
+  const selectedVideos = useTypedSelector((state) => state.videoSelection.selectedVideos) || {};
   const elements = navigatedElements;
 
   // Функция для вычисления colspan из блоков
@@ -56,9 +59,25 @@ const EmailPage: React.FC = () => {
     }
     return 100 / numberOfColumns;
   };
+  const getYouTubeThumbnail = (url: string): { thumbnail: string; link: string } | null => {
+    const match = url.match(
+      /(?:https?:\/\/)?(?:www\.)?(?:youtube\.com\/(?:watch\?v=|embed\/)|youtu\.be\/)([\w-]+)/,
+    );
+    if (!match || !match[1]) return null;
+
+    const id = match[1];
+    return {
+      thumbnail: `https://img.youtube.com/vi/${id}/hqdefault.jpg`,
+      link: `https://www.youtube.com/watch?v=${id}`,
+    };
+  };
 
   // Генерация структуры таблицы
-  const parseTreeToTable = (elements: Element[], numberOfColumns: number): JSX.Element[] => {
+  const parseTreeToTable = (
+    elements: Element[],
+    numberOfColumns: number,
+    isEmail: boolean = false,
+  ): JSX.Element[] => {
     if (!elements || elements.length === 0) {
       return [
         <tr key="no-elements">
@@ -138,6 +157,40 @@ const EmailPage: React.FC = () => {
                 </td>
               );
             }
+            if (elementInCell === "Video" || elementInCell === "VideoComponent") {
+              console.log(element);
+              const videoUrl = selectedVideos[id];
+              const videoData = videoUrl ? getYouTubeThumbnail(videoUrl) : null;
+
+              if (videoData) {
+                return (
+                  <td key={i} colSpan={colspan} style={{ textAlign: "center", padding: "10px" }}>
+                    {isEmail ? (
+                      <a href={videoData.link} target="_blank" rel="noreferrer">
+                        <img
+                          src={videoData.thumbnail}
+                          alt="YouTube Video Preview"
+                          style={{
+                            width: "100%",
+                            maxWidth: "600px",
+                            border: "0",
+                            display: "block",
+                          }}
+                        />
+                      </a>
+                    ) : (
+                      <VideoComponent
+                        id={id}
+                        videoUrl={videoUrl}
+                        onVideoSelect={(url: string) =>
+                          dispatch(setSelectedVideo({ elementId: id, url }))
+                        }
+                      />
+                    )}
+                  </td>
+                );
+              }
+            }
 
             // Рендер компонента из componentMap, если он существует
             type ComponentMap = typeof componentMap;
@@ -190,7 +243,7 @@ const EmailPage: React.FC = () => {
             borderCollapse: "collapse",
           }}
         >
-          <tbody>{parseTreeToTable(elements, numberOfColumns)}</tbody>
+          <tbody>{parseTreeToTable(elements, numberOfColumns, true)}</tbody>
         </table>
       </Provider>,
     );

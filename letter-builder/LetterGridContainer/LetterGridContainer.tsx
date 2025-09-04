@@ -16,6 +16,7 @@ import { useNavigate } from "react-router-dom";
 import classes from "./LetterGridContainer.module.scss";
 import { setSelectedGif } from "@/store/LetterBuilderStore/gifSelectionSlice";
 import { setSelectedSticker } from "@/store/LetterBuilderStore/stickerSelectionSlice";
+import { setSelectedVideo } from "@/store/LetterBuilderStore/videoSelectionSlice";
 
 const ResponsiveReactGridLayout = Responsive;
 const ResponsiveGridLayoutWithWidth = WidthProvider(ResponsiveReactGridLayout) as any;
@@ -36,6 +37,8 @@ const DynamicComponentRenderer: React.FC<LetterDynamicComponentRendererProps> = 
     selectedGif,
     onStickerSelect,
     selectedSticker,
+    selectedVideo,
+    onVideoSelect,
   }) => {
     const DynamicComponent = lazy(() => import(`../${source}/LineBlocks/index.ts`));
 
@@ -55,6 +58,8 @@ const DynamicComponentRenderer: React.FC<LetterDynamicComponentRendererProps> = 
             selectedGif={selectedGif}
             onStickerSelect={onStickerSelect}
             selectedSticker={selectedSticker}
+            selectedVideo={selectedVideo}
+            onVideoSelect={onVideoSelect}
           />
         </div>
       </Suspense>
@@ -76,6 +81,7 @@ export const LetterGridContainer = (container: IGridContainers) => {
   const selectedGifs = useTypedSelector((state) => state.gifSelection.selectedGifs) || {};
   const selectedStickers =
     useTypedSelector((state) => state.stickerSelection.selectedStickers) || {};
+  const selectedVideos = useTypedSelector((state) => state.videoSelection.selectedVideos || {});
 
   const handleSetDraggingInnerItem = (isDragging: boolean) => {
     setIsDraggingInnerItem(isDragging);
@@ -260,7 +266,6 @@ export const LetterGridContainer = (container: IGridContainers) => {
           }, [] as string[]);
 
           let gifComponentId = null;
-          let stickerComponentId = null;
           if (
             el.children &&
             el.children.length > 0 &&
@@ -291,6 +296,7 @@ export const LetterGridContainer = (container: IGridContainers) => {
               }
             }
           }
+          let stickerComponentId = null;
           if (
             el.children &&
             el.children.length > 0 &&
@@ -321,10 +327,42 @@ export const LetterGridContainer = (container: IGridContainers) => {
               }
             }
           }
+          let videoComponentId = null;
+          if (
+            el.children &&
+            el.children.length > 0 &&
+            el.children[0].children &&
+            el.children[0].children.length > 0
+          ) {
+            const potentialVideoComponent = el.children[0].children[0];
+
+            if (
+              potentialVideoComponent.name === "Video" ||
+              potentialVideoComponent.name === "VideoComponent"
+            ) {
+              videoComponentId = potentialVideoComponent.id;
+            } else {
+              for (const cell of el.children) {
+                if (cell.children) {
+                  for (const grandChild of cell.children) {
+                    if (
+                      potentialVideoComponent.name === "Video" ||
+                      (grandChild.name === "VideoComponent" && grandChild.id)
+                    ) {
+                      videoComponentId = grandChild.id;
+                      break;
+                    }
+                  }
+                  if (videoComponentId) break;
+                }
+              }
+            }
+          }
 
           // Используем найденный ID компонента Gifs, если он есть, иначе fallback на ID BlockLine
           const idToUseForGif = gifComponentId || el.id;
           const idToUseForSticker = stickerComponentId || el.id;
+          const idToUseForVideo = videoComponentId || el.id;
 
           return (
             <div
@@ -366,6 +404,10 @@ export const LetterGridContainer = (container: IGridContainers) => {
                   }
                 }}
                 selectedSticker={idToUseForSticker ? selectedStickers[idToUseForSticker] || "" : ""}
+                selectedVideo={idToUseForVideo ? selectedVideos[idToUseForVideo] || "" : ""}
+                onVideoSelect={(url: string) => {
+                  dispatch(setSelectedVideo({ elementId: idToUseForVideo, url }));
+                }}
               />
             </div>
           );

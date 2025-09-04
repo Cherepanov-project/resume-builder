@@ -118,6 +118,8 @@ export type DynamicComponentRendererProps = {
   selectedGif?: string;
   onStickerSelect?: (url: string) => void;
   selectedSticker?: string;
+  selectedVideo?: string;
+  onVideoSelect?: (url: string) => void;
 };
 
 export type ContainerDIVProps = {

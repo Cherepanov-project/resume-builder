@@ -37,6 +37,8 @@ export interface LineCardProps {
   selectedGif?: string;
   onStickerSelect?: (url: string) => void;
   selectedSticker?: string;
+  selectedVideo?: string;
+  onVideoSelect?: (url: string) => void;
 }
 
 interface DynamicChildComponentRendererProps {
@@ -47,6 +49,8 @@ interface DynamicChildComponentRendererProps {
   selectedGif?: string;
   onStickerSelect?: (url: string) => void;
   selectedSticker?: string;
+  selectedVideo?: string;
+  onVideoSelect?: (url: string) => void;
 }
 
 const cellStyles = {
@@ -62,7 +66,16 @@ const cellStyles = {
 };
 
 const DynamicChildComponentRenderer: React.FC<DynamicChildComponentRendererProps> = memo(
-  ({ Component, id, onGifSelect, selectedGif, onStickerSelect, selectedSticker }) => {
+  ({
+    Component,
+    id,
+    onGifSelect,
+    selectedGif,
+    onStickerSelect,
+    selectedSticker,
+    selectedVideo,
+    onVideoSelect,
+  }) => {
     if (!Component) return null;
 
     const DynamicComponent = lazy(() =>
@@ -80,6 +93,8 @@ const DynamicChildComponentRenderer: React.FC<DynamicChildComponentRendererProps
           selectedGif={selectedGif}
           onStickerSelect={onStickerSelect}
           selectedSticker={selectedSticker}
+          selectedVideo={selectedVideo}
+          onVideoSelect={onVideoSelect}
         />
       </Suspense>
     );
@@ -94,6 +109,8 @@ const BlockLine = ({
   selectedGif,
   onStickerSelect,
   selectedSticker,
+  selectedVideo,
+  onVideoSelect,
 }: LineCardProps) => {
   const gridContainers = useTypedSelector((state) => state.letterLayout.gridContainers);
   const currentDraggableItem = useTypedSelector((state) => state.letterLayout.currentDraggableItem);
@@ -203,6 +220,8 @@ const BlockLine = ({
                 selectedGif={selectedGif}
                 onStickerSelect={onStickerSelect}
                 selectedSticker={selectedSticker}
+                selectedVideo={selectedVideo}
+                onVideoSelect={onVideoSelect}
               />
             ));
         }
