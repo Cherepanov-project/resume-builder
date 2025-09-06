@@ -15,14 +15,12 @@ import ElementToolsPanel from "../organismis/ElementToolsPanel/ElementToolsPanel
 import { useNavigate } from "react-router-dom";
 import classes from "./LetterGridContainer.module.scss";
 import { setSelectedGif } from "@/store/LetterBuilderStore/gifSelectionSlice";
+import { setSelectedSticker } from "@/store/LetterBuilderStore/stickerSelectionSlice";
 
 const ResponsiveReactGridLayout = Responsive;
 const ResponsiveGridLayoutWithWidth = WidthProvider(ResponsiveReactGridLayout) as any;
 
-export type LetterDynamicComponentRendererProps = DynamicComponentRendererProps & {
-  onGifSelect?: (url: string) => void;
-  selectedGif?: string;
-};
+export type LetterDynamicComponentRendererProps = DynamicComponentRendererProps;
 
 const DynamicComponentRenderer: React.FC<LetterDynamicComponentRendererProps> = memo(
   ({
@@ -36,6 +34,8 @@ const DynamicComponentRenderer: React.FC<LetterDynamicComponentRendererProps> = 
     containerId,
     onGifSelect,
     selectedGif,
+    onStickerSelect,
+    selectedSticker,
   }) => {
     const DynamicComponent = lazy(() => import(`../${source}/LineBlocks/index.ts`));
 
@@ -53,6 +53,8 @@ const DynamicComponentRenderer: React.FC<LetterDynamicComponentRendererProps> = 
             containerId={containerId}
             onGifSelect={onGifSelect}
             selectedGif={selectedGif}
+            onStickerSelect={onStickerSelect}
+            selectedSticker={selectedSticker}
           />
         </div>
       </Suspense>
@@ -72,6 +74,8 @@ export const LetterGridContainer = (container: IGridContainers) => {
   const [isHoverBtn, setIsHoverBtn] = useState<boolean>(false);
   const gridContainers = useTypedSelector((state) => state.layout.gridContainers);
   const selectedGifs = useTypedSelector((state) => state.gifSelection.selectedGifs) || {};
+  const selectedStickers =
+    useTypedSelector((state) => state.stickerSelection.selectedStickers) || {};
 
   const handleSetDraggingInnerItem = (isDragging: boolean) => {
     setIsDraggingInnerItem(isDragging);
@@ -256,6 +260,7 @@ export const LetterGridContainer = (container: IGridContainers) => {
           }, [] as string[]);
 
           let gifComponentId = null;
+          let stickerComponentId = null;
           if (
             el.children &&
             el.children.length > 0 &&
@@ -286,9 +291,40 @@ export const LetterGridContainer = (container: IGridContainers) => {
               }
             }
           }
+          if (
+            el.children &&
+            el.children.length > 0 &&
+            el.children[0].children &&
+            el.children[0].children.length > 0
+          ) {
+            const potentialStickerComponent = el.children[0].children[0];
+
+            if (
+              potentialStickerComponent.name === "Stickers" ||
+              potentialStickerComponent.name === "StickersComponent"
+            ) {
+              stickerComponentId = potentialStickerComponent.id;
+            } else {
+              for (const cell of el.children) {
+                if (cell.children) {
+                  for (const grandChild of cell.children) {
+                    if (
+                      potentialStickerComponent.name === "Stickers" ||
+                      (grandChild.name === "StickersComponent" && grandChild.id)
+                    ) {
+                      stickerComponentId = grandChild.id;
+                      break;
+                    }
+                  }
+                  if (stickerComponentId) break;
+                }
+              }
+            }
+          }
 
           // Используем найденный ID компонента Gifs, если он есть, иначе fallback на ID BlockLine
           const idToUseForGif = gifComponentId || el.id;
+          const idToUseForSticker = stickerComponentId || el.id;
 
           return (
             <div
@@ -324,6 +360,12 @@ export const LetterGridContainer = (container: IGridContainers) => {
                   }
                 }}
                 selectedGif={idToUseForGif ? selectedGifs[idToUseForGif] || "" : ""}
+                onStickerSelect={(url: string) => {
+                  if (idToUseForSticker) {
+                    dispatch(setSelectedSticker({ elementId: idToUseForSticker, url }));
+                  }
+                }}
+                selectedSticker={idToUseForSticker ? selectedStickers[idToUseForSticker] || "" : ""}
               />
             </div>
           );

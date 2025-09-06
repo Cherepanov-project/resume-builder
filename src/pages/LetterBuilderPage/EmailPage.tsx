@@ -7,9 +7,11 @@ import ReactDOMServer from "react-dom/server";
 import { Modal, Box, Typography, Button, TextField } from "@mui/material";
 import * as componentMap from "../../../letter-builder/atoms/LineBlocksContent";
 import GifsComponent from "../../../letter-builder/atoms/LineBlocksContent/Gifs/Gifs";
+import StickersComponent from "../../../letter-builder/atoms/LineBlocksContent/Stickers";
 import { useAppDispatch, useTypedSelector } from "@/hooks/cvTemplateHooks";
 import { useLocation } from "react-router-dom";
 import { setSelectedGif } from "@/store/LetterBuilderStore/gifSelectionSlice";
+import { setSelectedSticker } from "@/store/LetterBuilderStore/stickerSelectionSlice";
 interface ElementProps {
   blockWidth?: string[];
 }
@@ -38,6 +40,8 @@ const EmailPage: React.FC = () => {
   const location = useLocation();
   const navigatedElements = (location.state?.elements as Element[]) || [];
   const selectedGifs = useTypedSelector((state) => state.gifSelection.selectedGifs) || {};
+  const selectedStickers =
+    useTypedSelector((state) => state.stickerSelection.selectedStickers) || {};
   const elements = navigatedElements;
 
   // Функция для вычисления colspan из блоков
@@ -94,6 +98,29 @@ const EmailPage: React.FC = () => {
                 </td>
               );
             }
+            if (elementInCell === "StickersComponent") {
+              const selectedSticker = selectedStickers[id];
+              return (
+                <td
+                  key={i}
+                  colSpan={colspan}
+                  style={{
+                    width: `${colspan}%`,
+                    padding: "10px",
+                    border: "1px solid #ddd",
+                    textAlign: "center",
+                  }}
+                >
+                  <StickersComponent
+                    id={id}
+                    selectedSticker={selectedSticker}
+                    onStickerSelect={(url: string) =>
+                      dispatch(setSelectedSticker({ elementId: id, url }))
+                    }
+                  />
+                </td>
+              );
+            }
 
             // Рендер компонента из componentMap, если он существует
             type ComponentMap = typeof componentMap;
@@ -113,9 +140,13 @@ const EmailPage: React.FC = () => {
                 {RenderedComponent ? (
                   <RenderedComponent
                     selectedGif={selectedGifs[id]}
+                    selectedSticker={selectedStickers[id]}
                     key={`${elementInCell}-${index}`}
                     id={id}
                     onGifSelect={(url: string) => dispatch(setSelectedGif({ elementId: id, url }))}
+                    onStickerSelect={(url: string) =>
+                      dispatch(setSelectedSticker({ elementId: id, url }))
+                    }
                   />
                 ) : (
                   elementInCell

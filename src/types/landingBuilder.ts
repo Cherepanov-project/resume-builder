@@ -114,6 +114,10 @@ export type DynamicComponentRendererProps = {
   children?: T_BlockElement[];
   layout: Layout;
   containerId?: string;
+  onGifSelect?: (url: string) => void;
+  selectedGif?: string;
+  onStickerSelect?: (url: string) => void;
+  selectedSticker?: string;
 };
 
 export type ContainerDIVProps = {
