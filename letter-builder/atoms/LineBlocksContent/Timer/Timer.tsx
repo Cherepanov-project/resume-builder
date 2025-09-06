@@ -30,7 +30,6 @@ const TimerComponent = ({ id }: { id: string }) => {
   });
   const dispatch = useAppDispatch();
   const [viewModal, setViewModal] = useState(false);
-  const [counter, setCounter] = useState(0);
   const [loading, setLoading] = useState(false);
 
   const {
@@ -39,22 +38,34 @@ const TimerComponent = ({ id }: { id: string }) => {
     installTime = 0,
     installDate = 0,
     size = "0.8",
-    save = false
+    save = false,
+    counter = 0,
   } = parameters?.timerList || {};
 
   // таймер
   useEffect(() => {
+    let timer: NodeJS.Timeout | undefined;
     if (counter > 0) {
-      const timer = setInterval(() => setCounter(prev => prev - 1000), 1000);
-      return () => clearInterval(timer);
+      timer = setInterval(() => {
+        const newCounter = installDate + installTime - Date.now();
+        if (newCounter > 0) {
+          dispatch(addTimer({ id, counter: newCounter }));
+        } else {
+          dispatch(addTimer({ id, counter: 0 }));
+        }
+      }, 1000);
     }
-  }, [counter]);
+    return () => {
+      if (timer) clearInterval(timer);
+    };
+  }, [counter, installDate, installTime, dispatch, id]);
 
   useEffect(() => {
     if (installDate > 0 && installTime > 0) {
       const newCounter = installDate + installTime - Date.now();
-      setCounter(newCounter);
-      dispatch(addTimer({ id, counter: newCounter }));
+      if (newCounter > 0) {
+        dispatch(addTimer({ id, counter: newCounter }));
+      }
     }
   }, [installDate, installTime, dispatch, id]);
 
@@ -72,38 +83,58 @@ const TimerComponent = ({ id }: { id: string }) => {
     }
   }, [dispatch, id, closeModal]);
 
-  const handleColorChange = useCallback((color: Color) => {
-    const { r, g, b, a } = color.toRgb();
-    dispatch(addTimer({ id, color: `rgba(${r},${g},${b},${a})` }));
-  }, [dispatch, id]);
+  const handleColorChange = useCallback(
+    (color: Color) => {
+      const { r, g, b, a } = color.toRgb();
+      dispatch(addTimer({ id, color: `rgba(${r},${g},${b},${a})` }));
+    },
+    [dispatch, id],
+  );
 
-  const handleBackgroundChange = useCallback((color: Color) => {
-    const { r, g, b, a } = color.toRgb();
-    dispatch(addTimer({ id, background: `rgba(${r},${g},${b},${a})` }));
-  }, [dispatch, id]);
+  const handleBackgroundChange = useCallback(
+    (color: Color) => {
+      const { r, g, b, a } = color.toRgb();
+      dispatch(addTimer({ id, background: `rgba(${r},${g},${b},${a})` }));
+    },
+    [dispatch, id],
+  );
 
-  const handleDateChange = useCallback((e: InstallDateTime) => {
-    dispatch(addTimer({ 
-      id, 
-      installDate: new Date(`${e.$y}-${e.$M + 1}-${e.$D}`).getTime() 
-    }));
-  }, [dispatch, id]);
+  const handleDateChange = useCallback(
+    (e: InstallDateTime) => {
+      dispatch(
+        addTimer({
+          id,
+          installDate: new Date(`${e.$y}-${e.$M + 1}-${e.$D}`).getTime(),
+        }),
+      );
+    },
+    [dispatch, id],
+  );
 
-  const handleTimeChange = useCallback((time: dayjs.Dayjs | null) => {
-    if (time) {
-      const installTime = time.hour() * 3600000 + time.minute() * 60000 + time.second() * 1000;
-      dispatch(addTimer({ id, installTime }));
-    }
-  }, [dispatch, id]);
+  const handleTimeChange = useCallback(
+    (time: dayjs.Dayjs | null) => {
+      if (time) {
+        const installTime = time.hour() * 3600000 + time.minute() * 60000 + time.second() * 1000;
+        dispatch(addTimer({ id, installTime }));
+      }
+    },
+    [dispatch, id],
+  );
 
-  const handleSizeChange = useCallback((e: string[]) => {
-    dispatch(addTimer({ id, size: e.join() }));
-  }, [dispatch, id]);
+  const handleSizeChange = useCallback(
+    (e: string[]) => {
+      dispatch(addTimer({ id, size: e.join() }));
+    },
+    [dispatch, id],
+  );
 
-  const handleKeyDown = useCallback((e: KeyboardEvent) => {
-    if (e.key === "Escape") closeModal();
-    if (e.key === "Enter") handleSave();
-  }, [closeModal, handleSave]);
+  const handleKeyDown = useCallback(
+    (e: KeyboardEvent) => {
+      if (e.key === "Escape") closeModal();
+      if (e.key === "Enter") handleSave();
+    },
+    [closeModal, handleSave],
+  );
 
   useEffect(() => {
     if (!viewModal) return;
@@ -126,12 +157,14 @@ const TimerComponent = ({ id }: { id: string }) => {
           <Row gutter={16}>
             {Object.entries(time).map(([key, value]) => (
               <Col key={key} span={6}>
-                <div style={{ color }} className={classes.int}>{value}</div>
+                <div style={{ color }} className={classes.int}>
+                  {value}
+                </div>
                 <div style={{ fontSize: 16, color }}>
-                  {key === 'days' && 'Дней'}
-                  {key === 'hours' && 'Часов'}
-                  {key === 'minutes' && 'Минут'}
-                  {key === 'seconds' && 'Секунд'}
+                  {key === "days" && "Дней"}
+                  {key === "hours" && "Часов"}
+                  {key === "minutes" && "Минут"}
+                  {key === "seconds" && "Секунд"}
                 </div>
               </Col>
             ))}
@@ -157,13 +190,16 @@ const TimerComponent = ({ id }: { id: string }) => {
       )}
 
       {viewModal && (
-        <div className={classes.modal} onClick={(e) => e.target === e.currentTarget && closeModal()}>
+        <div
+          className={classes.modal}
+          onClick={(e) => e.target === e.currentTarget && closeModal()}
+        >
           <div className={classes.modalContent} onClick={(e) => e.stopPropagation()}>
             <div className={classes.modalTitle}>
               <span>Настройка таймера</span>
-              <button 
-                type="button" 
-                className={classes.close} 
+              <button
+                type="button"
+                className={classes.close}
                 onClick={closeModal}
                 aria-label="Закрыть"
               >

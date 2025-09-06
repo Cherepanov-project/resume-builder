@@ -29,7 +29,6 @@ export const clearElements = createAction<string[]>("settingsPanel/clearElements
 export const addListValue = createAction<object>("settingsPanel/addListValue");
 export const addTimer = createAction<object>("settingsPanel/addTimer");
 
-
 const settingsPanelSlice = createSlice({
   name: "settingsPanel",
   initialState,
@@ -167,7 +166,11 @@ const settingsPanelSlice = createSlice({
         (state.elements[id].valueList as any)[key] = textList;
       }
     },
-    addTimer: (state, { payload }: PayloadAction<{
+    addTimer: (
+      state,
+      {
+        payload,
+      }: PayloadAction<{
         id: string;
         installDate?: number;
         installTime?: number;
@@ -179,7 +182,7 @@ const settingsPanelSlice = createSlice({
       }>,
     ) => {
       const { id, ...rest } = payload;
-      
+
       // Инициализация timerList если его нет
       if (!state.elements[id].timerList) {
         state.elements[id].timerList = {
@@ -187,13 +190,15 @@ const settingsPanelSlice = createSlice({
           background: "#457670",
           installTime: 0,
           installDate: 0,
+          counter: 0,
+          size: "0.8",
         };
       }
-    
+
       // Обновляем только переданные поля
       state.elements[id].timerList = {
         ...state.elements[id].timerList,
-        ...rest
+        ...rest,
       };
     },
   },

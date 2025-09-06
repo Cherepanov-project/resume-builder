@@ -8,6 +8,7 @@ import { Modal, Box, Typography, Button, TextField } from "@mui/material";
 import * as componentMap from "../../../letter-builder/atoms/LineBlocksContent";
 import GifsComponent from "../../../letter-builder/atoms/LineBlocksContent/Gifs/Gifs";
 import StickersComponent from "../../../letter-builder/atoms/LineBlocksContent/Stickers";
+import TimerComponent from "../../../letter-builder/atoms/LineBlocksContent/Timer";
 import { useAppDispatch, useTypedSelector } from "@/hooks/cvTemplateHooks";
 import { useLocation } from "react-router-dom";
 import { setSelectedGif } from "@/store/LetterBuilderStore/gifSelectionSlice";
@@ -118,6 +119,22 @@ const EmailPage: React.FC = () => {
                       dispatch(setSelectedSticker({ elementId: id, url }))
                     }
                   />
+                </td>
+              );
+            }
+            if (elementInCell === "TimerComponent") {
+              return (
+                <td
+                  key={i}
+                  colSpan={colspan}
+                  style={{
+                    width: `${colspan}%`,
+                    padding: "10px",
+                    border: "1px solid #ddd",
+                    textAlign: "center",
+                  }}
+                >
+                  <TimerComponent id={id} />
                 </td>
               );
             }
