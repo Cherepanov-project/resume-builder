@@ -1,5 +1,5 @@
 import { Table, TableBody, TableRow, TableCell, ThemeProvider } from "@mui/material";
-import { T_BlockElement } from "@/types/landingBuilder";
+import { T_BlockElement, T_BlockElementWithChild } from "@/types/landingBuilder";
 import React, { useEffect, Suspense, lazy, memo, useRef } from "react";
 import { useTypedSelector } from "../../hooks/cvTemplateHooks";
 import { useAppDispatch } from "../../hooks/cvTemplateHooks";
@@ -201,7 +201,7 @@ const BlockLine = ({
 
     const childrenElements: JSX.Element[][] = [];
     const index = gridContainers[0].elements.activeElements.findIndex(
-      (item: { id: string }) => item.id === id,
+      (item: T_BlockElementWithChild) => item.id === id
     );
 
     if (!props.blockWidth || !Array.isArray(props.blockWidth)) {
