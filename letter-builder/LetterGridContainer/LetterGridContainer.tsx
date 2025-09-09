@@ -11,14 +11,13 @@ import {
 import { addElement, changeElement, setWindowWidth } from "@/store/landingBuilder/layoutSlice";
 import React, { memo, useEffect, useState } from "react";
 import ElementToolsPanel from "../organismis/ElementToolsPanel/ElementToolsPanel";
-import { useNavigate } from "react-router-dom";
 import classes from "./LetterGridContainer.module.scss";
 import { setSelectedGif } from "@/store/LetterBuilderStore/gifSelectionSlice";
 import { setSelectedSticker } from "@/store/LetterBuilderStore/stickerSelectionSlice";
 import DynamicComponent from "../atoms/LineBlocks";
+import { setContainer } from "@/store/landingBuilder/containerElementSlice";
 
 const ResponsiveReactGridLayout = Responsive;
-// const ResponsiveGridLayoutWithWidth = WidthProvider(ResponsiveReactGridLayout) as any;
 const ResponsiveGridLayoutWithWidth = WidthProvider(ResponsiveReactGridLayout);
 
 export type LetterDynamicComponentRendererProps = DynamicComponentRendererProps;
@@ -79,9 +78,7 @@ export const LetterGridContainer = (container: IGridContainers) => {
   const [isHover, setIsHover] = useState<boolean>(false);
   const [isDraggingInnerItem, setIsDraggingInnerItem] = useState<boolean>(false);
   const [activeElement, setActiveElement] = useState<string | null>(null);
-  const navigate = useNavigate();
 
-  const [isHoverBtn, setIsHoverBtn] = useState<boolean>(false);
   const gridContainers = useTypedSelector((state) => state.layout.gridContainers);
   const selectedGifs = useTypedSelector((state) => state.gifSelection.selectedGifs) || {};
   const selectedStickers =
@@ -94,6 +91,10 @@ export const LetterGridContainer = (container: IGridContainers) => {
   const handleElementClick = (id: string) => {
     setActiveElement(id);
   };
+
+  useEffect(() => {
+    dispatch(setContainer(container));
+  }, [container]);
 
   useEffect(() => {
     const handleResize = () => {
@@ -116,61 +117,6 @@ export const LetterGridContainer = (container: IGridContainers) => {
   const handleChangeLayout = (layout: Layout[]) => {
     layout.forEach((item) => {
       dispatch(changeElement(item));
-    });
-  };
-
-  const handleEmailButtonClick = () => {
-    // Сохранение данных о расположении блоков
-    const layoutData = container.elements.activeElements.map((el) => ({
-      id: el.id,
-      layout: el.layout,
-    }));
-    const layoutString = JSON.stringify(layoutData);
-
-    const htmlTemplate = `
-      <div class="${classes["container"]}">
-        <ResponsiveGridLayout
-          class="${classes["grid"]}"
-          layout="${JSON.stringify(workspaceLayout)}"
-          cols="1"
-          rowHeight="${container.height}"
-          width="${String(width - 76 - (Number(width) - 120) * 0.3)}"
-          margin="[8, 8]"
-          isDraggable="false"
-          isDroppable="false"
-          isResizable="false"
-        >
-          ${container.elements.activeElements
-            .map(
-              (el) => `
-            <div
-              key="${el.layout.i}"
-              class="${classes["item"]}"
-            >
-              <DynamicComponentRenderer
-                id="${el.id}"
-                Component="${el.name}"
-                source="${el.source || "atoms"}"
-                props="${JSON.stringify(el.props)}"
-                columns="${el.columns || 1}"
-                layout="${JSON.stringify(el.layout)}"
-                children="${JSON.stringify(el.children)}"
-                containerId="${container.id}"
-              />
-            </div>
-          `,
-            )
-            .join("")}
-        </ResponsiveGridLayout>
-      </div>
-    `;
-
-    navigate("/email", {
-      state: {
-        layoutData: layoutString,
-        htmlTemplate: htmlTemplate,
-        elements: container.elements.activeElements,
-      },
     });
   };
 
@@ -198,26 +144,6 @@ export const LetterGridContainer = (container: IGridContainers) => {
         }
       }}
     >
-      {/* Кнопка Email Us - стайлинг */}
-      <button
-        style={{
-          color: isHoverBtn ? "white" : "gray",
-          marginLeft: "10px",
-          marginTop: "2px",
-          marginBottom: "2px",
-          transition: "background-color 0.6s ease 0.2s, color 0.4s ease 0.2s",
-          backgroundColor: isHoverBtn ? "darkcyan" : "rgb(30 122 127 / .2)",
-          borderColor: isHoverBtn ? "#fff" : "rgba(0, 0, 0, 0.1)",
-          border: isHoverBtn ? "1px solid white" : "1px solid gray",
-        }}
-        className={classes["email-button"]}
-        onClick={handleEmailButtonClick}
-        onMouseEnter={() => setIsHoverBtn(true)}
-        onMouseLeave={() => setIsHoverBtn(false)}
-      >
-        Email Us
-      </button>
-
       <ResponsiveGridLayoutWithWidth
         className={classes["grid"]}
         layouts={{
