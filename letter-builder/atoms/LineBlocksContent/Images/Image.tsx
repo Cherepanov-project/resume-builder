@@ -1,8 +1,9 @@
 import { useAppDispatch, useAppSelector } from "@/store/store";
 import { addImage, deleteImage } from "../../../reducers/imageSlice";
 import { useState } from "react";
-import { TextField } from "@mui/material";
+import { TextField, Button } from "@mui/material";
 import ElementSpecificSettingsForm from "../../../../src/components/molecules/ElementSpecificSettingsForm";
+import { buttonStyle } from "@/assets/style/buttonStyle";
 
 import s from "./image.module.css";
 
@@ -43,8 +44,8 @@ const Image = () => {
           style={{ marginBottom: "8px" }}
           onChange={(e) => setValue(e.target.value)}
         />
-        <button
-          className={s.button}
+        <Button
+          sx={{ ...buttonStyle, display: "block", mx: "auto" }}
           onClick={() => {
             dispatch(addImage({ url: value }));
             setValue("");
@@ -52,7 +53,7 @@ const Image = () => {
         >
           {" "}
           add image{" "}
-        </button>
+        </Button>
       </div>
     </div>
   );

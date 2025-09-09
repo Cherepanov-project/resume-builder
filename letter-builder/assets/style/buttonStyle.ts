@@ -4,7 +4,7 @@ interface ButtonStyle {
   backgroundColor: string;
   color: string;
   border: string;
-  ':hover': {
+  ":hover": {
     backgroundColor: string;
     color: string;
     border: string;
@@ -14,12 +14,12 @@ interface ButtonStyle {
 export const buttonStyle: ButtonStyle = {
   mt: 1,
   mr: 1,
-  backgroundColor: '#462174',
-  color: 'white',
-  border: '1px solid #462174',
-  ':hover': {
-    backgroundColor: 'white',
-    color: '#462174',
-    border: '1px solid #462174',
+  backgroundColor: "#462174",
+  color: "white",
+  border: "1px solid #462174",
+  ":hover": {
+    backgroundColor: "white",
+    color: "#462174",
+    border: "1px solid #462174",
   },
 };
