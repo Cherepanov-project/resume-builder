@@ -39,7 +39,7 @@ type AccordionData = Array<[string, string]>;
 const ElementSpecificSettingsForm = () => {
   const newImp = useInput("");
   const type = newImp.type;
-  const theme = useTheme()
+  const theme = useTheme();
 
   return (
     <form>
@@ -158,7 +158,11 @@ const ElementSpecificSettingsForm = () => {
                 </div>
               ))}
               <div>
-                <button style={{background: theme.custom.colorAlmostBlack, color: theme.custom.colorWhiteGray}}
+                <button
+                  style={{
+                    background: theme.custom.colorAlmostBlack,
+                    color: theme.custom.colorWhiteGray,
+                  }}
                   onClick={(e: { preventDefault: () => void }) => {
                     e.preventDefault();
                     const updatedList = [...newImp.selectList, { id: nanoid(), value: "Text" }];
@@ -168,7 +172,11 @@ const ElementSpecificSettingsForm = () => {
                 >
                   Add Item
                 </button>
-                <button style={{background: theme.custom.colorAlmostBlack, color: theme.custom.colorWhiteGray}}
+                <button
+                  style={{
+                    background: theme.custom.colorAlmostBlack,
+                    color: theme.custom.colorWhiteGray,
+                  }}
                   onClick={(e: { preventDefault: () => void }) => {
                     e.preventDefault();
                     const updatedList = [...newImp.selectList];
