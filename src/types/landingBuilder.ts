@@ -7,7 +7,7 @@ export interface CustomLayout extends Layout {
 }
 
 interface ElementsType {
-  activeElements: T_BlockElement[];
+  activeElements: T_BlockElementWithChild[];
 }
 
 export interface IGridContainers {
@@ -69,7 +69,6 @@ export interface IStyleFormObj {
   [key: string]: string | number;
 }
 
-// Гигачадовая типизация от Кенси
 export type T_BlockElement = {
   id?: string;
   name: string;
@@ -82,6 +81,23 @@ export type T_BlockElement = {
   elementScript?: string;
   interactiveType?: "button" | "slider";
   props: T_SectionElementProps;
+  children?: T_BlockElement[];
+  layout: Layout;
+};
+
+// Гигачадовая типизация от Кенси
+export type T_BlockElementWithChild = {
+  id?: string;
+  name: string;
+  title?: string;
+  url?: string;
+  value?: number;
+  type?: string;
+  source: string;
+  columns?: number;
+  elementScript?: string;
+  interactiveType?: "button" | "slider";
+  props: T_SectionElementPropsWithChild;
   children?: T_BlockElement[];
   layout: Layout;
 };
@@ -103,6 +119,7 @@ export type DynamicComponentRendererProps = {
     [key: string]:
       | string
       | number
+      | boolean
       | { [key: string]: string | number }
       | ISettingsInputItem[]
       | [string, string][];
@@ -286,6 +303,10 @@ export type T_SectionElementProps = {
   PhotoGallery?: ISettingsInputItem[];
   Avatars?: ISettingsInputItem[];
   size?: number;
+};
+
+export type T_SectionElementPropsWithChild = T_SectionElementProps & {
+  isChild?: boolean;
 };
 
 export interface ILayoutBlock {

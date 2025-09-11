@@ -1,4 +1,5 @@
 import { Table, TableBody, TableRow, TableCell, ThemeProvider } from "@mui/material";
+import { T_BlockElement, T_BlockElementWithChild } from "@/types/landingBuilder";
 import React, { useEffect, Suspense, lazy, memo, useRef } from "react";
 import { useTypedSelector } from "../../hooks/cvTemplateHooks";
 import { useAppDispatch } from "../../hooks/cvTemplateHooks";
@@ -12,6 +13,23 @@ interface IChildElement {
   id: string;
   name: string;
   children?: IChildElement[];
+}
+
+export interface CustomLayout {
+  i: string;
+  w: number;
+  h: number;
+  x: number;
+  y: number;
+  isDraggable?: boolean;
+  maxH?: number;
+  maxW?: number;
+  minH?: number;
+  minW?: number;
+  moved?: boolean;
+  static?: boolean;
+  isResizable?: boolean;
+  isBounded?: boolean;
 }
 
 export interface LineCardProps {
@@ -29,6 +47,11 @@ export interface LineCardProps {
       | ISettingsInputItem[]
       | [string, string][];
   };
+  columns? : number;
+  source? : string;
+  children? : T_BlockElement[] | undefined;
+  layout : CustomLayout;
+  containerId? : string | undefined;
   onDragStart: (e: React.DragEvent, id: string) => void;
   onDrop?: (e: React.DragEvent, id: string) => void;
   onDragOver?: (e: React.DragEvent) => void;
@@ -195,7 +218,7 @@ const BlockLine = ({
 
     const childrenElements: JSX.Element[][] = [];
     const index = gridContainers[0].elements.activeElements.findIndex(
-      (item: { id: string }) => item.id === id,
+      (item: T_BlockElementWithChild) => item.id === id
     );
 
     if (!props.blockWidth || !Array.isArray(props.blockWidth)) {

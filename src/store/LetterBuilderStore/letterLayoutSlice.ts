@@ -2,7 +2,7 @@ import { createSlice } from "@reduxjs/toolkit";
 import { customAlphabet } from "nanoid";
 import { insertChild } from "@/utils";
 import { addBaseScript } from "@/utils/scriptAssigner";
-import { T_BlockElement } from "@/types/landingBuilder";
+import { T_BlockElementWithChild as T_BlockElement } from "@/types/landingBuilder";
 import { replaceIdWithNanoid } from "@/utils/replaceIdWithId";
 
 const nanoid = customAlphabet("ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz", 15);

@@ -10,6 +10,7 @@ import GifsComponent from "../../../letter-builder/atoms/LineBlocksContent/Gifs/
 import StickersComponent from "../../../letter-builder/atoms/LineBlocksContent/Stickers";
 import TimerComponent from "../../../letter-builder/atoms/LineBlocksContent/Timer";
 import VideoComponent from "../../../letter-builder/atoms/LineBlocksContent/Video";
+import { ImageEmailView } from "../../../letter-builder/atoms/LineBlocksContent/Images/Image";
 import { useAppDispatch, useTypedSelector } from "@/hooks/cvTemplateHooks";
 import { useLocation } from "react-router-dom";
 import { setSelectedGif } from "@/store/LetterBuilderStore/gifSelectionSlice";
@@ -46,6 +47,7 @@ const EmailPage: React.FC = () => {
   const selectedStickers =
     useTypedSelector((state) => state.stickerSelection.selectedStickers) || {};
   const selectedVideos = useTypedSelector((state) => state.videoSelection.selectedVideos) || {};
+  const selectedImgs = useTypedSelector((state) => state.images.images);
   const elements = navigatedElements;
 
   // Функция для вычисления colspan из блоков
@@ -124,6 +126,21 @@ const EmailPage: React.FC = () => {
           </td>
         );
       }
+      case "Images":
+        return (
+        <td
+            key={id}
+            colSpan={colspan}
+            style={{
+              width: "100%",
+              maxWidth: "600px",
+              border: "0",
+              display: "block",
+            }}
+          >
+             <ImageEmailView images={selectedImgs} />
+            </td>
+        )
 
       case "TimerComponent":
         return (
