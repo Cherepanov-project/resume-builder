@@ -37,8 +37,8 @@ const DynamicComponentRenderer: React.FC<LetterDynamicComponentRendererProps> = 
     selectedGif,
     onStickerSelect,
     selectedSticker,
-    selectedVideo,
-    onVideoSelect,
+    // selectedVideo,
+    // onVideoSelect,
   }) => {
     const DynamicComponent = lazy(() => import(`../${source}/LineBlocks/index.ts`));
 
@@ -58,8 +58,8 @@ const DynamicComponentRenderer: React.FC<LetterDynamicComponentRendererProps> = 
             selectedGif={selectedGif}
             onStickerSelect={onStickerSelect}
             selectedSticker={selectedSticker}
-            selectedVideo={selectedVideo}
-            onVideoSelect={onVideoSelect}
+            // selectedVideo={selectedVideo}
+            // onVideoSelect={onVideoSelect}
           />
         </div>
       </Suspense>

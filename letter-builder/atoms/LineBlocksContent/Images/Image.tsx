@@ -2,7 +2,6 @@ import { useAppDispatch, useAppSelector } from "@/store/store";
 import { addImage, deleteImage } from "../../../reducers/imageSlice";
 import { useState } from "react";
 import { TextField } from "@mui/material";
-import ElementSpecificSettingsForm from "../../../../src/components/molecules/ElementSpecificSettingsForm";
 
 import s from "./image.module.css";
 
@@ -32,7 +31,6 @@ const Image = () => {
 
   return (
     <div>
-      <ElementSpecificSettingsForm />
       <div className={s.wrapper}>{element}</div>
       <div className={s.wrapperInput}>
         <TextField
