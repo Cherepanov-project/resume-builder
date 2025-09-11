@@ -2,10 +2,7 @@ import { useAppDispatch, useAppSelector } from "@/store/store";
 import { addImage, deleteImage } from "../../../reducers/imageSlice";
 import { useState } from "react";
 import { TextField, Button } from "@mui/material";
-import ElementSpecificSettingsForm from "../../../../src/components/molecules/ElementSpecificSettingsForm";
 import { buttonStyle } from "@/assets/style/buttonStyle";
-
-
 import s from "./image.module.css";
 
 const Image = () => {

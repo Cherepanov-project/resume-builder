@@ -14,8 +14,12 @@ import ElementToolsPanel from "../organismis/ElementToolsPanel/ElementToolsPanel
 import classes from "./LetterGridContainer.module.scss";
 import { setSelectedGif } from "@/store/LetterBuilderStore/gifSelectionSlice";
 import { setSelectedSticker } from "@/store/LetterBuilderStore/stickerSelectionSlice";
+
+import { setSelectedVideo } from "@/store/LetterBuilderStore/videoSelectionSlice";
+
 import DynamicComponent from "../atoms/LineBlocks";
 import { setContainer } from "@/store/landingBuilder/containerElementSlice";
+
 
 const ResponsiveReactGridLayout = Responsive;
 const ResponsiveGridLayoutWithWidth = WidthProvider(ResponsiveReactGridLayout);
@@ -36,6 +40,8 @@ const DynamicComponentRenderer: React.FC<LetterDynamicComponentRendererProps> = 
     selectedGif,
     onStickerSelect,
     selectedSticker,
+   
+  
   }) => {
     if (!id || !props) return;
 
@@ -83,6 +89,7 @@ export const LetterGridContainer = (container: IGridContainers) => {
   const selectedGifs = useTypedSelector((state) => state.gifSelection.selectedGifs) || {};
   const selectedStickers =
     useTypedSelector((state) => state.stickerSelection.selectedStickers) || {};
+  const selectedVideos = useTypedSelector((state) => state.videoSelection.selectedVideos || {});
 
   const handleSetDraggingInnerItem = (isDragging: boolean) => {
     setIsDraggingInnerItem(isDragging);
@@ -121,6 +128,27 @@ export const LetterGridContainer = (container: IGridContainers) => {
   };
 
   const calculatedWidth = Number(width) - 76 - (Number(width) - 120) * 0.3;
+
+  function findComponentId(el: T_BlockElement, names: string[]): string | null {
+    if (!el.children || el.children.length === 0) return null;
+
+    const potential = el.children[0]?.children?.[0];
+    if (potential && names.includes(potential.name) && potential.id) {
+      return potential.id;
+    }
+
+    for (const cell of el.children) {
+      if (!cell.children) continue;
+
+      for (const grandChild of cell.children) {
+        if (names.includes(grandChild.name) && grandChild.id) {
+          return grandChild.id;
+        }
+      }
+    }
+
+    return null;
+  }
 
   return (
     <div
@@ -196,72 +224,14 @@ export const LetterGridContainer = (container: IGridContainers) => {
             return acc;
           }, [] as string[]);
 
-          let gifComponentId = null;
-          let stickerComponentId = null;
-          if (
-            el.children &&
-            el.children.length > 0 &&
-            el.children[0].children &&
-            el.children[0].children.length > 0
-          ) {
-            const potentialGifComponent = el.children[0].children[0];
-
-            if (
-              potentialGifComponent.name === "Gifs" ||
-              potentialGifComponent.name === "GifsComponent"
-            ) {
-              gifComponentId = potentialGifComponent.id;
-            } else {
-              for (const cell of el.children) {
-                if (cell.children) {
-                  for (const grandChild of cell.children) {
-                    if (
-                      (grandChild.name === "Gifs" || grandChild.name === "GifsComponent") &&
-                      grandChild.id
-                    ) {
-                      gifComponentId = grandChild.id;
-                      break;
-                    }
-                  }
-                  if (gifComponentId) break;
-                }
-              }
-            }
-          }
-          if (
-            el.children &&
-            el.children.length > 0 &&
-            el.children[0].children &&
-            el.children[0].children.length > 0
-          ) {
-            const potentialStickerComponent = el.children[0].children[0];
-
-            if (
-              potentialStickerComponent.name === "Stickers" ||
-              potentialStickerComponent.name === "StickersComponent"
-            ) {
-              stickerComponentId = potentialStickerComponent.id;
-            } else {
-              for (const cell of el.children) {
-                if (cell.children) {
-                  for (const grandChild of cell.children) {
-                    if (
-                      potentialStickerComponent.name === "Stickers" ||
-                      (grandChild.name === "StickersComponent" && grandChild.id)
-                    ) {
-                      stickerComponentId = grandChild.id;
-                      break;
-                    }
-                  }
-                  if (stickerComponentId) break;
-                }
-              }
-            }
-          }
+          const gifComponentId = findComponentId(el, ["Gifs", "GifsComponent"]);
+          const stickerComponentId = findComponentId(el, ["Stickers", "StickersComponent"]);
+          const videoComponentId = findComponentId(el, ["Video", "VideoComponent"]);
 
           // Используем найденный ID компонента Gifs, если он есть, иначе fallback на ID BlockLine
           const idToUseForGif = gifComponentId || el.id;
           const idToUseForSticker = stickerComponentId || el.id;
+          const idToUseForVideo = videoComponentId || el.id;
 
           return (
             <div
@@ -303,6 +273,10 @@ export const LetterGridContainer = (container: IGridContainers) => {
                   }
                 }}
                 selectedSticker={idToUseForSticker ? selectedStickers[idToUseForSticker] || "" : ""}
+                selectedVideo={idToUseForVideo ? selectedVideos[idToUseForVideo] || "" : ""}
+                onVideoSelect={(url: string) => {
+                  dispatch(setSelectedVideo({ elementId: idToUseForVideo, url }));
+                }}
               />
             </div>
           );

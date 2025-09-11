@@ -9,11 +9,13 @@ import * as componentMap from "../../../letter-builder/atoms/LineBlocksContent";
 import GifsComponent from "../../../letter-builder/atoms/LineBlocksContent/Gifs/Gifs";
 import StickersComponent from "../../../letter-builder/atoms/LineBlocksContent/Stickers";
 import TimerComponent from "../../../letter-builder/atoms/LineBlocksContent/Timer";
+import VideoComponent from "../../../letter-builder/atoms/LineBlocksContent/Video";
 import { ImageEmailView } from "../../../letter-builder/atoms/LineBlocksContent/Images/Image";
 import { useAppDispatch, useTypedSelector } from "@/hooks/cvTemplateHooks";
 import { useLocation } from "react-router-dom";
 import { setSelectedGif } from "@/store/LetterBuilderStore/gifSelectionSlice";
 import { setSelectedSticker } from "@/store/LetterBuilderStore/stickerSelectionSlice";
+import { setSelectedVideo } from "@/store/LetterBuilderStore/videoSelectionSlice";
 interface ElementProps {
   blockWidth?: string[];
 }
@@ -44,6 +46,7 @@ const EmailPage: React.FC = () => {
   const selectedGifs = useTypedSelector((state) => state.gifSelection.selectedGifs) || {};
   const selectedStickers =
     useTypedSelector((state) => state.stickerSelection.selectedStickers) || {};
+  const selectedVideos = useTypedSelector((state) => state.videoSelection.selectedVideos) || {};
   const selectedImgs = useTypedSelector((state) => state.images.images);
   const elements = navigatedElements;
 
@@ -58,9 +61,180 @@ const EmailPage: React.FC = () => {
     }
     return 100 / numberOfColumns;
   };
+  const getYouTubeThumbnail = (url: string): { thumbnail: string; link: string } | null => {
+    const match = url.match(
+      /(?:https?:\/\/)?(?:www\.)?(?:youtube\.com\/(?:watch\?v=|embed\/)|youtu\.be\/)([\w-]+)/,
+    );
+    if (!match || !match[1]) return null;
+
+    const id = match[1];
+    return {
+      thumbnail: `https://img.youtube.com/vi/${id}/hqdefault.jpg`,
+      link: `https://www.youtube.com/watch?v=${id}`,
+    };
+  };
+
+  const renderTableCell = (
+    elementInCell: string,
+    id: string,
+    colspan: number,
+    isEmail: boolean = false,
+  ) => {
+    switch (elementInCell) {
+      case "GifsComponent": {
+        const selectedGif = selectedGifs[id];
+        return (
+          <td
+            key={id}
+            colSpan={colspan}
+            style={{
+              width: "100%",
+              maxWidth: "600px",
+              border: "0",
+              display: "block",
+            }}
+          >
+            <GifsComponent
+              id={id}
+              selectedGif={selectedGif}
+              onGifSelect={(url: string) => dispatch(setSelectedGif({ elementId: id, url }))}
+            />
+          </td>
+        );
+      }
+
+      case "StickersComponent": {
+        const selectedSticker = selectedStickers[id];
+        return (
+          <td
+            key={id}
+            colSpan={colspan}
+            style={{
+              width: "100%",
+              maxWidth: "600px",
+              border: "0",
+              display: "block",
+            }}
+          >
+            <StickersComponent
+              id={id}
+              selectedSticker={selectedSticker}
+              onStickerSelect={(url: string) =>
+                dispatch(setSelectedSticker({ elementId: id, url }))
+              }
+            />
+          </td>
+        );
+      }
+      case "Images":
+        return (
+        <td
+            key={id}
+            colSpan={colspan}
+            style={{
+              width: "100%",
+              maxWidth: "600px",
+              border: "0",
+              display: "block",
+            }}
+          >
+             <ImageEmailView images={selectedImgs} />
+            </td>
+        )
+
+      case "TimerComponent":
+        return (
+          <td
+            key={id}
+            colSpan={colspan}
+            style={{
+              width: "100%",
+              maxWidth: "600px",
+              border: "0",
+              display: "block",
+            }}
+          >
+            <TimerComponent id={id} />
+          </td>
+        );
+
+      case "Video":
+      case "VideoComponent": {
+        const videoUrl = selectedVideos[id];
+        const videoData = videoUrl ? getYouTubeThumbnail(videoUrl) : null;
+
+        if (videoData) {
+          return (
+            <td key={id} colSpan={colspan} style={{ textAlign: "center", padding: "10px" }}>
+              {isEmail ? (
+                <a href={videoData.link} target="_blank" rel="noreferrer">
+                  <img
+                    src={videoData.thumbnail}
+                    alt="YouTube Video Preview"
+                    style={{
+                      width: "100%",
+                      maxWidth: "600px",
+                      border: "0",
+                      display: "block",
+                    }}
+                  />
+                </a>
+              ) : (
+                <VideoComponent
+                  id={id}
+                  videoUrl={videoUrl}
+                  onVideoSelect={(url: string) =>
+                    dispatch(setSelectedVideo({ elementId: id, url }))
+                  }
+                />
+              )}
+            </td>
+          );
+        }
+        break;
+      }
+
+      default: {
+        type ComponentMap = typeof componentMap;
+        const RenderedComponent = componentMap[elementInCell as keyof ComponentMap];
+
+        return (
+          <td
+            key={id}
+            colSpan={colspan}
+            style={{
+              width: "100%",
+              maxWidth: "600px",
+              border: "0",
+              display: "block",
+            }}
+          >
+            {RenderedComponent ? (
+              <RenderedComponent
+                selectedGif={selectedGifs[id]}
+                selectedSticker={selectedStickers[id]}
+                key={id}
+                id={id}
+                onGifSelect={(url: string) => dispatch(setSelectedGif({ elementId: id, url }))}
+                onStickerSelect={(url: string) =>
+                  dispatch(setSelectedSticker({ elementId: id, url }))
+                }
+              />
+            ) : (
+              elementInCell
+            )}
+          </td>
+        );
+      }
+    }
+  };
 
   // Генерация структуры таблицы
-  const parseTreeToTable = (elements: Element[], numberOfColumns: number): JSX.Element[] => {
+  const parseTreeToTable = (
+    elements: Element[],
+    numberOfColumns: number,
+    isEmail: boolean = false,
+  ): JSX.Element[] => {
     if (!elements || elements.length === 0) {
       return [
         <tr key="no-elements">
@@ -80,114 +254,8 @@ const EmailPage: React.FC = () => {
             const colspan = extractPercent(blockWidth);
             const elementInCell = element.children?.[i]?.children?.[0]?.name || "No Content";
             const id = element.children?.[i]?.children?.[0]?.id || "";
-            if (elementInCell === "GifsComponent") {
-              const selectedGif = selectedGifs[id];
-              return (
-                <td
-                  key={i}
-                  colSpan={colspan}
-                  style={{
-                    width: `${colspan}%`,
-                    padding: "10px",
-                    border: "1px solid #ddd",
-                    textAlign: "center",
-                  }}
-                >
-                  <GifsComponent
-                    id={id}
-                    selectedGif={selectedGif}
-                    onGifSelect={(url: string) => dispatch(setSelectedGif({ elementId: id, url }))}
-                  />
-                </td>
-              );
-            }
-            if (elementInCell === "StickersComponent") {
-              const selectedSticker = selectedStickers[id];
-              return (
-                <td
-                  key={i}
-                  colSpan={colspan}
-                  style={{
-                    width: `${colspan}%`,
-                    padding: "10px",
-                    border: "1px solid #ddd",
-                    textAlign: "center",
-                  }}
-                >
-                  <StickersComponent
-                    id={id}
-                    selectedSticker={selectedSticker}
-                    onStickerSelect={(url: string) =>
-                      dispatch(setSelectedSticker({ elementId: id, url }))
-                    }
-                  />
-                </td>
-              );
-            }
-            if (elementInCell === "TimerComponent") {
-              return (
-                <td
-                  key={i}
-                  colSpan={colspan}
-                  style={{
-                    width: `${colspan}%`,
-                    padding: "10px",
-                    border: "1px solid #ddd",
-                    textAlign: "center",
-                  }}
-                >
-                  <TimerComponent id={id} />
-                </td>
-              );
-            }
-            if (elementInCell === "Images") {
-              return (
-                <td
-                  key={i}
-                  colSpan={colspan}
-                  style={{
-                    width: `${colspan}%`,
-                    padding: "10px",
-                    border: "1px solid #ddd",
-                    textAlign: "center",
-                  }}
-                >
-                  <ImageEmailView images={selectedImgs} />
-                </td>
-              );
-            }
 
-            // Рендер компонента из componentMap, если он существует
-            type ComponentMap = typeof componentMap;
-            const RenderedComponent = componentMap[elementInCell as keyof ComponentMap];
-
-            return (
-              <td
-                key={i}
-                colSpan={colspan}
-                style={{
-                  width: `${colspan}%`,
-                  padding: "10px",
-                  border: "1px solid #ddd",
-                  textAlign: "center",
-                }}
-              >
-                {RenderedComponent ? (
-                  <RenderedComponent
-                    selectedGif={selectedGifs[id]}
-                    selectedSticker={selectedStickers[id]}
-                    key={`${elementInCell}-${index}`}
-                    id={id}
-                    onGifSelect={(url: string) => dispatch(setSelectedGif({ elementId: id, url }))}
-                    onStickerSelect={(url: string) =>
-                      dispatch(setSelectedSticker({ elementId: id, url }))
-                    }
-                  />
-                ) : (
-                  elementInCell
-                )}
-              </td>
-            );
+            return renderTableCell(elementInCell, id, colspan, isEmail);
           })}
         </tr>
       );
@@ -208,7 +276,7 @@ const EmailPage: React.FC = () => {
             borderCollapse: "collapse",
           }}
         >
-          <tbody>{parseTreeToTable(elements, numberOfColumns)}</tbody>
+          <tbody>{parseTreeToTable(elements, numberOfColumns, true)}</tbody>
         </table>
       </Provider>,
     );
