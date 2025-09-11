@@ -171,6 +171,27 @@ export const LetterGridContainer = (container: IGridContainers) => {
 
   const calculatedWidth = Number(width) - 76 - (Number(width) - 120) * 0.3;
 
+  function findComponentId(el: T_BlockElement, names: string[]): string | null {
+    if (!el.children || el.children.length === 0) return null;
+
+    const potential = el.children[0]?.children?.[0];
+    if (potential && names.includes(potential.name) && potential.id) {
+      return potential.id;
+    }
+
+    for (const cell of el.children) {
+      if (!cell.children) continue;
+
+      for (const grandChild of cell.children) {
+        if (names.includes(grandChild.name) && grandChild.id) {
+          return grandChild.id;
+        }
+      }
+    }
+
+    return null;
+  }
+
   return (
     <div
       className={classes["container"]}
@@ -265,99 +286,9 @@ export const LetterGridContainer = (container: IGridContainers) => {
             return acc;
           }, [] as string[]);
 
-          let gifComponentId = null;
-          if (
-            el.children &&
-            el.children.length > 0 &&
-            el.children[0].children &&
-            el.children[0].children.length > 0
-          ) {
-            const potentialGifComponent = el.children[0].children[0];
-
-            if (
-              potentialGifComponent.name === "Gifs" ||
-              potentialGifComponent.name === "GifsComponent"
-            ) {
-              gifComponentId = potentialGifComponent.id;
-            } else {
-              for (const cell of el.children) {
-                if (cell.children) {
-                  for (const grandChild of cell.children) {
-                    if (
-                      (grandChild.name === "Gifs" || grandChild.name === "GifsComponent") &&
-                      grandChild.id
-                    ) {
-                      gifComponentId = grandChild.id;
-                      break;
-                    }
-                  }
-                  if (gifComponentId) break;
-                }
-              }
-            }
-          }
-          let stickerComponentId = null;
-          if (
-            el.children &&
-            el.children.length > 0 &&
-            el.children[0].children &&
-            el.children[0].children.length > 0
-          ) {
-            const potentialStickerComponent = el.children[0].children[0];
-
-            if (
-              potentialStickerComponent.name === "Stickers" ||
-              potentialStickerComponent.name === "StickersComponent"
-            ) {
-              stickerComponentId = potentialStickerComponent.id;
-            } else {
-              for (const cell of el.children) {
-                if (cell.children) {
-                  for (const grandChild of cell.children) {
-                    if (
-                      potentialStickerComponent.name === "Stickers" ||
-                      (grandChild.name === "StickersComponent" && grandChild.id)
-                    ) {
-                      stickerComponentId = grandChild.id;
-                      break;
-                    }
-                  }
-                  if (stickerComponentId) break;
-                }
-              }
-            }
-          }
-          let videoComponentId = null;
-          if (
-            el.children &&
-            el.children.length > 0 &&
-            el.children[0].children &&
-            el.children[0].children.length > 0
-          ) {
-            const potentialVideoComponent = el.children[0].children[0];
-
-            if (
-              potentialVideoComponent.name === "Video" ||
-              potentialVideoComponent.name === "VideoComponent"
-            ) {
-              videoComponentId = potentialVideoComponent.id;
-            } else {
-              for (const cell of el.children) {
-                if (cell.children) {
-                  for (const grandChild of cell.children) {
-                    if (
-                      potentialVideoComponent.name === "Video" ||
-                      (grandChild.name === "VideoComponent" && grandChild.id)
-                    ) {
-                      videoComponentId = grandChild.id;
-                      break;
-                    }
-                  }
-                  if (videoComponentId) break;
-                }
-              }
-            }
-          }
+          const gifComponentId = findComponentId(el, ["Gifs", "GifsComponent"]);
+          const stickerComponentId = findComponentId(el, ["Stickers", "StickersComponent"]);
+          const videoComponentId = findComponentId(el, ["Video", "VideoComponent"]);
 
           // Используем найденный ID компонента Gifs, если он есть, иначе fallback на ID BlockLine
           const idToUseForGif = gifComponentId || el.id;

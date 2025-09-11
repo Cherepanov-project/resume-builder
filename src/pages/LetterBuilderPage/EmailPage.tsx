@@ -72,6 +72,146 @@ const EmailPage: React.FC = () => {
     };
   };
 
+  const renderTableCell = (
+    elementInCell: string,
+    id: string,
+    colspan: number,
+    isEmail: boolean = false,
+  ) => {
+    switch (elementInCell) {
+      case "GifsComponent": {
+        const selectedGif = selectedGifs[id];
+        return (
+          <td
+            key={id}
+            colSpan={colspan}
+            style={{
+              width: "100%",
+              maxWidth: "600px",
+              border: "0",
+              display: "block",
+            }}
+          >
+            <GifsComponent
+              id={id}
+              selectedGif={selectedGif}
+              onGifSelect={(url: string) => dispatch(setSelectedGif({ elementId: id, url }))}
+            />
+          </td>
+        );
+      }
+
+      case "StickersComponent": {
+        const selectedSticker = selectedStickers[id];
+        return (
+          <td
+            key={id}
+            colSpan={colspan}
+            style={{
+              width: "100%",
+              maxWidth: "600px",
+              border: "0",
+              display: "block",
+            }}
+          >
+            <StickersComponent
+              id={id}
+              selectedSticker={selectedSticker}
+              onStickerSelect={(url: string) =>
+                dispatch(setSelectedSticker({ elementId: id, url }))
+              }
+            />
+          </td>
+        );
+      }
+
+      case "TimerComponent":
+        return (
+          <td
+            key={id}
+            colSpan={colspan}
+            style={{
+              width: "100%",
+              maxWidth: "600px",
+              border: "0",
+              display: "block",
+            }}
+          >
+            <TimerComponent id={id} />
+          </td>
+        );
+
+      case "Video":
+      case "VideoComponent": {
+        const videoUrl = selectedVideos[id];
+        const videoData = videoUrl ? getYouTubeThumbnail(videoUrl) : null;
+
+        if (videoData) {
+          return (
+            <td key={id} colSpan={colspan} style={{ textAlign: "center", padding: "10px" }}>
+              {isEmail ? (
+                <a href={videoData.link} target="_blank" rel="noreferrer">
+                  <img
+                    src={videoData.thumbnail}
+                    alt="YouTube Video Preview"
+                    style={{
+                      width: "100%",
+                      maxWidth: "600px",
+                      border: "0",
+                      display: "block",
+                    }}
+                  />
+                </a>
+              ) : (
+                <VideoComponent
+                  id={id}
+                  videoUrl={videoUrl}
+                  onVideoSelect={(url: string) =>
+                    dispatch(setSelectedVideo({ elementId: id, url }))
+                  }
+                />
+              )}
+            </td>
+          );
+        }
+        break;
+      }
+
+      default: {
+        type ComponentMap = typeof componentMap;
+        const RenderedComponent = componentMap[elementInCell as keyof ComponentMap];
+
+        return (
+          <td
+            key={id}
+            colSpan={colspan}
+            style={{
+              width: "100%",
+              maxWidth: "600px",
+              border: "0",
+              display: "block",
+            }}
+          >
+            {RenderedComponent ? (
+              <RenderedComponent
+                selectedGif={selectedGifs[id]}
+                selectedSticker={selectedStickers[id]}
+                key={id}
+                id={id}
+                onGifSelect={(url: string) => dispatch(setSelectedGif({ elementId: id, url }))}
+                onStickerSelect={(url: string) =>
+                  dispatch(setSelectedSticker({ elementId: id, url }))
+                }
+              />
+            ) : (
+              elementInCell
+            )}
+          </td>
+        );
+      }
+    }
+  };
+
   // Генерация структуры таблицы
   const parseTreeToTable = (
     elements: Element[],
@@ -97,132 +237,8 @@ const EmailPage: React.FC = () => {
             const colspan = extractPercent(blockWidth);
             const elementInCell = element.children?.[i]?.children?.[0]?.name || "No Content";
             const id = element.children?.[i]?.children?.[0]?.id || "";
-            if (elementInCell === "GifsComponent") {
-              const selectedGif = selectedGifs[id];
-              return (
-                <td
-                  key={i}
-                  colSpan={colspan}
-                  style={{
-                    width: `${colspan}%`,
-                    padding: "10px",
-                    border: "1px solid #ddd",
-                    textAlign: "center",
-                  }}
-                >
-                  <GifsComponent
-                    id={id}
-                    selectedGif={selectedGif}
-                    onGifSelect={(url: string) => dispatch(setSelectedGif({ elementId: id, url }))}
-                  />
-                </td>
-              );
-            }
-            if (elementInCell === "StickersComponent") {
-              const selectedSticker = selectedStickers[id];
-              return (
-                <td
-                  key={i}
-                  colSpan={colspan}
-                  style={{
-                    width: `${colspan}%`,
-                    padding: "10px",
-                    border: "1px solid #ddd",
-                    textAlign: "center",
-                  }}
-                >
-                  <StickersComponent
-                    id={id}
-                    selectedSticker={selectedSticker}
-                    onStickerSelect={(url: string) =>
-                      dispatch(setSelectedSticker({ elementId: id, url }))
-                    }
-                  />
-                </td>
-              );
-            }
-            if (elementInCell === "TimerComponent") {
-              return (
-                <td
-                  key={i}
-                  colSpan={colspan}
-                  style={{
-                    width: `${colspan}%`,
-                    padding: "10px",
-                    border: "1px solid #ddd",
-                    textAlign: "center",
-                  }}
-                >
-                  <TimerComponent id={id} />
-                </td>
-              );
-            }
-            if (elementInCell === "Video" || elementInCell === "VideoComponent") {
-              console.log(element);
-              const videoUrl = selectedVideos[id];
-              const videoData = videoUrl ? getYouTubeThumbnail(videoUrl) : null;
 
-              if (videoData) {
-                return (
-                  <td key={i} colSpan={colspan} style={{ textAlign: "center", padding: "10px" }}>
-                    {isEmail ? (
-                      <a href={videoData.link} target="_blank" rel="noreferrer">
-                        <img
-                          src={videoData.thumbnail}
-                          alt="YouTube Video Preview"
-                          style={{
-                            width: "100%",
-                            maxWidth: "600px",
-                            border: "0",
-                            display: "block",
-                          }}
-                        />
-                      </a>
-                    ) : (
-                      <VideoComponent
-                        id={id}
-                        videoUrl={videoUrl}
-                        onVideoSelect={(url: string) =>
-                          dispatch(setSelectedVideo({ elementId: id, url }))
-                        }
-                      />
-                    )}
-                  </td>
-                );
-              }
-            }
-
-            // Рендер компонента из componentMap, если он существует
-            type ComponentMap = typeof componentMap;
-            const RenderedComponent = componentMap[elementInCell as keyof ComponentMap];
-
-            return (
-              <td
-                key={i}
-                colSpan={colspan}
-                style={{
-                  width: `${colspan}%`,
-                  padding: "10px",
-                  border: "1px solid #ddd",
-                  textAlign: "center",
-                }}
-              >
-                {RenderedComponent ? (
-                  <RenderedComponent
-                    selectedGif={selectedGifs[id]}
-                    selectedSticker={selectedStickers[id]}
-                    key={`${elementInCell}-${index}`}
-                    id={id}
-                    onGifSelect={(url: string) => dispatch(setSelectedGif({ elementId: id, url }))}
-                    onStickerSelect={(url: string) =>
-                      dispatch(setSelectedSticker({ elementId: id, url }))
-                    }
-                  />
-                ) : (
-                  elementInCell
-                )}
-              </td>
-            );
+            return renderTableCell(elementInCell, id, colspan, isEmail);
           })}
         </tr>
       );
