@@ -3,16 +3,21 @@ import { Visibility, VisibilityOff } from "@mui/icons-material";
 import { IGridContainers } from "@/store/landingBuilder/layoutSlice";
 import { Layout } from "react-grid-layout";
 import { T_BlockElement } from "@/types/landingBuilder";
-import { useAppSelector } from "@/store/store";
+import { useAppSelector, useAppDispatch } from "@/store/store";
 import classes from "./LetterBuilderHeader.module.scss";
 import { useTypedSelector } from "@/hooks/cvTemplateHooks";
 import { useNavigate } from "react-router-dom";
 import { useTheme } from "@mui/material";
+import { setLetter } from "@/store/LetterBuilderStore/savedLettersSlice";
+import { RootState } from "@/store/store";
 
 const LetterBuilderHeader = () => {
   const theme = useTheme();
   const [visibleStructure, setVisibleStructure] = useState<boolean>(true);
-
+  const dispatch = useAppDispatch();
+  const containerEl: IGridContainers | null = useAppSelector(
+    (state: RootState) => state.container.container || null,
+  ) as IGridContainers | null;
   const visibleIcon = visibleStructure ? <Visibility /> : <VisibilityOff />;
   const buttonVisibleText = visibleStructure ? "Отобразить структуру" : "Скрыть структуру";
   const onClickHandler = () => {
@@ -118,7 +123,10 @@ const LetterBuilderHeader = () => {
 
       {/* Right Section */}
       <div className="flex items-center mr-4 space-x-4">
-        <button className={`${theme.custom.letterHeaderButton} bg-gray-500 hover:bg-gray-600`}>
+        <button
+          onClick={() => dispatch(setLetter(containerEl!))}
+          className={`${theme.custom.letterHeaderButton} bg-gray-500 hover:bg-gray-600`}
+        >
           Сохранить
         </button>
         <button

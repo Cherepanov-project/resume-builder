@@ -2,7 +2,7 @@ import { createSlice } from "@reduxjs/toolkit";
 import { customAlphabet } from "nanoid";
 import { insertChild } from "@/utils";
 import { addBaseScript } from "@/utils/scriptAssigner";
-import { T_BlockElement } from "@/types/landingBuilder";
+import { T_BlockElementWithChild as T_BlockElement } from "@/types/landingBuilder";
 import { replaceIdWithNanoid } from "@/utils/replaceIdWithId";
 
 const nanoid = customAlphabet("ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz", 15);
@@ -161,7 +161,8 @@ const letterLayoutSlice = createSlice({
       state.gridContainers.forEach((container) => {
         if (container.id !== id) return;
 
-        const findElementIndex = (layoutId: string | null): number =>          container.elements.activeElements.findIndex((element) => element.layout.i === layoutId);
+        const findElementIndex = (layoutId: string | null): number =>
+          container.elements.activeElements.findIndex((element) => element.layout.i === layoutId);
 
         const parentIndex = findElementIndex(parentLayout?.i || layout.i);
 
@@ -180,7 +181,7 @@ const letterLayoutSlice = createSlice({
                 ...originalChild,
                 layout: {
                   ...originalChild.layout,
-                  x: originalChild.layout.x + originalChild.layout.w, 
+                  x: originalChild.layout.x + originalChild.layout.w,
                   i: nanoid(),
                 },
               };
@@ -316,10 +317,13 @@ const letterLayoutSlice = createSlice({
         );
       }
     },
+    setGridContainer(state, action) {
+      state.gridContainers = action.payload;
+    },
     setCurrentContainer(state, action) {
       state.currentContainer = action.payload;
     },
-   increaseElementColumns(state, action) {
+    increaseElementColumns(state, action) {
       let indx: number;
       state.gridContainers.forEach((container) => {
         if (container.id === action.payload.id) {
@@ -482,6 +486,7 @@ export const {
   setSectionStyle,
   setProps,
   clearStore,
+  setGridContainer,
 } = letterLayoutSlice.actions;
 
 export default letterLayoutSlice.reducer;

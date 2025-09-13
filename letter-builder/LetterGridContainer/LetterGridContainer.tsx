@@ -9,16 +9,16 @@ import {
   CustomLayout,
 } from "@/types/landingBuilder";
 import { addElement, changeElement, setWindowWidth } from "@/store/landingBuilder/layoutSlice";
-import React, { Suspense, lazy, memo, useEffect, useState } from "react";
-import ComponentPreloader from "@/components/atoms/ComponentPreloader";
+import React, { memo, useEffect, useState } from "react";
 import ElementToolsPanel from "../organismis/ElementToolsPanel/ElementToolsPanel";
 import classes from "./LetterGridContainer.module.scss";
 import { setSelectedGif } from "@/store/LetterBuilderStore/gifSelectionSlice";
 import { setSelectedSticker } from "@/store/LetterBuilderStore/stickerSelectionSlice";
 import { setContainer } from "@/store/landingBuilder/containerElementSlice";
+import DynamicComponent from "../atoms/LineBlocks";
 
 const ResponsiveReactGridLayout = Responsive;
-const ResponsiveGridLayoutWithWidth = WidthProvider(ResponsiveReactGridLayout) as any;
+const ResponsiveGridLayoutWithWidth = WidthProvider(ResponsiveReactGridLayout);
 
 export type LetterDynamicComponentRendererProps = DynamicComponentRendererProps;
 
@@ -37,28 +37,37 @@ const DynamicComponentRenderer: React.FC<LetterDynamicComponentRendererProps> = 
     onStickerSelect,
     selectedSticker,
   }) => {
-    const DynamicComponent = lazy(() => import(`../${source}/LineBlocks/index.ts`));
-    // const DynamicComponent = lazy(() => import(`../${source}/LineBlocks/index.ts`));
+
+    if (!id || !props) return;
+
+    const enhancedProps = {
+      ...props,
+      blockWidth: Array.isArray(props.blockWidth)
+        ? props.blockWidth.filter((item) => typeof item === "string")
+        : ["100%"],
+    };
 
     return (
-      <Suspense fallback={<ComponentPreloader />}>
-        <div style={{ position: "relative" }}>
-          <DynamicComponent
-            id={id}
-            key={Component}
-            props={props}
-            columns={columns}
-            source={source}
-            children={children}
-            layout={layout}
-            containerId={containerId}
-            onGifSelect={onGifSelect}
-            selectedGif={selectedGif}
-            onStickerSelect={onStickerSelect}
-            selectedSticker={selectedSticker}
-          />
-        </div>
-      </Suspense>
+      <div style={{ position: "relative" }}>
+        <DynamicComponent
+          icon={<div />}
+          draggable={true}
+          blockWidth={enhancedProps.blockWidth}
+          onDragStart={() => {}}
+          id={id}
+          key={Component}
+          props={enhancedProps}
+          columns={columns}
+          source={source}
+          children={children}
+          layout={layout}
+          containerId={containerId}
+          onGifSelect={onGifSelect}
+          selectedGif={selectedGif}
+          onStickerSelect={onStickerSelect}
+          selectedSticker={selectedSticker}
+        />
+      </div>
     );
   },
 );

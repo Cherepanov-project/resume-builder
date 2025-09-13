@@ -120,7 +120,7 @@
     "@mui/material": "5.15.2",
     "@mui/base": "5.0.0-beta.28"
   },
-    "engines": {
+  "engines": {
     "node": "22.x"
   }
 }
