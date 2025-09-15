@@ -12,15 +12,28 @@ const savedLettersSlice = createSlice({
     letters: [],
   } as SavedLettersState,
   reducers: {
+    deleteLetter(state, action: { payload: string; type: string }) {
+      const id = action.payload;
+      state.letters = state.letters.filter((item) => item.id !== id);
+    },
+    deleteAllLetters(state) {
+      state.letters = [];
+    },
     setLetter(state, action: PayloadAction<IGridContainers>) {
-      const newData = {
-        ...action.payload,
-        id: crypto.randomUUID(), // Генерируем новый ID
-      };
-      state.letters.push(newData);
+      const existingIndex = state.letters.findIndex((item) => item.id === action.payload.id);
+
+      if (existingIndex !== -1) {
+        state.letters[existingIndex] = action.payload;
+      } else {
+        const newData = {
+          ...action.payload,
+          id: crypto.randomUUID(),
+        };
+        state.letters.push(newData);
+      }
     },
   },
 });
 
-export const { setLetter } = savedLettersSlice.actions;
+export const { setLetter, deleteAllLetters, deleteLetter } = savedLettersSlice.actions;
 export default savedLettersSlice.reducer;

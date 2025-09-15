@@ -1,17 +1,20 @@
-import { useAppSelector } from "@/store/store";
+import { useAppSelector, useAppDispatch } from "@/store/store";
 import { Grid, Box } from "@mui/material";
 import classes from "./SavedLetters.module.scss";
 import DefaultButton from "@/components/atoms/DefaultButton";
 import { useState } from "react";
 import { ParseTreeToTable } from "@/pages/LetterBuilderPage/EmailPage";
 import { useNavigate } from "react-router-dom";
+import { deleteAllLetters, deleteLetter } from "@/store/LetterBuilderStore/savedLettersSlice";
 
 const SavedLetters = () => {
   const [showModal, setShowModal] = useState(false);
   const [selectedId, setSelectedId] = useState<string | null>(null);
   const containerSaveLetters = useAppSelector((store) => store.savedLetters.letters);
   const navigate = useNavigate();
+  const dispatch = useAppDispatch();
   const selectedContainer = containerSaveLetters.find((el) => el.id === selectedId);
+  const isEmptyLettersArr = containerSaveLetters.length > 0;
 
   const handleClickOnOpen = (id: string) => {
     const containerToOpen = containerSaveLetters.find((el) => el.id === id);
@@ -59,7 +62,12 @@ const SavedLetters = () => {
         </section>
       )}
 
-      <Grid className={classes.container} container spacing={3} sx={{ padding: 5 }}>
+      <div className={classes.header}>
+        {isEmptyLettersArr && (
+          <DefaultButton onClick={() => dispatch(deleteAllLetters())} label="Delete all" primary />
+        )}
+      </div>
+      <Grid className={classes.container} container spacing={3} sx={{ padding: 2 }}>
         {containerSaveLetters.map((container) => (
           <Grid item key={container.id} xs={12} sm={6} md={4} lg={4}>
             <Box
@@ -82,6 +90,13 @@ const SavedLetters = () => {
               <DefaultButton
                 onClick={() => handleShowClick(container.id)}
                 label="Show preview"
+                primary
+              />
+              <DefaultButton
+                onClick={() => {
+                  dispatch(deleteLetter(container.id));
+                }}
+                label="Delete"
                 primary
               />
             </Box>

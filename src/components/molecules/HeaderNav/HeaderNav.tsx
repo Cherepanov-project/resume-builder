@@ -43,7 +43,7 @@ const HeaderNav = () => {
               onClick={() => setActiveLink("saved")}
               className={isActive("saved") ? classes["active-link"] : ""}
             >
-              Saved
+              Saved Letters
             </span>
           </NavLink>
         </Link>
