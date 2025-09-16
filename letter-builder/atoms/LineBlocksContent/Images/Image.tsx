@@ -1,8 +1,10 @@
 import { useAppDispatch, useAppSelector } from "@/store/store";
 import { addImage, deleteImage } from "../../../reducers/imageSlice";
 import { useState } from "react";
-import { TextField } from "@mui/material";
+import { TextField, Button } from "@mui/material";
 import ElementSpecificSettingsForm from "../../../../src/components/molecules/ElementSpecificSettingsForm";
+import { buttonStyle } from "@/assets/style/buttonStyle";
+
 
 import s from "./image.module.css";
 
@@ -15,8 +17,8 @@ const Image = () => {
     images.length > 0
       ? images.map((img) => {
           return (
-            <div className={s.image}>
-              <img key={img.id} src={img.url} alt="Your picture should have been here"></img>
+            <div key={img.id} className={s.image}>
+              <img src={img.url} alt="Your picture should have been here"></img>
               <button
                 className={s.deleteBtn}
                 onClick={() => {
@@ -32,7 +34,6 @@ const Image = () => {
 
   return (
     <div>
-      <ElementSpecificSettingsForm />
       <div className={s.wrapper}>{element}</div>
       <div className={s.wrapperInput}>
         <TextField
@@ -43,8 +44,8 @@ const Image = () => {
           style={{ marginBottom: "8px" }}
           onChange={(e) => setValue(e.target.value)}
         />
-        <button
-          className={s.button}
+        <Button
+          sx={{ ...buttonStyle, display: "block", mx: "auto" }}
           onClick={() => {
             dispatch(addImage({ url: value }));
             setValue("");
@@ -52,9 +53,21 @@ const Image = () => {
         >
           {" "}
           add image{" "}
-        </button>
+        </Button>
       </div>
     </div>
+  );
+};
+
+export const ImageEmailView = ({ images }: { images: { id: string; url: string }[] }) => {
+  if (!images || images.length === 0) return null;
+
+  return (
+    <>
+      {images.map((img) => (
+        <img key={img.id} src={img.url} alt="image" style={{ maxWidth: "100%", height: "auto" }} />
+      ))}
+    </>
   );
 };
 

@@ -16,6 +16,7 @@ import { setSelectedGif } from "@/store/LetterBuilderStore/gifSelectionSlice";
 import { setSelectedSticker } from "@/store/LetterBuilderStore/stickerSelectionSlice";
 import { setContainer } from "@/store/landingBuilder/containerElementSlice";
 import DynamicComponent from "../atoms/LineBlocks";
+import { setContainer } from "@/store/landingBuilder/containerElementSlice";
 
 const ResponsiveReactGridLayout = Responsive;
 const ResponsiveGridLayoutWithWidth = WidthProvider(ResponsiveReactGridLayout);
