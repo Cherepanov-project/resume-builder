@@ -78,20 +78,17 @@ const EmailPage: React.FC = () => {
     colspan: number,
     isEmail: boolean = false,
   ) => {
+    const cellStyle = {
+      width: "100%",
+      maxWidth: "600px",
+      border: "0",
+      display: "block",
+    };
     switch (elementInCell) {
       case "GifsComponent": {
         const selectedGif = selectedGifs[id];
         return (
-          <td
-            key={id}
-            colSpan={colspan}
-            style={{
-              width: "100%",
-              maxWidth: "600px",
-              border: "0",
-              display: "block",
-            }}
-          >
+          <td key={id} colSpan={colspan} style={cellStyle}>
             <GifsComponent
               id={id}
               selectedGif={selectedGif}
@@ -104,16 +101,7 @@ const EmailPage: React.FC = () => {
       case "StickersComponent": {
         const selectedSticker = selectedStickers[id];
         return (
-          <td
-            key={id}
-            colSpan={colspan}
-            style={{
-              width: "100%",
-              maxWidth: "600px",
-              border: "0",
-              display: "block",
-            }}
-          >
+          <td key={id} colSpan={colspan} style={cellStyle}>
             <StickersComponent
               id={id}
               selectedSticker={selectedSticker}
@@ -127,16 +115,7 @@ const EmailPage: React.FC = () => {
 
       case "TimerComponent":
         return (
-          <td
-            key={id}
-            colSpan={colspan}
-            style={{
-              width: "100%",
-              maxWidth: "600px",
-              border: "0",
-              display: "block",
-            }}
-          >
+          <td key={id} colSpan={colspan} style={cellStyle}>
             <TimerComponent id={id} />
           </td>
         );
@@ -151,16 +130,7 @@ const EmailPage: React.FC = () => {
             <td key={id} colSpan={colspan} style={{ textAlign: "center", padding: "10px" }}>
               {isEmail ? (
                 <a href={videoData.link} target="_blank" rel="noreferrer">
-                  <img
-                    src={videoData.thumbnail}
-                    alt="YouTube Video Preview"
-                    style={{
-                      width: "100%",
-                      maxWidth: "600px",
-                      border: "0",
-                      display: "block",
-                    }}
-                  />
+                  <img src={videoData.thumbnail} alt="YouTube Video Preview" style={cellStyle} />
                 </a>
               ) : (
                 <VideoComponent
@@ -182,16 +152,7 @@ const EmailPage: React.FC = () => {
         const RenderedComponent = componentMap[elementInCell as keyof ComponentMap];
 
         return (
-          <td
-            key={id}
-            colSpan={colspan}
-            style={{
-              width: "100%",
-              maxWidth: "600px",
-              border: "0",
-              display: "block",
-            }}
-          >
+          <td key={id} colSpan={colspan} style={cellStyle}>
             {RenderedComponent ? (
               <RenderedComponent
                 selectedGif={selectedGifs[id]}
