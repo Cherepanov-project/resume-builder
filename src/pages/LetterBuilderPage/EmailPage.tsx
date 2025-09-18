@@ -9,16 +9,16 @@ import * as componentMap from "../../../letter-builder/atoms/LineBlocksContent";
 import GifsComponent from "../../../letter-builder/atoms/LineBlocksContent/Gifs/Gifs";
 import StickersComponent from "../../../letter-builder/atoms/LineBlocksContent/Stickers";
 import TimerComponent from "../../../letter-builder/atoms/LineBlocksContent/Timer";
-
 import VideoComponent from "../../../letter-builder/atoms/LineBlocksContent/Video";
-
 import { ImageEmailView } from "../../../letter-builder/atoms/LineBlocksContent/Images/Image";
-
 import { useAppDispatch, useTypedSelector } from "@/hooks/cvTemplateHooks";
 import { useLocation } from "react-router-dom";
 import { setSelectedGif } from "@/store/LetterBuilderStore/gifSelectionSlice";
 import { setSelectedSticker } from "@/store/LetterBuilderStore/stickerSelectionSlice";
 import { setSelectedVideo } from "@/store/LetterBuilderStore/videoSelectionSlice";
+
+
+
 interface ElementProps {
   blockWidth?: string[];
 }
@@ -38,6 +38,8 @@ interface EmailParams extends Record<string, unknown> {
   to_email: string; // поле для email получателя
 }
 
+
+
 const EmailPage: React.FC = () => {
   const [isModalVisible, setIsModalVisible] = useState<boolean>(false);
   const [email, setEmail] = useState<string>(""); // для хранения email получателя
@@ -49,11 +51,7 @@ const EmailPage: React.FC = () => {
   const selectedGifs = useTypedSelector((state) => state.gifSelection.selectedGifs) || {};
   const selectedStickers =
     useTypedSelector((state) => state.stickerSelection.selectedStickers) || {};
-
   const selectedVideos = useTypedSelector((state) => state.videoSelection.selectedVideos) || {};
-
-  const selectedImgs = useTypedSelector((state) => state.images.images);
-
   const elements = navigatedElements;
 
   // Функция для вычисления colspan из блоков
@@ -127,7 +125,7 @@ const EmailPage: React.FC = () => {
             <TimerComponent id={id} />
           </td>
         );
-      case "Images":
+        case "Images":
         return (
                 <td
                   key={i}

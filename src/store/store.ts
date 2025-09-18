@@ -37,6 +37,7 @@ import stickerSelectionReducer from "./LetterBuilderStore/stickerSelectionSlice"
 import videoSelectionReducer from "./LetterBuilderStore/videoSelectionSlice";
 
 import containerElementReducer from "./landingBuilder/containerElementSlice";
+import savedLetterReducer from "./LetterBuilderStore/savedLettersSlice";
 
 
 //конфиг для persist
@@ -68,10 +69,9 @@ const rootReducer = combineReducers({
   carousel: carouselReducer,
   gifSelection: gifSelectionReducer,
   stickerSelection: stickerSelectionReducer,
-
   videoSelection: videoSelectionReducer,
-
   container: containerElementReducer,
+  savedLetters: savedLetterReducer,
 
 });
 

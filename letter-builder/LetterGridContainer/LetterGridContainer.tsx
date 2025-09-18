@@ -17,6 +17,7 @@ import { setSelectedSticker } from "@/store/LetterBuilderStore/stickerSelectionS
 import { setSelectedVideo } from "@/store/LetterBuilderStore/videoSelectionSlice";
 import DynamicComponent from "../atoms/LineBlocks";
 import { setContainer } from "@/store/landingBuilder/containerElementSlice";
+import DynamicComponent from "../atoms/LineBlocks";
 
 
 const ResponsiveReactGridLayout = Responsive;
@@ -41,6 +42,7 @@ const DynamicComponentRenderer: React.FC<LetterDynamicComponentRendererProps> = 
     // selectedVideo,
     // onVideoSelect,
   }) => {
+
     if (!id || !props) return;
 
     const enhancedProps = {
