@@ -1,3 +1,6 @@
+@use "../../../assets/style/variables.scss" as *;
+
+
 .header-nav {
   display: flex;
   align-items: center;
@@ -9,4 +12,8 @@
       padding-right: 40px;
     }
   }
+}
+
+.active-link {
+  color: $hover-button-color;
 }
