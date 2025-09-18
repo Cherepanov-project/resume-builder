@@ -1,0 +1,107 @@
+.container {
+  box-sizing: content-box;
+  width: 100%;
+  padding-bottom: 28px;
+  border-bottom: 1px dashed rgba(90, 90, 90, 0.2);
+  border-top: 1px dashed rgba(90, 90, 90, 0.2);
+  margin-top: -1px;
+  position: relative;
+}
+
+.container:hover {
+  border-bottom: 1px dashed rgba(90, 90, 90, 1);
+  border-top: 1px dashed rgba(90, 90, 90, 1);
+  transition: all ease-in-out 0.3s;
+}
+
+.container:first-child {
+  border-top: 1px dashed transparent;
+}
+
+.grid {
+  display: flex;
+  width: 100%;
+  min-height: 1600px;
+  padding: 20px;
+  margin: 0 auto;
+  background-color: white;
+  border: 2px dashed #ccc;
+  box-sizing: border-box;
+  flex-direction: column;
+  flex-wrap: wrap;
+  align-content: center;
+  position: relative;
+}
+
+.grid::before,
+.grid::after {
+  content: "";
+  position: absolute;
+  top: 0;
+  height: 100%;
+  background-color: rgba(0, 0, 0, 0.1);
+  pointer-events: none;
+}
+
+.grid::before {
+  left: 0;
+  width: 10%;
+}
+
+.grid::after {
+  right: 0;
+  width: 10%;
+}
+
+.react-resizable-handle {
+  display: none;
+}
+
+.post-grid {
+  min-height: 800px;
+  background-color: grey;
+  display: flex;
+  flex-wrap: wrap;
+  flex-direction: column;
+  align-content: center;
+}
+
+.item {
+  position: relative !important;
+  width: 100% !important;
+  padding: 0 15% 0 15%;
+  height: auto !important;
+  transform: none !important;
+  border-radius: 2px;
+  box-sizing: border-box;
+  background-color: transparent;
+}
+
+.add-button,
+.add-button:hover {
+  width: 30px;
+  height: 30px;
+  padding: 0;
+  border-radius: 50%;
+  position: absolute;
+  bottom: -15px;
+  left: 50%;
+  background-color: white;
+  border: 2px solid transparent;
+  cursor: pointer;
+}
+
+.drag-area {
+  width: 100%;
+  border: 2px solid red;
+  z-index: 1;
+}
+
+.item.active {
+  border: 1px solid #1976d2;
+}
+
+:global .react-grid-item.react-grid-placeholder {
+  opacity: 0;
+  z-index: -10;
+}
