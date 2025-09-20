@@ -17,8 +17,6 @@ import { setSelectedGif } from "@/store/LetterBuilderStore/gifSelectionSlice";
 import { setSelectedSticker } from "@/store/LetterBuilderStore/stickerSelectionSlice";
 import { setSelectedVideo } from "@/store/LetterBuilderStore/videoSelectionSlice";
 
-
-
 interface ElementProps {
   blockWidth?: string[];
 }
@@ -38,8 +36,6 @@ interface EmailParams extends Record<string, unknown> {
   to_email: string; // поле для email получателя
 }
 
-
-
 const EmailPage: React.FC = () => {
   const [isModalVisible, setIsModalVisible] = useState<boolean>(false);
   const [email, setEmail] = useState<string>(""); // для хранения email получателя
@@ -52,6 +48,7 @@ const EmailPage: React.FC = () => {
   const selectedStickers =
     useTypedSelector((state) => state.stickerSelection.selectedStickers) || {};
   const selectedVideos = useTypedSelector((state) => state.videoSelection.selectedVideos) || {};
+  const selectedImgs = useTypedSelector((state) => state.images.images) || {};
   const elements = navigatedElements;
 
   // Функция для вычисления colspan из блоков
@@ -125,16 +122,12 @@ const EmailPage: React.FC = () => {
             <TimerComponent id={id} />
           </td>
         );
-        case "Images":
+      case "Images":
         return (
-                <td
-                  key={i}
-                  colSpan={colspan}
-                  style={cellStyle}
-                >
-                  <ImageEmailView images={selectedImgs} />
-                </td>
-              );
+          <td key={id} colSpan={colspan} style={cellStyle}>
+            <ImageEmailView images={selectedImgs} />
+          </td>
+        );
 
       case "Video":
       case "VideoComponent": {

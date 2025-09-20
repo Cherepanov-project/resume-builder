@@ -15,10 +15,8 @@ import classes from "./LetterGridContainer.module.scss";
 import { setSelectedGif } from "@/store/LetterBuilderStore/gifSelectionSlice";
 import { setSelectedSticker } from "@/store/LetterBuilderStore/stickerSelectionSlice";
 import { setSelectedVideo } from "@/store/LetterBuilderStore/videoSelectionSlice";
-import DynamicComponent from "../atoms/LineBlocks";
 import { setContainer } from "@/store/landingBuilder/containerElementSlice";
 import DynamicComponent from "../atoms/LineBlocks";
-
 
 const ResponsiveReactGridLayout = Responsive;
 const ResponsiveGridLayoutWithWidth = WidthProvider(ResponsiveReactGridLayout);
@@ -42,7 +40,6 @@ const DynamicComponentRenderer: React.FC<LetterDynamicComponentRendererProps> = 
     // selectedVideo,
     // onVideoSelect,
   }) => {
-
     if (!id || !props) return;
 
     const enhancedProps = {
