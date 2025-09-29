@@ -24,7 +24,8 @@
 
   .item {
     border-radius: 2px;
-
+    background-color: white;
+    
     &:hover {
       transition: background-color 0.3s ease-in-out;
       background-color: white;
