@@ -26,12 +26,6 @@
       "migrations_dir": "The path to the migrations directory relative to the root of the project"
     }
   ],
-  "r2_buckets": [
-    {
-      "binding": "The name of the variable in the code that will be used to access the bucket",
-      "bucket_name": "The name of the bucket (from cloudflare dashboard)"
-    }
-  ],
   "vars": {
     "SOME_BACKEND_VARIABLE": "You can set public variables here"
   },
