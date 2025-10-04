@@ -83,6 +83,7 @@
     "autoprefixer": "^10.4.20",
     "babel-eslint": "^10.1.0",
     "babel-jest": "^29.7.0",
+    "barrelsby": "^2.8.1",
     "cross-env": "^7.0.3",
     "eslint": "^8.45.0",
     "eslint-config-airbnb": "^19.0.4",
@@ -107,7 +108,8 @@
     "sass-loader": "^16.0.5",
     "tailwindcss": "^3.4.15",
     "typescript": "^5.0.2",
-    "vite": "^5.2.11"
+    "vite": "^5.2.11",
+    "vite-bundle-visualizer": "^1.2.1"
   },
   "lint-staged": {
     "**/*.{js,jsx,ts,tsx}": [

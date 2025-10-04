@@ -1,6 +1,8 @@
 import { fileURLToPath, URL } from 'url';
 import { defineConfig } from 'vite';
 import react from '@vitejs/plugin-react';
+import type { PluginOption } from 'vite'
+import visualizer from 'vite-bundle-visualizer';
 
 process.env.SASS_QUIET = 'true';
 
@@ -15,7 +17,12 @@ export default defineConfig({
         if (warning.code === 'MIXED_EXPORTS') return;
         if (warning.message && warning.message.includes('legacy-js-api')) return;
         warn(warning);
-      }
+      },
+      output: {
+        manualChunks: {
+          vendor: ['react', 'react-dom'],
+        },
+      },
     }
   },
   css: {
