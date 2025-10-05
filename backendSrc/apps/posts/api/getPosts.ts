@@ -2,11 +2,10 @@ import { OpenAPIRoute } from "chanfana";
 import { z } from "zod";
 import { postsSchema, postsTable } from "../models/Post";
 import { drizzle } from "drizzle-orm/d1";
-import { TPost, TPostsResponse } from "@/shared/types";
+import type { TPost, TPostsResponse } from "../../../types";
+import type { Env } from "../../..";
 
-const RESPONSE_SCHEMA = z.array(
-  postsSchema
-) satisfies z.ZodType<TPostsResponse>;
+const RESPONSE_SCHEMA = z.array(postsSchema) satisfies z.ZodType<TPostsResponse>;
 
 export class GetPostsApi extends OpenAPIRoute {
   schema = {

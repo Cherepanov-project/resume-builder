@@ -1,6 +1,6 @@
 import { int, sqliteTable, text } from "drizzle-orm/sqlite-core";
 import { z } from "zod";
-import { TPost } from "../../../../shared/types";
+import type { TPost } from "../../../types";
 
 export const postsTable = sqliteTable("posts_table", {
   id: int().primaryKey({ autoIncrement: true }),
