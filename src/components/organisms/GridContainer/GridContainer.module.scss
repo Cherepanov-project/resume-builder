@@ -24,7 +24,7 @@
 
   .item {
     border-radius: 2px;
-
+    
     &:hover {
       transition: background-color 0.3s ease-in-out;
       background-color: white;
@@ -36,12 +36,12 @@
       &:after {
         right: 0;
         bottom: 0;
-        border-color: transparent !important;
+        border-color: #1976d2 !important;
         transition: border-color 0.3s ease-in-out;
       }
     }
     &:hover > span:after {
-      border-color: #1976d2 !important;
+      border-color: #1662ad !important;
     }
 
     & > span:first-of-type {
