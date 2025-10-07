@@ -9,11 +9,11 @@ const RESPONSE_SCHEMA = z.array(postsSchema) satisfies z.ZodType<TPostsResponse>
 
 export class GetPostsApi extends OpenAPIRoute {
   schema = {
-    security: [
-      {
-        BearerAuth: [],
-      },
-    ],
+    // security: [
+    //   {
+    //     BearerAuth: [],
+    //   },
+    // ],
     responses: {
       200: {
         description: "Success",
