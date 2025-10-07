@@ -15,7 +15,14 @@ export default defineConfig({
         if (warning.code === 'MIXED_EXPORTS') return;
         if (warning.message && warning.message.includes('legacy-js-api')) return;
         warn(warning);
-      }
+      },
+      output: {
+        manualChunks(id) {
+          if (id.includes('components/atoms')) return 'atoms';
+          if (id.includes('components/molecules')) return 'molecules';
+          if (id.includes('components/organisms')) return 'organisms';
+        },
+      },
     }
   },
   css: {
