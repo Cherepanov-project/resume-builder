@@ -98,7 +98,6 @@ const SavedLetters = () => {
               <DefaultButton
                 onClick={() => {
                   createTemplate({
-                    id: crypto.randomUUID(),
                     content: containerSaveLetters.find((el) => el.id === container.id),
                   });
                 }}

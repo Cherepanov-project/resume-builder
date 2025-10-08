@@ -2,7 +2,7 @@ import { OpenAPIRoute } from "chanfana";
 import { z } from "zod";
 import { templatesSchema, templatesTable } from "../models/Template";
 import { drizzle } from "drizzle-orm/d1";
-import type { TTemplate, TTemplatesResponse } from "../../../types";
+import type { TTemplatesResponse } from "../../../types";
 import type { Env } from "../../..";
 
 const RESPONSE_SCHEMA = z.array(templatesSchema) satisfies z.ZodType<TTemplatesResponse>;
@@ -23,8 +23,13 @@ export class GetTemplatesApi extends OpenAPIRoute {
 
   async handle(_request: Request, env: Env) {
     const db = drizzle(env.DB);
-    const templates: TTemplate[] = await db.select().from(templatesTable);
-
-    return Response.json(RESPONSE_SCHEMA.parse(templates));
+    const templates = await db.select().from(templatesTable);
+    const responseSchema = z.array(
+      z.object({
+        id: z.number(),
+        content: z.string(),
+      }),
+    );
+    return Response.json(responseSchema.parse(templates));
   }
 }

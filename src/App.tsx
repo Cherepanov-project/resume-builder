@@ -1,7 +1,7 @@
 import WorkSpace from "@organisms/WorkSpace";
 import LandingPreview from "@pages/LandingPreview";
 import { Route, Routes } from "react-router-dom";
-import { ProtectedRoute } from "./components/atoms/ProtectedRoute/ProtectedRoute.tsx";
+// import { ProtectedRoute } from "./components/atoms/ProtectedRoute/ProtectedRoute.tsx";
 import SectionsManager from "./components/organisms/SectionsManager";
 import SavedLetters from "./components/organisms/SavedLetters";
 import TemplateManager from "./components/organisms/TemplateManager";
@@ -22,33 +22,18 @@ function App() {
         <Route path="/" element={<StarterPage />} />
         {/* <Route path="/sign-in" element={<AuthPage />} />
         <Route path="/sign-up" element={<AuthPage />} /> */}
-        <Route path="/intro" index element={<ProtectedRoute component={IntroPage} />} />
-        <Route
-          path="/letter-builder-page"
-          element={<ProtectedRoute component={LetterBuilderPage} />}
-        />
+        <Route path="/intro" index element={<IntroPage />} />
+        <Route path="/letter-builder-page" element={<LetterBuilderPage />} />
         <Route path="/email" element={<EmailPage />} />
-        <Route
-          path="/landing-builder-start-page"
-          element={<ProtectedRoute component={LandingBuilderStartPage} />}
-        />
-        <Route path="/landing-builder" element={<ProtectedRoute component={LandingBuilder} />}>
-          <Route index element={<ProtectedRoute component={WorkSpace} />} />
-          <Route
-            path="/landing-builder/sections-creator"
-            element={<ProtectedRoute component={SectionsManager} />}
-          />
-          <Route
-            path="/landing-builder/template-creator"
-            element={<ProtectedRoute component={TemplateManager} />}
-          />
-          <Route
-            path="/landing-builder/saved-letters"
-            element={<ProtectedRoute component={SavedLetters} />}
-          />
+        <Route path="/landing-builder-start-page" element={<LandingBuilderStartPage />} />
+        <Route path="/landing-builder" element={<LandingBuilder />}>
+          <Route index element={<WorkSpace />} />
+          <Route path="/landing-builder/sections-creator" element={<SectionsManager />} />
+          <Route path="/landing-builder/template-creator" element={<TemplateManager />} />
+          <Route path="/landing-builder/saved-letters" element={<SavedLetters />} />
         </Route>
-        <Route path="/landing-preview" element={<ProtectedRoute component={LandingPreview} />} />
-        <Route path="/resume-builder" element={<ProtectedRoute component={CvTemplate} />} />
+        <Route path="/landing-preview" element={<LandingPreview />} />
+        <Route path="/resume-builder" element={<CvTemplate />} />
         <Route path="*" element={<NotFoundPage />} />
       </Routes>
     </>
@@ -56,4 +41,3 @@ function App() {
 }
 
 export default App;
-// Приватный Router

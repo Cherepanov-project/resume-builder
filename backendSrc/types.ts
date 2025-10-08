@@ -8,7 +8,7 @@ export interface TPost {
 
 export type TTemplate = {
   id: number;
-  content: string;
+  content: string | Record<string, unknown> | unknown[];
 };
 
 export type TPostsResponse = TPost[];
