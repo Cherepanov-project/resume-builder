@@ -1,19 +1,14 @@
 import { OpenAPIRoute } from "chanfana";
 import { z } from "zod";
-import { postsSchema, postsTable } from "../models/Post";
+import { templatesSchema, templatesTable } from "../models/Template";
 import { drizzle } from "drizzle-orm/d1";
-import type { TPost, TPostsResponse } from "../../../types";
+import type { TTemplate, TTemplatesResponse } from "../../../types";
 import type { Env } from "../../..";
 
-const RESPONSE_SCHEMA = z.array(postsSchema) satisfies z.ZodType<TPostsResponse>;
+const RESPONSE_SCHEMA = z.array(templatesSchema) satisfies z.ZodType<TTemplatesResponse>;
 
-export class GetPostsApi extends OpenAPIRoute {
+export class GetTemplatesApi extends OpenAPIRoute {
   schema = {
-    security: [
-      {
-        BearerAuth: [],
-      },
-    ],
     responses: {
       200: {
         description: "Success",
@@ -28,8 +23,8 @@ export class GetPostsApi extends OpenAPIRoute {
 
   async handle(_request: Request, env: Env) {
     const db = drizzle(env.DB);
-    const posts: TPost[] = await db.select().from(postsTable);
+    const templates: TTemplate[] = await db.select().from(templatesTable);
 
-    return Response.json(RESPONSE_SCHEMA.parse(posts));
+    return Response.json(RESPONSE_SCHEMA.parse(templates));
   }
 }

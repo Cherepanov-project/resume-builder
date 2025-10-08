@@ -5,7 +5,7 @@ import { ProtectedRoute } from "./components/atoms/ProtectedRoute/ProtectedRoute
 import SectionsManager from "./components/organisms/SectionsManager";
 import SavedLetters from "./components/organisms/SavedLetters";
 import TemplateManager from "./components/organisms/TemplateManager";
-import AuthPage from "./pages/AuthPage";
+// import AuthPage from "./pages/AuthPage";
 import CvTemplate from "./pages/CvTemplate";
 import IntroPage from "./pages/IntroPage";
 import LandingBuilder from "./pages/LandingBuilder";
@@ -20,9 +20,9 @@ function App() {
     <>
       <Routes>
         <Route path="/" element={<StarterPage />} />
-        <Route path="/sign-in" element={<AuthPage />} />
-        <Route path="/sign-up" element={<AuthPage />} />
-        <Route path="/intro" element={<ProtectedRoute component={IntroPage} />} />
+        {/* <Route path="/sign-in" element={<AuthPage />} />
+        <Route path="/sign-up" element={<AuthPage />} /> */}
+        <Route path="/intro" index element={<ProtectedRoute component={IntroPage} />} />
         <Route
           path="/letter-builder-page"
           element={<ProtectedRoute component={LetterBuilderPage} />}
