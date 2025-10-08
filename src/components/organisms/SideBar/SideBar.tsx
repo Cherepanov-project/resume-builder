@@ -16,7 +16,7 @@ import classes from "./SideBar.module.scss";
 
 const SideBar: React.FC = () => {
   const [currentTab, setCurrentTab] = useState(0);
-  const [isActiveTab, setSctiveTab] = useState(true);
+  const [isActiveTab, setActiveTab] = useState(true);
   const [sidebarMenuList, setSidebarMenuList] = useState({});
   const sideMenuTabs = ["Sections", "Elements", "Templates", "Manage"];
   const tabsIcons = [<DashboardIcon />, <ExtensionIcon />, <ViewCarouselIcon />, <Settings />];
@@ -26,18 +26,21 @@ const SideBar: React.FC = () => {
       setSidebarMenuList({ ...sidebarMenuList, ...data });
     });
   }, [sidebarMenuList]);
+  
 
   const handleChangeTab = (_event: React.SyntheticEvent, indxBtn: number) => {
     setCurrentTab(indxBtn);
   };
 
   const openPanel = () => {
-    setSctiveTab(true);
+    setActiveTab(true);
   };
 
   const closePanel = () => {
-    setSctiveTab(false);
+    setActiveTab(false);
   };
+
+
 
   const navigate = useNavigate();
   return (
@@ -65,6 +68,7 @@ const SideBar: React.FC = () => {
         return (
           isActiveTab && (
             <TabPanel key={key} value={currentTab} index={indx} label={key} closePanel={closePanel}>
+          
               {key === "Manage" && (
                 <>
                   <ManagerButton

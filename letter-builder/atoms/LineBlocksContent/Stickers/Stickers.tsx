@@ -2,10 +2,15 @@ import { IconPngStickers } from "@components/atoms/Icons/LetterCardIcons";
 import { GiphyFetch } from "@giphy/js-fetch-api";
 import { useEffect, useMemo, useCallback, useState } from "react";
 
-const StickersComponent = () => {
+type StickerProps = {
+  id: string;
+  selectedSticker?: string;
+  onStickerSelect?: (url: string) => void;
+};
+
+const StickersComponent: React.FC<StickerProps> = ({ selectedSticker, onStickerSelect }) => {
   const [isPopOverVisible, setPopOverVisibility] = useState(false);
   const [stickers, setStickers] = useState<string[]>([]);
-  const [currSticker, setCurrSticker] = useState<string>("");
   const [loading, setLoading] = useState<boolean>(false);
 
   const gf = useMemo(() => new GiphyFetch("PuZUD4zqFLkDgmrlnoZCLS0zRQGDwsV7"), []);
@@ -22,35 +27,42 @@ const StickersComponent = () => {
     }
   }, [gf]);
 
-  const handleSearch = useCallback(async (q: string) => {
-    if (!q) {
-      fetchStickers();
-      return;
-    }
+  const handleSearch = useCallback(
+    async (q: string) => {
+      if (!q) {
+        fetchStickers();
+        return;
+      }
 
-    setLoading(true);
-    try {
-      const { data } = await gf.search(q, {
-        sort: "relevant",
-        lang: "en",
-        limit: 15,
-        type: "stickers",
-      });
-      setStickers(data.map((item) => item.images.fixed_height.url));
-    } catch (err) {
-      console.error("Error while searching: ", err);
-    } finally {
-      setLoading(false);
-    }
-  }, [gf, fetchStickers]);
+      setLoading(true);
+      try {
+        const { data } = await gf.search(q, {
+          sort: "relevant",
+          lang: "en",
+          limit: 15,
+          type: "stickers",
+        });
+        setStickers(data.map((item) => item.images.fixed_height.url));
+      } catch (err) {
+        console.error("Error while searching: ", err);
+      } finally {
+        setLoading(false);
+      }
+    },
+    [gf, fetchStickers],
+  );
 
   const handleChoose = (url: string) => {
+    if (onStickerSelect) {
+      onStickerSelect(url);
+    }
     setPopOverVisibility(false);
-    setCurrSticker(url);
   };
 
   const handleResetSticker = () => {
-    setCurrSticker("");
+    if (onStickerSelect) {
+      onStickerSelect("");
+    }
   };
 
   // Удаляем дублирование debouncedSearch, оставляем только эту версию
@@ -87,10 +99,7 @@ const StickersComponent = () => {
           >
             <div className="flex justify-between items-center mb-4">
               <span className="font-semibold text-gray-500">Powered by GIPHY</span>
-              <button
-                className="text-white hover:text-red-500"
-                onClick={closePopOver}
-              >
+              <button className="text-white hover:text-red-500" onClick={closePopOver}>
                 X
               </button>
             </div>
@@ -127,10 +136,10 @@ const StickersComponent = () => {
       )}
 
       <div className="relative text-gray-600">
-        {currSticker ? (
+        {selectedSticker ? (
           <div className="relative w-full h-40 group">
             <img
-              src={currSticker}
+              src={selectedSticker}
               alt="Selected Sticker"
               className="object-cover w-full h-full rounded"
             />

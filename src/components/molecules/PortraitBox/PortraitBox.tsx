@@ -2,10 +2,11 @@ import Stack from '@mui/material/Stack';
 import Button from '@mui/material/Button';
 import avatar from '@assets/images/avatar.png';
 import classes from './PortraitBox.module.scss';
-import { Typography } from '@mui/material';
+import { Typography, useTheme } from '@mui/material';
 import { useFormContext } from 'react-hook-form';
 
 const PortraitBox = () => {
+  const theme = useTheme()
   const { reset } = useFormContext();
 
   const handleRemove = () => {
@@ -29,14 +30,14 @@ const PortraitBox = () => {
       <Stack spacing={2} direction="row">
         <Button
           variant="contained"
-          sx={{ mt: 1, mr: 1, backgroundColor: '#462174', color: 'white' }}
+          sx={{ mt: 1, mr: 1, backgroundColor: theme.custom.colorDarkBlue, color: 'white' }}
         >
           Upload
         </Button>
         <Button
           variant="outlined"
           onClick={handleRemove}
-          sx={{ borderColor: '#462174', color: '#462174' }}
+          sx={{ borderColor: theme.custom.colorDarkBlue, color: theme.custom.colorDarkBlue }}
         >
           Remove
         </Button>

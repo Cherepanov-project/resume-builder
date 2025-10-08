@@ -14,7 +14,6 @@ interface Circle {
 
 const ColorPicker: FC<IProps> = ({ handleStyleChange, place, styles }) => {
   const [selectedCircle, setSelectedCircle] = useState<number | null>(null);
-
   const circles: Circle[] = [
     { color: 'red', id: 1 },
     { color: 'blue', id: 2 },

@@ -1,5 +1,5 @@
 import { IGridContainers, setCurrentContainer } from "@/store/LetterBuilderStore/letterLayoutSlice";
-import  { WidthProvider, Responsive, Layout } from "react-grid-layout";
+import { WidthProvider, Responsive, Layout } from "react-grid-layout";
 import "react-grid-layout/css/styles.css";
 import "react-resizable/css/styles.css";
 import { useAppDispatch, useTypedSelector } from "@/hooks/cvTemplateHooks";
@@ -8,41 +8,68 @@ import {
   T_BlockElement,
   CustomLayout,
 } from "@/types/landingBuilder";
-import {
-  addElement,
-  changeElement,
-  setWindowWidth,
-} from "@store/LetterBuilderStore/letterLayoutSlice";
-import React, { Suspense, lazy, memo, useEffect, useState } from "react";
-import ComponentPreloader from "@/components/atoms/ComponentPreloader";
+import { addElement, changeElement, setWindowWidth } from "@/store/landingBuilder/layoutSlice";
+import React, { memo, useEffect, useState } from "react";
 import ElementToolsPanel from "../organismis/ElementToolsPanel/ElementToolsPanel";
-import { useNavigate } from "react-router-dom";
 import classes from "./LetterGridContainer.module.scss";
+import { setSelectedGif } from "@/store/LetterBuilderStore/gifSelectionSlice";
+import { setSelectedSticker } from "@/store/LetterBuilderStore/stickerSelectionSlice";
+import { setSelectedVideo } from "@/store/LetterBuilderStore/videoSelectionSlice";
+import { setContainer } from "@/store/landingBuilder/containerElementSlice";
+import DynamicComponent from "../atoms/LineBlocks";
 
 const ResponsiveReactGridLayout = Responsive;
-const ResponsiveGridLayoutWithWidth = WidthProvider(ResponsiveReactGridLayout) as any;
+const ResponsiveGridLayoutWithWidth = WidthProvider(ResponsiveReactGridLayout);
 
 export type LetterDynamicComponentRendererProps = DynamicComponentRendererProps;
 
 const DynamicComponentRenderer: React.FC<LetterDynamicComponentRendererProps> = memo(
-  ({ id, Component, props, columns, source, children, layout, containerId }) => {
-    const DynamicComponent = lazy(() => import(`../${source}/LineBlocks/index.ts`));
+  ({
+    id,
+    Component,
+    props,
+    columns,
+    source,
+    children,
+    layout,
+    containerId,
+    onGifSelect,
+    selectedGif,
+    onStickerSelect,
+    selectedSticker,
+    // selectedVideo,
+    // onVideoSelect,
+  }) => {
+    if (!id || !props) return;
+
+    const enhancedProps = {
+      ...props,
+      blockWidth: Array.isArray(props.blockWidth)
+        ? props.blockWidth.filter((item) => typeof item === "string")
+        : ["100%"],
+    };
 
     return (
-      <Suspense fallback={<ComponentPreloader />}>
-        <div style={{ position: "relative" }}>
-          <DynamicComponent
-            id={id}
-            key={Component}
-            props={props}
-            columns={columns}
-            source={source}
-            children={children}
-            layout={layout}
-            containerId={containerId}
-          />
-        </div>
-      </Suspense>
+      <div style={{ position: "relative" }}>
+        <DynamicComponent
+          icon={<div />}
+          draggable={true}
+          blockWidth={enhancedProps.blockWidth}
+          onDragStart={() => {}}
+          id={id}
+          key={Component}
+          props={enhancedProps}
+          columns={columns}
+          source={source}
+          children={children}
+          layout={layout}
+          containerId={containerId}
+          onGifSelect={onGifSelect}
+          selectedGif={selectedGif}
+          onStickerSelect={onStickerSelect}
+          selectedSticker={selectedSticker}
+        />
+      </div>
     );
   },
 );
@@ -54,9 +81,12 @@ export const LetterGridContainer = (container: IGridContainers) => {
   const [isHover, setIsHover] = useState<boolean>(false);
   const [isDraggingInnerItem, setIsDraggingInnerItem] = useState<boolean>(false);
   const [activeElement, setActiveElement] = useState<string | null>(null);
-  const navigate = useNavigate();
 
-  const [isHoverBtn, setIsHoverBtn] = useState<boolean>(false);
+  const gridContainers = useTypedSelector((state) => state.layout.gridContainers);
+  const selectedGifs = useTypedSelector((state) => state.gifSelection.selectedGifs) || {};
+  const selectedStickers =
+    useTypedSelector((state) => state.stickerSelection.selectedStickers) || {};
+  const selectedVideos = useTypedSelector((state) => state.videoSelection.selectedVideos || {});
 
   const handleSetDraggingInnerItem = (isDragging: boolean) => {
     setIsDraggingInnerItem(isDragging);
@@ -65,6 +95,10 @@ export const LetterGridContainer = (container: IGridContainers) => {
   const handleElementClick = (id: string) => {
     setActiveElement(id);
   };
+
+  useEffect(() => {
+    dispatch(setContainer(container));
+  }, [container]);
 
   useEffect(() => {
     const handleResize = () => {
@@ -77,7 +111,7 @@ export const LetterGridContainer = (container: IGridContainers) => {
     };
   }, [dispatch]);
 
-  const workspaceLayout = container.elements.activeElements.reduce(
+  const workspaceLayout = gridContainers[0]?.elements.activeElements.reduce(
     (acc: Layout[], el: T_BlockElement) => {
       return [...acc, el.layout];
     },
@@ -90,61 +124,28 @@ export const LetterGridContainer = (container: IGridContainers) => {
     });
   };
 
-  const handleEmailButtonClick = () => {
-    // Сохранение данных о расположении блоков
-    const layoutData = container.elements.activeElements.map((el) => ({
-      id: el.id,
-      layout: el.layout,
-    }));
-    const layoutString = JSON.stringify(layoutData);
-
-    const htmlTemplate = `
-      <div class="${classes["container"]}">
-        <ResponsiveGridLayout
-          class="${classes["grid"]}"
-          layout="${JSON.stringify(workspaceLayout)}"
-          cols="1"
-          rowHeight="${container.height}"
-          width="${String(width - 76 - (Number(width) - 120) * 0.3)}"
-          margin="[8, 8]"
-          isDraggable="false"
-          isDroppable="false"
-          isResizable="false"
-        >
-          ${container.elements.activeElements
-            .map(
-              (el) => `
-            <div
-              key="${el.layout.i}"
-              class="${classes["item"]}"
-            >
-              <DynamicComponentRenderer
-                id="${el.id}"
-                Component="${el.name}"
-                source="${el.source || "atoms"}"
-                props="${JSON.stringify(el.props)}"
-                columns="${el.columns || 1}"
-                layout="${JSON.stringify(el.layout)}"
-                children="${JSON.stringify(el.children)}"
-                containerId="${container.id}"
-              />
-            </div>
-          `,
-            )
-            .join("")}
-        </ResponsiveGridLayout>
-      </div>
-    `;
-
-    navigate("/email", {
-      state: {
-        layoutData: layoutString,
-        htmlTemplate: htmlTemplate,
-      },
-    });
-  };
-
   const calculatedWidth = Number(width) - 76 - (Number(width) - 120) * 0.3;
+
+  function findComponentId(el: T_BlockElement, names: string[]): string | null {
+    if (!el.children || el.children.length === 0) return null;
+
+    const potential = el.children[0]?.children?.[0];
+    if (potential && names.includes(potential.name) && potential.id) {
+      return potential.id;
+    }
+
+    for (const cell of el.children) {
+      if (!cell.children) continue;
+
+      for (const grandChild of cell.children) {
+        if (names.includes(grandChild.name) && grandChild.id) {
+          return grandChild.id;
+        }
+      }
+    }
+
+    return null;
+  }
 
   return (
     <div
@@ -168,29 +169,14 @@ export const LetterGridContainer = (container: IGridContainers) => {
         }
       }}
     >
-      {/* Кнопка Email Us - стайлинг */}
-      <button
-        style={{
-          color: isHoverBtn ? "white" : "gray",
-          marginLeft: "10px",
-          marginTop: "2px",
-          marginBottom: "2px",
-          transition: "background-color 0.6s ease 0.2s, color 0.4s ease 0.2s",
-          backgroundColor: isHoverBtn ? "darkcyan" : "rgb(30 122 127 / .2)",
-          borderColor: isHoverBtn ? "#fff" : "rgba(0, 0, 0, 0.1)",
-          border: isHoverBtn ? "1px solid white" : "1px solid gray",
-        }}
-        className={classes["email-button"]}
-        onClick={handleEmailButtonClick}
-        onMouseEnter={() => setIsHoverBtn(true)}
-        onMouseLeave={() => setIsHoverBtn(false)}
-      >
-        Email Us
-      </button>
-
       <ResponsiveGridLayoutWithWidth
         className={classes["grid"]}
-        layouts={{ lg: workspaceLayout, md: workspaceLayout, sm: workspaceLayout, xs: workspaceLayout }}
+        layouts={{
+          lg: workspaceLayout,
+          md: workspaceLayout,
+          sm: workspaceLayout,
+          xs: workspaceLayout,
+        }}
         cols={{ lg: 1, md: 1, sm: 1, xs: 1 }}
         breakpoints={{ lg: 1200, md: 996, sm: 768, xs: 480 }}
         rowHeight={container.height}
@@ -199,6 +185,8 @@ export const LetterGridContainer = (container: IGridContainers) => {
         isDraggable={!isDraggingInnerItem}
         isDroppable={true}
         isResizable={false}
+        compactType={null}
+        preventCollision={true}
         onDrop={(layout: Layout[], layoutItem: Layout) => {
           const draggableItem = currentDraggableItem as CustomLayout;
 
@@ -213,12 +201,7 @@ export const LetterGridContainer = (container: IGridContainers) => {
             x: layoutItem.x || 0,
             y: layoutItem.y || 0,
           };
-          console.log("Добавленный элемент:", {
-            draggableItem,
-            layoutItem: newLayoutItem,
-            layout,
-            containerId: id,
-          });
+
           dispatch(addElement({ draggableItem, layoutItem: newLayoutItem, layout, id }));
         }}
         draggableHandle=".drag-area"
@@ -237,6 +220,15 @@ export const LetterGridContainer = (container: IGridContainers) => {
             }
             return acc;
           }, [] as string[]);
+
+          const gifComponentId = findComponentId(el, ["Gifs", "GifsComponent"]);
+          const stickerComponentId = findComponentId(el, ["Stickers", "StickersComponent"]);
+          const videoComponentId = findComponentId(el, ["Video", "VideoComponent"]);
+
+          // Используем найденный ID компонента Gifs, если он есть, иначе fallback на ID BlockLine
+          const idToUseForGif = gifComponentId || el.id;
+          const idToUseForSticker = stickerComponentId || el.id;
+          const idToUseForVideo = videoComponentId || el.id;
 
           return (
             <div
@@ -266,6 +258,22 @@ export const LetterGridContainer = (container: IGridContainers) => {
                 layout={el.layout}
                 children={el.children}
                 containerId={container.id}
+                onGifSelect={(url: string) => {
+                  if (idToUseForGif) {
+                    dispatch(setSelectedGif({ elementId: idToUseForGif, url }));
+                  }
+                }}
+                selectedGif={idToUseForGif ? selectedGifs[idToUseForGif] || "" : ""}
+                onStickerSelect={(url: string) => {
+                  if (idToUseForSticker) {
+                    dispatch(setSelectedSticker({ elementId: idToUseForSticker, url }));
+                  }
+                }}
+                selectedSticker={idToUseForSticker ? selectedStickers[idToUseForSticker] || "" : ""}
+                selectedVideo={idToUseForVideo ? selectedVideos[idToUseForVideo] || "" : ""}
+                onVideoSelect={(url: string) => {
+                  dispatch(setSelectedVideo({ elementId: idToUseForVideo, url }));
+                }}
               />
             </div>
           );

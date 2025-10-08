@@ -6,6 +6,7 @@ import {
   T_SwiperPresetList,
 } from '@/types/landingBuilder.ts';
 
+
 import { Navigation, Pagination } from 'swiper/modules';
 
 export const insertChild = (
@@ -48,7 +49,6 @@ export const insertChild = (
 
 const processFiles = async (moduleFiles: TProcessFiles) => {
   const elements: T_SidebarMenuItem[] = [];
-  
   for await (const file of Object.values(moduleFiles)) {
     const module = await file();
     const { props } = module as T_ComponentProps;
@@ -61,6 +61,7 @@ const processFiles = async (moduleFiles: TProcessFiles) => {
         elements.push({ name: props.type, list: [props] });
       }
     }
+
   }
   return elements;
 };
@@ -102,7 +103,7 @@ export const importFiles = async () => {
   })
 
   allSections.push(...sections);
-  
+
   return {
     Sections: allSections,
     Elements: elements,

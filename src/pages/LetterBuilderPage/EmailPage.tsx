@@ -1,11 +1,22 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
 import { useState } from "react";
-import { Provider, useSelector } from "react-redux";
-import store, { RootState } from "../../store/store";
+import { Provider } from "react-redux";
+import store from "../../store/store";
 import emailjs from "emailjs-com";
 import ReactDOMServer from "react-dom/server";
 import { Modal, Box, Typography, Button, TextField } from "@mui/material";
-import * as componentMap from "../../../letter-builder/atoms/LineBlocksContent";
+import CellRenderer from "@/components/molecules/CellRenderer/CellRenderer";
+// import * as componentMap from "../../../letter-builder/atoms/LineBlocksContent";
+// import GifsComponent from "../../../letter-builder/atoms/LineBlocksContent/Gifs/Gifs";
+// import StickersComponent from "../../../letter-builder/atoms/LineBlocksContent/Stickers";
+// import TimerComponent from "../../../letter-builder/atoms/LineBlocksContent/Timer";
+// import VideoComponent from "../../../letter-builder/atoms/LineBlocksContent/Video";
+// import { ImageEmailView } from "../../../letter-builder/atoms/LineBlocksContent/Images/Image";
+// import { useAppDispatch, useTypedSelector } from "@/hooks/cvTemplateHooks";
+import { useLocation } from "react-router-dom";
+// import { setSelectedGif } from "@/store/LetterBuilderStore/gifSelectionSlice";
+// import { setSelectedSticker } from "@/store/LetterBuilderStore/stickerSelectionSlice";
+// import { setSelectedVideo } from "@/store/LetterBuilderStore/videoSelectionSlice";
 
 interface ElementProps {
   blockWidth?: string[];
@@ -25,83 +36,79 @@ interface EmailParams extends Record<string, unknown> {
   message: string;
   to_email: string;
 }
+interface ParseTreeTableComponentProps {
+  elements: any[];
+  numberOfColumns: number;
+  isEmail?: boolean;
+}
+
+// Функция для вычисления colspan из блоков
+const extractPercent = (calcValue: string, numberOfColumns: number): number => {
+  const match = calcValue.match(/calc\(([\d.]+)%\s*-\s*\d+px\)/);
+  if (calcValue === "100%") {
+    return 100;
+  }
+  if (match) {
+    return parseFloat(match[1]);
+  }
+  return 100 / numberOfColumns;
+};
+
+// Генерация структуры таблицы
+export const ParseTreeToTable: React.FC<ParseTreeTableComponentProps> = ({
+  elements,
+  numberOfColumns,
+  isEmail,
+}) => {
+  if (!elements || elements.length === 0) {
+    return (
+      <tr key="no-elements">
+        <td colSpan={numberOfColumns} style={{ textAlign: "center" }}>
+          No elements to display
+        </td>
+      </tr>
+    );
+  }
+
+  return (
+    <>
+      {elements.map((element: Element, index: number) => {
+        const blockWidths: string[] =
+          element.props?.blockWidth || Array(numberOfColumns).fill("auto");
+        return (
+          <tr key={index}>
+            {blockWidths.map((blockWidth: string, i: number) => {
+              const colspan = extractPercent(blockWidth, numberOfColumns);
+              const elementInCell = element.children?.[i]?.children?.[0]?.name || "No Content";
+              const id = element.children?.[i]?.children?.[0]?.id || "";
+
+              return (
+                <CellRenderer
+                  elementName={elementInCell}
+                  id={id}
+                  colspan={colspan}
+                  isEmail={isEmail}
+                />
+              );
+            })}
+          </tr>
+        );
+      })}
+    </>
+  );
+};
 
 const EmailPage: React.FC = () => {
   const [isModalVisible, setIsModalVisible] = useState<boolean>(false);
-  const [tableHTML, setTableHTML] = useState<string>("");
-  const [email, setEmail] = useState<string>("");
-  const [emailError, setEmailError] = useState<string>("");
+  const [email, setEmail] = useState<string>(""); // для хранения email получателя
+  const [emailError, setEmailError] = useState<string>(""); // для ошибки валидации email
   const numberOfColumns = 6;
+  const location = useLocation();
+  const navigatedElements = (location.state?.elements as Element[]) || [];
+  const elements = navigatedElements;
 
-  const elements = useSelector(
-    (state: RootState) => state.letterLayout.gridContainers[0].elements.activeElements as Element[],
-  );
-
-  // Функция для вычисления colspan из блоков
-  const extractPercent = (calcValue: string): number => {
-    const match = calcValue.match(/calc\(([\d.]+)%\s*-\s*\d+px\)/);
-    if (calcValue === "100%") {
-      return 100;
-    }
-    if (match) {
-      return parseFloat(match[1]);
-    }
-    return 100 / numberOfColumns;
-  };
-
-  // Генерация структуры таблицы
-  const parseTreeToTable = (elements: Element[], numberOfColumns: number): JSX.Element[] => {
-    if (!elements || elements.length === 0) {
-      return [
-        <tr key="no-elements">
-          <td colSpan={numberOfColumns} style={{ textAlign: "center" }}>
-            No elements to display
-          </td>
-        </tr>,
-      ];
-    }
-
-    return elements.map((element: Element, index: number) => {
-      const blockWidths: string[] =
-        element.props?.blockWidth || Array(numberOfColumns).fill("auto");
-      return (
-        <tr key={index}>
-          {blockWidths.map((blockWidth: string, i: number) => {
-            const colspan = extractPercent(blockWidth);
-            const elementInCell = element.children?.[i]?.children?.[0]?.name || "No Content";
-            const id = element.children?.[i]?.children?.[0]?.id || "";
-
-            // Рендер компонента из componentMap, если он существует
-            type ComponentMap = typeof componentMap;
-            const RenderedComponent = componentMap[elementInCell as keyof ComponentMap];
-
-            return (
-              <td
-                key={i}
-                colSpan={colspan}
-                style={{
-                  width: `${colspan}%`,
-                  padding: "10px",
-                  border: "1px solid #ddd",
-                  textAlign: "center",
-                }}
-              >
-                {RenderedComponent ? (
-                  <RenderedComponent key={`${elementInCell}-${index}`} id={id} />
-                ) : (
-                  elementInCell
-                )}
-              </td>
-            );
-          })}
-        </tr>
-      );
-    });
-  };
-
-  // Генерация HTML таблицы
-  const generateTableHTML = (): string => {
-    const tableContent: JSX.Element = (
+  const generatedHTMLForEmail = (): string => {
+    return ReactDOMServer.renderToString(
       <Provider store={store}>
         <table
           style={{
@@ -114,20 +121,12 @@ const EmailPage: React.FC = () => {
             borderCollapse: "collapse",
           }}
         >
-          <h1>Your letter</h1>
-          <tbody>{parseTreeToTable(elements, numberOfColumns)}</tbody>
+          <tbody>
+            <ParseTreeToTable elements={elements} numberOfColumns={numberOfColumns} isEmail />
+          </tbody>
         </table>
-      </Provider>
+      </Provider>,
     );
-
-    return ReactDOMServer.renderToString(tableContent);
-  };
-
-  // Показ модалки с таблицей
-  const showTableModal = (): void => {
-    const htmlContent = generateTableHTML();
-    setTableHTML(htmlContent);
-    setIsModalVisible(true);
   };
 
   // Валидация email
@@ -137,13 +136,13 @@ const EmailPage: React.FC = () => {
   };
 
   // Отправка email
-  const sendEmail = (htmlContent: string): void => {
+  const sendEmail = (): void => {
     if (!validateEmail(email)) {
       setEmailError("Please enter a valid email address");
       return;
     }
     setEmailError("");
-
+    const htmlContent = generatedHTMLForEmail();
     const params: EmailParams = {
       message: htmlContent,
       to_email: email, // добавляем email получателя в параметры
@@ -173,7 +172,9 @@ const EmailPage: React.FC = () => {
           borderCollapse: "collapse",
         }}
       >
-        <tbody>{parseTreeToTable(elements, numberOfColumns)}</tbody>
+        <tbody>
+          <ParseTreeToTable elements={elements} numberOfColumns={numberOfColumns} />
+        </tbody>
       </table>
 
       <TextField
@@ -189,7 +190,7 @@ const EmailPage: React.FC = () => {
 
       <Button
         variant="contained"
-        onClick={showTableModal}
+        onClick={() => setIsModalVisible(true)}
         style={{ marginBottom: "20px", height: "40px" }}
       >
         Preview Table
@@ -218,12 +219,26 @@ const EmailPage: React.FC = () => {
           <Typography id="modal-title" variant="h6" component="h2">
             Generated Table Preview
           </Typography>
-          <div dangerouslySetInnerHTML={{ __html: tableHTML }} />
+          <table
+            style={{
+              borderSpacing: "10px",
+              backgroundColor: "#ffffff",
+              color: "#000000",
+              fontFamily: "Arial, sans-serif",
+              fontSize: "16px",
+              width: "100%",
+              borderCollapse: "collapse",
+            }}
+          >
+            <tbody>
+              <ParseTreeToTable elements={elements} numberOfColumns={numberOfColumns} />
+            </tbody>
+          </table>
           <Box sx={{ display: "flex", justifyContent: "flex-end", mt: 2 }}>
             <Button
               variant="contained"
               onClick={() => {
-                sendEmail(tableHTML);
+                sendEmail();
                 setIsModalVisible(false);
               }}
               sx={{ mr: 2 }}

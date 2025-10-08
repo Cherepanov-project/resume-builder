@@ -3,7 +3,9 @@ import { useDispatch } from "react-redux";
 import { IconPngVideo } from "@components/atoms/Icons/LetterCardIcons";
 import { MdEdit, MdDelete, MdSave, MdClose } from "react-icons/md";
 import styles from "./Video.module.scss";
-import { changeElement } from "@/store/LetterBuilderStore/letterLayoutSlice";
+// import { changeElement } from "@/store/LetterBuilderStore/letterLayoutSlice";
+import { setSelectedVideo } from "@/store/LetterBuilderStore/videoSelectionSlice";
+import { useTypedSelector } from "@/hooks/cvTemplateHooks";
 
 interface VideoProps {
   videoUrl?: string;
@@ -11,7 +13,7 @@ interface VideoProps {
 }
 
 interface LayoutProps {
-  [key:string]: unknown;
+  [key: string]: unknown;
 }
 interface VideoComponentProps {
   id: string;
@@ -19,39 +21,20 @@ interface VideoComponentProps {
   layout?: LayoutProps;
   containerId?: string;
   type?: string;
+  videoUrl?: string;
+  onVideoSelect?: (url: string) => void;
 }
 
-const VideoComponent: React.FC<VideoComponentProps> = ({ 
-  id, 
-  props = {}, 
-  layout = {}, 
-  containerId = "" 
-}) => {
+const VideoComponent: React.FC<VideoComponentProps> = ({ id, onVideoSelect }) => {
   const dispatch = useDispatch();
+  const videoUrl = useTypedSelector((state) => state.videoSelection.selectedVideos[id]) || "";
+
   const [isSidebarOpen, setIsSidebarOpen] = useState(false);
-  const [inputVideoUrl, setInputVideoUrl] = useState(props?.videoUrl || "");
-  const [videoUrl, setVideoUrl] = useState(props?.videoUrl || "");
-  
+  const [inputVideoUrl, setInputVideoUrl] = useState(videoUrl);
+
   useEffect(() => {
-    if (props?.videoUrl !== undefined) {
-      setVideoUrl(props.videoUrl);
-      setInputVideoUrl(props.videoUrl);
-    }
-  }, [props?.videoUrl]);
-  
-  useEffect(() => {
-    if (!videoUrl) {
-      try {
-        const videoStorage = JSON.parse(localStorage.getItem('videoStorage') || '{}');
-        if (videoStorage[id]) {
-          setVideoUrl(videoStorage[id]);
-          setInputVideoUrl(videoStorage[id]);
-        }
-      } catch (error) {
-        console.error('Ошибка при чтении видео из localStorage:', error);
-      }
-    }
-  }, [id, videoUrl]);
+    setInputVideoUrl(videoUrl);
+  }, [videoUrl]);
 
   const isValidYouTubeUrl = (url: string): boolean => {
     if (!url) return false;
@@ -60,34 +43,14 @@ const VideoComponent: React.FC<VideoComponentProps> = ({
   };
 
   const getYouTubeEmbedUrl = (url?: string | undefined): string => {
-    if (!url || typeof url !== 'string') return "";
+    if (!url || typeof url !== "string") return "";
     const videoIdMatch = url.match(
-      /(?:https?:\/\/)?(www\.)?(?:youtube\.com\/(?:watch\?v=|embed\/)|youtu\.be\/)([\w-]+)/
+      /(?:https?:\/\/)?(www\.)?(?:youtube\.com\/(?:watch\?v=|embed\/)|youtu\.be\/)([\w-]+)/,
     );
-    
-    return videoIdMatch && videoIdMatch[2] 
-      ? `https://www.youtube.com/embed/${videoIdMatch[2]}?enablejsapi=0&origin=${window.location.origin}` 
+
+    return videoIdMatch && videoIdMatch[2]
+      ? `https://www.youtube.com/embed/${videoIdMatch[2]}?enablejsapi=0&origin=${window.location.origin}`
       : "";
-  };
-
-  const saveVideoToStorage = (url: string) => {
-    try {
-      const videoStorage = JSON.parse(localStorage.getItem('videoStorage') || '{}');
-      videoStorage[id] = url;
-      localStorage.setItem('videoStorage', JSON.stringify(videoStorage));
-    } catch (error) {
-      console.error('Ошибка при сохранении видео в localStorage:', error);
-    }
-  };
-
-  const removeVideoFromStorage = () => {
-    try {
-      const videoStorage = JSON.parse(localStorage.getItem('videoStorage') || '{}');
-      delete videoStorage[id];
-      localStorage.setItem('videoStorage', JSON.stringify(videoStorage));
-    } catch (error) {
-      console.error('Ошибка при удалении видео из localStorage:', error);
-    }
   };
 
   const activateThisVideo = () => {
@@ -97,19 +60,9 @@ const VideoComponent: React.FC<VideoComponentProps> = ({
 
   const applyVideo = () => {
     if (isValidYouTubeUrl(inputVideoUrl)) {
-      setVideoUrl(inputVideoUrl);
-      saveVideoToStorage(inputVideoUrl);
-      
-      dispatch(changeElement({
-        layout,
-        props: {
-          ...props,
-          videoUrl: inputVideoUrl
-        },
-        id: containerId,
-        elementId: id
-      }));
-      
+      dispatch(setSelectedVideo({ elementId: id, url: inputVideoUrl }));
+      onVideoSelect?.(inputVideoUrl);
+
       setIsSidebarOpen(false);
     } else {
       alert("Введите корректный URL YouTube");
@@ -117,19 +70,9 @@ const VideoComponent: React.FC<VideoComponentProps> = ({
   };
 
   const removeThisVideo = () => {
-    setVideoUrl("");
-    removeVideoFromStorage();
-    
-    dispatch(changeElement({
-      layout,
-      props: {
-        ...props,
-        videoUrl: ""
-      },
-      id: containerId,
-      elementId: id
-    }));
-    
+    dispatch(setSelectedVideo({ elementId: id, url: "" }));
+    onVideoSelect?.("");
+    setInputVideoUrl("");
     setIsSidebarOpen(false);
   };
 
@@ -139,7 +82,7 @@ const VideoComponent: React.FC<VideoComponentProps> = ({
   return (
     <div className={styles.videoComponent}>
       {!hasVideoUrl && !isSidebarOpen && (
-        <div onClick={activateThisVideo} className={styles.videoIcon} >
+        <div onClick={activateThisVideo} className={styles.videoIcon}>
           <div className={styles.videoIconText}>
             <div className="flex justify-center items-center">
               <IconPngVideo {...iconStyle} />
@@ -159,7 +102,7 @@ const VideoComponent: React.FC<VideoComponentProps> = ({
             allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
             allowFullScreen
           ></iframe>
-          
+
           <div className={styles.videoOverlay}>
             <button
               onClick={activateThisVideo}
@@ -193,7 +136,7 @@ const VideoComponent: React.FC<VideoComponentProps> = ({
               <MdClose size={24} />
             </button>
           </div>
-          
+
           <input
             type="text"
             placeholder="https://www.youtube.com/watch?v=..."
@@ -201,21 +144,15 @@ const VideoComponent: React.FC<VideoComponentProps> = ({
             onChange={(e) => setInputVideoUrl(e.target.value || "")}
             className={styles.urlInput}
           />
-          
+
           <div className={styles.buttonsContainer}>
-            <button
-              onClick={applyVideo}
-              className={styles.saveButton}
-            >
+            <button onClick={applyVideo} className={styles.saveButton}>
               <MdSave size={20} className={styles.buttonIcon} />
               <span>Сохранить</span>
             </button>
-            
+
             {hasVideoUrl && (
-              <button
-                onClick={removeThisVideo}
-                className={styles.deleteButtonLarge}
-              >
+              <button onClick={removeThisVideo} className={styles.deleteButtonLarge}>
                 <MdDelete size={20} className={styles.buttonIcon} />
                 <span>Удалить</span>
               </button>

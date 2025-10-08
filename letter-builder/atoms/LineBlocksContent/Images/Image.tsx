@@ -23,10 +23,7 @@ const Image = () => {
           images.map((img) => (
             <div key={img.id} className={s.image}>
               <img src={img.url} alt="Your picture should have been here" />
-              <button
-                className={s.deleteBtn}
-                onClick={() => dispatch(deleteImage(img.id))}
-              >
+              <button className={s.deleteBtn} onClick={() => dispatch(deleteImage(img.id))}>
                 &times;
               </button>
             </div>
@@ -47,16 +44,24 @@ const Image = () => {
             onChange={(e) => setValue(e.target.value)}
             onKeyDown={(e) => e.key === "Enter" && handleAddImage()}
           />
-          <button
-            className={s.button}
-            onClick={handleAddImage}
-            disabled={!value.trim()}
-          >
+          <button className={s.button} onClick={handleAddImage} disabled={!value.trim()}>
             Add image
           </button>
         </div>
       )}
     </div>
+  );
+};
+
+export const ImageEmailView = ({ images }: { images: { id: string; url: string }[] }) => {
+  if (!images || images.length === 0) return null;
+
+  return (
+    <>
+      {images.map((img) => (
+        <img key={img.id} src={img.url} alt="image" style={{ maxWidth: "100%", height: "auto" }} />
+      ))}
+    </>
   );
 };
 

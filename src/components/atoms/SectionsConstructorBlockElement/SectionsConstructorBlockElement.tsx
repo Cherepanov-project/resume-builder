@@ -12,6 +12,7 @@ const RatingSystem = lazy(() => import('../RatingSystem'));
 const Avatars = lazy(() => import('../Avatars'));
 const Tooltip = lazy(() => import('../Tooltip'));
 const Checkboxes = lazy(() => import('../Checkboxes'));
+const CheckboxGroup = lazy(() => import("../CheckboxGroup"));
 const RadioButtons = lazy(() => import('../RadioButtons'));
 const SocialMediaIcon = lazy(() => import('../SocialMediaIcon'));
 const CardItem = lazy(() => import('../CardItem'));
@@ -85,18 +86,20 @@ const SectionsConstructorBlockElement: React.FC<SectionsConstructorBlockElementT
         />
       )}
       {isCheckboxGroup && (
-        <Checkboxes 
-          props={{
-            Checkboxes: [
-              {
-                id: nanoid(),
-                value: props.text || ''
-              }
-            ],
-            text: props.text,
-            onChange: undefined
-          }}
+          <CheckboxGroup
           layout={params.layout}
+          props={{
+           name: "checkbox-group",
+            label: "CheckboxGroup",
+            options:
+              params.props.CheckboxGroup?.map((item) => ({
+                id: item.id || nanoid(),
+                value: item.value || "",
+                label: item.value || "",
+              })) || [],
+            onChange: undefined,
+          }}
+         
         />
       )}
       {isRadiobox && (

@@ -1,4 +1,4 @@
-import { Box, Button, Paper, Typography } from '@mui/material';
+import { Box, Button, Paper, Typography, useTheme } from '@mui/material';
 import { FC, MouseEventHandler, useRef } from 'react';
 import { CvTemplatePDF } from '../../CvTemplatePDF';
 import { buttonStyle } from '@assets/style/buttonStyle.ts';
@@ -15,6 +15,7 @@ const FinishResume: FC<IProps> = ({ handleReset, nameTemplate }) => {
   const handlePrint = useReactToPrint({
     content: () => componentRef.current,
   });
+  const theme = useTheme()
   return (
     <Box>
       <Box display="flex" justifyContent="space-between" alignItems="flex-end" sx={{ mb: 3 }}>
@@ -22,7 +23,7 @@ const FinishResume: FC<IProps> = ({ handleReset, nameTemplate }) => {
       </Box>
       <Box display="flex" justify-content="center" flexDirection="row" sx={{ mr: '80px' }}>
         <Box>
-          <Typography sx={{ mt: 10, fontSize: 60, ml: 10, fontWeight: 700 }}>
+          <Typography sx={{ mt: 10, fontSize: theme.custom.fontSize60, ml: 10, fontWeight: theme.custom.fontWeightBig }}>
             Congratulations!
           </Typography>
           <Typography sx={{ fontSize: 34, ml: 10, mr: 4 }}>

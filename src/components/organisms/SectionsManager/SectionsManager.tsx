@@ -1,7 +1,7 @@
 import { FC, useEffect, useState } from 'react';
 import { useDispatch } from 'react-redux';
 
-import { Box, SpeedDial, SpeedDialAction, SpeedDialIcon, Stack } from '@mui/material';
+import { Box, SpeedDial, SpeedDialAction, SpeedDialIcon, Stack, useTheme } from '@mui/material';
 import { AddSharp, Close, EditSharp, RemoveSharp } from '@mui/icons-material/';
 
 import { setLayoutDate } from '@/store/landingBuilder/sectionsManagerSlice';
@@ -14,6 +14,7 @@ import SectionsToolsPanel from '@molecules/SectionsToolsPanel/SectionsToolsPanel
 import ErrorPopup from '@atoms/ErrorPopup';
 
 const SectionsManager: FC = () => {
+  const theme = useTheme()
   const dispatch = useDispatch();
   const layoutDate = useTypedSelector((state) => state.sectionsManager.layoutDate);
   const rows = Object.keys(layoutDate).length;
@@ -89,6 +90,7 @@ const SectionsManager: FC = () => {
         p: '0 30px 0 56px',
         minHeight: '100vh',
         minWidth: '1520px',
+        background: theme.custom.colorAlmostBlack
       }}
     >
       {error ? <ErrorPopup message={error} severity={severity} /> : null}
@@ -98,12 +100,12 @@ const SectionsManager: FC = () => {
           minHeight: '100%',
         }}
       >
-        <Item sx={{ height: '100%', mx: '10px' }}>
+        <Item sx={{ height: '100%', mx: '10px',background: theme.custom.colorAlmostBlack }}>
           <SectionsToolsPanel setError={setError} setSeverity={setSeverity} />
         </Item>
-        <Item sx={{ height: '100vh', width: '70%', backgroundColor: '#eaf9f4', px: '35px' }}>
+        <Item sx={{ height: '100vh', width: '70%', backgroundColor: theme.custom.colorMetalGray, px: '35px' }}>
           <div>
-            <h2>WORKSPACE</h2>
+            <h2 style={{color: theme.custom.colorWhiteGray}}>WORKSPACE</h2>
           </div>
           <MemoizedSectionsConstructor setError={setError} setSeverity={setSeverity} />
           <Box

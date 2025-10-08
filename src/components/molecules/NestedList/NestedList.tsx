@@ -1,5 +1,5 @@
 import { useState } from 'react';
-import { List, ListItemButton, ListItemIcon, ListItemText, Collapse, Divider } from '@mui/material';
+import { List, ListItemButton, ListItemIcon, ListItemText, Collapse, Divider, useTheme } from '@mui/material';
 import CircleIcon from '@mui/icons-material/Circle';
 import RadioButtonCheckedIcon from '@mui/icons-material/RadioButtonChecked';
 import ExpandLess from '@mui/icons-material/ExpandLess';
@@ -12,6 +12,7 @@ import { NestedListProps } from '@/types/landingBuilder';
 import classes from './NestedList.module.scss';
 
 const NestedList: React.FC<NestedListProps> = ({ name, items }) => {
+  const theme = useTheme()
   const dispatch = useAppDispatch();
   const [isOpen, setOpen] = useState(false);
 
@@ -24,7 +25,7 @@ const NestedList: React.FC<NestedListProps> = ({ name, items }) => {
       <List className={classes['list']} component="nav" aria-labelledby="nested-list-subheader">
         <ListItemButton onClick={handleClick}>
           <ListItemIcon>
-            <CircleIcon fontSize="small" className={classes['icon__circle']} />
+            <CircleIcon fontSize={theme.custom.fontSize} className={classes['icon__circle']} />
           </ListItemIcon>
           <ListItemText primary={name} />
           {isOpen ? (
@@ -47,7 +48,7 @@ const NestedList: React.FC<NestedListProps> = ({ name, items }) => {
                 >
                   <ListItemIcon>
                     <RadioButtonCheckedIcon
-                      fontSize="small"
+                      fontSize={theme.custom.fontSize}
                       className={classes['icon__dotcircle']}
                     />
                   </ListItemIcon>

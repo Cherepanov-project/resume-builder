@@ -3,6 +3,7 @@ import LandingPreview from "@pages/LandingPreview";
 import { Route, Routes } from "react-router-dom";
 import { ProtectedRoute } from "./components/atoms/ProtectedRoute/ProtectedRoute.tsx";
 import SectionsManager from "./components/organisms/SectionsManager";
+import SavedLetters from "./components/organisms/SavedLetters";
 import TemplateManager from "./components/organisms/TemplateManager";
 import AuthPage from "./pages/AuthPage";
 import CvTemplate from "./pages/CvTemplate";
@@ -41,6 +42,10 @@ function App() {
           <Route
             path="/landing-builder/template-creator"
             element={<ProtectedRoute component={TemplateManager} />}
+          />
+          <Route
+            path="/landing-builder/saved-letters"
+            element={<ProtectedRoute component={SavedLetters} />}
           />
         </Route>
         <Route

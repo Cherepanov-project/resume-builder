@@ -1,0 +1,51 @@
+{
+	"$schema": "node_modules/wrangler/config-schema.json",
+	"name": "resume-builder",
+	"main": "backendSrc/index.ts",
+	"compatibility_date": "2024-12-30",
+	"compatibility_flags": [
+		"nodejs_compat"
+	],
+	"minify": true,
+	"assets": {
+		"directory": "./dist",
+		"binding": "ASSETS",
+		"not_found_handling": "single-page-application"
+	},
+	"observability": {
+		"enabled": true
+	},
+	"placement": {
+		"mode": "smart"
+	},
+	"d1_databases": [
+		{
+			"binding": "DB",
+			"database_name": "some-database-name",
+			"database_id": "some-database-id",
+			"migrations_dir": "backendSrc/migrations"
+		}
+	],
+	"env": {
+		"dev": {
+			"d1_databases": [
+				{
+					"binding": "DB",
+					"database_name": "some-database-name",
+					"database_id": "some-database-id",
+					"migrations_dir": "backendSrc/migrations"
+				}
+			]
+		},
+		"test": {
+			"d1_databases": [
+				{
+					"binding": "DB",
+					"database_name": "some-database-name",
+					"database_id": "some-database-id",
+					"migrations_dir": "backendSrc/migrations"
+				}
+			]
+		}
+	}
+}

@@ -1,4 +1,4 @@
-import { Box, Typography } from '@mui/material';
+import { Box, Typography, useTheme } from '@mui/material';
 import { useNavigate } from 'react-router-dom';
 
 interface IIntroPageSectionProps {
@@ -16,13 +16,8 @@ const IntroPageSection: React.FC<IIntroPageSectionProps> = ({
   firstBox,
   secondBox,
 }) => {
-  const imageBoxStyles = {
-    width: '300px',
-    height: '218px',
-    background: '#fff',
-    boxShadow: 2,
-    backgroundSize: 'cover',
-  };
+  const theme = useTheme()
+  const imageBoxStyles = theme.custom.imageBoxStyles;
 
   const navigate = useNavigate();
   const onClickNavigate = () => {
