@@ -1,6 +1,6 @@
 export const getTemplates = async () =>  {
   try {
-    const response = await fetch('/api/template/', {
+    const response = await fetch('https://resume-builder-api.paulenter143.workers.dev/api/template/', {
       method: 'GET',
       headers: { 
         'Content-Type': 'application/json' 
@@ -21,7 +21,7 @@ export const getTemplates = async () =>  {
 
 export const createTemplate = async (templateData : object) => {
   try {
-    const response = await fetch('/api/template/', {
+    const response = await fetch('https://resume-builder-api.paulenter143.workers.dev/api/template/', {
       method: 'POST',
       headers: { 
         'Content-Type': 'application/json' 
