@@ -34,7 +34,7 @@ interface Element {
 
 interface EmailParams extends Record<string, unknown> {
   message: string;
-  to_email: string; // поле для email получателя
+  to_email: string;
 }
 interface ParseTreeTableComponentProps {
   elements: any[];

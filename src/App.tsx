@@ -14,6 +14,7 @@ import EmailPage from "./pages/LetterBuilderPage/EmailPage.tsx";
 import LetterBuilderPage from "./pages/LetterBuilderPage/LetterBuilderPage.tsx";
 import NotFoundPage from "./pages/NotFoundPage";
 import StarterPage from "./pages/StarterPage";
+import LetterConstructorPage from "./pages/LetterConstructorPage";
 
 function App() {
   return (
@@ -47,6 +48,10 @@ function App() {
             element={<ProtectedRoute component={SavedLetters} />}
           />
         </Route>
+        <Route
+          path="/landing-letter-constructor-page"
+          element={<ProtectedRoute component={LetterConstructorPage} />}
+        />
         <Route path="/landing-preview" element={<ProtectedRoute component={LandingPreview} />} />
         <Route path="/resume-builder" element={<ProtectedRoute component={CvTemplate} />} />
         <Route path="*" element={<NotFoundPage />} />
@@ -56,4 +61,3 @@ function App() {
 }
 
 export default App;
-// Приватный Router

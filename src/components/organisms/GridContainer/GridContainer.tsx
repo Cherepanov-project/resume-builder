@@ -1,19 +1,27 @@
-import { IGridContainers, setCurrentContainer } from '@/store/landingBuilder/layoutSlice';
-import { Layout } from 'react-grid-layout';
-import ContainerToolsPanel from '../ContainerToolsPanel';
-import { useAppDispatch, useTypedSelector } from '@/hooks/cvTemplateHooks';
-import { DynamicComponentRendererProps, T_BlockElement } from '@/types/landingBuilder';
-import { addElement, addGridContainer, changeElement, setWindowWidth } from '@store/landingBuilder/layoutSlice';
-import React, { Suspense, lazy, memo, useEffect, useState } from 'react';
-import ComponentPreloader from '@/components/atoms/ComponentPreloader';
-import ElementToolsPanel from '../ElementToolsPanel';
-import { PlusCircleFilled, PlusCircleOutlined } from '@ant-design/icons';
+import { IGridContainers, setCurrentContainer } from "@/store/landingBuilder/layoutSlice";
+import { Layout } from "react-grid-layout";
+import ContainerToolsPanel from "../ContainerToolsPanel";
+import { useAppDispatch, useTypedSelector } from "@/hooks/cvTemplateHooks";
+import { DynamicComponentRendererProps, T_BlockElement } from "@/types/landingBuilder";
+import {
+  addElement,
+  addGridContainer,
+  changeElement,
+  setWindowWidth,
+} from "@store/landingBuilder/layoutSlice";
+import React, { Suspense, lazy, memo, useEffect, useState } from "react";
+import ComponentPreloader from "@/components/atoms/ComponentPreloader";
+import ElementToolsPanel from "../ElementToolsPanel";
+import { PlusCircleFilled, PlusCircleOutlined } from "@ant-design/icons";
 
-import classes from './GridContainer.module.scss';
+import classes from "./GridContainer.module.scss";
 
-import { Responsive, WidthProvider } from 'react-grid-layout';
-import { useTheme } from '@mui/material';
-const ResponsiveGridLayout = WidthProvider(Responsive);
+import { Responsive, WidthProvider } from "react-grid-layout";
+import { useTheme } from "@mui/material";
+
+const ResponsiveGridLayout = WidthProvider(Responsive) as React.ComponentType<
+  ReactGridLayout.WidthProviderProps & ReactGridLayout.ResponsiveProps
+>;
 
 const DynamicComponentRenderer: React.FC<DynamicComponentRendererProps> = memo(
   ({ Component, props, columns, source, children, layout, containerId }) => {
@@ -35,7 +43,7 @@ const DynamicComponentRenderer: React.FC<DynamicComponentRendererProps> = memo(
 );
 
 export const GridContainer = (container: IGridContainers) => {
-  const theme = useTheme()
+  const theme = useTheme();
   const dispatch = useAppDispatch();
   const currentDraggableItem = useTypedSelector((state) => state.layout.currentDraggableItem);
   const width = useTypedSelector((state) => state.layout.windowWidth);
@@ -51,10 +59,10 @@ export const GridContainer = (container: IGridContainers) => {
     const handleResize = () => {
       dispatch(setWindowWidth(window.innerWidth));
     };
-    
-    window.addEventListener('resize', handleResize);
+
+    window.addEventListener("resize", handleResize);
     return () => {
-      window.removeEventListener('resize', handleResize);
+      window.removeEventListener("resize", handleResize);
     };
   }, [dispatch]);
 
@@ -70,10 +78,10 @@ export const GridContainer = (container: IGridContainers) => {
       dispatch(changeElement(item));
     });
   };
-  
+
   return (
     <div
-      className={classes['container']}
+      className={classes["container"]}
       onMouseEnter={() => {
         if (!isHover) {
           setIsHover(true);
@@ -95,14 +103,14 @@ export const GridContainer = (container: IGridContainers) => {
     >
       <ContainerToolsPanel id={container.id} />
       <ResponsiveGridLayout
-        className={classes['grid']}
+        className={classes["grid"]}
         layouts={{ lg: workspaceLayout }}
         breakpoints={{ lg: 1200, md: 996, sm: 768, xs: 480, xxs: 0 }}
         cols={{ lg: 6, md: 6, sm: 6, xs: 6, xxs: 6 }}
         rowHeight={container.height}
         width={width - 76 - (width - 120) * 0.3}
         margin={[8, 8]}
-        resizeHandles={['sw', 'se']}
+        resizeHandles={["sw", "se"]}
         isDraggable={!isDraggingInnerItem}
         isDroppable
         onDrop={(layout: Layout[], layoutItem: Layout) => {
@@ -115,16 +123,16 @@ export const GridContainer = (container: IGridContainers) => {
         onDragStop={handleChangeLayout}
       >
         {container.elements.activeElements.map((el) => (
-          <div key={el.layout.i} className={classes['item']}>
-            <ElementToolsPanel 
-              layout={el.layout} 
-              id={container.id} 
-              setDraggingInnerItem={handleSetDraggingInnerItem} 
-              elClass='drag-area'
+          <div key={el.layout.i} className={classes["item"]}>
+            <ElementToolsPanel
+              layout={el.layout}
+              id={container.id}
+              setDraggingInnerItem={handleSetDraggingInnerItem}
+              elClass="drag-area"
             />
             <DynamicComponentRenderer
               Component={el.name}
-              source={el.source || 'atoms'}
+              source={el.source || "atoms"}
               props={el.props}
               columns={el.columns || 1}
               layout={el.layout}
@@ -136,7 +144,7 @@ export const GridContainer = (container: IGridContainers) => {
       </ResponsiveGridLayout>
       {isHover && (
         <button
-          className={classes['add-button']}
+          className={classes["add-button"]}
           onClick={() => dispatch(addGridContainer(container.id))}
           onMouseEnter={() => {
             if (!isButtonHover) {
