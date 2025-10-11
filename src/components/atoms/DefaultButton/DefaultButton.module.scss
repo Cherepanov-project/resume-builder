@@ -6,19 +6,18 @@
   gap: 5px;
   align-items: center;
   justify-content: center;
-  color: $base-button-color;
-  background-color: transparent;
-  border: 1px solid $base-button-color;
+  color: $base-button-text;
+  background-color: $base-button-color;
   font-size: 16px;
   line-height: 18px;
   font-weight: 700;
   padding: 9px 14px;
-  max-height: 40px;
-  border-radius: 3px;
-  transition: all .3s ease-in-out;
+  max-height: 32px;
+  border-radius: 2px;
+  transition: all .2s ease-in-out;
   &:hover {
     background-color: $hover-button-color;
-    color: white;
+    color: $hover-button-text;
     border-color: $hover-button-color;
     transition: all .3s ease-in-out;
     opacity: 1;
@@ -27,8 +26,8 @@
     outline-color: $base-button-color;
   }
   &--primary {
-    color: white;
-    background-color: $base-button-color;
+    color: $hover-button-text;
+    background-color: $hover-button-color;
   }
   &--float {
     position: fixed;

@@ -9,11 +9,12 @@
     display: flex;
     align-items: center;
     & li {
+      color: $base-button-text;
       padding-right: 40px;
     }
   }
 }
 
 .active-link {
-  color: $hover-button-color;
+  color: #1976d2;
 }
