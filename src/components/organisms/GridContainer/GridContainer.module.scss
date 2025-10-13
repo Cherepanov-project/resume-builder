@@ -1,4 +1,4 @@
-@import '../../../assets/style/variables.scss';
+@use '../../../assets/style/variables.scss' as *;
 
 .container {
     box-sizing: content-box;
@@ -70,4 +70,8 @@
     background-color: white;
     border: 2px solid transparent;
     cursor: pointer;
+  }
+
+  .add-button:focus {
+    outline: none;
   }

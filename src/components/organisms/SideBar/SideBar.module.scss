@@ -19,3 +19,9 @@
     margin: 4px 0 0 4px;
   }
 }
+
+.tab {
+  &:focus {
+    outline: none;
+  }
+}

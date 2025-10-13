@@ -22,7 +22,10 @@
     transition: all .3s ease-in-out;
     opacity: 1;
   }
-  &:focus, &:active {
+  &:focus {
+    outline: none;
+  }
+  &:active {
     outline-color: $base-button-color;
   }
   &--primary {
