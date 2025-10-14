@@ -44,7 +44,7 @@ const IntroPage = () => {
           style guide page. To use them simply select them from the Figma style panel as shown
           below."
           firstBox='url("./../../../src/assets/images/defaultSlides/5.jpg")'
-          secondBox='url("./../../../src/assets/images/defaultSlides/8.jpg")'
+          secondBox='url("./../../../src/assets/images/defaultSlides/3.jpg")'
         />
         <IntroPageSection
           title="Use the resume builder"
@@ -55,11 +55,11 @@ const IntroPage = () => {
           secondBox='url("./../../../src/assets/images/defaultSlides/3.jpg")'
         />
         <IntroPageSection
-          title="EMAIL CONSTUCTION"
+          title="Use the content blocks"
           content="We've built   out a multitude of content blocks for you to use in your landing pages. From
           hero sections, forms, CTAs to pricing sections. Everything you need to get started
           building polished, modern landing pages."
-          firstBox='url("./../../../src/assets/images/defaultSlides/2.jpg")'
+          firstBox='url("./../../../src/assets/images/defaultSlides/7.jpg")'
         />
       </Box>
     </Container>
