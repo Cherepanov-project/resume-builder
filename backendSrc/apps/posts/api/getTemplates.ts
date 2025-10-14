@@ -9,6 +9,11 @@ const RESPONSE_SCHEMA = z.array(templatesSchema) satisfies z.ZodType<TTemplatesR
 
 export class GetTemplatesApi extends OpenAPIRoute {
   schema = {
+    security: [
+      {
+        BearerAuth: [],
+      },
+    ],
     responses: {
       200: {
         description: "Success",

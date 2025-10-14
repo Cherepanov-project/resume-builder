@@ -17,7 +17,7 @@ export const getTemplates = async () => {
     const templates = await response.json();
     return templates;
   } catch (error) {
-    console.error("Error", error);
+    console.error(error);
     throw error;
   }
 };
@@ -28,12 +28,8 @@ export const createTemplate = async (templateData: object | undefined, dataId?: 
 
     const data = templateData as any;
 
-    const safeContent = JSON.stringify(data)
-      .replace(/<script>/g, "&lt;script&gt;")
-      .replace(/<\/script>/g, "&lt;/script&gt;");
-
     const requestBody: Record<string, any> = {
-      content: safeContent,
+      content: data,
     };
 
     if (dataId && dataId.trim()) {
@@ -47,7 +43,7 @@ export const createTemplate = async (templateData: object | undefined, dataId?: 
         headers: {
           "Content-Type": "application/json",
         },
-        body: JSON.stringify(requestBody),
+        body: JSON.stringify(requestBody).replace(/</g, "\\u003c").replace(/>/g, "\\u003e"),
       },
     );
 
@@ -58,7 +54,7 @@ export const createTemplate = async (templateData: object | undefined, dataId?: 
 
     return await response.json();
   } catch (error) {
-    console.error("Error in createTemplate:", error);
+    console.error(error);
     throw error;
   }
 };

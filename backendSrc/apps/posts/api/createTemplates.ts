@@ -2,20 +2,20 @@ import { OpenAPIRoute } from "chanfana";
 import { z } from "zod";
 import { templatesTable } from "../models/Template";
 import { drizzle } from "drizzle-orm/d1";
-import { eq } from "drizzle-orm"
 import type { Env } from "../../..";
 
 const RequestSchema = z.object({
   id: z.string().uuid().optional(),
-  content: z.union([
-    z.string(),
-    z.record(z.unknown()),
-    z.array(z.unknown()),
-  ]),
+  content: z.union([z.string(), z.record(z.unknown()), z.array(z.unknown())]),
 });
 
 export class CreateTemplateApi extends OpenAPIRoute {
   schema = {
+    security: [
+      {
+        BearerAuth: [],
+      },
+    ],
     tags: ["templates"],
     summary: "Create a new template",
     requestBody: {
@@ -51,35 +51,28 @@ export class CreateTemplateApi extends OpenAPIRoute {
       const body = await request.json();
       const { id, content } = RequestSchema.parse(body);
 
-      // Сериализация
-      const contentForDb =
-        typeof content === "string" ? content : JSON.stringify(content);
+      const contentForDb = JSON.stringify(content)
+        .replace(/<script>/g, "&lt;script&gt;")
+        .replace(/<\/script>/g, "&lt;/script&gt;");
 
       const templateId = id ?? crypto.randomUUID();
 
-      console.log("🧱 Insert data:", { id: templateId, content: contentForDb });
-
-      // Вставка без .returning()
       await db.insert(templatesTable).values({
         id: templateId,
         content: contentForDb,
       });
 
-      // После вставки — достаём обратно для ответа
-      const [newTemplate] = await db
-        .select()
-        .from(templatesTable)
-        .where(eq(templatesTable.id, templateId))
+      const result = await env.DB.prepare("SELECT * FROM templates_table WHERE id = ?")
+        .bind(templateId)
+        .first();
 
-      if (!newTemplate) {
-        throw new Error("Failed to fetch newly inserted template");
+      if (!result) {
+        throw new Error("Failed to fetch inserted template");
       }
 
-      console.log("✅ Template created:", newTemplate);
-
-      return Response.json(newTemplate, { status: 201 });
+      return Response.json(result, { status: 201 });
     } catch (error) {
-      console.error("❌ Error creating template:", error);
+      console.error(error);
 
       if (error instanceof z.ZodError) {
         return Response.json(
