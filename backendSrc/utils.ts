@@ -1,11 +1,14 @@
-export const getTemplates = async () =>  {
+export const getTemplates = async () => {
   try {
-    const response = await fetch('https://resume-builder-api.paulenter143.workers.dev/api/template/', {
-      method: 'GET',
-      headers: { 
-        'Content-Type': 'application/json' 
+    const response = await fetch(
+      "https://resume-builder-api.paulenter143.workers.dev/api/template/",
+      {
+        method: "GET",
+        headers: {
+          "Content-Type": "application/json",
+        },
       },
-    });
+    );
 
     if (!response.ok) {
       throw new Error(`HTTP error! status: ${response.status}`);
@@ -14,29 +17,44 @@ export const getTemplates = async () =>  {
     const templates = await response.json();
     return templates;
   } catch (error) {
-    console.error('Error', error);
+    console.error("Error", error);
     throw error;
   }
-}
+};
 
-export const createTemplate = async (templateData : object) => {
+export const createTemplate = async (templateData: object | undefined, dataId?: string) => {
   try {
-    const response = await fetch('https://resume-builder-api.paulenter143.workers.dev/api/template/', {
-      method: 'POST',
-      headers: { 
-        'Content-Type': 'application/json' 
-      },
-      body: JSON.stringify(templateData)
-    });
+    if (!templateData) throw new Error("templateData is undefined");
 
-    if (!response.ok) {
-      throw new Error(`HTTP error! status: ${response.status}`);
+    const data = templateData as any;
+
+    const requestBody: any = {
+      content: { ...data },
+    };
+
+    if (dataId && dataId.trim()) {
+      requestBody.id = dataId;
     }
 
-    const newTemplate = await response.json();
-    return newTemplate;
+    const response = await fetch(
+      "https://resume-builder-api.paulenter143.workers.dev/api/template/",
+      {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify(requestBody),
+      },
+    );
+
+    if (!response.ok) {
+      const errText = await response.text();
+      throw new Error(`HTTP ${response.status}: ${errText}`);
+    }
+
+    return await response.json();
   } catch (error) {
-    console.error('Error', error);
+    console.error("Error in createTemplate:", error);
     throw error;
   }
-}
+};

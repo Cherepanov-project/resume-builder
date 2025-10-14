@@ -1,13 +1,13 @@
-import { int, sqliteTable, text } from "drizzle-orm/sqlite-core";
+import { sqliteTable, text } from "drizzle-orm/sqlite-core";
 import { z } from "zod";
 import type { TTemplate } from "../../../types";
 
 export const templatesTable = sqliteTable("templates_table", {
-  id: int().primaryKey({ autoIncrement: true }),
+  id: text().primaryKey().$defaultFn(() => crypto.randomUUID()),
   content: text().notNull(),
 });
 
 export const templatesSchema = z.object({
-  id: z.number(),
+  id: z.string(),
   content: z.string(),
 }) satisfies z.ZodType<TTemplate>;

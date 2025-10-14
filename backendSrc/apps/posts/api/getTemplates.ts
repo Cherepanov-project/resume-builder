@@ -26,7 +26,7 @@ export class GetTemplatesApi extends OpenAPIRoute {
     const templates = await db.select().from(templatesTable);
     const responseSchema = z.array(
       z.object({
-        id: z.number(),
+        id: z.string(),
         content: z.string(),
       }),
     );

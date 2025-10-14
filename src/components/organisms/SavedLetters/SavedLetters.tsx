@@ -97,9 +97,7 @@ const SavedLetters = () => {
             >
               <DefaultButton
                 onClick={() => {
-                  createTemplate({
-                    content: containerSaveLetters.find((el) => el.id === container.id),
-                  });
+                  createTemplate(containerSaveLetters.find((el) => el.id === container.id));
                 }}
                 label="Add on Templete"
               />
