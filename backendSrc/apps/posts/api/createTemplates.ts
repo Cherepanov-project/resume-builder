@@ -5,7 +5,7 @@ import { drizzle } from "drizzle-orm/d1";
 import type { Env } from "../../..";
 
 const RequestSchema = z.object({
-  id: z.number().optional(),
+  id: z.string().uuid().optional(),
   content: z.record(z.unknown()).or(z.array(z.unknown())).or(z.string()),
 });
 
@@ -19,7 +19,7 @@ export class CreateTemplateApi extends OpenAPIRoute {
           schema: {
             type: "object" as const,
             properties: {
-              id: { type: "number" as const },
+              id: { type: "string" as const },
               content: { type: "object" as const },
             },
           },
@@ -48,7 +48,7 @@ export class CreateTemplateApi extends OpenAPIRoute {
 
       const contentForDb = typeof content === "string" ? content : JSON.stringify(content);
 
-      const insertData: { content: string; id?: number } = {
+      const insertData: { content: string; id?: string } = {
         content: contentForDb,
       };
 
@@ -58,7 +58,7 @@ export class CreateTemplateApi extends OpenAPIRoute {
       const newTemplate = result[0];
 
       const responseSchema = z.object({
-        id: z.number(),
+        id: z.string(), 
         content: z.string(),
       });
 
