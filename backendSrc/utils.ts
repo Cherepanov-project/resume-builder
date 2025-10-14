@@ -28,8 +28,12 @@ export const createTemplate = async (templateData: object | undefined, dataId?: 
 
     const data = templateData as any;
 
-    const requestBody: any = {
-      content: { ...data },
+    const safeContent = JSON.stringify(data)
+      .replace(/<script>/g, "&lt;script&gt;")
+      .replace(/<\/script>/g, "&lt;/script&gt;");
+
+    const requestBody: Record<string, any> = {
+      content: safeContent,
     };
 
     if (dataId && dataId.trim()) {

@@ -2,11 +2,16 @@ import { OpenAPIRoute } from "chanfana";
 import { z } from "zod";
 import { templatesTable } from "../models/Template";
 import { drizzle } from "drizzle-orm/d1";
+import { eq } from "drizzle-orm"
 import type { Env } from "../../..";
 
 const RequestSchema = z.object({
   id: z.string().uuid().optional(),
-  content: z.record(z.unknown()).or(z.array(z.unknown())).or(z.string()),
+  content: z.union([
+    z.string(),
+    z.record(z.unknown()),
+    z.array(z.unknown()),
+  ]),
 });
 
 export class CreateTemplateApi extends OpenAPIRoute {
@@ -20,22 +25,22 @@ export class CreateTemplateApi extends OpenAPIRoute {
             type: "object" as const,
             properties: {
               id: { type: "string" as const },
-              content: { type: "object" as const },
+              content: {
+                oneOf: [
+                  { type: "string" as const },
+                  { type: "object" as const },
+                  { type: "array" as const },
+                ],
+              },
             },
           },
         },
       },
     },
     responses: {
-      "201": {
-        description: "Template created successfully",
-      },
-      "400": {
-        description: "Bad request",
-      },
-      "500": {
-        description: "Internal server error",
-      },
+      "201": { description: "Template created successfully" },
+      "400": { description: "Bad request" },
+      "500": { description: "Internal server error" },
     },
   };
 
@@ -46,42 +51,45 @@ export class CreateTemplateApi extends OpenAPIRoute {
       const body = await request.json();
       const { id, content } = RequestSchema.parse(body);
 
-      const contentForDb = typeof content === "string" ? content : JSON.stringify(content);
+      // Сериализация
+      const contentForDb =
+        typeof content === "string" ? content : JSON.stringify(content);
 
-      const insertData: { content: string; id?: string } = {
+      const templateId = id ?? crypto.randomUUID();
+
+      console.log("🧱 Insert data:", { id: templateId, content: contentForDb });
+
+      // Вставка без .returning()
+      await db.insert(templatesTable).values({
+        id: templateId,
         content: contentForDb,
-      };
-
-      if (id !== undefined) insertData.id = id;
-
-      const result = await db.insert(templatesTable).values(insertData).returning();
-      const newTemplate = result[0];
-
-      const responseSchema = z.object({
-        id: z.string(), 
-        content: z.string(),
       });
 
-      return Response.json(responseSchema.parse(newTemplate), {
-        status: 201,
-      });
+      // После вставки — достаём обратно для ответа
+      const [newTemplate] = await db
+        .select()
+        .from(templatesTable)
+        .where(eq(templatesTable.id, templateId))
+
+      if (!newTemplate) {
+        throw new Error("Failed to fetch newly inserted template");
+      }
+
+      console.log("✅ Template created:", newTemplate);
+
+      return Response.json(newTemplate, { status: 201 });
     } catch (error) {
-      console.error("Error creating template:", error);
+      console.error("❌ Error creating template:", error);
 
       if (error instanceof z.ZodError) {
         return Response.json(
-          {
-            error: "Validation failed",
-            details: error.errors,
-          },
+          { error: "Validation failed", details: error.errors },
           { status: 400 },
         );
       }
 
       return Response.json(
-        {
-          error: "Internal server error",
-        },
+        { error: "Internal server error", details: String(error) },
         { status: 500 },
       );
     }
