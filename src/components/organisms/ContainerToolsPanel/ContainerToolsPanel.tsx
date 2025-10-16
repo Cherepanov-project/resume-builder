@@ -6,7 +6,7 @@ import {
   deleteGridContainer,
   moveDownGridContainer,
   moveUpGridContainer,
-} from "@store/landingBuilder/layoutSlice";
+} from "@store/LetterBuilderStore/letterLayoutSlice";
 import { useAppDispatch } from "@hooks/cvTemplateHooks";
 
 import classes from "./ContainerToolsPanel.module.scss";

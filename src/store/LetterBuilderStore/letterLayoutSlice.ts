@@ -284,27 +284,26 @@ const letterLayoutSlice = createSlice({
     },
     moveUpGridContainer(state, action) {
       if (state.gridContainers.length !== 1) {
-        const indx = state.gridContainers.findIndex(
-          (container) => container.id === action.payload.id,
-        );
-        if (indx !== 0) {
-          [state.gridContainers[indx], state.gridContainers[indx - 1]] = [
-            state.gridContainers[indx - 1],
-            state.gridContainers[indx],
-          ];
+        const { id } = action.payload;
+        const index = state.gridContainers.findIndex((c) => c.id === id);
+        if (index > 0) {
+          const newOrder = [...state.gridContainers];
+          const [moved] = newOrder.splice(index, 1);
+          newOrder.splice(index - 1, 0, moved);
+          state.gridContainers = newOrder;
         }
       }
     },
     moveDownGridContainer(state, action) {
       if (state.gridContainers.length !== 1) {
-        const indx = state.gridContainers.findIndex(
+        const index = state.gridContainers.findIndex(
           (container) => container.id === action.payload.id,
         );
-        if (indx !== state.gridContainers.length - 1) {
-          [state.gridContainers[indx + 1], state.gridContainers[indx]] = [
-            state.gridContainers[indx],
-            state.gridContainers[indx + 1],
-          ];
+        if (index !== state.gridContainers.length - 1) {
+          const newOrder = [...state.gridContainers];
+          const [moved] = newOrder.splice(index, 1);
+          newOrder.splice(index + 1, 0, moved);
+          state.gridContainers = newOrder;
         }
       }
     },
