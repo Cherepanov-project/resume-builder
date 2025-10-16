@@ -11,11 +11,11 @@ const RequestSchema = z.object({
 
 export class CreateTemplateApi extends OpenAPIRoute {
   schema = {
-    security: [
-      {
-        BearerAuth: [],
-      },
-    ],
+    // security: [
+    //   {
+    //     BearerAuth: [],
+    //   },
+    // ],
     tags: ["templates"],
     summary: "Create a new template",
     requestBody: {
