@@ -1,5 +1,4 @@
-@import '../../../index.css';
-@import '../../../assets/style/variables.scss';
+@use '../../../assets/style/variables.scss' as *;
 
 .header {
   display: flex;
