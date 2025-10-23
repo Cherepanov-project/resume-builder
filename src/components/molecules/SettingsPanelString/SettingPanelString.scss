@@ -1,6 +1,6 @@
 @use "../../../assets/style/variables.scss" as *;
 
-.list {
+.string-list {
   &__wrap {
     position: fixed;
     right: 0px;
@@ -30,7 +30,7 @@
     padding: 0 5px;
     height: 48px;
     width: 100%;
-    background: $bg-sidebar-title;
+    background: #1274e7;
   }
 
   &__close-btn {
@@ -40,14 +40,15 @@
   }
 }
 
-.tab {
+.string-tab {
   min-width: 30px !important;
 }
 
-.settings-panel {
+.string-settings-panel {
   display: flex;
   flex-direction: column;
   width: 100%;
+
   &::after {
     content: "";
     width: 90%;
@@ -59,11 +60,11 @@
   }
 }
 
-.hidden {
+.string-hidden {
   display: none;
 }
 
-.settings-panel__bgcolor {
+.string-settings-panel__bgcolor {
   margin-top: 10px;
   display: flex;
   flex-direction: column;
@@ -83,6 +84,7 @@
   &:last-child::after {
     display: none;
   }
+
   &::after {
     content: "";
     width: 70%;
@@ -94,7 +96,7 @@
   }
 }
 
-.settings-panel__item {
+.string-settings-panel__item {
   display: flex;
   flex-direction: column;
   justify-content: center;
@@ -106,7 +108,7 @@
   align-self: center;
 }
 
-.settings-panel__items__btns {
+.string-settings-panel__items__btns {
   width: 100%;
   display: flex;
   justify-content: space-around;
@@ -114,7 +116,7 @@
   opacity: 0.6;
 }
 
-.settings-panel__items__btns__btn {
+.string-settings-panel__items__btns__btn {
   width: 45%;
   border: none;
   border-radius: 10px;
@@ -126,12 +128,12 @@
   }
 }
 
-.settings-panel__items__btns .settings-panel__items__btns__btn--green {
+.string-settings-panel__items__btns .string-settings-panel__items__btns__btn--green {
   background-color: #51a480;
   border-radius: 15px;
 }
 
-.settings-panel__items__btns .settings-panel__items__btns__btn--grey {
+.string-settings-panel__items__btns .string-settings-panel__items__btns__btn--grey {
   background-color: grey;
   border-radius: 15px;
 
@@ -140,7 +142,7 @@
   }
 }
 
-.bg-form {
+.string-bg-form {
   height: 40px;
   border: none;
   background-color: grey;
@@ -162,22 +164,25 @@
   }
 }
 
-.bg-form__square {
+.string-bg-form__square {
   width: 40px;
   border: 1px solid black;
   border-radius: 5px;
 }
-.settings-panel__image__block {
+
+.string-settings-panel__image__block {
   position: relative;
   background-color: grey;
   width: 90%;
   align-self: center;
   border-radius: 5px;
+
   &__bgimage {
     background-color: #7aac98;
     border-radius: 5px 5px 0 0;
     padding-left: 5px;
   }
+
   & input {
     width: 96.5%;
     height: 30px;
@@ -191,7 +196,7 @@
   }
 }
 
-.settings-panel__items__btns__btn--blue {
+.string-settings-panel__items__btns__btn--blue {
   position: absolute;
   background-color: rgb(96, 185, 233);
   border-radius: 10px;
@@ -200,33 +205,42 @@
   top: 10px;
 }
 
-.settings-panel__image__block__bgimage {
+.string-settings-panel__image__block__bgimage {
   & img {
     width: 100%;
     vertical-align: middle;
   }
 }
 
-.settings-panel__image {
+.string-settings-panel__image {
   & span {
     margin-left: 15px;
   }
 }
 
-.notification {
+.string-notification {
   margin-top: 15px;
   width: 80%;
   margin: 15px auto;
   border: 1px #bfd6f7 solid;
 }
 
-.notificationError {
+.string-notificationError {
   margin: 15px 0;
   border: 1px #d32f2f solid;
 }
 
-.list__title .title {
+.string-list__title .string-title {
   font-family: "Nunito", sans-serif;
   font-size: 20px;
   font-weight: 700;
+  color: #ffffffe6;
+}
+.string-menu {
+  &__text {
+    font-family: "Nunito", sans-serif;
+    font-size: 14px;
+    font-weight: 700;
+    color: #ffffffe6;
+  }
 }

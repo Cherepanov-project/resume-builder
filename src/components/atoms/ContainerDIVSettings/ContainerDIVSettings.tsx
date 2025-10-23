@@ -1,3 +1,4 @@
+import "./ContainerDIVSettings.scss";
 import { useAppDispatch } from "@/hooks/cvTemplateHooks";
 import { initImageMenu } from "@/store/landingBuilder/settingsPanelSlice";
 import { useEffect, useLayoutEffect, useRef, useState } from "react";
@@ -51,7 +52,7 @@ const ContainerDIVSettings: React.FC<IProps> = ({ backgroundColor, setStyle }) =
   const bgImage = () => {
     return (
       <div className="settings-panel__item settings-panel__image">
-        <span>BackgroundImage</span>
+        <span className="settings-panel__text--color">BackgroundImage</span>
         <div className="settings-panel__image__block">
           <div className="settings-panel__image__block__bgimage">
             <img className="media-object" src={image} alt="bg-image" />
@@ -75,7 +76,7 @@ const ContainerDIVSettings: React.FC<IProps> = ({ backgroundColor, setStyle }) =
           <HexColorPicker color={color} onChange={setColor} />
         ) : (
           <div className="settings-panel__bgcolor">
-            <span>Background-color</span>
+            <span className="settings-panel__text--color">Background-color</span>
             <div className="bg-form">
               <input value={color} onChange={(e) => handleColorInput(e)} />
               <div

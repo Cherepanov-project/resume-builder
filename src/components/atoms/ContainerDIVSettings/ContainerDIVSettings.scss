@@ -1,0 +1,18 @@
+.settings-panel__text--color {
+  color: #777;
+  font-size: 16px;
+}
+.media-object {
+  min-height: 280px;
+}
+.settings-panel__bgcolor {
+  margin-top: 10px;
+  display: flex;
+  flex-direction: row;
+  margin-left: 20px;
+  justify-content: space-between;
+  align-items: center;
+}
+.settings-panel__image__block input {
+  width: 100%;
+}

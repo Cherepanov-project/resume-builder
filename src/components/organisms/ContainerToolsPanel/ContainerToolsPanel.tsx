@@ -1,5 +1,5 @@
 import { IconButton } from "@mui/material";
-import { ContentCopy, Delete, ArrowUpward, ArrowDownward } from "@mui/icons-material";
+import { ContentCopy, Delete, ArrowUpward, ArrowDownward, Settings } from "@mui/icons-material";
 
 import {
   copyGridContainer,
@@ -10,13 +10,19 @@ import {
 import { useAppDispatch } from "@hooks/cvTemplateHooks";
 
 import classes from "./ContainerToolsPanel.module.scss";
+import { initPanel } from "@/store/landingBuilder/settingsPanelStringSlice";
 
 type ContainerToolsPanelProps = {
   id: string;
 };
 
-const ContainerToolsPanel: React.FC<ContainerToolsPanelProps> = (id: ContainerToolsPanelProps) => {
+const ContainerToolsPanel: React.FC<ContainerToolsPanelProps> = ({ id }) => {
   const dispatch = useAppDispatch();
+
+  const handleSettingsGridContainer = () => {
+    console.log("handleSettingsGridContainer click, id=", id);
+    dispatch(initPanel({ type: "section", sectionID: id, moduleID: "0" }));
+  };
 
   return (
     <div className={classes["tools-panel"]}>
@@ -24,7 +30,7 @@ const ContainerToolsPanel: React.FC<ContainerToolsPanelProps> = (id: ContainerTo
         aria-label="Move Up Container"
         title="Сдвинуть вверх"
         color="primary"
-        onClick={() => dispatch(moveUpGridContainer(id))}
+        onClick={() => dispatch(moveUpGridContainer({ id }))}
       >
         <ArrowUpward />
       </IconButton>
@@ -32,7 +38,7 @@ const ContainerToolsPanel: React.FC<ContainerToolsPanelProps> = (id: ContainerTo
         aria-label="Move Down Container"
         title="Сдвинуть вниз"
         color="primary"
-        onClick={() => dispatch(moveDownGridContainer(id))}
+        onClick={() => dispatch(moveDownGridContainer({ id }))}
       >
         <ArrowDownward />
       </IconButton>
@@ -40,7 +46,7 @@ const ContainerToolsPanel: React.FC<ContainerToolsPanelProps> = (id: ContainerTo
         aria-label="Copy Container"
         title="Скопировать блок"
         color="primary"
-        onClick={() => dispatch(copyGridContainer(id))}
+        onClick={() => dispatch(copyGridContainer({ id }))}
       >
         <ContentCopy />
       </IconButton>
@@ -48,9 +54,17 @@ const ContainerToolsPanel: React.FC<ContainerToolsPanelProps> = (id: ContainerTo
         aria-label="Remove Item"
         title="Удалить блок"
         color="primary"
-        onClick={() => dispatch(deleteGridContainer(id))}
+        onClick={() => dispatch(deleteGridContainer({ id }))}
       >
         <Delete />
+      </IconButton>
+      <IconButton
+        aria-label="Configure Item"
+        title="Дополнительные настройки"
+        color="primary"
+        onClick={handleSettingsGridContainer}
+      >
+        <Settings />
       </IconButton>
     </div>
   );
