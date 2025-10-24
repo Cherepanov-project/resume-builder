@@ -1,7 +1,7 @@
 import { useState, useEffect, useRef } from "react";
 import "./ImageMenu.scss";
 import { useAppDispatch, useTypedSelector } from "@/hooks/cvTemplateHooks";
-import { closeImageMenu } from "@/store/landingBuilder/settingsPanelSlice";
+import { applyImage, closeImageMenu } from "@/store/landingBuilder/settingsPanelSlice";
 
 type listItemType = { url: string; title: string };
 
@@ -59,6 +59,11 @@ const ImageMenu = () => {
     };
     reader.readAsDataURL(file);
     e.currentTarget.value = "";
+  };
+
+  const handleApply = () => {
+    if (!curItem.url) return;
+    dispatch(applyImage(curItem.url));
   };
 
   // const handleApply = (item) => {
@@ -142,7 +147,7 @@ const ImageMenu = () => {
               >
                 CANCEL
               </button>
-              <button className="apply-btn" type="button">
+              <button className="apply-btn" type="button" onClick={() => handleApply()}>
                 APPLY
               </button>
             </div>

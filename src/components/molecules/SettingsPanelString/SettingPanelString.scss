@@ -1,12 +1,12 @@
 @use "../../../assets/style/variables.scss" as *;
 
-.list {
+.string-list {
   &__wrap {
     position: fixed;
     right: 0px;
     top: 40px;
     width: 320px;
-    height: Calc(100vh - 40px);
+    height: Calc(100vh - 72px);
     background-color: $bg-sidebar;
     z-index: 1;
     padding-bottom: 20px;
@@ -20,6 +20,19 @@
     }
   }
 
+  &__title {
+    font-weight: 400;
+    line-height: 1.5;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin: 0;
+    padding: 0 5px;
+    height: 48px;
+    width: 100%;
+    background: #1274e7;
+  }
+
   &__close-btn {
     cursor: pointer;
     padding: 0 !important;
@@ -27,11 +40,11 @@
   }
 }
 
-.tab {
+.string-tab {
   min-width: 30px !important;
 }
 
-.settings-panel {
+.string-settings-panel {
   display: flex;
   flex-direction: column;
   width: 100%;
@@ -47,30 +60,26 @@
   }
 }
 
-.hidden {
+.string-hidden {
   display: none;
 }
 
-.settings-panel__bgcolor {
-  width: 100%;
+.string-settings-panel__bgcolor {
   margin-top: 10px;
   display: flex;
   flex-direction: column;
   margin-left: 20px;
+  justify-content: space-between;
 
   & span {
-    font-family: "Nunito", sans-serif;
-    font-size: 17px;
-    font-weight: 400;
-    text-align: start;
-    color: $base-button-text;
+    text-align: center;
     margin-right: 10px;
     margin-bottom: 5px;
     margin-top: 10px;
     margin-bottom: 10px;
   }
 
-  align-items: start;
+  align-items: center;
 
   &:last-child::after {
     display: none;
@@ -82,12 +91,12 @@
     align-self: center;
     height: 1px;
     margin-top: 20px;
-    border-radius: 10px;
+    border-radius: 50px;
     background-color: rgb(214, 214, 214);
   }
 }
 
-.settings-panel__item {
+.string-settings-panel__item {
   display: flex;
   flex-direction: column;
   justify-content: center;
@@ -99,54 +108,53 @@
   align-self: center;
 }
 
-.settings-panel__items__btns {
+.string-settings-panel__items__btns {
   width: 100%;
   display: flex;
   justify-content: space-around;
   margin-top: 20px;
-  opacity: 1;
+  opacity: 0.6;
 }
 
-.settings-panel__items__btns__btn {
+.string-settings-panel__items__btns__btn {
   width: 45%;
   border: none;
   border-radius: 10px;
   transition: all 0.3s ease-in-out;
-  height: 32px;
-}
-
-.settings-panel__items__btns .settings-panel__items__btns__btn--green {
-  background-color: $bg-settings-btn-green;
-  border-radius: 2px;
+  height: 40px;
 
   &:hover {
-    background-color: $bg-settings-btn-green-hover;
+    opacity: 0.5;
   }
 }
 
-.settings-panel__items__btns .settings-panel__items__btns__btn--grey {
-  background-color: $base-button-color;
-  border-radius: 2px;
+.string-settings-panel__items__btns .string-settings-panel__items__btns__btn--green {
+  background-color: #51a480;
+  border-radius: 15px;
+}
+
+.string-settings-panel__items__btns .string-settings-panel__items__btns__btn--grey {
+  background-color: grey;
+  border-radius: 15px;
 
   &:hover {
-    background-color: $hover-button-color;
+    background-color: grey;
   }
 }
 
-.bg-form {
-  width: 90%;
+.string-bg-form {
   height: 40px;
   border: none;
-  background-color: $base-button-color;
+  background-color: grey;
   display: flex;
-  border-radius: 2px;
+  border-radius: 5px;
   margin-right: 15px;
 
   & input {
-    width: 89.5%;
+    width: 80px;
     background-color: inherit;
     border: none;
-    color: $base-button-text;
+    color: #fff;
     margin-left: 5px;
     font-size: 16px;
 
@@ -156,17 +164,19 @@
   }
 }
 
-.bg-form__square {
+.string-bg-form__square {
   width: 40px;
   border: 1px solid black;
-  border-radius: 2px;
+  border-radius: 5px;
 }
 
-.settings-panel__image__block {
+.string-settings-panel__image__block {
   position: relative;
+  background-color: grey;
   width: 90%;
   align-self: center;
   border-radius: 5px;
+
   &__bgimage {
     background-color: #7aac98;
     border-radius: 5px 5px 0 0;
@@ -174,62 +184,63 @@
   }
 
   & input {
-    width: 100%;
-    height: 40px;
+    width: 96.5%;
+    height: 30px;
     bottom: 0px;
-    background-color: $base-button-color;
+    background-color: rgb(161, 159, 159);
     font-size: 16px;
     padding: 5px;
     border-bottom-left-radius: 5px;
     border-bottom-right-radius: 5px;
-    border-radius: 0 0 2px 2px;
     border: none;
   }
 }
 
-.settings-panel__items__btns__btn--blue {
+.string-settings-panel__items__btns__btn--blue {
   position: absolute;
-  display: flex;
-  align-items: center;
-  background-color: $bg-sidebar-title;
-  border-radius: 2px;
+  background-color: rgb(96, 185, 233);
+  border-radius: 10px;
   width: 100px;
-  right: 5px;
-  top: 28px;
+  right: 10px;
+  top: 10px;
 }
 
-.settings-panel__image__block__bgimage {
-  padding-left: 0px;
+.string-settings-panel__image__block__bgimage {
   & img {
     width: 100%;
     vertical-align: middle;
   }
 }
 
-.settings-panel__image {
+.string-settings-panel__image {
   & span {
-    font-family: "Nunito", sans-serif;
-    font-size: 17px;
-    font-weight: 400;
-    color: $base-button-text;
-    margin-left: 18px;
+    margin-left: 15px;
   }
 }
 
-.notification {
+.string-notification {
   margin-top: 15px;
   width: 80%;
   margin: 15px auto;
   border: 1px #bfd6f7 solid;
 }
 
-.notificationError {
+.string-notificationError {
   margin: 15px 0;
   border: 1px #d32f2f solid;
 }
 
-.list__title .title {
+.string-list__title .string-title {
   font-family: "Nunito", sans-serif;
   font-size: 20px;
   font-weight: 700;
+  color: #ffffffe6;
+}
+.string-menu {
+  &__text {
+    font-family: "Nunito", sans-serif;
+    font-size: 14px;
+    font-weight: 700;
+    color: #ffffffe6;
+  }
 }
