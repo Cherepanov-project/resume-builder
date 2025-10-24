@@ -4,9 +4,9 @@
   &__wrap {
     position: fixed;
     right: 0px;
-    top: 72px;
+    top: 40px;
     width: 320px;
-    height: Calc(100vh - 72px);
+    height: Calc(100vh - 40px);
     background-color: $bg-sidebar;
     z-index: 1;
     padding-bottom: 20px;
@@ -18,19 +18,6 @@
     &::-webkit-scrollbar {
       display: none;
     }
-  }
-
-  &__title {
-    font-weight: 400;
-    line-height: 1.5;
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    margin: 0;
-    padding: 0 5px;
-    height: 48px;
-    width: 100%;
-    background: $bg-sidebar-title;
   }
 
   &__close-btn {
@@ -48,6 +35,7 @@
   display: flex;
   flex-direction: column;
   width: 100%;
+
   &::after {
     content: "";
     width: 90%;
@@ -64,32 +52,37 @@
 }
 
 .settings-panel__bgcolor {
+  width: 100%;
   margin-top: 10px;
   display: flex;
   flex-direction: column;
   margin-left: 20px;
-  justify-content: space-between;
 
   & span {
-    text-align: center;
+    font-family: "Nunito", sans-serif;
+    font-size: 17px;
+    font-weight: 400;
+    text-align: start;
+    color: $base-button-text;
     margin-right: 10px;
     margin-bottom: 5px;
     margin-top: 10px;
     margin-bottom: 10px;
   }
 
-  align-items: center;
+  align-items: start;
 
   &:last-child::after {
     display: none;
   }
+
   &::after {
     content: "";
     width: 70%;
     align-self: center;
     height: 1px;
     margin-top: 20px;
-    border-radius: 50px;
+    border-radius: 10px;
     background-color: rgb(214, 214, 214);
   }
 }
@@ -111,7 +104,7 @@
   display: flex;
   justify-content: space-around;
   margin-top: 20px;
-  opacity: 0.6;
+  opacity: 1;
 }
 
 .settings-panel__items__btns__btn {
@@ -119,40 +112,41 @@
   border: none;
   border-radius: 10px;
   transition: all 0.3s ease-in-out;
-  height: 40px;
-
-  &:hover {
-    opacity: 0.5;
-  }
+  height: 32px;
 }
 
 .settings-panel__items__btns .settings-panel__items__btns__btn--green {
-  background-color: #51a480;
-  border-radius: 15px;
+  background-color: $bg-settings-btn-green;
+  border-radius: 2px;
+
+  &:hover {
+    background-color: $bg-settings-btn-green-hover;
+  }
 }
 
 .settings-panel__items__btns .settings-panel__items__btns__btn--grey {
-  background-color: grey;
-  border-radius: 15px;
+  background-color: $base-button-color;
+  border-radius: 2px;
 
   &:hover {
-    background-color: grey;
+    background-color: $hover-button-color;
   }
 }
 
 .bg-form {
+  width: 90%;
   height: 40px;
   border: none;
-  background-color: grey;
+  background-color: $base-button-color;
   display: flex;
-  border-radius: 5px;
+  border-radius: 2px;
   margin-right: 15px;
 
   & input {
-    width: 80px;
+    width: 89.5%;
     background-color: inherit;
     border: none;
-    color: #fff;
+    color: $base-button-text;
     margin-left: 5px;
     font-size: 16px;
 
@@ -165,11 +159,11 @@
 .bg-form__square {
   width: 40px;
   border: 1px solid black;
-  border-radius: 5px;
+  border-radius: 2px;
 }
+
 .settings-panel__image__block {
   position: relative;
-  background-color: grey;
   width: 90%;
   align-self: center;
   border-radius: 5px;
@@ -178,29 +172,34 @@
     border-radius: 5px 5px 0 0;
     padding-left: 5px;
   }
+
   & input {
-    width: 96.5%;
-    height: 30px;
+    width: 100%;
+    height: 40px;
     bottom: 0px;
-    background-color: rgb(161, 159, 159);
+    background-color: $base-button-color;
     font-size: 16px;
     padding: 5px;
     border-bottom-left-radius: 5px;
     border-bottom-right-radius: 5px;
+    border-radius: 0 0 2px 2px;
     border: none;
   }
 }
 
 .settings-panel__items__btns__btn--blue {
   position: absolute;
-  background-color: rgb(96, 185, 233);
-  border-radius: 10px;
+  display: flex;
+  align-items: center;
+  background-color: $bg-sidebar-title;
+  border-radius: 2px;
   width: 100px;
-  right: 10px;
-  top: 10px;
+  right: 5px;
+  top: 28px;
 }
 
 .settings-panel__image__block__bgimage {
+  padding-left: 0px;
   & img {
     width: 100%;
     vertical-align: middle;
@@ -209,7 +208,11 @@
 
 .settings-panel__image {
   & span {
-    margin-left: 15px;
+    font-family: "Nunito", sans-serif;
+    font-size: 17px;
+    font-weight: 400;
+    color: $base-button-text;
+    margin-left: 18px;
   }
 }
 

@@ -1,5 +1,5 @@
 import "./ContainerDIVSettings.scss";
-import { useAppDispatch } from "@/hooks/cvTemplateHooks";
+import { useAppDispatch, useTypedSelector } from "@/hooks/cvTemplateHooks";
 import { initImageMenu } from "@/store/landingBuilder/settingsPanelSlice";
 import { useEffect, useLayoutEffect, useRef, useState } from "react";
 import { HexColorPicker } from "react-colorful";
@@ -17,6 +17,7 @@ const ContainerDIVSettings: React.FC<IProps> = ({ backgroundColor, setStyle }) =
   const [colorOpen, setColorOpen] = useState(false);
 
   const colorRef = useRef<HTMLDivElement>(null);
+  const selectedImageUrl = useTypedSelector((state) => state.settingsPanel.selectedImageUrl);
 
   useLayoutEffect(() => {
     document.addEventListener("mousedown", handleClick);
@@ -25,6 +26,12 @@ const ContainerDIVSettings: React.FC<IProps> = ({ backgroundColor, setStyle }) =
     };
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
+
+  useEffect(() => {
+    if (selectedImageUrl) {
+      setImage(selectedImageUrl);
+    }
+  }, [selectedImageUrl]);
 
   useEffect(() => {
     // вывести в отдельную функцию

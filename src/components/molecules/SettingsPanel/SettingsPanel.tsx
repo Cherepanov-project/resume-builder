@@ -114,8 +114,21 @@ const SettingsPanel: React.FC = () => {
 
   return isShown ? (
     <Box ref={panelRef} className="list__wrap">
-      <Box className={"list__title"}>
-        <Typography variant="h3" className="title">
+      <Box
+        sx={{
+          display: "flex",
+          justifyContent: "space-between",
+          alignItems: "center",
+          height: "40px",
+          px: "5px",
+          bgcolor: "#1274e7",
+          color: "#fff",
+          fontFamily: '"Nunito", sans-serif',
+          fontSize: "17px",
+          fontWeight: 400,
+        }}
+      >
+        <Typography variant="h3" className="title" sx={{ fontSize: "inherit", fontWeight: "inherit" }}>
           Settings
         </Typography>
         <CloseIcon className="list__close-btn" onClick={handleClose} />
