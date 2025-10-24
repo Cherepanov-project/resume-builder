@@ -8,7 +8,7 @@ import InputUpdate from "../InputUpdate";
 import ButtonsSettingsPanel from "@atoms/ButtonsSettingsPanel";
 import { IElementProps, ISettingsInputItem, T_BlockElement } from "@/types/landingBuilder";
 import SliderSettings from "../SliderSettings";
-import { Alert, Box, Typography, Button } from "@mui/material";
+import { Box, Typography } from "@mui/material";
 import BasicRatingSettings from "@/components/atoms/BasicRatingSettings";
 import BasicToolTipSettings from "@/components/atoms/BasicToolTipSettings";
 import LayoutBlockButtonSettings from "@/components/atoms/LayoutBlockButtonSettings";
