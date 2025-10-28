@@ -22,6 +22,7 @@ import utilityReducer from "./landingBuilder/utilitySlice";
 import cardReducer from "./cardSlice";
 import sectionsManagerReducer from "./landingBuilder/sectionsManagerSlice";
 import settingsPanelReducer from "./landingBuilder/settingsPanelSlice";
+import settingsPanelStringReducer from "./landingBuilder/settingsPanelStringSlice";
 import styleModuleSlice from "./LetterBuilderStore/styleModule";
 import swiperReducer from "./landingBuilder/swiperSlice";
 import userReducer from "./userSlice";
@@ -38,7 +39,6 @@ import videoSelectionReducer from "./LetterBuilderStore/videoSelectionSlice";
 
 import containerElementReducer from "./landingBuilder/containerElementSlice";
 import savedLetterReducer from "./LetterBuilderStore/savedLettersSlice";
-
 
 //конфиг для persist
 const persistConfig = {
@@ -59,6 +59,7 @@ const rootReducer = combineReducers({
   card: cardReducer,
   sectionsManager: sectionsManagerReducer,
   settingsPanel: settingsPanelReducer,
+  settingsPanelString: settingsPanelStringReducer,
   styleModule: styleModuleSlice,
   swiper: swiperReducer,
   user: userReducer,
@@ -72,7 +73,6 @@ const rootReducer = combineReducers({
   videoSelection: videoSelectionReducer,
   container: containerElementReducer,
   savedLetters: savedLetterReducer,
-
 });
 
 //преобразование редьюсера для persist

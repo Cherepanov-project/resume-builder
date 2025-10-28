@@ -1,4 +1,4 @@
-@use '@assets/style/variables.scss' as *;
+@use "@assets/style/variables.scss" as *;
 
 .tools-panel {
   width: 10%;
@@ -14,6 +14,10 @@
   & > button {
     padding: 5px;
     border-radius: 0;
+
+    &:focus {
+      outline: none;
+    }
 
     &:first-child {
       background-color: $bg-static-light;

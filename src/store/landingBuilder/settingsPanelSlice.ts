@@ -6,6 +6,7 @@ interface SettingsPanelState {
   type: string;
   sectionID: string;
   moduleID: string;
+  selectedImageUrl: string;
 }
 
 const initialState: SettingsPanelState = {
@@ -14,6 +15,7 @@ const initialState: SettingsPanelState = {
   type: "",
   sectionID: "",
   moduleID: "",
+  selectedImageUrl: "",
 };
 
 const settingsPanelSlice = createSlice({
@@ -40,9 +42,14 @@ const settingsPanelSlice = createSlice({
     closeImageMenu(state) {
       state.imageMenu = false;
     },
+    applyImage(state, action: PayloadAction<string>) {
+      state.selectedImageUrl = action.payload;
+      state.imageMenu = false;
+    },
   },
 });
 
-export const { initPanel, closePanel, initImageMenu, closeImageMenu } = settingsPanelSlice.actions;
+export const { initPanel, closePanel, initImageMenu, closeImageMenu, applyImage } =
+  settingsPanelSlice.actions;
 
 export default settingsPanelSlice.reducer;

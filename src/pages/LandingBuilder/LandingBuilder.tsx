@@ -10,6 +10,7 @@ import { useAuth0 } from "@auth0/auth0-react";
 import { useDispatch } from "react-redux";
 import { setUser } from "@/store/userSlice";
 import Header from "@/components/organisms/Header";
+import SettingsPanelString from "@/components/molecules/SettingsPanelString";
 
 const LandingBuilder = () => {
   const location = useLocation();
@@ -27,6 +28,7 @@ const LandingBuilder = () => {
       {!isSavedLettersPage && <SideBar />}
       <Outlet />
       <SettingsPanel />
+      <SettingsPanelString />
       <ImageMenu />
     </main>
   );

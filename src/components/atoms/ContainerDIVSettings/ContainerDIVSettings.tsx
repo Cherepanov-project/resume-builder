@@ -1,4 +1,5 @@
-import { useAppDispatch } from "@/hooks/cvTemplateHooks";
+import "./ContainerDIVSettings.scss";
+import { useAppDispatch, useTypedSelector } from "@/hooks/cvTemplateHooks";
 import { initImageMenu } from "@/store/landingBuilder/settingsPanelSlice";
 import { useEffect, useLayoutEffect, useRef, useState } from "react";
 import { HexColorPicker } from "react-colorful";
@@ -16,6 +17,7 @@ const ContainerDIVSettings: React.FC<IProps> = ({ backgroundColor, setStyle }) =
   const [colorOpen, setColorOpen] = useState(false);
 
   const colorRef = useRef<HTMLDivElement>(null);
+  const selectedImageUrl = useTypedSelector((state) => state.settingsPanel.selectedImageUrl);
 
   useLayoutEffect(() => {
     document.addEventListener("mousedown", handleClick);
@@ -24,6 +26,12 @@ const ContainerDIVSettings: React.FC<IProps> = ({ backgroundColor, setStyle }) =
     };
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
+
+  useEffect(() => {
+    if (selectedImageUrl) {
+      setImage(selectedImageUrl);
+    }
+  }, [selectedImageUrl]);
 
   useEffect(() => {
     // вывести в отдельную функцию
@@ -51,7 +59,7 @@ const ContainerDIVSettings: React.FC<IProps> = ({ backgroundColor, setStyle }) =
   const bgImage = () => {
     return (
       <div className="settings-panel__item settings-panel__image">
-        <span>BackgroundImage</span>
+        <span className="settings-panel__text--color">BackgroundImage</span>
         <div className="settings-panel__image__block">
           <div className="settings-panel__image__block__bgimage">
             <img className="media-object" src={image} alt="bg-image" />
@@ -75,7 +83,7 @@ const ContainerDIVSettings: React.FC<IProps> = ({ backgroundColor, setStyle }) =
           <HexColorPicker color={color} onChange={setColor} />
         ) : (
           <div className="settings-panel__bgcolor">
-            <span>Background-color</span>
+            <span className="settings-panel__text--color">Background-color</span>
             <div className="bg-form">
               <input value={color} onChange={(e) => handleColorInput(e)} />
               <div

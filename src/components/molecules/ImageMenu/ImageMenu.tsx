@@ -1,9 +1,9 @@
 import { useState, useEffect, useRef } from "react";
 import "./ImageMenu.scss";
 import { useAppDispatch, useTypedSelector } from "@/hooks/cvTemplateHooks";
-import { closeImageMenu } from "@/store/landingBuilder/settingsPanelSlice";
+import { applyImage, closeImageMenu } from "@/store/landingBuilder/settingsPanelSlice";
 
-type listItemType = { [key: string]: string };
+type listItemType = { url: string; title: string };
 
 const ImageMenu = () => {
   const dispatch = useAppDispatch();
@@ -15,6 +15,7 @@ const ImageMenu = () => {
 
   const urlRef = useRef<HTMLInputElement>(null);
   const altRef = useRef<HTMLInputElement>(null);
+  const fileInputRef = useRef<HTMLInputElement | null>(null);
 
   const handleChange = () => {
     let url = "";
@@ -40,9 +41,29 @@ const ImageMenu = () => {
     }
   };
 
-  const handleItem = (item: { [key: string]: string }) => {
+  const handleItem = (item: listItemType) => {
     const { url, title } = item;
     setCurItem({ url, alt: title });
+  };
+  const handleFileChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+    const file = e.target.files?.[0];
+    if (!file) return;
+    const reader = new FileReader();
+    reader.onload = () => {
+      const url = String(reader.result ?? "");
+      const title = file.name;
+      setList((prev) => [{ url, title }, ...prev]);
+      setCurItem({ url, alt: title });
+      if (urlRef.current) urlRef.current.value = url;
+      if (altRef.current) altRef.current.value = title;
+    };
+    reader.readAsDataURL(file);
+    e.currentTarget.value = "";
+  };
+
+  const handleApply = () => {
+    if (!curItem.url) return;
+    dispatch(applyImage(curItem.url));
   };
 
   // const handleApply = (item) => {
@@ -104,7 +125,18 @@ const ImageMenu = () => {
             </div>
           </div>
           <div className="confirm-menu__bottom-btns">
-            <button className="upload-btn" type="button">
+            <input
+              ref={fileInputRef}
+              type="file"
+              accept="image/*"
+              style={{ display: "none" }}
+              onChange={handleFileChange}
+            />
+            <button
+              className="upload-btn"
+              type="button"
+              onClick={() => fileInputRef.current?.click()}
+            >
               UPLOAD IMAGE
             </button>
             <div className="confirm-menu__bottom-btns__confirm">
@@ -115,7 +147,7 @@ const ImageMenu = () => {
               >
                 CANCEL
               </button>
-              <button className="apply-btn" type="button">
+              <button className="apply-btn" type="button" onClick={() => handleApply()}>
                 APPLY
               </button>
             </div>

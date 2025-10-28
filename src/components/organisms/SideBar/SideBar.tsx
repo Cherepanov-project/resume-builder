@@ -26,7 +26,7 @@ const SideBar: React.FC = () => {
       setSidebarMenuList({ ...sidebarMenuList, ...data });
     });
   }, [sidebarMenuList]);
-  
+
 
   const handleChangeTab = (_event: React.SyntheticEvent, indxBtn: number) => {
     setCurrentTab(indxBtn);
@@ -59,6 +59,12 @@ const SideBar: React.FC = () => {
               className={classes["tab"]}
               icon={tabsIcons[indx]}
               aria-label={item}
+              sx={{
+                minWidth: 40, width: 40, minHeight: 40, p: 0,
+                color: '#777',
+                '& .MuiSvgIcon-root': { color: 'inherit', transition: 'color .18s' },
+                '&.Mui-selected': { color: '#fff' },
+              }}
               onClick={openPanel}
             />
           );
@@ -68,7 +74,7 @@ const SideBar: React.FC = () => {
         return (
           isActiveTab && (
             <TabPanel key={key} value={currentTab} index={indx} label={key} closePanel={closePanel}>
-          
+
               {key === "Manage" && (
                 <>
                   <ManagerButton
