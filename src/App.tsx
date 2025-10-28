@@ -14,7 +14,6 @@ import EmailPage from "./pages/LetterBuilderPage/EmailPage.tsx";
 import LetterBuilderPage from "./pages/LetterBuilderPage/LetterBuilderPage.tsx";
 import NotFoundPage from "./pages/NotFoundPage";
 import StarterPage from "./pages/StarterPage";
-import LetterConstructorPage from "./pages/LetterConstructorPage";
 
 function App() {
   return (
@@ -35,12 +34,6 @@ function App() {
         </Route>
         <Route path="/landing-preview" element={<LandingPreview />} />
         <Route path="/resume-builder" element={<CvTemplate />} />
-        <Route
-          path="/landing-letter-constructor-page"
-          element={<ProtectedRoute component={LetterConstructorPage} />}
-        />
-        <Route path="/landing-preview" element={<ProtectedRoute component={LandingPreview} />} />
-        <Route path="/resume-builder" element={<ProtectedRoute component={CvTemplate} />} />
         <Route path="*" element={<NotFoundPage />} />
       </Routes>
     </>
