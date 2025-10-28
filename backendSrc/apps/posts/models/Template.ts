@@ -8,6 +8,6 @@ export const templatesTable = sqliteTable("templates_table", {
 });
 
 export const templatesSchema = z.object({
-  id: z.string(),
+  id: z.number(),
   content: z.string(),
 }) satisfies z.ZodType<TTemplate>;

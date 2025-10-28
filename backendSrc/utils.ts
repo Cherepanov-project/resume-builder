@@ -58,3 +58,59 @@ export const createTemplate = async (templateData: object | undefined, dataId?: 
     throw error;
   }
 };
+
+export const updateTemplate = async (id: string, content: string) => {
+  try {
+    if (!id) throw new Error("id is required");
+    if (!content) throw new Error("content is required");
+
+    const response = await fetch(
+      `https://resume-builder-api.paulenter143.workers.dev/api/template/${id}`,
+      {
+        method: "PUT",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify({ content })
+          .replace(/</g, "\\u003c")
+          .replace(/>/g, "\\u003e"), // защита от XSS
+      },
+    );
+
+    if (!response.ok) {
+      const errText = await response.text();
+      throw new Error(`HTTP ${response.status}: ${errText}`);
+    }
+
+    return await response.json();
+  } catch (error) {
+    console.error(error);
+    throw error;
+  }
+};
+
+export const deleteTemplate = async (id: string) => {
+  try {
+    if (!id) throw new Error("id is required");
+
+    const response = await fetch(
+      `https://resume-builder-api.paulenter143.workers.dev/api/template/${id}`,
+      {
+        method: "DELETE",
+        headers: {
+          "Content-Type": "application/json",
+        },
+      },
+    );
+
+    if (!response.ok) {
+      const errText = await response.text();
+      throw new Error(`HTTP ${response.status}: ${errText}`);
+    }
+
+    return await response.json();
+  } catch (error) {
+    console.error(error);
+    throw error;
+  }
+};

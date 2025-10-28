@@ -5,8 +5,8 @@ import DefaultButton from "@/components/atoms/DefaultButton";
 import { useState } from "react";
 import { ParseTreeToTable } from "@/pages/LetterBuilderPage/EmailPage";
 import { useNavigate } from "react-router-dom";
-import { deleteAllLetters, deleteLetter } from "@/store/LetterBuilderStore/savedLettersSlice";
-import { getTemplates, createTemplate } from "../../../../backendSrc/utils";
+import { deleteAllLetters } from "@/store/LetterBuilderStore/savedLettersSlice";
+import { getTemplates, createTemplate, deleteTemplate } from "../../../../backendSrc/utils";
 
 const SavedLetters = () => {
   const [showModal, setShowModal] = useState(false);
@@ -108,8 +108,16 @@ const SavedLetters = () => {
                 primary
               />
               <DefaultButton
-                onClick={() => {
-                  dispatch(deleteLetter(container.id));
+                onClick={async () => {
+                  try {
+
+                    await deleteTemplate(container.id);
+
+                    console.log(`Template ${container.id} deleted`);
+
+                  } catch (error) {
+                    console.error("Failed to delete template:", error);
+                  }
                 }}
                 label="Delete"
                 primary
