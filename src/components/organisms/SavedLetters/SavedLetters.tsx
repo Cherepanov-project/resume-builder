@@ -5,7 +5,8 @@ import DefaultButton from "@/components/atoms/DefaultButton";
 import { useState } from "react";
 import { ParseTreeToTable } from "@/pages/LetterBuilderPage/EmailPage";
 import { useNavigate } from "react-router-dom";
-import { deleteAllLetters, deleteLetter } from "@/store/LetterBuilderStore/savedLettersSlice";
+import { deleteAllLetters } from "@/store/LetterBuilderStore/savedLettersSlice";
+import { getTemplates, createTemplate, deleteTemplate } from "../../../../backendSrc/utils";
 
 const SavedLetters = () => {
   const [showModal, setShowModal] = useState(false);
@@ -63,6 +64,14 @@ const SavedLetters = () => {
       )}
 
       <div className={classes.header}>
+        <DefaultButton
+          onClick={() => {
+            getTemplates().then((templates) => {
+              console.log(templates);
+            });
+          }}
+          label="Show Templetes"
+        />
         {isEmptyLettersArr && (
           <DefaultButton onClick={() => dispatch(deleteAllLetters())} label="Delete all" primary />
         )}
@@ -86,6 +95,12 @@ const SavedLetters = () => {
                 backgroundColor: "#f5f5f5",
               }}
             >
+              <DefaultButton
+                onClick={() => {
+                  createTemplate(containerSaveLetters.find((el) => el.id === container.id));
+                }}
+                label="Add on Templete"
+              />
               <DefaultButton onClick={() => handleClickOnOpen(container.id)} label="Open" primary />
               <DefaultButton
                 onClick={() => handleShowClick(container.id)}
@@ -93,8 +108,16 @@ const SavedLetters = () => {
                 primary
               />
               <DefaultButton
-                onClick={() => {
-                  dispatch(deleteLetter(container.id));
+                onClick={async () => {
+                  try {
+
+                    await deleteTemplate(container.id);
+
+                    console.log(`Template ${container.id} deleted`);
+
+                  } catch (error) {
+                    console.error("Failed to delete template:", error);
+                  }
                 }}
                 label="Delete"
                 primary

@@ -6,4 +6,11 @@ export interface TPost {
   updatedAt?: string;
 }
 
+export type TTemplate = {
+  id: number;
+  content: string | Record<string, unknown> | unknown[];
+};
+
 export type TPostsResponse = TPost[];
+
+export type TTemplatesResponse = TTemplate[];
