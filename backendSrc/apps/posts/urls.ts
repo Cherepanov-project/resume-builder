@@ -7,6 +7,6 @@ import { UpdateTemplateApi } from "./api/updateTemplates";
 export default function registerTemplateRoutes(router: RouterType) {
   router.get("/api/template/", GetTemplatesApi);
   router.post("/api/template/", CreateTemplateApi);
-  router.delete("/api/template/", DeleteTemplateApi);
-  router.put("/api/template/", UpdateTemplateApi);
+  router.delete("/api/template/:id", DeleteTemplateApi);
+  router.put("/api/template/:id", UpdateTemplateApi);
 }

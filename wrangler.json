@@ -1,5 +1,5 @@
 {
-	"name": "resume-builder",
+	"name": "resume-builder-api",
 	"main": "backendSrc/index.ts",
 	"compatibility_date": "2024-12-30",
 	"compatibility_flags": [
@@ -20,8 +20,8 @@
 	"d1_databases": [
 		{
 			"binding": "DB",
-			"database_name": "some-database-name",
-			"database_id": "some-database-id",
+			"database_name": "resume-builder-db",
+			"database_id": "f13b33e0-ef48-49cb-8f72-238adcdafe9a",
 			"migrations_dir": "backendSrc/migrations"
 		}
 	],
@@ -30,8 +30,8 @@
 			"d1_databases": [
 				{
 					"binding": "DB",
-					"database_name": "some-database-name",
-					"database_id": "some-database-id",
+					"database_name": "resume-builder-db",
+					"database_id": "f13b33e0-ef48-49cb-8f72-238adcdafe9a",
 					"migrations_dir": "backendSrc/migrations"
 				}
 			]
@@ -40,8 +40,8 @@
 			"d1_databases": [
 				{
 					"binding": "DB",
-					"database_name": "some-database-name",
-					"database_id": "some-database-id",
+					"database_name": "resume-builder-db",
+					"database_id": "f13b33e0-ef48-49cb-8f72-238adcdafe9a",
 					"migrations_dir": "backendSrc/migrations"
 				}
 			]
