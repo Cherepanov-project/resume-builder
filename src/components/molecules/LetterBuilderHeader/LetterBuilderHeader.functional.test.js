@@ -72,7 +72,7 @@ describe("LetterBuilderHeader Функциональные тесты", () => {
     expect(rightSection).toBeInTheDocument();
     
     const rightSectionButtons = rightSection.querySelectorAll("button");
-    expect(rightSectionButtons.length).toBe(2);
+    expect(rightSectionButtons).toHaveLength(2);
   });
   
   test("текст кнопки должен соответствовать состоянию компонента", () => {

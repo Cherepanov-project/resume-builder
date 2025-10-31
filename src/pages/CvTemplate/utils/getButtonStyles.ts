@@ -1,24 +1,23 @@
-import { useTheme } from "@mui/material";
+import type { Theme } from "@mui/material/styles";
 
 interface Style {
   [key: string]: string;
 }
 
-const getButtonStyles = (index: number, activeStep: number): Style => {
-  const theme = useTheme()
+const getButtonStyles = (theme: Theme, index: number, activeStep: number): Style => {
   if (index === activeStep) {
     return {
-      color: theme.custom.colorDarkBlue,
+      color: theme.custom.colorDarkBlue as string,
       backgroundColor: 'white',
-      border: `2px solid ${theme.custom.colorDarkBlue}`
+      border: `2px solid ${theme.custom.colorDarkBlue as string}`
     };
   }
 
   if (index < activeStep) {
     return {
       color: 'white',
-      backgroundColor: theme.custom.colorDarkBlue,
-      border: theme.custom.colorDarkBlue,
+      backgroundColor: theme.custom.colorDarkBlue as string,
+      border: theme.custom.colorDarkBlue as string,
     };
   }
 

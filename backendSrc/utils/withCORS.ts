@@ -3,18 +3,18 @@ export function withCORS(handler: (...args: any[]) => Promise<Response> | Respon
     const response: Response = await handler(...args);
     const headers = new Headers(response.headers);
 
-    const allowedOrigins = [
-      "http://localhost:5173",
-      "https://resume-builder-dev.paulenter143.workers.dev",
-      "https://resume-builder.paulenter143.workers.dev"
+    const allowedPatterns = [
+      /^https?:\/\/localhost(:\d+)?$/,
+      /^https:\/\/.*\.vercel\.app$/,
+      /^https:\/\/.*\.workers\.dev$/
     ];
 
+    
     const [request] = args;
     const origin = request?.headers.get("Origin");
-    if (origin && allowedOrigins.includes(origin)) {
+    const isAllowed = origin && allowedPatterns.some((regex) => regex.test(origin));
+    if (isAllowed) {
       headers.set("Access-Control-Allow-Origin", origin);
-    } else {
-      headers.set("Access-Control-Allow-Origin", allowedOrigins[0]);
     }
 
 

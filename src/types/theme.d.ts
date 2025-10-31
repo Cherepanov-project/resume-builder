@@ -1,3 +1,4 @@
+/* eslint-disable @typescript-eslint/no-explicit-any */
 import '@mui/material/styles';
 
 declare module '@mui/material/styles' {
@@ -13,3 +14,4 @@ declare module '@mui/material/styles' {
     };
   }
 }
+/* eslint-enable @typescript-eslint/no-explicit-any */
