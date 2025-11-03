@@ -44,12 +44,16 @@ const LetterBuilderHeader = () => {
         try {
           result = await updateTemplate(container.id, contentString);
           console.log("Письмо обновлено на сервере:", result);
-        } catch (updateError: any) {
-          // создание, если id не нашло ( при редактировании письма)
-          if (updateError.message.includes("404")) {
-            console.warn("Id не найден");
-            result = await createTemplate(container);
-            console.log("Письмо создано на сервере");
+        } catch (updateError: unknown) {
+          // проверяем, что ошибка действительно экземпляр Error
+          if (updateError instanceof Error) {
+            if (updateError.message.includes("404")) {
+              console.warn("Id не найден");
+              result = await createTemplate(container);
+              console.log("Письмо создано на сервере");
+            } else {
+              throw updateError;
+            }
           } else {
             throw updateError;
           }
