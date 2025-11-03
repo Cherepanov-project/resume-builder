@@ -9,15 +9,12 @@ import { useTypedSelector } from "@/hooks/cvTemplateHooks";
 import { useNavigate } from "react-router-dom";
 import { useTheme } from "@mui/material";
 import { setLetter } from "@/store/LetterBuilderStore/savedLettersSlice";
-import { RootState } from "@/store/store";
+import { createTemplate, updateTemplate } from "../../../../backendSrc/utils";
 
 const LetterBuilderHeader = () => {
   const theme = useTheme();
   const [visibleStructure, setVisibleStructure] = useState<boolean>(true);
   const dispatch = useAppDispatch();
-  const containerEl: IGridContainers | null = useAppSelector(
-    (state: RootState) => state.container.container || null,
-  ) as IGridContainers | null;
   const visibleIcon = visibleStructure ? <Visibility /> : <VisibilityOff />;
   const buttonVisibleText = visibleStructure ? "Отобразить структуру" : "Скрыть структуру";
   const onClickHandler = () => {
@@ -29,6 +26,49 @@ const LetterBuilderHeader = () => {
   const container = useAppSelector((state) => state.container.container);
 
   if (!container) return null;
+
+  const handleSaveLetter = async () => {
+    if (!container || !isContainerValid(container)) {
+      console.error("container не валиден");
+      return;
+    }
+  
+    try {
+      const contentString = JSON.stringify(container)
+        .replace(/</g, "\\u003c")
+        .replace(/>/g, "\\u003e");
+
+      let result;
+      // обновлени при наличии Id
+      if (container.id) {
+        try {
+          result = await updateTemplate(container.id, contentString);
+          console.log("Письмо обновлено на сервере:", result);
+        } catch (updateError: any) {
+          // создание, если id не нашло ( при редактировании письма)
+          if (updateError.message.includes("404")) {
+            console.warn("Id не найден");
+            result = await createTemplate(container);
+            console.log("Письмо создано на сервере");
+          } else {
+            throw updateError;
+          }
+        }
+      } else {
+        // если id нет, создаем новое 
+        result = await createTemplate(container);
+        console.log("Письмо создано на сервере:", result);
+      }
+      // сохранение id в Redux
+      dispatch(setLetter({ ...container, id: result.id }));
+    } catch (error) {
+      console.error("Ошибка при сохранении", error);
+      // локальное сохранение при ошибке
+      dispatch(setLetter(container));
+      alert("Письмо сохранено локально.");
+    }
+  };
+  
 
   const isContainerValid = (obj: unknown): obj is IGridContainers => {
     return (
@@ -124,7 +164,7 @@ const LetterBuilderHeader = () => {
       {/* Right Section */}
       <div className="flex items-center mr-4 space-x-4">
         <button
-          onClick={() => dispatch(setLetter(containerEl!))}
+          onClick={handleSaveLetter}
           className={`${theme.custom.letterHeaderButton} bg-gray-500 hover:bg-gray-600`}
         >
           Сохранить
