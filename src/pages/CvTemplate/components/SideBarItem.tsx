@@ -1,5 +1,6 @@
 import { Fragment } from 'react';
 import { Box, Divider, Button } from '@mui/material';
+import { useTheme } from '@mui/material/styles';
 
 import { Step } from '@pages/CvTemplate/utils/steps.tsx';
 import { steps } from '../utils/index';
@@ -13,6 +14,7 @@ interface Props {
 }
 
 const SideBarItem: React.FC<Props> = ({ activeStep, setActiveStep }) => {
+  const theme = useTheme();
   return (
     <Box className={classes.cvTemlpate__step}>
       {steps.map((step: Step, index: number) => (
@@ -20,7 +22,7 @@ const SideBarItem: React.FC<Props> = ({ activeStep, setActiveStep }) => {
           <Button
             disabled={true}
             variant="contained"
-            style={getButtonStyles(index, activeStep)}
+            style={getButtonStyles(theme, index, activeStep)}
             sx={{
               width: '60px',
               height: '60px',

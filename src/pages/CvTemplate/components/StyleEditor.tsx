@@ -1,4 +1,4 @@
-import React, { useMemo } from 'react';
+import React, { useMemo, useCallback } from 'react';
 import { FormControl, Input, MenuItem, Select, SelectChangeEvent } from '@mui/material';
 import { Colorful } from '@uiw/react-color';
 
@@ -198,20 +198,20 @@ const StyleEditor_v2: React.FC<StyleEditorProps> = ({
   Component,
   isComplex = false,
 }) => {
-  const handleChange = (
+  const handleChange = useCallback((
     value: string | number,
     el: string,
     place_: string | null = null
   ): void => {
     isComplex ? setNewStyleValue(place_ || '', el, value) : setNewStyleValue(place, el, value);
     updateParent();
-  };
+  }, [isComplex, setNewStyleValue, updateParent, place]);
 
-  const getStyleValue = (place_: string, subKey: string = ''): { value: string | number, label: string } => {
+  const getStyleValue = useCallback((place_: string, subKey: string = ''): { value: string | number, label: string } => {
     if (isComplex && componentProps.style[place_]) {
       const styleValue = componentProps.style[place_];
       if (typeof styleValue === 'object' && styleValue !== null && subKey in styleValue) {
-        const nestedValue = styleValue[subKey];
+        const nestedValue = (styleValue as Record<string, unknown>)[subKey];
         if (typeof nestedValue === 'string' || typeof nestedValue === 'number') {
           return {
             value: nestedValue,
@@ -232,7 +232,7 @@ const StyleEditor_v2: React.FC<StyleEditorProps> = ({
       value: '',
       label: isComplex ? `${place_} - ${subKey}` : place_,
     };
-  };
+  }, [componentProps.style, isComplex]);
 
   const styleComponents = useMemo<StyleComponentsType>(() => ({
     width: InputField,
@@ -298,7 +298,7 @@ const StyleEditor_v2: React.FC<StyleEditorProps> = ({
     }
     
     return result;
-  }, [componentProps.style, isComplex, styleComponents, handleChange]);
+  }, [componentProps.style, isComplex, styleComponents, handleChange, getStyleValue]);
 
   return (
     <div style={{ minWidth: '500px' }}>
